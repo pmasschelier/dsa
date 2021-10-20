@@ -23,6 +23,7 @@ void free_graph_mat(GRAPH_MAT* g)
 		free(g->mat[i]);
 	}
 	free(g->mat);
+	free(g);
 }
 
 void set_edge_mat(GRAPH_MAT* g,  unsigned int a, unsigned int b, BOOL val, BOOL reverse)
@@ -39,20 +40,23 @@ void set_edge_mat_weight(GRAPH_MAT* g,  unsigned int a, unsigned int b, int weig
 		g->mat[b][a].w = weight;
 }
 
-void Djikstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance)
+void Dijkstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance)
 {
 	int* A = malloc(sizeof(int[g->nb_vert]));
-	for(int i=0; i < g->nb_vert; i++) 
+	for(unsigned i=0; i < g->nb_vert; i++) 
 		A[i] = 0;
-	unsigned pivot = r;
+	A[r] = 1;
 	int* Pi = malloc(sizeof(int[g->nb_vert]));
 	for(unsigned i=0; i < g->nb_vert; i++)
 		Pi[i] = -1;
 	Pi[r] = 0;
 	int* f = malloc(sizeof(int[g->nb_vert]));
 	f[r] = -1;
+	
+	unsigned pivot = r;
+	
 	for(unsigned i=0; i < g->nb_vert-1; i++) {
-		for(unsigned j=0; j < g->nb_vert-1; j++) { // Pour tout sommet j
+		for(unsigned j=0; j < g->nb_vert; j++) { // Pour tout sommet j
 			if(!A[j] && g->mat[pivot][j].b) { // non encore dans A et successeur de pivot
 				int d = Pi[pivot] + g->mat[pivot][j].w;
 				if(Pi[j] == -1 || d < Pi[j]) {
@@ -63,14 +67,16 @@ void Djikstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance)
 		}
 		int min = -1;
 		int jmin = -1;
-		for(unsigned j=0; i < g->nb_vert-1; i++) { // Pour tout sommet j
-			if(!A[j] && (min == -1 || min > Pi[j])) { // non encore dans A
+		for(unsigned j=0; j < g->nb_vert; j++) { // Pour tout sommet j
+			if(!A[j] && Pi[j] >=0 && (min == -1 || Pi[j] < min)) { // non encore dans A
 				min = Pi[j];
 				jmin = j;
 			}
 		}
-		pivot = jmin;
-		A[pivot] = 1;
+		if(jmin >= 0) {
+			pivot = jmin;
+			A[pivot] = 1;
+		}
 	}
 	*father = f;
 	*distance = Pi;

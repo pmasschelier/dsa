@@ -31,7 +31,7 @@ $(EXEC): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 # Construction automatique des .o à partir des .c
-$(OBJDIR)/%.o:$(SRCDIR)/%.c $(HEADERS)
+$(OBJDIR)/%$(EXT).o:$(SRCDIR)/%.c $(HEADERS)
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 

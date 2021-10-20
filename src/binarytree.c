@@ -139,15 +139,21 @@ int push_forest(FOREST* f, BinaryTree* tree)
 		return -1;
 	new->tree = tree;
 	new->next = NULL;
-	if(empty_forest(f))
+	if(empty_forest(f)) {
 		f->begin = new;
-	f->end->next = new;
-	f->end = new;
+		f->end = new;
+	}
+	else {
+		f->end->next = new;
+		f->end = new;
+	}
 	return 0;
 }
 
 BinaryTree* pop_forest(FOREST* f)
 {
+	if(empty_forest(f))
+		return NULL;
 	FOREST_NODE* begin = f->begin->next;
 	BinaryTree* tree = f->begin->tree;
 	free(f->begin);
@@ -179,8 +185,10 @@ void free_forest(FOREST* f)
 int level_order_traversal(BinaryTree* tree, T* tab) {
 	if(tree) {
 		unsigned i=0;
-		FOREST* f = create_forest(tree);
+		FOREST* f = create_forest();
 		if(!f)
+			return -1;
+		if(push_forest(f, tree) != 0)
 			return -1;
 		
 		while(!empty_forest(f)) {
