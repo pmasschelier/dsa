@@ -117,92 +117,27 @@ void free_BT(BinaryTree* tree)
 	}
 }
 
-/////////////////////////////////////////
-///// Implémentation de la forêt	/////
-/////////////////////////////////////////
-
-FOREST* create_forest() 
-{
-	FOREST* f = malloc(sizeof(FOREST));
-	if(!f)
-		return NULL;
-	f->begin = NULL;
-	f->end = NULL;
-	return f;
-}
-
-
-int push_forest(FOREST* f, BinaryTree* tree)
-{
-	FOREST_NODE* new = malloc(sizeof(FOREST_NODE));
-	if(!new)
-		return -1;
-	new->tree = tree;
-	new->next = NULL;
-	if(empty_forest(f)) {
-		f->begin = new;
-		f->end = new;
-	}
-	else {
-		f->end->next = new;
-		f->end = new;
-	}
-	return 0;
-}
-
-BinaryTree* pop_forest(FOREST* f)
-{
-	if(empty_forest(f))
-		return NULL;
-	FOREST_NODE* begin = f->begin->next;
-	BinaryTree* tree = f->begin->tree;
-	free(f->begin);
-	f->begin = begin;
-	return tree;
-}
-
-BOOL empty_forest(FOREST* f)
-{
-	return (f->begin == NULL);
-}
-
-static void free_forest_node(FOREST_NODE* fn) {
-	if(fn) {
-		free_forest_node(fn->next);
-		free(fn);
-	}
-}
-void free_forest(FOREST* f)
-{
-	if(f) {
-		free_forest_node(f->begin);
-		free(f); 
-	}
-}
-
-//////////////////////////////////////////////////////////////////////////////
-
 int level_order_traversal(BinaryTree* tree, T* tab) {
 	if(tree) {
 		unsigned i=0;
-		FOREST* f = create_forest();
-		if(!f)
+		LIST* foret = create_list(sizeof(BinaryTree));
+		if(!foret)
 			return -1;
-		if(push_forest(f, tree) != 0)
+		if(!push_back_list(foret, tree))
 			return -1;
 		
-		while(!empty_forest(f)) {
-			BinaryTree* t = pop_forest(f);
+		while(!empty_list(foret)) {
+			BinaryTree* t = pop_front_list(foret);
 			if(t) {
-				if(push_forest(f, t->ls) != 0)
+				if(!push_back_list(foret, t->ls))
 					return -1;
-				if(push_forest(f, t->rs))
+				if(!push_back_list(foret, t->rs))
 					return -1;
 				tab[i] = t->x;
 				i++;
 			}
 		}
-		free_forest(f);
+		free_list(foret);
 		return 0;
 	}
 	else
@@ -213,6 +148,8 @@ BinaryTree* perfect_BT_from_tab(T* tab, unsigned size) {
 	if(size == 0) 
 		return NULL;
 	BinaryTree* tree = malloc(sizeof(BinaryTree));
+	tree->ls = NULL;
+	tree->rs = NULL;
 	for(unsigned i=0; i<size; i++) {
 		edit_BT(tree, path(i), tab[i]);
 	}

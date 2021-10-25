@@ -81,3 +81,66 @@ void Dijkstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance)
 	*father = f;
 	*distance = Pi;
 }
+
+/*
+
+static unsigned father_heap(unsigned i) {
+	return i==0 ? 0 : (i+1)/2 - 1;
+}
+
+static unsigned ls_heap(unsigned i) {
+	return (i+1)*2-1;
+}
+
+static unsigned rs_heap(unsigned i) {
+	return (i+1)*2;
+}
+
+static void pull_up(int* tas, unsigned fin) {
+	unsigned i = fin;
+	int cle = tas[fin];
+	
+	while(i>=1 && cle > tas[parent_tas(i)]) {
+		tas[i] = tas[parent_tas(i)];
+		i = parent_tas(i);
+	}
+	tas[i] = cle;
+}
+
+
+void construire_tas_tableau(int* tas, unsigned taille) {
+	for(unsigned i=0; i<taille; i++)
+		montee(tas, i);
+}
+
+void pull_down(int* tas, unsigned taille, unsigned index) {
+	int trouvee = 0;
+	int cle = tas[index];
+	int i_max;
+	while(!trouvee && fg_tas(index) < taille) {
+		// printf("indice : %d, fg : %d, fd : %d\n", index, fg_tas(index), fd_tas(index));
+		if(fg_tas(index) == taille-1)
+			i_max = taille-1;
+		else if(tas[fg_tas(index)] >= tas[fd_tas(index)])
+			i_max = fg_tas(index);
+		else
+			i_max = fd_tas(index);
+		
+		if(cle < tas[i_max]) {
+			tas[index] = tas[i_max];
+			index = i_max;
+		}
+		else
+			trouvee = 1;
+	}
+	tas[index] = cle;
+}
+
+void tri_tas(int* tas, unsigned taille) {
+	for(int p=taille-1; p>0; p--) {
+		echanger(tas, 0, p);
+		descente(tas, p, 0);
+	}
+}
+
+*/

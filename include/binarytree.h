@@ -1,7 +1,7 @@
 #ifndef BINARYTREE_H
 #define BINARYTREE_H
 
-#include "structures.h"
+#include "list.h"
 
 typedef struct BinaryTree BinaryTree;
 struct BinaryTree {
@@ -49,49 +49,6 @@ unsigned postorder_traversal(BinaryTree* tree, T* tab);
 unsigned sym_traversal(BinaryTree* tree, T* tab);
 
 void free_BT(BinaryTree* tree);
-
-/* Une forêt est, ici, une file d'arbres */
-typedef struct FOREST_NODE FOREST_NODE;
-struct FOREST_NODE {
-	BinaryTree* tree;
-	FOREST_NODE* next;
-};
-
-typedef struct FOREST FOREST;
-struct FOREST {
-	FOREST_NODE* begin;
-	FOREST_NODE* end;
-};
-
-/* \brief Crée une file d'arbres binaires vide (une forêt)
- * Renvoie un pointeur f sur un FOREST alloué (qui devra être libéré avec
- * free_forest) tel que f->begin = NULL et f->end = NULL
- */
-FOREST* create_forest();
-
-/* \brief Ajoute un arbre à la fin de la forêt (enfile)
- * \param Forêt sur laquelle on veut enfiler
- * \param Arbre qu'on veut enfiler
- * \return 0 si tout c'est bien passé et -1 en cas d'erreur (échec de l'allocation)
- */
-int push_forest(FOREST* queue, BinaryTree* tree);
-
-/* \brief Dépile la forêt
- * \param pointeur vers la forêt
- * \return pointeur vers l'arbre dépilé
- */
-BinaryTree* pop_forest(FOREST* queue);
-
-/* \brief Renvoie TRUE ssi la forêt est vide
- * Concrètement : return f->begin == NULL;
- */
-BOOL empty_forest(FOREST* queue);
-
-/* \brief Libère récursivement tous les noeuds de la forêt
- * !!! Cette fonction ne libère pas les arbres qui sont dans la foret
- * Après avoir libéré la forêt, chaque arbre doit être libéré individuellement.
- */
-void free_forest(FOREST* queue);
 
 /* \brief Parcours en largeur de l'arbre binaire
  * \param Arbre binaire à parcourir

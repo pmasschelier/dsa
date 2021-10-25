@@ -48,12 +48,13 @@ void set_edge_mat(GRAPH_MAT* g,  unsigned int a, unsigned int b, BOOL val, BOOL 
 void set_edge_mat_weight(GRAPH_MAT* g,  unsigned int a, unsigned int b, int weight, BOOL reverse);
 
 /* \brief Implémentation de l'algorithme de Dijkstra avec un graphe sous forme de matrice d'adjacence
- * \param Pointeur vers le graphe
+ * \param Pointeur vers le graphe, !!! Les arêtes du graphe ne doivent avoir que des poids posisitfs.
  * \param Racine du graphe
  * \param pointeur vers un pointeur sur un int
  * \param pointeur vers un pointeur sur un int
  * Ces deux derniers pointeurs vont être modifiés pour pointer vers des tableau alloués
  * de la taille graphe->nb_vert !!! Ils devront être libérés par l'utilisateur !!!
+ * \complexity O(n²)
  */
 void Dijkstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance);
 
