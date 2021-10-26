@@ -121,6 +121,7 @@ int level_order_traversal(BinaryTree* tree, T* tab) {
 	if(tree) {
 		unsigned i=0;
 		LIST* foret = create_list(sizeof(BinaryTree));
+		foret->free_element = free_BT; // Inutile mais présent par sécurité
 		if(!foret)
 			return -1;
 		if(!push_back_list(foret, tree))

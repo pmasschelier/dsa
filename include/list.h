@@ -27,7 +27,7 @@ enum type {
 /* \brief Crée un pointeur qui copie la premiere donnée envoyé
  * \param TYPE_INT pour une donnée sur 4 octets et TYPE_DOUBLE pour une donnée sur 8 octets
  * \param Le premier paramètre de la liste sera la donnée à copier
- * \return Pointeur vers l'adresse allouée !!! Le pointeur retourné doit être libéré avec free
+ * \return Pointeur vers l'adresse allouée !!! Le pointeur retourné doit être libéré avec free !!!
  */
 void* ptr(enum type t, ...);
 
@@ -88,6 +88,7 @@ LIST_NODE* insert_list(LIST* list, LIST_NODE* node, void* p);
  * \param élément à ajouter, l'élément pointé n'est pas copié, aucun allocation
  * ni libération de mémoire ne sont faites par ces fonctions sur x
  * \return Pointeur sur le noeud ajouté à la liste, NULL en cas d'échec
+ * Les pointeurs renvoyés par les fonctions pop devront être libérés
  * \complexity O(1)
  */
 LIST_NODE* push_front_list(LIST* list, void* x);

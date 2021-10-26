@@ -3,18 +3,8 @@
 #include "binarytree.h"
 #include "graph.h"
 
-static void print_path(Path path) {
-	if(path.length == 0) {
-		printf("0");
-	}
-	else {
-		while(path.length) {
-			printf("%d", path.path & 1);
-			path.path >>= 1;
-			path.length--;
-		}
-	}
-}
+static void print_path(Path path);
+static void print_edges(GRAPH_MAT* g);
 
 int main() {
 	LIST* liste = list_from_tab((int[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, sizeof(int), 10);
@@ -68,7 +58,7 @@ int main() {
 		printf("\n");
 		node = node->next;
 	}
-	BinaryTree* second = forest->begin->next->p;
+	
 	free_list(forest); // Libère tout le contenu de la liste
 	
 	
@@ -90,6 +80,58 @@ int main() {
 		printf("Distance de 0 à %d : %d\n", i, distance[i]); 
 	free(father);
 	free(distance);
+	free_graph_mat(g);
+	
+	g = init_graph_mat(8);
+	set_edge_mat(g, 0, 1, TRUE, FALSE);
+	set_edge_mat(g, 0, 6, TRUE, FALSE);
+	set_edge_mat(g, 1, 5, TRUE, FALSE);
+	set_edge_mat(g, 5, 7, TRUE, FALSE);
+	set_edge_mat(g, 5, 4, TRUE, FALSE);
+	set_edge_mat(g, 7, 4, TRUE, FALSE);
+	set_edge_mat(g, 3, 4, TRUE, FALSE);
+	set_edge_mat(g, 6, 7, TRUE, FALSE);
+	set_edge_mat(g, 7, 2, TRUE, FALSE);
+	set_edge_mat(g, 2, 6, TRUE, FALSE);
+	print_edges(g);
+	int* vertices;
+	int nb = mark_and_examine_traversal_mat(g, 0, &vertices, &father, QUEUE);
+	printf("Parcours BFS du graphe\n");
+	for(int i=0; i<nb; i++)
+		printf("%c, père : %c\n", (char)vertices[i] + 'a', (char)father[vertices[i]] + 'a');
+	free(father);
+	free(vertices);
+	
+	nb = DFS_mat(g, 0, &vertices, &father);
+	printf("Parcours DFS du graphe\n");
+	for(int i=0; i<nb; i++)
+		printf("%c, père : %c\n", (char)vertices[i] + 'a', (char)father[vertices[i]] + 'a');
+	free(father);
+	free(vertices);
+	
+	free_graph_mat(g);
 	
 	return 0;
+}
+
+static void print_path(Path path) {
+	if(path.length == 0) {
+		printf("0");
+	}
+	else {
+		while(path.length) {
+			printf("%d", path.path & 1);
+			path.path >>= 1;
+			path.length--;
+		}
+	}
+}
+
+static void print_edges(GRAPH_MAT* g) {
+	for(unsigned i=0; i<g->nb_vert; i++) {
+		for(unsigned j=0; j<g->nb_vert; j++) {
+			if(g->mat[i][j].b)
+				printf("%c -> %c\n" , (char)i+'a', (char)j+'a');
+		}
+	}
 }

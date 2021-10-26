@@ -2,6 +2,8 @@
 
 GRAPH_MAT* init_graph_mat(unsigned size)
 {
+	if(size == 0)
+		return NULL;
 	GRAPH_MAT* g = malloc(sizeof(GRAPH_MAT));	
 	if(!g)
 		return NULL;
@@ -19,9 +21,7 @@ GRAPH_MAT* init_graph_mat(unsigned size)
 
 void free_graph_mat(GRAPH_MAT* g)
 {
-	for(unsigned i=0; i<g->nb_vert; i++) {
-		free(g->mat[i]);
-	}
+	free(*g->mat);
 	free(g->mat);
 	free(g);
 }
@@ -38,6 +38,122 @@ void set_edge_mat_weight(GRAPH_MAT* g,  unsigned int a, unsigned int b, int weig
 	g->mat[a][b].w = weight;
 	if(reverse)
 		g->mat[b][a].w = weight;
+}
+
+static int allow_tab_father_mark(unsigned length, int** tab, int** father, char** mark) {
+	if(tab) {
+		*tab = malloc(sizeof(int[length]));
+		if(!*tab)
+			return -1;
+	}
+	if(father) {
+		*father = malloc(sizeof(int[length]));
+		if(!*father && tab) {
+			free(*tab);
+			return -1;
+		}
+	}
+	*mark = calloc(length, sizeof(char));
+	if(!*mark) {
+		if(tab) free(*tab);
+		if(father) free(*father);
+		return -1;
+	}
+	return 0;
+}
+
+int mark_and_examine_traversal_mat(GRAPH_MAT* g, unsigned r, int** tab, int** father, char queue_or_stack)
+{
+	char* mark;
+	if(allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
+		return -1;
+	mark[r] = 1; // Marquer r
+	(*father)[r] = -1;
+	
+	LIST* waiting_list = create_list(sizeof(int)); // Création d'une file
+	push_back_list(waiting_list, ptr(TYPE_INT, r)); // Ajouter r à la liste d'attente
+	
+	unsigned index = 0;
+	
+	while(!empty_list(waiting_list))
+	{
+		int* vertex = pop_front_list(waiting_list);
+		if(tab)
+			(*tab)[index] = *vertex;
+		index++;
+		
+		for(unsigned i=0; i<g->nb_vert; i++)
+		{
+			if(g->mat[*vertex][i].b && !mark[i]) {
+				mark[i] = 1;
+				if(father)
+					(*father)[i] = *vertex;
+				if(queue_or_stack == STACK)
+					push_front_list(waiting_list, ptr(TYPE_INT, i));
+				else
+					push_back_list(waiting_list, ptr(TYPE_INT, i));
+			}
+		}
+		free(vertex);
+	}
+	return index;
+}
+
+int DFS_mat(GRAPH_MAT* g, unsigned r, int** tab, int** father) 
+{
+	char* mark;
+	if(allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
+		return -1;
+	mark[r] = 1; // Marquer r
+	(*father)[r] = -1;
+	(*tab)[0] = r;
+	
+	unsigned current = r;
+	unsigned index = 1;
+	
+	while(TRUE) {
+		BOOL any_edge = FALSE;
+		for(unsigned i=0; i<g->nb_vert; i++) {
+			if(g->mat[current][i].b && !mark[i]) {
+				mark[i] = 1;
+				(*tab)[index++] = i;
+				if(father)
+					(*father)[i] = current;
+				current = i;
+				any_edge = TRUE;
+				break;
+			}
+		}
+		if(!any_edge) {
+			if(current != r)
+				current = (*father)[current];
+			else
+				break;
+		}
+	}
+	return index;
+}
+static void DFS_mat_recursive_rec(GRAPH_MAT* g, unsigned current, int** tab, int** father, char* mark, unsigned* index)
+{
+	mark[current] = 1;
+	(*tab)[*index] = current;
+	*index += 1;
+	for(unsigned i=0; i<g->nb_vert; i++) {
+		if(g->mat[current][i].b && !mark[i]) {
+			(*father)[i] = current;
+			DFS_mat_recursive_rec(g, i, tab, father, mark, index);
+		}
+	}
+}
+
+int DFS_mat_recursive(GRAPH_MAT* g, unsigned r, int** tab, int** father) {
+	char* mark;
+	if(allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
+		return -1;
+	(*father)[r] = -1;
+	unsigned index = 0;
+	DFS_mat_recursive_rec(g, r, tab, father, mark, &index);
+	return index;
 }
 
 void Dijkstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance)

@@ -1,7 +1,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include "structures.h"
+#include "list.h"
 
 /* Graphe représenté par une matrice d'adjacence */
 typedef struct EDGE_MAT EDGE_MAT;
@@ -19,7 +19,7 @@ struct GRAPH_MAT
 };
 
 /* \brief Crée un graphe sous forme de matrice d'adjacence
- * \param Nombre de sommets du graphe
+ * \param Nombre de sommets du graphe (doit être strictement positif)
  * \return Renvoie un pointeur vers le graphe alloué (toutes les cases mémoire ont
  * été mises à zéro avec calloc) le graphe doit être libéré avec free_graph_mat(g);
  * La fonction renvoie nulle si l'allocation à échoué.
@@ -46,6 +46,10 @@ void set_edge_mat(GRAPH_MAT* g,  unsigned int a, unsigned int b, BOOL val, BOOL 
  * \param TRUE : L'arc est créé dans les deux sens : (a, b) et (b, a)
  */
 void set_edge_mat_weight(GRAPH_MAT* g,  unsigned int a, unsigned int b, int weight, BOOL reverse);
+
+int mark_and_examine_traversal_mat(GRAPH_MAT* g, unsigned r, int** tab, int** father, char queue_or_stack);
+int DFS_mat(GRAPH_MAT* g, unsigned r, int** tab, int** father) ;
+int DFS_mat_recursive(GRAPH_MAT* g, unsigned r, int** tab, int** father);
 
 /* \brief Implémentation de l'algorithme de Dijkstra avec un graphe sous forme de matrice d'adjacence
  * \param Pointeur vers le graphe, !!! Les arêtes du graphe ne doivent avoir que des poids posisitfs.

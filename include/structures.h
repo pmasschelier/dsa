@@ -15,4 +15,9 @@ typedef enum {
 	TRUE
 } BOOL;
 
+enum {
+	STACK,
+	QUEUE
+};
+
 #endif
