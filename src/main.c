@@ -73,12 +73,13 @@ int main() {
 	set_edge_mat(g, 2, 3, TRUE, TRUE);
 	set_edge_mat_weight(g, 2, 3, 4, TRUE);
 	
-	int *father, *distance;
-	Dijkstra_mat(g, 0, &father, &distance);
+	int *father;
+	long long *distance;
+	Dijkstra_mat(g, 0, &distance, &father);
 	
 	// Devrait afficher dans l'ordre 0, 2, 5, 9
 	for(unsigned i=0; i<4; i++)
-		printf("Distance de 0 à %d : %d\n", i, distance[i]); 
+		printf("Distance de 0 à %d : %lld\n", i, distance[i]); 
 	free(father);
 	free(distance);
 	free_graph_mat(g);
@@ -119,11 +120,34 @@ int main() {
 			printf("%d, étiquette : %d\n", i, num[i]);
 			assert(i == denum[num[i]]);
 		}
+		
+		set_edge_mat_weight(g, 0, 1, 3, FALSE);
+		set_edge_mat_weight(g, 0, 6, 5, FALSE);
+		set_edge_mat_weight(g, 1, 5, 1, FALSE);
+		set_edge_mat_weight(g, 5, 7, 0, FALSE);
+		set_edge_mat_weight(g, 5, 4, 5, FALSE);
+		set_edge_mat_weight(g, 7, 4, 2, FALSE);
+		set_edge_mat_weight(g, 3, 4, 9, FALSE);
+		set_edge_mat_weight(g, 6, 7, 2, FALSE);
+		set_edge_mat_weight(g, 7, 2, 8, FALSE);
+		
+		ret = Bellman_mat(g, 0, &distance, &father);
+		if(ret == 0) {
+			for(unsigned i=0; i<g->nb_vert; i++) {
+				if(distance[i] < INFINITY)
+					printf("Distance de 0 à %d : %lld\n", i, distance[i]);
+			}
+		}
+		else
+			fprintf(stderr, "Erreur dans l'algorithme de Bellman\n");
 	}
+	else if(ret > 0)
+		fprintf(stderr, "Le graphe n'est pas un DAG");
 	else
 		fprintf(stderr, "Code d'erreur : %d\n", ret);
 	
-	
+	free(father);
+	free(distance);
 	free_graph_mat(g);
 	
 	

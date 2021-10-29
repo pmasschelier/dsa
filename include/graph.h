@@ -3,11 +3,13 @@
 
 #include "list.h"
 
+extern const long long int INFINITY;
+
 /* Graphe représenté par une matrice d'adjacence */
 typedef struct EDGE_MAT EDGE_MAT;
 struct EDGE_MAT
 {
-	int w; // Poids de l'arcs
+	long long w; // Poids de l'arcs
 	BOOL b; // L'arc existe ?
 };
 
@@ -45,7 +47,7 @@ void set_edge_mat(GRAPH_MAT* g,  unsigned int a, unsigned int b, BOOL val, BOOL 
  * \param Poids de l'arc
  * \param TRUE : L'arc est créé dans les deux sens : (a, b) et (b, a)
  */
-void set_edge_mat_weight(GRAPH_MAT* g,  unsigned int a, unsigned int b, int weight, BOOL reverse);
+void set_edge_mat_weight(GRAPH_MAT* g,  unsigned int a, unsigned int b, long long weight, BOOL reverse);
 
 /* \brief Parcours "marquer et examiner" du graphe
  * \param g Pointeur vers le graphe
@@ -76,22 +78,22 @@ int DFS_mat_recursive(GRAPH_MAT* g, unsigned r, int** tab, int** father);
 /* \brief Implémentation de l'algorithme de Dijkstra avec un graphe sous forme de matrice d'adjacence
  * \param Pointeur vers le graphe, !!! Les arêtes du graphe ne doivent avoir que des poids posisitfs.
  * \param Racine du graphe
- * \param pointeur vers un pointeur sur un int, après la fonction father[i] est le père de i
- * \param pointeur vers un pointeur sur un int, après la fonction distance[i] = d(r, i)
+ * \param après la fonction distance[i] = d(r, i) et INFINI si le sommet n'est pas atteint
+ * \param si father != NULL, après la fonction father[i] est le père de i
  * Ces deux derniers pointeurs vont être modifiés pour pointer vers des tableau alloués
  * de la taille graphe->nb_vert !!! Ils devront être libérés par l'utilisateur !!!
- * \return Nombre de sommets atteints par l'algorithme
+ * \return Nombre de sommets atteints par l'algorithme et -1 en cas d'échec
  * \complexity O(n²)
  */
-unsigned Dijkstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance);
+int Dijkstra_mat(GRAPH_MAT* g, unsigned r, long long** distance, int** father);
 
 /* \brief Numérotation topologique du graphe
  * Associe à chaque sommet i d'un graphe orienté acyclique (DAG) un numéro
- * num[i] tel que si j est un ascendant de i num[j] < num[i]
- * \param g Pointeur vers le graphe, !!! Ce doit être un DAG
- * \param pointeur vers un pointeur sur un int, après la fonction num[i] est le numéro topologique de i
- * \param pointeur vers un pointeur sur un int, si denum != NULL : après la fonction denum[num[i]=i
- * Ces deux derniers pointeurs vont être modifiés pour pointer vers des tableau alloués
+ * num[i] tel que si j est un ascendant de i (*num)[j] < (*num)[i]
+ * \param g Pointeur vers le graphe, !!! Ce doit être un DAG !!!
+ * \param après la fonction (*num)[i] est le numéro topologique de i
+ * \param si denum != NULL : après la fonction (*denum)[num[i]]=i
+ * Ces trois derniers pointeurs vont être modifiés pour pointer vers des tableau alloués
  * de la taille graphe->nb_vert !!! Ils devront être libérés par l'utilisateur !!!
  * \return 0 si la numérotation a bien eu lieu
  * 	-1 si father == NULL ou g->nb_vert == 0
@@ -101,5 +103,16 @@ unsigned Dijkstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance);
  */
 int topological_numbering_mat(GRAPH_MAT* g, unsigned** num, unsigned** denum);
 
+/* \brief Implémentation de l'algorithme de Bellman avec un graphe sous forme de matrice d'adjacence
+ * \param Pointeur vers le graphe, !!! Ce doit être un DAG !!!
+ * \param Racine du graphe
+ * \param après la fonction distance[i] = d(r, i) et INFINI si le sommet n'est pas atteint
+ * \param si father != NULL, après la fonction father[i] est le père de i
+ * Ces deux derniers pointeurs vont être modifiés pour pointer vers des tableau alloués
+ * de la taille graphe->nb_vert !!! Ils devront être libérés par l'utilisateur !!!
+ * \return Nombre de sommets atteints par l'algorithme et -1 en cas d'échec
+ * \complexity O(n²)
+ */
+int Bellman_mat(GRAPH_MAT*g, unsigned r, int** distance, long long** father);
 
 #endif

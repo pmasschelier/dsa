@@ -1,5 +1,7 @@
 #include "graph.h"
 
+const long long int INFINITY = LLONG_MAX;
+
 GRAPH_MAT* init_graph_mat(unsigned size)
 {
 	if(size == 0)
@@ -33,7 +35,7 @@ void set_edge_mat(GRAPH_MAT* g,  unsigned int a, unsigned int b, BOOL val, BOOL 
 		g->mat[b][a].b = val;
 }
 
-void set_edge_mat_weight(GRAPH_MAT* g,  unsigned int a, unsigned int b, int weight, BOOL reverse)
+void set_edge_mat_weight(GRAPH_MAT* g,  unsigned int a, unsigned int b, long long weight, BOOL reverse)
 {
 	g->mat[a][b].w = weight;
 	if(reverse)
@@ -156,48 +158,75 @@ int DFS_mat_recursive(GRAPH_MAT* g, unsigned r, int** tab, int** father) {
 	return index;
 }
 
-unsigned Dijkstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance)
+static int allow_father_distance_mark(unsigned length, int** father, long long** distance, BOOL** mark)
 {
-	int* A = malloc(sizeof(int[g->nb_vert]));
-	for(unsigned i=0; i < g->nb_vert; i++) 
-		A[i] = 0;
-	A[r] = 1;
-	int* Pi = malloc(sizeof(int[g->nb_vert]));
-	for(unsigned i=0; i < g->nb_vert; i++)
-		Pi[i] = -1;
-	Pi[r] = 0;
-	int* f = malloc(sizeof(int[g->nb_vert]));
-	f[r] = -1;
+	if(father) {
+		*father = malloc(sizeof(int[length]));
+		if(!*father)
+			return -1;
+	}
+	if(distance) {
+		*distance = malloc(sizeof(long long int[length]));
+		if(!*distance) {
+			free(*father);
+			return -1;
+		}
+		for(unsigned i=0; i<length; i++)
+			(*distance)[i] = INFINITY;
+	}
+	if(mark) {
+		*mark = calloc(length, sizeof(BOOL));
+		if(!*mark) {
+			free(*father);
+			free(*distance);
+			return -1;
+		}
+	}
+	return 0;
+}
+
+int Dijkstra_mat(GRAPH_MAT* g, unsigned r, long long** distance, int** father)
+{
+	if(!distance)
+		return -1;
+	BOOL *mark;
+	if(allow_father_distance_mark(g->nb_vert, father, distance, &mark) != 0)
+		return -1;
+	mark[r] = TRUE;
+	(*distance)[r] = 0;
+	if(father)
+		(*father)[r] = -1;
 	
 	unsigned pivot = r;
 	unsigned number = 0; // nombre de sommets atteints par l'algorithme
 	
 	for(unsigned i=0; i < g->nb_vert-1; i++) {
 		for(unsigned j=0; j < g->nb_vert; j++) { // Pour tout sommet j
-			if(!A[j] && g->mat[pivot][j].b) { // non encore dans A et successeur de pivot
-				int d = Pi[pivot] + g->mat[pivot][j].w;
-				if(Pi[j] == -1 || d < Pi[j]) {
-					Pi[j] = d;
-					f[j] = pivot;
+			if(!mark[j] && g->mat[pivot][j].b) { // non encore dans A et successeur de pivot
+				int d = (*distance)[pivot] > INFINITY - g->mat[pivot][j].w ?
+					INFINITY :
+					(*distance)[pivot] + g->mat[pivot][j].w;
+				if(d < (*distance)[j]) {
+					(*distance)[j] = d;
+					if(father)
+						(*father)[j] = pivot;
 					number++;
 				}
 			}
 		}
-		int min = -1;
+		long long min = INFINITY;
 		int jmin = -1;
 		for(unsigned j=0; j < g->nb_vert; j++) { // Pour tout sommet j
-			if(!A[j] && Pi[j] >=0 && (min == -1 || Pi[j] < min)) { // non encore dans A
-				min = Pi[j];
+			if(!mark[j] && (*distance)[j] >=0 && (*distance)[j] < min) { // non encore dans A
+				min = (*distance)[j];
 				jmin = j;
 			}
 		}
 		if(jmin >= 0) {
 			pivot = jmin;
-			A[pivot] = 1;
+			mark[pivot] = TRUE;
 		}
 	}
-	*father = f;
-	*distance = Pi;
 	
 	return number;
 }
@@ -215,8 +244,10 @@ int topological_numbering_mat(GRAPH_MAT* g, unsigned** num, unsigned** denum)
 		return -1;
 	if(denum) {
 		*denum = malloc(sizeof(unsigned[g->nb_vert]));
-		if(!*denum)
+		if(!*denum) {
+			free(num);
 			return -2;
+		}
 	}
 	
 	int number = g->nb_vert - 1;
@@ -249,3 +280,37 @@ int topological_numbering_mat(GRAPH_MAT* g, unsigned** num, unsigned** denum)
 	return number + 1;
 }
 
+
+int Bellman_mat(GRAPH_MAT*g, unsigned r, int** distance, long long** father)
+{
+	if(!distance)
+		return -1;
+	if(allow_father_distance_mark(g->nb_vert, father, distance, NULL) != 0)
+		return -1;
+	(*distance)[r] = 0;
+	(*father)[r] = -1;
+	
+	unsigned *num, *denum;
+	if(topological_numbering_mat(g, &num, &denum) != 0)
+		return -1;
+	for(unsigned i = num[r] + 1; i<g->nb_vert; i++) {
+		long long min = INFINITY;
+		unsigned x = denum[i];
+		int y = -1;
+		for(unsigned j=0; j<g->nb_vert; j++) {
+			long long d = (*distance)[j] > INFINITY - g->mat[j][x].w ? 
+				INFINITY : 
+				(*distance)[j] + g->mat[j][x].w;
+			if(g->mat[j][x].b && num[j]<i && d < min) {
+				min = d;
+				y = j;
+			}
+		}
+		if(y >= 0) {
+			(*distance)[x] = min;
+			(*father)[x] = y;
+		}
+	}
+	
+	return 0;
+}   

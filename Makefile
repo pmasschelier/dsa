@@ -18,7 +18,7 @@ HEADERS= $(wildcard $(INCLUDEDIR)/*.h)
 ifeq ($(DEBUG),y)
 	CFLAGS += -DDEBUG -g3 -O0
 	EXT=-d
-else ifeq($(RETRO), y)
+else ifeq ($(RETRO), y)
 	CFLAGS += -O0
 	EXT=retro
 else
