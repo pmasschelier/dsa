@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 #include "list.h"
 #include "binarytree.h"
 #include "graph.h"
@@ -109,7 +110,22 @@ int main() {
 	free(father);
 	free(vertices);
 	
+	set_edge_mat(g, 2, 6, FALSE, FALSE); // On transforme g en DAG
+	unsigned *num, *denum;
+	ret = topological_numbering_mat(g, &num, &denum);
+	if(ret == 0) {
+		puts("La numérotation topologique du graphe a bien été effectuée :");
+		for(unsigned i=0; i<g->nb_vert; i++) {
+			printf("%d, étiquette : %d\n", i, num[i]);
+			assert(i == denum[num[i]]);
+		}
+	}
+	else
+		fprintf(stderr, "Code d'erreur : %d\n", ret);
+	
+	
 	free_graph_mat(g);
+	
 	
 	return 0;
 }

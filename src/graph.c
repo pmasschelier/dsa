@@ -156,7 +156,7 @@ int DFS_mat_recursive(GRAPH_MAT* g, unsigned r, int** tab, int** father) {
 	return index;
 }
 
-void Dijkstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance)
+unsigned Dijkstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance)
 {
 	int* A = malloc(sizeof(int[g->nb_vert]));
 	for(unsigned i=0; i < g->nb_vert; i++) 
@@ -170,6 +170,7 @@ void Dijkstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance)
 	f[r] = -1;
 	
 	unsigned pivot = r;
+	unsigned number = 0; // nombre de sommets atteints par l'algorithme
 	
 	for(unsigned i=0; i < g->nb_vert-1; i++) {
 		for(unsigned j=0; j < g->nb_vert; j++) { // Pour tout sommet j
@@ -178,6 +179,7 @@ void Dijkstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance)
 				if(Pi[j] == -1 || d < Pi[j]) {
 					Pi[j] = d;
 					f[j] = pivot;
+					number++;
 				}
 			}
 		}
@@ -196,67 +198,54 @@ void Dijkstra_mat(GRAPH_MAT* g, unsigned r, int** father, int** distance)
 	}
 	*father = f;
 	*distance = Pi;
-}
-
-/*
-
-static unsigned father_heap(unsigned i) {
-	return i==0 ? 0 : (i+1)/2 - 1;
-}
-
-static unsigned ls_heap(unsigned i) {
-	return (i+1)*2-1;
-}
-
-static unsigned rs_heap(unsigned i) {
-	return (i+1)*2;
-}
-
-static void pull_up(int* tas, unsigned fin) {
-	unsigned i = fin;
-	int cle = tas[fin];
 	
-	while(i>=1 && cle > tas[parent_tas(i)]) {
-		tas[i] = tas[parent_tas(i)];
-		i = parent_tas(i);
+	return number;
+}
+
+int topological_numbering_mat(GRAPH_MAT* g, unsigned** num, unsigned** denum)
+{
+	if(g->nb_vert <= 0)
+		return -1;
+	if(num) {
+		*num = malloc(sizeof(unsigned[g->nb_vert]));
+		if(!*num)
+			return -2;
 	}
-	tas[i] = cle;
-}
-
-
-void construire_tas_tableau(int* tas, unsigned taille) {
-	for(unsigned i=0; i<taille; i++)
-		montee(tas, i);
-}
-
-void pull_down(int* tas, unsigned taille, unsigned index) {
-	int trouvee = 0;
-	int cle = tas[index];
-	int i_max;
-	while(!trouvee && fg_tas(index) < taille) {
-		// printf("indice : %d, fg : %d, fd : %d\n", index, fg_tas(index), fd_tas(index));
-		if(fg_tas(index) == taille-1)
-			i_max = taille-1;
-		else if(tas[fg_tas(index)] >= tas[fd_tas(index)])
-			i_max = fg_tas(index);
-		else
-			i_max = fd_tas(index);
-		
-		if(cle < tas[i_max]) {
-			tas[index] = tas[i_max];
-			index = i_max;
+	else
+		return -1;
+	if(denum) {
+		*denum = malloc(sizeof(unsigned[g->nb_vert]));
+		if(!*denum)
+			return -2;
+	}
+	
+	int number = g->nb_vert - 1;
+	
+	LIST* pile = create_list(sizeof(unsigned));
+	
+	unsigned degre[g->nb_vert];
+	for(unsigned i=0; i<g->nb_vert; i++) {
+		degre[i] = 0;
+		for(unsigned j=0; j<g->nb_vert; j++) {
+			if(g->mat[i][j].b)
+				degre[i] ++; // On calcule le degré extérieur du sommet i
 		}
-		else
-			trouvee = 1;
+		if(degre[i] == 0)
+			push_front_list(pile, ptr(TYPE_INT, i));
 	}
-	tas[index] = cle;
+	while(!empty_list(pile)) {
+		unsigned* s = pop_front_list(pile);
+		(*num)[*s] = number;
+		if(denum)
+			(*denum)[number] = *s;
+		number--;
+		for(unsigned t=0; t<g->nb_vert; t++) {
+			if(g->mat[t][*s].b)
+				if(--degre[t] == 0)
+					push_front_list(pile, ptr(TYPE_INT, t));
+		}
+		free(s);
+	}
+	return number + 1;
 }
 
-void tri_tas(int* tas, unsigned taille) {
-	for(int p=taille-1; p>0; p--) {
-		echanger(tas, 0, p);
-		descente(tas, p, 0);
-	}
-}
-
-*/
