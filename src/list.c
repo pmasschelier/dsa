@@ -71,18 +71,19 @@ LIST* list_from_tab(void* tab, size_t size, unsigned length)
 	}
 	return ret;
 }
-/*
+
 void* tab_from_list(LIST* list, void* tab) {
 	unsigned i = 0;
-	while(list) {
-		tab[i] = list->x;
-		list = list->next;
+	LIST_NODE node = list->begin;
+	while(node) {
+		memcpy(tab + i*list->size, node->p, size);
+		node = node->next;
 		i++;
 	}
 	return tab;
-}*/
+}
 
-unsigned length(LIST* list) {
+unsigned length_list(LIST* list) {
 	unsigned l = 0;
 	LIST_NODE* node = list->begin;
 	while(node) {
@@ -162,6 +163,25 @@ void* pop_back_list(LIST* list) {
 	if(!list->end)
 		list->begin = NULL;
 	return ret; // On retourne l'adresse qui était dans le dernier noeud
+}
+
+LIST_NODE* find_list(LIST* list, void* x)
+{
+	LIST_NODE* node = list->begin;
+	while(node) {
+		if(memcmp(node->p, x, list->size) == 0)
+			return node;
+		node = node->next;
+	}
+	return NULL;
+}
+
+void remove(LIST* list, LIST_NODE* node)
+{
+	node->prev->next = node->next;
+	node->next->prev = node->prev;
+	list->free_element(node->p);
+	free(node);
 }
 
 static void free_node(LIST* list, LIST_NODE* node) {

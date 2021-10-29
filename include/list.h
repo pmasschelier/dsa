@@ -69,7 +69,7 @@ void* tab_from_list(LIST* list, void* tab);
  * \param pointeur vers le premier élément de la liste chainée.
  * \return Longueur de la liste.
  */
-unsigned length(LIST* list);
+unsigned length_list(LIST* list);
 
 /* \brief Insert un élément juste après le noeud list, si list et le premier
  * élément de la liste chainée, x sera la valeur du deuxième élément après l'appel
@@ -95,6 +95,22 @@ LIST_NODE* push_front_list(LIST* list, void* x);
 void* pop_front_list(LIST* list);
 LIST_NODE* push_back_list(LIST* list, void* x);
 void* pop_back_list(LIST* list);
+
+/* \brief Renvoie le premier élément de la liste égale à *x
+ * La comparaison est faite avec memcmp
+ * \param list pointeur sur la liste chainée.
+ * \param x pointeur sur l'élément à comparer
+ * \return un pointeur sur l'élément s'il a été trouve, NULL sinon
+ * \complexity O(n)
+ */
+LIST_NODE* find_list(LIST* list, void* x);
+
+/* \brief Supprime le noeud de la liste
+ * !!! Libère l'élément pointé !!!
+ * \param list pointeur sur la liste chainée.
+ * \param node noeud à supprimer
+ */
+void remove(LIST* list, LIST_NODE* node);
 
 /* \brief Libère la liste
  * Libère récursivement tous les éléments de la liste chainée en utilisant
