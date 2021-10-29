@@ -110,7 +110,13 @@ LIST_NODE* find_list(LIST* list, void* x);
  * \param list pointeur sur la liste chainée.
  * \param node noeud à supprimer
  */
-void remove(LIST* list, LIST_NODE* node);
+void remove_list(LIST* list, LIST_NODE* node);
+
+/* \brief Supprime tous les noeuds de la liste
+ * !!! Libère les éléments pointés !!!
+ * \param list pointeur sur la liste chainée.
+ */
+void clean_list(LIST* list);
 
 /* \brief Libère la liste
  * Libère récursivement tous les éléments de la liste chainée en utilisant

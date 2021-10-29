@@ -2,7 +2,7 @@
 #include <assert.h>
 #include "list.h"
 #include "binarytree.h"
-#include "graph.h"
+#include "graph_mat.h"
 
 static void print_path(Path path);
 static void print_edges(GRAPH_MAT* g);
@@ -64,14 +64,10 @@ int main() {
 	
 	
 	GRAPH_MAT* g = init_graph_mat(4);
-	set_edge_mat(g, 0, 1, TRUE, TRUE);
-	set_edge_mat_weight(g, 0, 1, 2, TRUE);
-	set_edge_mat(g, 1, 2, TRUE, TRUE);
-	set_edge_mat_weight(g, 1, 2, 3, TRUE);
-	set_edge_mat(g, 1, 3, TRUE, TRUE);
-	set_edge_mat_weight(g, 1, 3, 10, TRUE);
-	set_edge_mat(g, 2, 3, TRUE, TRUE);
-	set_edge_mat_weight(g, 2, 3, 4, TRUE);
+	set_edge_mat(g, 0, 1, TRUE, 2, TRUE);
+	set_edge_mat(g, 1, 2, TRUE, 3, TRUE);
+	set_edge_mat(g, 1, 3, TRUE, 10, TRUE);
+	set_edge_mat(g, 2, 3, TRUE, 4, TRUE);
 	
 	int *father;
 	long long *distance;
@@ -85,16 +81,16 @@ int main() {
 	free_graph_mat(g);
 	
 	g = init_graph_mat(8);
-	set_edge_mat(g, 0, 1, TRUE, FALSE);
-	set_edge_mat(g, 0, 6, TRUE, FALSE);
-	set_edge_mat(g, 1, 5, TRUE, FALSE);
-	set_edge_mat(g, 5, 7, TRUE, FALSE);
-	set_edge_mat(g, 5, 4, TRUE, FALSE);
-	set_edge_mat(g, 7, 4, TRUE, FALSE);
-	set_edge_mat(g, 3, 4, TRUE, FALSE);
-	set_edge_mat(g, 6, 7, TRUE, FALSE);
-	set_edge_mat(g, 7, 2, TRUE, FALSE);
-	set_edge_mat(g, 2, 6, TRUE, FALSE);
+	set_edge_mat(g, 0, 1, TRUE, 3, FALSE);
+	set_edge_mat(g, 0, 6, TRUE, 5, FALSE);
+	set_edge_mat(g, 1, 5, TRUE, 1, FALSE);
+	set_edge_mat(g, 5, 7, TRUE, 0, FALSE);
+	set_edge_mat(g, 5, 4, TRUE, 5, FALSE);
+	set_edge_mat(g, 7, 4, TRUE, 2, FALSE);
+	set_edge_mat(g, 3, 4, TRUE, 9, FALSE);
+	set_edge_mat(g, 6, 7, TRUE, 2, FALSE);
+	set_edge_mat(g, 7, 2, TRUE, 8, FALSE);
+	set_edge_mat(g, 2, 6, TRUE, 0, FALSE);
 	print_edges(g);
 	int* vertices;
 	int nb = mark_and_examine_traversal_mat(g, 0, &vertices, &father, QUEUE);
@@ -111,7 +107,7 @@ int main() {
 	free(father);
 	free(vertices);
 	
-	set_edge_mat(g, 2, 6, FALSE, FALSE); // On transforme g en DAG
+	set_edge_mat(g, 2, 6, FALSE, 0, FALSE); // On transforme g en DAG
 	unsigned *num, *denum;
 	ret = topological_numbering_mat(g, &num, &denum);
 	if(ret == 0) {
@@ -120,16 +116,6 @@ int main() {
 			printf("%d, étiquette : %d\n", i, num[i]);
 			assert(i == denum[num[i]]);
 		}
-		
-		set_edge_mat_weight(g, 0, 1, 3, FALSE);
-		set_edge_mat_weight(g, 0, 6, 5, FALSE);
-		set_edge_mat_weight(g, 1, 5, 1, FALSE);
-		set_edge_mat_weight(g, 5, 7, 0, FALSE);
-		set_edge_mat_weight(g, 5, 4, 5, FALSE);
-		set_edge_mat_weight(g, 7, 4, 2, FALSE);
-		set_edge_mat_weight(g, 3, 4, 9, FALSE);
-		set_edge_mat_weight(g, 6, 7, 2, FALSE);
-		set_edge_mat_weight(g, 7, 2, 8, FALSE);
 		
 		ret = Bellman_mat(g, 0, &distance, &father);
 		if(ret == 0) {

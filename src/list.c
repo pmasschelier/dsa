@@ -74,9 +74,9 @@ LIST* list_from_tab(void* tab, size_t size, unsigned length)
 
 void* tab_from_list(LIST* list, void* tab) {
 	unsigned i = 0;
-	LIST_NODE node = list->begin;
+	LIST_NODE* node = list->begin;
 	while(node) {
-		memcpy(tab + i*list->size, node->p, size);
+		memcpy((char*)tab + i*list->size, node->p, list->size);
 		node = node->next;
 		i++;
 	}
@@ -176,7 +176,7 @@ LIST_NODE* find_list(LIST* list, void* x)
 	return NULL;
 }
 
-void remove(LIST* list, LIST_NODE* node)
+void remove_list(LIST* list, LIST_NODE* node)
 {
 	node->prev->next = node->next;
 	node->next->prev = node->prev;
@@ -189,6 +189,15 @@ static void free_node(LIST* list, LIST_NODE* node) {
 		free_node(list, node->next); // Libère le noeud suivant
 		list->free_element(node->p); // Libère l'élément pointé
 		free(node); // Libère le noeud courant
+	}
+}
+
+void clean_list(LIST* list)
+{
+	if(list && list->begin) {
+		free_node(list, list->begin);
+		list->begin = NULL;
+		list->end = NULL;
 	}
 }
 
