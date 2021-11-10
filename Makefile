@@ -4,7 +4,8 @@ OBJDIR=./obj
 EXT=
 
 CC=gcc
-CFLAGS=-Wall -Wextra -pedantic -std=c11 -fno-common -fno-builtin -I$(INCLUDEDIR)
+# -Wstrict-prototypes
+CFLAGS=-Wall -Wextra -Wunreachable-code -Wwrite-strings -pedantic -std=c11 -fno-common -fno-builtin -I$(INCLUDEDIR)
 LDFLAGS=
 SRC= $(wildcard $(SRCDIR)/*.c)
 HEADERS= $(wildcard $(INCLUDEDIR)/*.h)

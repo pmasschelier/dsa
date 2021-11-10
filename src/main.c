@@ -3,9 +3,11 @@
 #include "list.h"
 #include "binarytree.h"
 #include "graph_mat.h"
+#include "graph_list.h"
 
 static void print_path(Path path);
-static void print_edges(GRAPH_MAT* g);
+static void print_edges_mat(GRAPH_MAT* g);
+static void print_edges_list(GRAPH_LIST* g);
 
 int main() {
 	LIST* liste = list_from_tab((int[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, sizeof(int), 10);
@@ -91,7 +93,15 @@ int main() {
 	set_edge_mat(g, 6, 7, TRUE, 2, FALSE);
 	set_edge_mat(g, 7, 2, TRUE, 8, FALSE);
 	set_edge_mat(g, 2, 6, TRUE, 0, FALSE);
-	print_edges(g);
+	print_edges_mat(g);
+
+	puts("/////////////////////////////////////////");
+
+	GRAPH_LIST* g_list = NULL;
+	graph_mat_to_graph_list(g, &g_list);
+	print_edges_list(g_list);
+
+
 	int* vertices;
 	int nb = mark_and_examine_traversal_mat(g, 0, &vertices, &father, QUEUE);
 	printf("Parcours BFS du graphe\n");
@@ -153,11 +163,22 @@ static void print_path(Path path) {
 	}
 }
 
-static void print_edges(GRAPH_MAT* g) {
+static void print_edges_mat(GRAPH_MAT* g) {
 	for(unsigned i=0; i<g->nb_vert; i++) {
 		for(unsigned j=0; j<g->nb_vert; j++) {
 			if(g->mat[i][j].b)
 				printf("%c -> %c\n" , (char)i+'a', (char)j+'a');
+		}
+	}
+}
+
+static void print_edges_list(GRAPH_LIST* g) {
+	for(unsigned i=0; i<g->nb_vert; i++) {
+		LIST_NODE* node = g->neighbours[i].begin;
+		while(node) {
+			EDGE_LIST* e = node->p;
+			printf("%c -> %c\n" , (char)i+'a', (char)(e->p)+'a');
+			node = node->next;
 		}
 	}
 }
