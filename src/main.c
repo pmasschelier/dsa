@@ -95,13 +95,6 @@ int main() {
 	set_edge_mat(g, 2, 6, TRUE, 0, FALSE);
 	print_edges_mat(g);
 
-	puts("/////////////////////////////////////////");
-
-	GRAPH_LIST* g_list = NULL;
-	graph_mat_to_graph_list(g, &g_list);
-	print_edges_list(g_list);
-
-
 	int* vertices;
 	int nb = mark_and_examine_traversal_mat(g, 0, &vertices, &father, QUEUE);
 	printf("Parcours BFS du graphe\n");
@@ -111,6 +104,26 @@ int main() {
 	free(vertices);
 	
 	nb = DFS_mat(g, 0, &vertices, &father);
+	printf("Parcours DFS du graphe\n");
+	for(int i=0; i<nb; i++)
+		printf("%c, père : %c\n", (char)vertices[i] + 'a', (char)father[vertices[i]] + 'a');
+	free(father);
+	free(vertices);
+
+	puts("\n# On transforme le graphe représenté par une matrice d'adjacence en un graphe représenté par des listes d'adjacence :");
+
+	GRAPH_LIST* g_list = NULL;
+	graph_mat_to_graph_list(g, &g_list);
+	print_edges_list(g_list);
+
+	nb = mark_and_examine_traversal_list(g_list, 0, &vertices, &father, QUEUE);
+	printf("Parcours BFS du graphe\n");
+	for(int i=0; i<nb; i++)
+		printf("%c, père : %c\n", (char)vertices[i] + 'a', (char)father[vertices[i]] + 'a');
+	free(father);
+	free(vertices);
+
+	nb = DFS_list(g_list, 0, &vertices, &father);
 	printf("Parcours DFS du graphe\n");
 	for(int i=0; i<nb; i++)
 		printf("%c, père : %c\n", (char)vertices[i] + 'a', (char)father[vertices[i]] + 'a');

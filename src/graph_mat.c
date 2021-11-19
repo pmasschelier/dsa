@@ -57,7 +57,7 @@ static int allow_tab_father_mark(unsigned length, int** tab, int** father, char*
 	return 0;
 }
 
-int mark_and_examine_traversal_mat(GRAPH_MAT* g, unsigned r, int** tab, int** father, char queue_or_stack)
+int mark_and_examine_traversal_mat(GRAPH_MAT* g, unsigned r, int** tab, int** father, LIST_STRUCT queue_or_stack)
 {
 	char* mark;
 	if(allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)

@@ -47,4 +47,31 @@ void free_graph_list(GRAPH_LIST* g);
  */
 void set_edge_list(GRAPH_LIST* g,  unsigned int a, unsigned int b, BOOL val, long long weight, BOOL reverse);
 
+/* \brief Parcours "marquer et examiner" du graphe
+ * \param g Pointeur vers le graphe
+ * \param r Racine du parcours
+ * \param tab Liste des sommets dans l'ordre rencontrés
+ * \param father Tableau tel que father[i] soit le père de i si i a été rencontré lors du parcours
+ * Ces deux derniers pointeurs vont être modifiés pour pointer vers des tableau alloués
+ * de la taille graphe->nb_vert !!! Ils devront être libérés par l'utilisateur !!!
+ * \param queue_or_stack Type de la file d'attente, doit valoir QUEUE ou STACK
+ * QUEUE : On a un parcours en largeur (BFS)
+ * STACK : On a un parcours proche du DFS
+ * \return -1 en cas d'erreur et sinon le nombre de sommets rencontrés
+ * \complexity 0(n·m)
+ */
+int mark_and_examine_traversal_list(GRAPH_LIST* g, unsigned r, int** tab, int** father, LIST_STRUCT queue_or_stack);
+
+/* \brief Parcours en profondeur du graphe
+ * \param g Pointeur vers le graphe
+ * \param r Racine du parcours
+ * \param tab Liste des sommets dans l'ordre rencontrés
+ * \param father Tableau tel que father[i] soit le père de i si i a été rencontré lors du parcours
+ * Ces deux derniers pointeurs vont être modifiés pour pointer vers des tableau alloués
+ * de la taille graphe->nb_vert !!! Ils devront être libérés par l'utilisateur !!!
+ * \return -1 en cas d'erreur et sinon le nombre de sommets rencontrés
+ */
+int DFS_list(GRAPH_LIST* g, unsigned r, int** tab, int** father) ;
+int DFS_list_recursive(GRAPH_LIST* g, unsigned r, int** tab, int** father);
+
 #endif

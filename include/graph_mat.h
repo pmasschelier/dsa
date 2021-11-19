@@ -51,8 +51,9 @@ void set_edge_mat(GRAPH_MAT* g,  unsigned int a, unsigned int b, BOOL val, long 
  * QUEUE : On a un parcours en largeur (BFS)
  * STACK : On a un parcours proche du DFS
  * \return -1 en cas d'erreur et sinon le nombre de sommets rencontrés
+ * \complexity 0(n²)
  */
-int mark_and_examine_traversal_mat(GRAPH_MAT* g, unsigned r, int** tab, int** father, char queue_or_stack);
+int mark_and_examine_traversal_mat(GRAPH_MAT* g, unsigned r, int** tab, int** father, LIST_STRUCT queue_or_stack);
 
 /* \brief Parcours en profondeur du graphe
  * \param g Pointeur vers le graphe
@@ -104,6 +105,8 @@ int topological_numbering_mat(GRAPH_MAT* g, unsigned** num, unsigned** denum);
  * \return Nombre de sommets atteints par l'algorithme et -1 en cas d'échec
  * \complexity O(n²)
  */
-int Bellman_mat(GRAPH_MAT*g, unsigned r, long long** distance, int** father);
+int Bellman_mat(GRAPH_MAT* g, unsigned r, long long** distance, int** father);
+
+// int Ford_and_Fulkerson(GRAPH_MAT* g, unsigned src, unsigned well, )
 
 #endif

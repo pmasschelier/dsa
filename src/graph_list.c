@@ -88,5 +88,129 @@ void free_graph_list(GRAPH_LIST* g)
 	}
 }
 
+static int allow_tab_father_mark(unsigned length, int** tab, int** father, char** mark) {
+	if(tab) {
+		*tab = malloc(sizeof(int[length]));
+		if(!*tab)
+			return -1;
+	}
+	if(father) {
+		*father = malloc(sizeof(int[length]));
+		if(!*father && tab) {
+			free(*tab);
+			return -1;
+		}
+	}
+	*mark = calloc(length, sizeof(char));
+	if(!*mark) {
+		if(tab) free(*tab);
+		if(father) free(*father);
+		return -1;
+	}
+	return 0;
+}
 
+int mark_and_examine_traversal_list(GRAPH_LIST* g, unsigned r, int** tab, int** father, LIST_STRUCT queue_or_stack)
+{
+	char* mark;
+	if(allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
+		return -1;
+	mark[r] = 1; // Marquer r
+	(*father)[r] = -1;
+	
+	LIST* waiting_list = create_list(sizeof(int)); // Création d'une file
+	push_back_list(waiting_list, ptr(TYPE_INT, r)); // Ajouter r à la liste d'attente
+	
+	unsigned index = 0;
+	
+	while(!empty_list(waiting_list))
+	{
+		int* vertex = pop_front_list(waiting_list);
+		if(tab)
+			(*tab)[index] = *vertex;
+		index++;
+		
+		LIST_NODE* node = g->neighbours[*vertex].begin;
+		EDGE_LIST *e = NULL;
+		while(node) {
+			e = node->p;
+			if(!mark[e->p]) {
+				mark[e->p] = TRUE;
+				if(father)
+					(*father)[e->p] = *vertex;
+				if(queue_or_stack == STACK)
+					push_front_list(waiting_list, ptr(TYPE_INT, e->p));
+				else
+					push_back_list(waiting_list, ptr(TYPE_INT, e->p));
+			}
+			node = node->next;
+		}
+		free(vertex);
+	}
+	return index;
+}
 
+int DFS_list(GRAPH_LIST* g, unsigned r, int** tab, int** father) 
+{
+	char* mark;
+	if(allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
+		return -1;
+	mark[r] = 1; // Marquer r
+	(*father)[r] = -1;
+	(*tab)[0] = r;
+	
+	unsigned current = r;
+	unsigned index = 1;
+	
+	while(TRUE) {
+		BOOL any_edge = FALSE;
+
+		LIST_NODE* node = g->neighbours[current].begin;
+		EDGE_LIST *e = NULL;
+		while(node) {
+			e = node->p;
+			if(!mark[e->p]) {
+				mark[e->p] = 1;
+				(*tab)[index++] = e->p;
+				if(father)
+					(*father)[e->p] = current;
+				current = e->p;
+				any_edge = TRUE;
+				break;
+			}
+			node = node->next;
+		}
+		if(!any_edge) {
+			if(current != r)
+				current = (*father)[current];
+			else
+				break;
+		}
+	}
+	return index;
+}
+
+static void DFS_list_recursive_rec(GRAPH_LIST* g, unsigned current, int** tab, int** father, char* mark, unsigned* index)
+{
+	mark[current] = 1;
+	(*tab)[*index] = current;
+	*index += 1;
+	LIST_NODE* node = g->neighbours[current].begin;
+	EDGE_LIST *e = NULL;
+	while(node) {
+		if(!mark[e->p]) {
+			(*father)[e->p] = current;
+			DFS_list_recursive_rec(g, e->p, tab, father, mark, index);
+		}
+	}
+}
+
+int DFS_list_recursive(GRAPH_LIST* g, unsigned r, int** tab, int** father) {
+	char* mark;
+	if(allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
+		return -1;
+	(*father)[r] = -1;
+	unsigned index = 0;
+	DFS_list_recursive_rec(g, r, tab, father, mark, &index);
+	return index;
+}

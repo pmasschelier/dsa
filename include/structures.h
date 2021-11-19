@@ -16,9 +16,9 @@ typedef enum {
 	TRUE
 } BOOL;
 
-enum {
+typedef enum {
 	STACK,
 	QUEUE
-};
+} LIST_STRUCT;
 
 #endif
