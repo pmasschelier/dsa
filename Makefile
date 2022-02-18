@@ -31,18 +31,24 @@ OBJ=$(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%$(EXT).o)
 
 all: $(EXEC)
 
-$(EXEC): $(OBJ)
-	$(CC) -o $@ $^ $(LDFLAGS)
+$(EXEC): $(OBJ) depend
+	$(CC) -o $@ $(OBJ) $(LDFLAGS)
 
 # Construction automatique des .o à partir des .c
-$(OBJDIR)/%$(EXT).o:$(SRCDIR)/%.c $(HEADERS)
+$(OBJDIR)/%$(EXT).o:$(SRCDIR)/%.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 
+depend: .depend
+
+.depend: $(SRC)
+	$(CC) -MM $(SRC) -I $(INCLUDEDIR) > $@
+
+include .depend
 
 # .PHONY est la cible qui est systématiquement reconstruite (utile si il existe déjà des fichiers clean ou mrproper dans le répertoire courant, il serait alors forcément plus récent que ses dépendances et la règle ne serait alors jamais exécutée.
 .PHONY: clean
 
 clean:
-	rm -rf $(OBJDIR)/*.o $(EXEC)
+	rm -rf $(OBJDIR)/*.o $(EXEC) .depend
 
 rebuild: clean all

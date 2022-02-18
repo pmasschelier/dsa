@@ -214,3 +214,153 @@ int DFS_list_recursive(GRAPH_LIST* g, unsigned r, int** tab, int** father) {
 	DFS_list_recursive_rec(g, r, tab, father, mark, &index);
 	return index;
 }
+
+static unsigned father_heap(unsigned i) {
+	return i==0 ? 0 : (i+1)/2 - 1;
+}
+
+static unsigned ls_heap(unsigned i) {
+	return (i+1)*2-1;
+}
+
+static unsigned rs_heap(unsigned i) {
+	return (i+1)*2;
+}
+
+void pullup_heap(unsigned* index, long long*  val, unsigned end) {
+	unsigned i = end;
+	unsigned key = index[end];
+	
+	while(i >= 1 && val[key] < val[father_heap(i)]) {
+		index[i] = index[father_heap(i)];
+		i = father_heap(i);
+	}
+	index[i] = key;
+}
+
+
+void build_heap(unsigned* index, long long*  val, unsigned size) {
+	for(unsigned i=0; i<size; i++)
+		pullup_heap(index, val, i);
+}
+
+void pulldown_heap(unsigned* index, long long* val, unsigned size, unsigned n) {
+	BOOL found = FALSE;
+	unsigned key = index[n];
+	int i_min;
+
+	while(!found && ls_heap(n) < size) {
+		if(ls_heap(n) == size-1)
+			i_min = size-1;
+		else if(val[ls_heap(n)] <= val[rs_heap(n)])
+			i_min = ls_heap(n);
+		else
+			i_min = rs_heap(n);
+		
+		if(val[key] < val[i_min]) {
+			index[n] = index[i_min];
+			n = i_min;
+		}
+		else
+			found = TRUE;
+	}
+	index[n] = key;
+}
+
+static void swap(unsigned* index, int i, int j) {
+	unsigned a = index[i];
+	index[i] = index[j];
+	index[j] = a;
+}
+
+/*
+static void heap_sort(unsigned* index, long long*  val, unsigned size) {
+	for(int p=size-1; p>0; p--) {
+		swap(index, 0, p);
+		pulldown_heap(index, val, p, 0);
+	}
+} */
+
+static int allow_father_index_distance_mark(unsigned length, int** father, unsigned** index, long long** distance, BOOL** mark)
+{
+	if(father) {
+		*father = malloc(sizeof(int[length]));
+		if(!*father)
+			return -1;
+	}
+	if(index) {
+		*index = malloc(sizeof(unsigned[length]));
+		if(!*index) {
+			free(*father);
+			return -1;
+		}
+		for(unsigned i=0; i<length; i++)
+			(*index)[i] = i;
+	}
+	if(distance) {
+		*distance = malloc(sizeof(long long[length]));
+		if(!*distance) {
+			free(*index);
+			free(*father);
+			return -1;
+		}
+		for(unsigned i=0; i<length; i++)
+			(*distance)[i] = INFINITY;
+	}
+	if(mark) {
+		*mark = calloc(length, sizeof(BOOL));
+		if(!*mark) {
+			free(*father);
+			free(*index);
+			free(*distance);
+			return -1;
+		}
+	}
+	return 0;
+}
+
+int Dijkstra_list(GRAPH_LIST* g, unsigned r, long long** distance, int** father)
+{
+	if(!distance)
+		return -1;
+	BOOL *mark;
+	unsigned *index;
+	if(allow_father_index_distance_mark(g->nb_vert, father, &index, distance, &mark) != 0)
+		return -1;
+	mark[r] = TRUE;
+	(*distance)[r] = 0;
+	if(father)
+		(*father)[r] = -1;
+
+	unsigned size = g->nb_vert;
+	swap(index, 0, r); // On place r en tête de (index, distance), ce qui en fait un tas
+	
+	unsigned pivot = r;
+	unsigned number = 0; // nombre de sommets atteints par l'algorithme
+	
+	while(size > 0) { // Tant qu'il existe un sommet non marqué (donc dans le tas)
+		swap(index, 0, size-1);
+		pulldown_heap(index, *distance, --size, 0); // Choisir un sommet de distance minimale
+		mark[index[size]] = TRUE; // Marquer ce sommet
+
+		LIST_NODE* node = g->neighbours[index[size-1]].begin;
+		EDGE_LIST *e = NULL;
+		while(node != NULL) { // Pour tout successeur de pivot
+			e = node->p;
+
+			int d = (*distance)[pivot] > INFINITY - e->w ?
+					INFINITY :
+					(*distance)[pivot] + e->w;
+			if(d < (*distance)[e->p]) {
+				(*distance)[e->p] = d;
+				if(father)
+					(*father)[e->p] = pivot;
+				number++;
+			}
+
+			node = node->next;
+		}
+	}
+	
+	return number;
+}

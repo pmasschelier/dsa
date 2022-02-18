@@ -2,7 +2,7 @@
 #define LIST_H
 
 #include "structures.h"
-
+#include "graph_mat.h"
 /* Listes doublement chainée */
 
 typedef struct LIST_NODE LIST_NODE;

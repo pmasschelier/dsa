@@ -74,4 +74,44 @@ int mark_and_examine_traversal_list(GRAPH_LIST* g, unsigned r, int** tab, int** 
 int DFS_list(GRAPH_LIST* g, unsigned r, int** tab, int** father) ;
 int DFS_list_recursive(GRAPH_LIST* g, unsigned r, int** tab, int** father);
 
+/* \brief Implémentation de l'algorithme de Dijkstra avec un graphe sous forme de listes d'adjacence
+ * \param g Pointeur vers le graphe, !!! Les arêtes du graphe ne doivent avoir que des poids posisitfs.
+ * \param r Racine du graphe
+ * \param distance Après la fonction distance[i] = d(r, i) et INFINI si le sommet n'est pas atteint
+ * \param father Si father != NULL, après la fonction father[i] est le père de i
+ * Ces deux derniers pointeurs vont être modifiés pour pointer vers des tableau alloués
+ * de la taille graphe->nb_vert !!! Ils devront être libérés par l'utilisateur !!!
+ * \return Nombre de sommets atteints par l'algorithme et -1 en cas d'échec
+ * \complexity O(n²)
+ */
+int Dijkstra_list(GRAPH_LIST* g, unsigned r, long long** distance, int** father);
+
+/* \brief Numérotation topologique du graphe
+ * Associe à chaque sommet i d'un graphe orienté acyclique (DAG) un numéro
+ * num[i] tel que si j est un ascendant de i (*num)[j] < (*num)[i]
+ * \param g Pointeur vers le graphe, !!! Ce doit être un DAG !!!
+ * \param num Après la fonction (*num)[i] est le numéro topologique de i
+ * \param denum si denum != NULL : après la fonction (*denum)[num[i]]=i
+ * Ces trois derniers pointeurs vont être modifiés pour pointer vers des tableau alloués
+ * de la taille graphe->nb_vert !!! Ils devront être libérés par l'utilisateur !!!
+ * \return 0 si la numérotation a bien eu lieu
+ * 	-1 si father == NULL ou g->nb_vert == 0
+ * 	-2 s'il y a eu une erreur d'allocation
+ * 	>0 si g n'était pas un DAG
+ * \complexity 0(n²)
+ */
+int topological_numbering_list(GRAPH_LIST* g, unsigned** num, unsigned** denum);
+
+/* \brief Implémentation de l'algorithme de Bellman avec un graphe sous forme de listes d'adjacence
+ * \param g Pointeur vers le graphe, !!! Ce doit être un DAG !!!
+ * \param r Racine du graphe
+ * \param distance Après la fonction distance[i] = d(r, i) et INFINI si le sommet n'est pas atteint
+ * \param father Si father != NULL, après la fonction father[i] est le père de i
+ * Ces deux derniers pointeurs vont être modifiés pour pointer vers des tableau alloués
+ * de la taille graphe->nb_vert !!! Ils devront être libérés par l'utilisateur !!!
+ * \return Nombre de sommets atteints par l'algorithme et -1 en cas d'échec
+ * \complexity O(n²)
+ */
+int Bellman_list(GRAPH_LIST* g, unsigned r, long long** distance, int** father);
+
 #endif
