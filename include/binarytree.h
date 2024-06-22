@@ -6,11 +6,10 @@
 typedef struct BinaryTree BinaryTree;
 struct BinaryTree {
 	T x;
-	BinaryTree *ls, *rs; // left son & right son
+	BinaryTree *ls, *rs;  // left son & right son
 };
 
-
-typedef	struct Path Path;
+typedef struct Path Path;
 struct Path {
 	char length;
 	long unsigned int path;
@@ -19,10 +18,11 @@ struct Path {
 /* \brief Renvoie le chemin correspondant à la numérotation d'un arbre binaire
  * parfait (numérotation canonique d'un tas)
  * \param numérotation du noeud dont on cherche le chemin
- * \return 
+ * \return
  * path.length contient la longueur du chemin
  * path.path est un mot binaire sur 64 bits contenant le chemin dans l'arbre
- * (O = gauche, 1 = droite) avec le bit de plus faible poids représentant le premier chemin
+ * (O = gauche, 1 = droite) avec le bit de plus faible poids représentant le
+ * premier chemin
  */
 Path path(long unsigned int pos);
 
@@ -41,8 +41,8 @@ unsigned size_BT(BinaryTree* tree);
  * binaire et écrit les éléments dans le tableau
  * \param Arbre à parcourir
  * \param Tableau à remplir, il doit pointer vers une zone allouée de taille
- * suffisante, par exemple en ayant mesuré l'arbre au préalable avec size_BT(tree)
- * \return Nombre de noeuds de l'arbre.
+ * suffisante, par exemple en ayant mesuré l'arbre au préalable avec
+ * size_BT(tree) \return Nombre de noeuds de l'arbre.
  */
 unsigned preorder_traversal(BinaryTree* tree, T* tab);
 unsigned postorder_traversal(BinaryTree* tree, T* tab);
