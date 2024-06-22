@@ -3,7 +3,7 @@
 #include "binarytree.h"
 #include "graph_list.h"
 #include "graph_mat.h"
-#include "list.h"
+#include "list_ref.h"
 
 static void print_path(Path path);
 static void print_edges_mat(GRAPH_MAT* g);

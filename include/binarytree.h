@@ -1,7 +1,7 @@
 #ifndef BINARYTREE_H
 #define BINARYTREE_H
 
-#include "list.h"
+#include "list_ref.h"
 
 typedef struct BinaryTree BinaryTree;
 struct BinaryTree {

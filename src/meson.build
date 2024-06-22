@@ -1,4 +1,4 @@
-src_files = files('list.c', 'binarytree.c', 'graph_list.c', 'graph_mat.c')
+src_files = files('list_ref.c', 'binarytree.c', 'graph_list.c', 'graph_mat.c')
 
 lib = library('struct', src_files,
   include_directories: inc_dir,

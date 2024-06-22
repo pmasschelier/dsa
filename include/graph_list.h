@@ -2,7 +2,7 @@
 #define GRAPH_LIST_H
 
 #include "graph_mat.h"
-#include "list.h"
+#include "list_ref.h"
 
 /* Graphe représenté par des listes d'adjacence */
 typedef struct EDGE_LIST EDGE_LIST;
