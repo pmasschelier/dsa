@@ -1,24 +1,16 @@
 #ifndef STRUCTURES_H
 #define STRUCTURES_H
 
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
 #include <limits.h>
+#include <stdarg.h>
 
-#define MAX(a, b) (a<b)?b:a
+#define MAX(a, b) ((a < b) ? b : a)
 
 typedef char T;
 
 // Les énumérations sont des int (4 octets)
-typedef enum {
-	FALSE,
-	TRUE
-} BOOL;
+typedef enum { FALSE, TRUE } BOOL;
 
-typedef enum {
-	STACK,
-	QUEUE
-} LIST_STRUCT;
+typedef enum { STACK, QUEUE } LIST_STRUCT;
 
 #endif

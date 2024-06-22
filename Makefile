@@ -3,9 +3,9 @@ INCLUDEDIR=./include
 OBJDIR=./obj
 EXT=
 
-CC=gcc
+CC=clang
 # -Wstrict-prototypes
-CFLAGS=-Wall -Wextra -Wunreachable-code -Wwrite-strings -pedantic -std=c11 -fno-common -fno-builtin -I$(INCLUDEDIR)
+CFLAGS=-Wall -Wextra -Wunreachable-code -Wwrite-strings -pedantic -std=c11 -fno-common -fno-builtin -ferror-limit=0 -I$(INCLUDEDIR)
 LDFLAGS=
 SRC= $(wildcard $(SRCDIR)/*.c)
 HEADERS= $(wildcard $(INCLUDEDIR)/*.h)
@@ -17,7 +17,7 @@ HEADERS= $(wildcard $(INCLUDEDIR)/*.h)
 # rajouter @ devant une commande pour la rendre silencieuse
 
 ifeq ($(DEBUG),y)
-	CFLAGS += -DDEBUG -g3 -O0
+	CFLAGS += -DDEBUG -g3 -O1
 	EXT=-d
 else ifeq ($(RETRO), y)
 	CFLAGS += -O0
@@ -51,4 +51,5 @@ include .depend
 clean:
 	rm -rf $(OBJDIR)/*.o $(EXEC) .depend
 
-rebuild: clean all
+rebuild: clean
+	bear --force-wrapper -- make
