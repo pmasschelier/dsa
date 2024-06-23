@@ -85,11 +85,13 @@ void* tab_from_list(list_ref_t* list, void* tab);
  */
 unsigned length_list(list_ref_t* list);
 
-/** \brief Insert un élément juste après le noeud list, si list et le premier
- * élément de la liste chainée, x sera la valeur du deuxième élément après
- * l'appel de la fonction. \param list pointeur vers la liste \param node
- * pointeur vers l'élément après lequel on veut insérer. \param élément à
- * insérer !!! \return pointeur sur l'élément inséré (ret = list->next)
+void insert_list_node(list_ref_t* list, node_ref_t* prev, node_ref_t* node);
+
+/** \brief Insert un élément juste après le noeud list, si list et le
+ * premier élément de la liste chainée, x sera la valeur du deuxième élément
+ * après l'appel de la fonction. \param list pointeur vers la liste \param
+ * node pointeur vers l'élément après lequel on veut insérer. \param élément
+ * à insérer !!! \return pointeur sur l'élément inséré (ret = list->next)
  * \complexity 0(1)
  */
 node_ref_t* insert_list(list_ref_t* list, node_ref_t* node, void* p);
@@ -107,6 +109,8 @@ node_ref_t* push_front_list(list_ref_t* list, void* x);
 node_ref_t* push_back_list(list_ref_t* list, void* x);
 void pop_front_list(list_ref_t* list, void** x);
 void pop_back_list(list_ref_t* list, void** x);
+
+void extract_list(list_ref_t* list, node_ref_t* node);
 
 /** \brief Supprime le noeud de la liste
  * !!! Libère l'élément pointé !!!

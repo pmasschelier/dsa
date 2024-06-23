@@ -84,19 +84,13 @@ unsigned length_list(list_ref_t* list) {
 	return l;
 }
 
-node_ref_t* insert_list(list_ref_t* list, node_ref_t* prev, void* p) {
+void insert_list_node(list_ref_t* list, node_ref_t* prev, node_ref_t* node) {
 	assert(list);
-
-	// On crée un nouveau noeud qui devient le nouveau suivant
-	node_ref_t* node = malloc(sizeof(node_ref_t));
-	if (!node)
-		return NULL;
+	assert(node);
 
 	// On conserve l'adresse de l'élément suivant
 	node_ref_t* next = prev ? prev->next : list->begin;
 
-	// On assigne la valeur voulue au pointeur du nouveau noeud
-	node->p = p;
 	// On désigne le précédant du nouveau noeud : le noeud courant
 	node->prev = prev;
 	// On désigne le suivant du nouveau noeud : le noeud qu'on a conservé
@@ -110,7 +104,20 @@ node_ref_t* insert_list(list_ref_t* list, node_ref_t* prev, void* p) {
 		next->prev = node;	// On désigne le précédant du noeud conservé :
 	else
 		list->end = node;  // Le nouveau noeud est le dernier
-	return node;		   // On retourne le nouveau noeud
+}
+
+node_ref_t* insert_list(list_ref_t* list, node_ref_t* prev, void* p) {
+	assert(list);
+
+	// On crée un nouveau noeud qui devient le nouveau suivant
+	node_ref_t* node = malloc(sizeof(node_ref_t));
+	if (!node)
+		return NULL;
+
+	// On assigne la valeur voulue au pointeur du nouveau noeud
+	node->p = p;
+	insert_list_node(list, prev, node);
+	return node;  // On retourne le nouveau noeud
 }
 
 node_ref_t* push_front_list(list_ref_t* list, void* p) {
@@ -194,10 +201,8 @@ void pop_back_list(list_ref_t* list, void** x) {
 		list->free_element(ret);
 }
 
-void remove_list(list_ref_t* list, node_ref_t* node, void** x) {
+void extract_list(list_ref_t* list, node_ref_t* node) {
 	assert(node);
-	if (!node)
-		return;
 	if (node->prev)
 		node->prev->next = node->next;
 	else
@@ -206,6 +211,10 @@ void remove_list(list_ref_t* list, node_ref_t* node, void** x) {
 		node->next->prev = node->prev;
 	else
 		list->end = node->prev;
+}
+
+void remove_list(list_ref_t* list, node_ref_t* node, void** x) {
+	extract_list(list, node);
 	if (x)
 		*x = node->p;
 	else
