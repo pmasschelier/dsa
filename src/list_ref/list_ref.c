@@ -1,31 +1,7 @@
 #include "list_ref/list_ref.h"
+
 #include <assert.h>
-#include <stdio.h>
 #include <string.h>
-
-void* ptr(enum type t, ...) {
-	va_list ap;
-	va_start(ap, t);
-	void* p = NULL;
-
-	switch (t) {
-	case TYPE_INT:
-		p = malloc(sizeof(int));
-		int i = va_arg(ap, int);
-		memcpy(p, &i, sizeof(int));
-		break;
-	case TYPE_DOUBLE:
-		p = malloc(sizeof(double));
-		double d = va_arg(ap, double);
-		memcpy(p, &d, sizeof(double));
-		break;
-	default:
-		break;
-	}
-
-	va_end(ap);
-	return p;
-}
 
 list_ref_t* create_list(size_t size) {
 	list_ref_t* ret = malloc(sizeof(list_ref_t));
@@ -177,7 +153,7 @@ void pop_front_list(list_ref_t* list, void** x) {
 	list->begin = second;  // Le deuxième noeud devient le premier
 	if (x)
 		*x = ret;  // On retourne l'adresse qui était dans le premier noeud
-	else
+	else if (list->free_element)
 		list->free_element(ret);
 }
 
@@ -197,7 +173,7 @@ void pop_back_list(list_ref_t* list, void** x) {
 	list->end = second;	 // Le dernier noeud est maintenant l'avant-dernier
 	if (x)
 		*x = ret;
-	else
+	else if (list->free_element)
 		list->free_element(ret);
 }
 
@@ -217,7 +193,7 @@ void remove_list(list_ref_t* list, node_ref_t* node, void** x) {
 	extract_list(list, node);
 	if (x)
 		*x = node->p;
-	else
+	else if (list->free_element)
 		list->free_element(node->p);
 	free(node);
 }
@@ -225,8 +201,9 @@ void remove_list(list_ref_t* list, node_ref_t* node, void** x) {
 static void free_node(list_ref_t* list, node_ref_t* node) {
 	if (node) {
 		free_node(list, node->next);  // Libère le noeud suivant
-		list->free_element(node->p);  // Libère l'élément pointé
-		free(node);					  // Libère le noeud courant
+		if (list->free_element)
+			list->free_element(node->p);  // Libère l'élément pointé
+		free(node);						  // Libère le noeud courant
 	}
 }
 

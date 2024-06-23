@@ -2,7 +2,8 @@
 #define STRUCTURES_H
 
 #include <limits.h>
-#include <stdarg.h>
+
+#include "ptr.h"
 
 #define MAX(a, b) ((a < b) ? b : a)
 
