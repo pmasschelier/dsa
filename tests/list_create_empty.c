@@ -1,6 +1,6 @@
 
 #include <assert.h>
-#include <list_ref.h>
+#include <list_ref/list_ref.h>
 
 int main(void) {
 	list_ref_t* list = create_list(sizeof(int));

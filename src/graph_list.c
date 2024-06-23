@@ -1,4 +1,5 @@
 #include "graph_list.h"
+#include "list_ref/list_ref.h"
 
 GRAPH_LIST* init_graph_list(unsigned size) {
 	if (size == 0)
@@ -7,7 +8,7 @@ GRAPH_LIST* init_graph_list(unsigned size) {
 	if (!g)
 		return NULL;
 	g->nb_vert = size;
-	g->neighbours = malloc(sizeof(list_ref_t[size]));
+	g->neighbours = malloc(size * sizeof(list_ref_t));
 	if (!g->neighbours)
 		return NULL;
 	for (unsigned i = 0; i < size; i++) {
@@ -98,12 +99,12 @@ static int allow_tab_father_mark(unsigned length,
 								 int** father,
 								 char** mark) {
 	if (tab) {
-		*tab = malloc(sizeof(int[length]));
+		*tab = malloc(length * sizeof(int));
 		if (!*tab)
 			return -1;
 	}
 	if (father) {
-		*father = malloc(sizeof(int[length]));
+		*father = malloc(length * sizeof(int));
 		if (!*father && tab) {
 			free(*tab);
 			return -1;

@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <list_ref.h>
+#include <list_ref/algorithms.h>
 
 struct time {
 	int h, m, s;
@@ -17,7 +17,7 @@ int main(void) {
 	list_ref_t* list = list_from_tab(tab, sizeof(TAB_TYPE), TAB_LEN);
 	node_ref_t *nodeA, *nodeB = list->begin;
 	for (int i = 0; i < TAB_LEN; i++) {
-		nodeA = find_list(list, (void*)&tab[i]);
+		nodeA = find_in_list(list, (void*)&tab[i]);
 		assert(nodeA == nodeB);
 		nodeB = nodeB->next;
 	}

@@ -1,4 +1,5 @@
 #include "binarytree.h"
+#include "list_ref/list_ref.h"
 
 Path path(long unsigned int pos) {
 	Path path = {0, 0};
@@ -25,7 +26,7 @@ static BinaryTree** left_right(BinaryTree* tree, Path p) {
 	return (p.path & 1) ? &tree->rs : &tree->ls;
 }
 
-BinaryTree* edit_BT(BinaryTree* tree, Path p, T x) {
+static BinaryTree* edit_BT(BinaryTree* tree, Path p, T x) {
 	if (p.length == 0) {
 		if (tree)
 			tree->x = x;

@@ -108,15 +108,6 @@ node_ref_t* push_back_list(list_ref_t* list, void* x);
 void pop_front_list(list_ref_t* list, void** x);
 void pop_back_list(list_ref_t* list, void** x);
 
-/** \brief Renvoie le premier élément de la liste égale à *x
- * La comparaison est faite avec memcmp
- * \param list pointeur sur la liste chainée.
- * \param x pointeur sur l'élément à comparer
- * \return un pointeur sur l'élément s'il a été trouve, NULL sinon
- * \complexity O(n)
- */
-node_ref_t* find_list(list_ref_t* list, void* x);
-
 /** \brief Supprime le noeud de la liste
  * !!! Libère l'élément pointé !!!
  * \param list pointeur sur la liste chainée.

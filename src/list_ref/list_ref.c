@@ -1,4 +1,4 @@
-#include "list_ref.h"
+#include "list_ref/list_ref.h"
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
@@ -48,18 +48,10 @@ list_ref_t* list_from_tab(void* tab, size_t size, unsigned length) {
 	if (0 == size)
 		return ret;
 
-	// ret->begin = malloc(sizeof(node_ref_t));
-	// if (!ret->begin)
-	//     return NULL;
-
 	/* NOTE: On ne copie pas le tableau d'un seul bloc parce que sinon il
 	 * faudrait gérer la libération de la mémoire et c'est complique :/
 	 * Peut-être à modifier */
 
-	// node_ref_t* ptr = ret->begin;
-	// ret->begin->p = malloc(size);
-	// ret->begin->prev = NULL;
-	// memcpy(ret->begin->p, tab, size);
 	node_ref_t* ptr = NULL;
 	for (unsigned i = 0; i < length; i++) {
 		void* p = malloc(size);
@@ -200,16 +192,6 @@ void pop_back_list(list_ref_t* list, void** x) {
 		*x = ret;
 	else
 		list->free_element(ret);
-}
-
-node_ref_t* find_list(list_ref_t* list, void* x) {
-	node_ref_t* node = list->begin;
-	while (node) {
-		if (memcmp(node->p, x, list->size) == 0)
-			return node;
-		node = node->next;
-	}
-	return NULL;
 }
 
 void remove_list(list_ref_t* list, node_ref_t* node, void** x) {

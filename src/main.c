@@ -3,14 +3,14 @@
 #include "binarytree.h"
 #include "graph_list.h"
 #include "graph_mat.h"
-#include "list_ref.h"
+#include "list_ref/list_ref.h"
 
 static void print_path(Path path);
 static void print_edges_mat(GRAPH_MAT* g);
 static void print_edges_list(GRAPH_LIST* g);
 
 int main(void) {
-	LIST* liste =
+	list_ref_t* liste =
 		list_from_tab((int[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, sizeof(int), 10);
 	pop_front_list(liste, NULL);
 	push_front_list(liste, ptr(TYPE_INT, 30));
@@ -47,10 +47,10 @@ int main(void) {
 
 	free_BT(tree);
 
-	LIST* forest = create_list(sizeof(BinaryTree));
+	list_ref_t* forest = create_list(sizeof(BinaryTree));
 	forest->free_element = (free_element_fn_t)free_BT;
 
-	for (unsigned i = 0; i < 3; i++)
+	for (int i = 0; i < 3; i++)
 		push_back_list(
 			forest, perfect_BT_from_tab((T[]){3 * i, 3 * i + 1, 3 * i + 2}, 3));
 	T contenu[3];

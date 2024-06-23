@@ -1,6 +1,6 @@
 #include "graph_mat.h"
 #include <stdlib.h>
-#include "list_ref.h"
+#include "list_ref/list_ref.h"
 
 const long long int INFINITY = LLONG_MAX;
 
