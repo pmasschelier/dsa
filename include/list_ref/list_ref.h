@@ -26,8 +26,6 @@ struct list_node_ref {
 	list_node_ref_t* next; /**< Pointer to its successor */
 };
 
-typedef void (*free_element_fn_t)(void*);
-
 /**
  * @struct list_ref
  * @brief Doubly linked list

@@ -1,6 +1,8 @@
 #ifndef STRUCT_PTR_H
 #define STRUCT_PTR_H
 
+typedef void (*free_element_fn_t)(void*);
+
 enum type { TYPE_INT, TYPE_DOUBLE };
 
 /** @brief Crée un pointeur qui copie la premiere donnée envoyé
