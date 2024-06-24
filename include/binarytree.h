@@ -24,7 +24,7 @@ struct Path {
  * (O = gauche, 1 = droite) avec le bit de plus faible poids représentant le
  * premier chemin
  */
-Path path(long unsigned int pos);
+Path btree_node_to_path(long unsigned int pos);
 
 /* \brief Renvoie la hauteur de l'arbre
  * \param Pointeur vers la racine
