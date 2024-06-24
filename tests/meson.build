@@ -1,4 +1,5 @@
 passing_test_sources = [
+  'btree_create_empty.c',
   'btree_node_to_path_node.c',
   'btree_node_to_path_root.c',
   'list_clean.c',

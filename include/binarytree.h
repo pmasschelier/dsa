@@ -1,19 +1,29 @@
 #ifndef BINARYTREE_H
 #define BINARYTREE_H
 
-#include "structures.h"
+#include <stddef.h>
+#include "ptr.h"
 
-typedef struct BinaryTree BinaryTree;
-struct BinaryTree {
-	T x;
-	BinaryTree *ls, *rs;  // left son & right son
+typedef struct node_btree_ref node_btree_ref_t;
+struct node_btree_ref {
+	void* p;
+	node_btree_ref_t *ls, *rs;	// left son & right son
 };
 
-typedef struct Path Path;
-struct Path {
+typedef struct btree_ref btree_ref_t;
+struct btree_ref {
+	size_t size;
+	free_element_fn_t free_element;
+	node_btree_ref_t* root;
+};
+
+typedef struct btree_path btree_path_t;
+struct btree_path {
 	char length;
 	long unsigned int path;
 };
+
+btree_ref_t* create_btree(size_t size);
 
 /* \brief Renvoie le chemin correspondant à la numérotation d'un arbre binaire
  * parfait (numérotation canonique d'un tas)
@@ -24,18 +34,18 @@ struct Path {
  * (O = gauche, 1 = droite) avec le bit de plus faible poids représentant le
  * premier chemin
  */
-Path btree_node_to_path(long unsigned int pos);
+btree_path_t btree_node_to_path(long unsigned int pos);
 
 /* \brief Renvoie la hauteur de l'arbre
  * \param Pointeur vers la racine
  * \return hauteur de l'arbre, 0 si tree == NULL, 1 si il n'y a que la racine.
  */
-unsigned height_BT(BinaryTree* tree);
+unsigned btree_height(btree_ref_t* tree);
 
 /* \brief Renvoie le nombre de noeuds de l'abre
  * \param Pointeur vers la racine
  */
-unsigned size_BT(BinaryTree* tree);
+unsigned btree_length(btree_ref_t* tree);
 
 /* \brief Parcours respectiverment en ordre prefixe, suffixe et infixe l'arbre
  * binaire et écrit les éléments dans le tableau
@@ -44,11 +54,9 @@ unsigned size_BT(BinaryTree* tree);
  * suffisante, par exemple en ayant mesuré l'arbre au préalable avec
  * size_BT(tree) \return Nombre de noeuds de l'arbre.
  */
-unsigned preorder_traversal(BinaryTree* tree, T* tab);
-unsigned postorder_traversal(BinaryTree* tree, T* tab);
-unsigned sym_traversal(BinaryTree* tree, T* tab);
-
-void free_BT(BinaryTree* tree);
+unsigned preorder_traversal(btree_ref_t* tree, void* tab[]);
+unsigned postorder_traversal(btree_ref_t* tree, void* tab[]);
+unsigned sym_traversal(btree_ref_t* tree, void* tab[]);
 
 /* \brief Parcours en largeur de l'arbre binaire
  * \param Arbre binaire à parcourir
@@ -57,7 +65,7 @@ void free_BT(BinaryTree* tree);
  * (cf. size(tree))
  * \return 0 si tout c'est bien passé et -1 en cas d'erreur
  */
-int level_order_traversal(BinaryTree* tree, T* tab);
+int level_order_traversal(node_btree_ref_t* tree, void* tab[]);
 
 /* Arbre binaires parfaits */
 
@@ -69,6 +77,8 @@ int level_order_traversal(BinaryTree* tree, T* tab);
  * \return Pointeur vers l'arbre binaire créé, qui devra être libéré avec
  * free_BT(tree);
  */
-BinaryTree* perfect_BT_from_tab(T* tab, unsigned size);
+btree_ref_t* perfect_BT_from_tab(void* tab, size_t size, unsigned length);
+
+void btree_free(btree_ref_t* tree);
 
 #endif
