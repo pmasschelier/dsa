@@ -23,6 +23,8 @@ struct btree_path {
 	long unsigned int path;
 };
 
+const btree_path_t ROOT_PATH = {0, 0};
+
 btree_ref_t* create_btree(size_t size);
 
 /* \brief Renvoie le chemin correspondant à la numérotation d'un arbre binaire
@@ -47,6 +49,9 @@ unsigned btree_height(btree_ref_t* tree);
  */
 unsigned btree_length(btree_ref_t* tree);
 
+node_btree_ref_t* btree_emplace_at(btree_ref_t* tree,
+								   btree_path_t path,
+								   void* p);
 /* \brief Parcours respectiverment en ordre prefixe, suffixe et infixe l'arbre
  * binaire et écrit les éléments dans le tableau
  * \param Arbre à parcourir
