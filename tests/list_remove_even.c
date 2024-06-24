@@ -11,9 +11,9 @@ int main(void) {
 	for (int i = 0; i < TAB_LEN; i++)
 		push_back_list(list, ptr(TYPE_INT, i));
 	assert(length_list(list) == TAB_LEN);
-	node_ref_t* node = list->begin;
+	list_node_ref_t* node = list->begin;
 
-	node_ref_t* next;
+	list_node_ref_t* next;
 	TAB_TYPE* val;
 	for (int i = 0; i < HALF_TAB_LEN; i++) {
 		next = node->next;

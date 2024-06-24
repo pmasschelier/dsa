@@ -10,7 +10,7 @@
  * \return un pointeur sur l'élément s'il a été trouve, NULL sinon
  * \complexity O(n)
  */
-node_ref_t* find_in_list(list_ref_t* list, void* x);
+list_node_ref_t* find_in_list(list_ref_t* list, void* x);
 
 typedef void (*transform_list_fn_t)(void*);
 

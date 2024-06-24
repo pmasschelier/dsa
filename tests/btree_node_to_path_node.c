@@ -1,9 +1,8 @@
 #include <assert.h>
 #include <binarytree.h>
-#include <stdio.h>
 
 #define TAB_LEN 21
-Path paths[TAB_LEN] = {
+btree_path_t paths[TAB_LEN] = {
 	{0, 0x0},
 	  {1, 0x0},
 	{1, 0x1},
@@ -28,7 +27,7 @@ Path paths[TAB_LEN] = {
 };
 
 int main(void) {
-	Path p;
+	btree_path_t p;
 	for (int i = 0; i < TAB_LEN; i++) {
 		p = btree_node_to_path(i);
 

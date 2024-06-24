@@ -17,7 +17,7 @@ int main(void) {
 		pop_front_list(list, NULL);
 	int i = 0;
 	assert(length_list(list) == TAB_LEN);
-	node_ref_t* node = list->end;
+	list_node_ref_t* node = list->end;
 	do {
 		assert(*(int*)(node->p) == tab[i++]);
 	} while ((node = node->prev));

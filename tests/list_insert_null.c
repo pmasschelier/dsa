@@ -6,7 +6,7 @@
 
 int main(void) {
 	list_ref_t* list = create_list(sizeof(TAB_TYPE));
-	node_ref_t* node;
+	list_node_ref_t* node;
 	for (int i = 0; i < TAB_LEN; i++) {
 		node = insert_list(list, NULL, ptr(TYPE_INT, i));
 		assert(i == *(TAB_TYPE*)node->p);

@@ -5,7 +5,7 @@
 #include "graph_mat.h"
 #include "list_ref/list_ref.h"
 
-static void print_path(Path path);
+static void print_path(btree_path_t path);
 static void print_edges_mat(GRAPH_MAT* g);
 static void print_edges_list(GRAPH_LIST* g);
 
@@ -17,7 +17,7 @@ int main(void) {
 	pop_back_list(liste, NULL);
 	push_back_list(liste, ptr(TYPE_INT, 100));
 
-	node_ref_t* parcours = liste->begin;
+	list_node_ref_t* parcours = liste->begin;
 	while (parcours != NULL) {
 		int* x = parcours->p;
 		printf("%d\n", *x);
@@ -26,10 +26,10 @@ int main(void) {
 
 	free_list(liste);
 
-	Path p = btree_node_to_path(10);
+	btree_path_t p = btree_node_to_path(10);
 	print_path(p);
 
-	BinaryTree* tree =
+	btree_ref_t* tree =
 		perfect_BT_from_tab((T[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 10);
 	const unsigned n = size_BT(tree);
 	T tab[n];
@@ -47,7 +47,7 @@ int main(void) {
 
 	free_BT(tree);
 
-	list_ref_t* forest = create_list(sizeof(BinaryTree));
+	list_ref_t* forest = create_list(sizeof(btree_ref_t));
 	forest->free_element = (free_element_fn_t)free_BT;
 
 	for (int i = 0; i < 3; i++)
@@ -55,9 +55,9 @@ int main(void) {
 			forest, perfect_BT_from_tab((T[]){3 * i, 3 * i + 1, 3 * i + 2}, 3));
 	T contenu[3];
 
-	node_ref_t* node = forest->begin;
+	list_node_ref_t* node = forest->begin;
 	while (node) {
-		BinaryTree* p = node->p;
+		btree_ref_t* p = node->p;
 		preorder_traversal(p, contenu);
 		for (int i = 0; i < 3; i++)
 			printf("%d, ", contenu[i]);
@@ -168,7 +168,7 @@ int main(void) {
 	return 0;
 }
 
-static void print_path(Path path) {
+static void print_path(btree_path_t path) {
 	if (path.length == 0) {
 		printf("0");
 	} else {
@@ -191,7 +191,7 @@ static void print_edges_mat(GRAPH_MAT* g) {
 
 static void print_edges_list(GRAPH_LIST* g) {
 	for (unsigned i = 0; i < g->nb_vert; i++) {
-		node_ref_t* node = g->neighbours[i].begin;
+		list_node_ref_t* node = g->neighbours[i].begin;
 		while (node) {
 			EDGE_LIST* e = node->p;
 			printf("%c -> %c\n", (char)i + 'a', (char)(e->p) + 'a');

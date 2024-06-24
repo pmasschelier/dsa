@@ -42,7 +42,7 @@ void set_edge_list(GRAPH_LIST* g,
 				   long long weight,
 				   BOOL reverse) {
 	list_ref_t* neighbours = &g->neighbours[a];
-	node_ref_t* node = neighbours->begin;
+	list_node_ref_t* node = neighbours->begin;
 
 	EDGE_LIST* e = NULL;
 	while (node) {
@@ -145,7 +145,7 @@ int mark_and_examine_traversal_list(GRAPH_LIST* g,
 			(*tab)[index] = *vertex;
 		index++;
 
-		node_ref_t* node = g->neighbours[*vertex].begin;
+		list_node_ref_t* node = g->neighbours[*vertex].begin;
 		EDGE_LIST* e = NULL;
 		while (node) {
 			e = node->p;
@@ -179,7 +179,7 @@ int DFS_list(GRAPH_LIST* g, unsigned r, int** tab, int** father) {
 	while (TRUE) {
 		BOOL any_edge = FALSE;
 
-		node_ref_t* node = g->neighbours[current].begin;
+		list_node_ref_t* node = g->neighbours[current].begin;
 		EDGE_LIST* e = NULL;
 		while (node) {
 			e = node->p;
@@ -213,7 +213,7 @@ static void DFS_list_recursive_rec(GRAPH_LIST* g,
 	mark[current] = 1;
 	(*tab)[*index] = current;
 	*index += 1;
-	node_ref_t* node = g->neighbours[current].begin;
+	list_node_ref_t* node = g->neighbours[current].begin;
 	EDGE_LIST* e = NULL;
 	while (node) {
 		if (!mark[e->p]) {
@@ -368,7 +368,7 @@ int Dijkstra_list(GRAPH_LIST* g,
 					  0);		   // Choisir un sommet de distance minimale
 		mark[index[size]] = TRUE;  // Marquer ce sommet
 
-		node_ref_t* node = g->neighbours[index[size - 1]].begin;
+		list_node_ref_t* node = g->neighbours[index[size - 1]].begin;
 		EDGE_LIST* e = NULL;
 		while (node != NULL) {	// Pour tout successeur de pivot
 			e = node->p;

@@ -17,7 +17,7 @@ TAB_TYPE x = {10, 11, 12};
 
 int main(void) {
 	list_ref_t* list = list_from_tab(tab, sizeof(TAB_TYPE), TAB_LEN);
-	node_ref_t* node;
+	list_node_ref_t* node;
 	node = find_in_list(list, &x);
 	assert(node == NULL);
 
