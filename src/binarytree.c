@@ -1,15 +1,12 @@
 #include "binarytree.h"
 #include "list_ref/list_ref.h"
 
-Path path(long unsigned int pos) {
+Path btree_node_to_path(long unsigned int pos) {
 	Path path = {0, 0};
 	while (pos) {
-		if (pos % 2 == 1) {
-			path.path <<= 1;
-		} else {
-			path.path <<= 1;
+		path.path <<= 1;
+		if ((pos & 1) == 0)
 			path.path += 1;
-		}
 		path.length++;
 		pos = (pos - 1) / 2;
 	}
@@ -148,7 +145,7 @@ BinaryTree* perfect_BT_from_tab(T* tab, unsigned size) {
 	tree->ls = NULL;
 	tree->rs = NULL;
 	for (unsigned i = 0; i < size; i++) {
-		edit_BT(tree, path(i), tab[i]);
+		edit_BT(tree, btree_node_to_path(i), tab[i]);
 	}
 	return tree;
 }

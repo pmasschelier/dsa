@@ -26,7 +26,7 @@ int main(void) {
 
 	free_list(liste);
 
-	Path p = path(10);
+	Path p = btree_node_to_path(10);
 	print_path(p);
 
 	BinaryTree* tree =
