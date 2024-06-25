@@ -29,9 +29,9 @@ int main(void) {
 	btree_path_t p = btree_node_to_path(10);
 	print_path(p);
 
-	btree_ref_t* tree =
+	node_btree_ref_t* tree =
 		perfect_BT_from_tab((T[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 10);
-	const unsigned n = size_BT(tree);
+	const unsigned n = btree_length(tree);
 	T tab[n];
 	int ret = level_order_traversal(tree, tab);
 	if (ret) {
@@ -45,10 +45,10 @@ int main(void) {
 		printf("\n");
 	}
 
-	free_BT(tree);
+	btree_free(tree);
 
-	list_ref_t* forest = create_list(sizeof(btree_ref_t));
-	forest->free_element = (free_element_fn_t)free_BT;
+	list_ref_t* forest = create_list(sizeof(node_btree_ref_t));
+	forest->free_element = (free_element_fn_t)btree_free;
 
 	for (int i = 0; i < 3; i++)
 		push_back_list(
@@ -57,7 +57,7 @@ int main(void) {
 
 	list_node_ref_t* node = forest->begin;
 	while (node) {
-		btree_ref_t* p = node->p;
+		node_btree_ref_t* p = node->p;
 		preorder_traversal(p, contenu);
 		for (int i = 0; i < 3; i++)
 			printf("%d, ", contenu[i]);

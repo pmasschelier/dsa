@@ -24,6 +24,8 @@ struct btree_path {
 };
 
 const btree_path_t ROOT_PATH = {0, 0};
+const btree_path_t LHS_PATH = {1, 0};
+const btree_path_t RHS_PATH = {1, 1};
 
 btree_ref_t* create_btree(size_t size);
 

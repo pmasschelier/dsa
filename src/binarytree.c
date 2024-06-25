@@ -57,12 +57,11 @@ static node_btree_ref_t* btree_emplace_at_rec(node_btree_ref_t** node_ptr,
 		return *node_ptr;
 	}
 
-	node_btree_ref_t** son = left_right(*node_ptr, path);
-	if (*son)
-		return btree_emplace_at_rec(
-			son, (btree_path_t){path.length - 1, path.path >> 1}, p);
-	else
+	if (*node_ptr == NULL)
 		return NULL;
+	node_btree_ref_t** son = left_right(*node_ptr, path);
+	return btree_emplace_at_rec(
+		son, (btree_path_t){path.length - 1, path.path >> 1}, p);
 }
 
 node_btree_ref_t* btree_emplace_at(btree_ref_t* tree,
