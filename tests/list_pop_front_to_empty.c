@@ -1,11 +1,11 @@
 #include <assert.h>
 #include <list_ref/list_ref.h>
 
-#define TAB_TYPE int
+#define LIST_TYPE int
 #define TAB_LEN 10
 
 int main(void) {
-	list_ref_t* list = create_list(sizeof(TAB_TYPE));
+	list_ref_t* list = create_list(sizeof(LIST_TYPE));
 	for (int i = 0; i < TAB_LEN; i++)
 		push_back_list(list, ptr(TYPE_INT, i));
 	int* elem;
