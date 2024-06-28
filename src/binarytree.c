@@ -144,7 +144,8 @@ unsigned sym_traversal(btree_ref_t* tree, void* tab[]) {
 	return i;
 }
 
-void btree_free_rec(node_btree_ref_t* node, free_element_fn_t free_elements) {
+static void btree_free_rec(node_btree_ref_t* node,
+						   free_element_fn_t free_elements) {
 	if (node) {
 		btree_free_rec(node->ls, free_elements);
 		btree_free_rec(node->rs, free_elements);
@@ -153,8 +154,19 @@ void btree_free_rec(node_btree_ref_t* node, free_element_fn_t free_elements) {
 	}
 }
 
+static void btree_free_rec_no_free(node_btree_ref_t* node) {
+	if (node) {
+		btree_free_rec_no_free(node->ls);
+		btree_free_rec_no_free(node->rs);
+		free(node);
+	}
+}
+
 void btree_free(btree_ref_t* tree) {
-	btree_free_rec(tree->root, tree->free_element);
+	if (tree->free_element)
+		btree_free_rec(tree->root, tree->free_element);
+	else
+		btree_free_rec_no_free(tree->root);
 	free(tree);
 }
 
