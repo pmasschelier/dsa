@@ -9,6 +9,7 @@ passing_test_sources = [
   'btree_no_free_element.c',
   'btree_node_to_path_node.c',
   'btree_node_to_path_root.c',
+  'btree_perfect_tree_from_tab.c',
   'list_clean.c',
   'list_create_empty.c',
   'list_find_in.c',
