@@ -6,10 +6,28 @@
 
 btree_ref_t* create_btree(size_t size) {
 	btree_ref_t* tree = malloc(sizeof(btree_ref_t));
+	if (tree == NULL)
+		return NULL;
 	tree->size = size;
 	tree->free_element = free;
 	tree->root = NULL;
 	return tree;
+}
+
+btree_path_t* path_lhs(btree_path_t* path_from_root) {
+	path_append_branch(path_from_root, LHS_PATH);
+	return path_from_root;
+}
+
+btree_path_t* path_rhs(btree_path_t* path_from_root) {
+	path_append_branch(path_from_root, RHS_PATH);
+	return path_from_root;
+}
+
+void path_append_branch(btree_path_t* path_from_root,
+						btree_path_t next_branch) {
+	path_from_root->path |= (next_branch.path << path_from_root->length);
+	path_from_root->length += next_branch.length;
 }
 
 btree_path_t btree_node_to_path(long unsigned int pos) {

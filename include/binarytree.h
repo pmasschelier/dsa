@@ -29,6 +29,11 @@ const btree_path_t RHS_PATH = {1, 1};
 
 btree_ref_t* create_btree(size_t size);
 
+btree_path_t* path_lhs(btree_path_t* path_from_root);
+btree_path_t* path_rhs(btree_path_t* path_from_root);
+
+void path_append_branch(btree_path_t* path_from_root, btree_path_t next_branch);
+
 /* \brief Renvoie le chemin correspondant à la numérotation d'un arbre binaire
  * parfait (numérotation canonique d'un tas)
  * \param numérotation du noeud dont on cherche le chemin

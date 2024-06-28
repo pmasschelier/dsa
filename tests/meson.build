@@ -22,6 +22,8 @@ passing_test_sources = [
   'list_remove_even.c',
   'list_remove_front_to_empty.c',
   'list_transform_square.c',
+  'path_append_branch.c',
+  'path_append_lhs_rhs.c',
   'tab_from_list.c',
 ]
 
