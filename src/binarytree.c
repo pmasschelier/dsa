@@ -56,8 +56,11 @@ unsigned btree_length(btree_ref_t* tree) {
 	return preorder_traversal(tree, NULL);
 }
 
-static node_btree_ref_t** left_right(node_btree_ref_t* tree, btree_path_t p) {
-	return (p.path & 1) ? &tree->rs : &tree->ls;
+node_btree_ref_t** btree_next_node(node_btree_ref_t* tree, btree_path_t* p) {
+	node_btree_ref_t** ret = (p->path & 1) ? &tree->rs : &tree->ls;
+	p->length -= 1;
+	p->path >>= 1;
+	return ret;
 }
 
 static node_btree_ref_t* btree_emplace_at_rec(node_btree_ref_t** node_ptr,
@@ -77,9 +80,8 @@ static node_btree_ref_t* btree_emplace_at_rec(node_btree_ref_t** node_ptr,
 
 	if (*node_ptr == NULL)
 		return NULL;
-	node_btree_ref_t** son = left_right(*node_ptr, path);
-	return btree_emplace_at_rec(
-		son, (btree_path_t){path.length - 1, path.path >> 1}, p);
+	node_btree_ref_t** son = btree_next_node(*node_ptr, &path);
+	return btree_emplace_at_rec(son, path, p);
 }
 
 node_btree_ref_t* btree_emplace_at(btree_ref_t* tree,

@@ -19,7 +19,7 @@ struct btree_ref {
 
 typedef struct btree_path btree_path_t;
 struct btree_path {
-	char length;
+	unsigned char length;
 	long unsigned int path;
 };
 
@@ -55,6 +55,8 @@ unsigned btree_height(btree_ref_t* tree);
  * \param Pointeur vers la racine
  */
 unsigned btree_length(btree_ref_t* tree);
+
+node_btree_ref_t** btree_next_node(node_btree_ref_t* tree, btree_path_t* p);
 
 node_btree_ref_t* btree_emplace_at(btree_ref_t* tree,
 								   btree_path_t path,
