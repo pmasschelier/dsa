@@ -90,6 +90,36 @@ node_btree_ref_t* btree_emplace_at(btree_ref_t* tree,
 	return btree_emplace_at_rec(&tree->root, path, p);
 }
 
+static void btree_emplace_path_rec(node_btree_ref_t** node_ptr,
+								   btree_path_t path,
+								   void* values[],
+								   int index,
+								   size_t length) {
+	if (path.length == 0)
+		return;
+	if (*node_ptr == NULL) {
+		*node_ptr = malloc(sizeof(node_btree_ref_t));
+		(*node_ptr)->ls = NULL;
+		(*node_ptr)->rs = NULL;
+		(*node_ptr)->p = NULL;
+	}
+	if (*node_ptr) {
+		if (index >= 0 && index < (int)length && values[index])
+			(*node_ptr)->p = values[index];
+	}
+
+	node_btree_ref_t** son = btree_next_node(*node_ptr, &path);
+	btree_emplace_path_rec(son, path, values, index + 1, length);
+}
+
+void btree_emplace_path(btree_ref_t* tree,
+						btree_path_t path,
+						void* values[],
+						size_t length,
+						size_t offset) {
+	btree_emplace_path_rec(&tree->root, path, values, -offset, length);
+}
+
 static void preorder_traversal_rec(node_btree_ref_t* tree,
 								   void* tab[],
 								   unsigned* i) {

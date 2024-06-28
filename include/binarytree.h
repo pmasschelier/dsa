@@ -61,6 +61,12 @@ node_btree_ref_t** btree_next_node(node_btree_ref_t* tree, btree_path_t* p);
 node_btree_ref_t* btree_emplace_at(btree_ref_t* tree,
 								   btree_path_t path,
 								   void* p);
+
+void btree_emplace_path(btree_ref_t* tree,
+						btree_path_t path,
+						void* values[],
+						size_t length,
+						size_t offset);
 /* \brief Parcours respectiverment en ordre prefixe, suffixe et infixe l'arbre
  * binaire et écrit les éléments dans le tableau
  * \param Arbre à parcourir
