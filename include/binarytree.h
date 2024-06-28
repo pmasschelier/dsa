@@ -67,6 +67,19 @@ void btree_emplace_path(btree_ref_t* tree,
 						void* values[],
 						size_t length,
 						size_t offset);
+
+/* \brief Construit un arbre binaire parfait à partir d'un tableau
+ * La bijection tableau <-> arbre se fait en suivant la numérotation
+ * canonique des feuilles d'un arbre binaire parfait
+ * \param Pointeur vers le tableau à lire
+ * \param Taille du tableau à lire
+ * \return Pointeur vers l'arbre binaire créé, qui devra être libéré avec
+ * free_BT(tree);
+ */
+btree_ref_t* btree_perfect_tree_from_tab(void* tab,
+										 size_t size,
+										 unsigned length);
+
 /* \brief Parcours respectiverment en ordre prefixe, suffixe et infixe l'arbre
  * binaire et écrit les éléments dans le tableau
  * \param Arbre à parcourir
@@ -88,16 +101,6 @@ unsigned sym_traversal(btree_ref_t* tree, void* tab[]);
 int level_order_traversal(node_btree_ref_t* tree, void* tab[]);
 
 /* Arbre binaires parfaits */
-
-/* \brief Construit un arbre binaire parfait à partir d'un tableau
- * La bijection tableau <-> arbre se fait en suivant la numérotation
- * canonique des feuilles d'un arbre binaire parfait
- * \param Pointeur vers le tableau à lire
- * \param Taille du tableau à lire
- * \return Pointeur vers l'arbre binaire créé, qui devra être libéré avec
- * free_BT(tree);
- */
-btree_ref_t* perfect_BT_from_tab(void* tab, size_t size, unsigned length);
 
 void btree_free(btree_ref_t* tree);
 
