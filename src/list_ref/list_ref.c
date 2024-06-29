@@ -28,7 +28,7 @@ list_ref_t* list_from_tab(void* tab, size_t size, unsigned length) {
 	 * faudrait gérer la libération de la mémoire et c'est complique :/
 	 * Peut-être à modifier */
 
-	list_node_ref_t* ptr = NULL;
+	node_list_ref_t* ptr = NULL;
 	for (unsigned i = 0; i < length; i++) {
 		void* p = malloc(size);
 		memcpy(p, (char*)tab + i * size, size);
@@ -40,7 +40,7 @@ list_ref_t* list_from_tab(void* tab, size_t size, unsigned length) {
 
 void* tab_from_list(list_ref_t* list, void* tab) {
 	unsigned i = 0;
-	list_node_ref_t* node = list->begin;
+	node_list_ref_t* node = list->begin;
 	while (node) {
 		memcpy((char*)tab + i * list->size, node->p, list->size);
 		node = node->next;
@@ -53,7 +53,7 @@ unsigned length_list(list_ref_t* list) {
 	if (empty_list(list))
 		return 0;
 	unsigned l = 0;
-	list_node_ref_t* node = list->begin;
+	node_list_ref_t* node = list->begin;
 	do {
 		l++;
 	} while ((node = node->next));
@@ -61,13 +61,13 @@ unsigned length_list(list_ref_t* list) {
 }
 
 void insert_list_node(list_ref_t* list,
-					  list_node_ref_t* prev,
-					  list_node_ref_t* node) {
+					  node_list_ref_t* prev,
+					  node_list_ref_t* node) {
 	assert(list);
 	assert(node);
 
 	// On conserve l'adresse de l'élément suivant
-	list_node_ref_t* next = prev ? prev->next : list->begin;
+	node_list_ref_t* next = prev ? prev->next : list->begin;
 
 	// On désigne le précédant du nouveau noeud : le noeud courant
 	node->prev = prev;
@@ -84,11 +84,11 @@ void insert_list_node(list_ref_t* list,
 		list->end = node;  // Le nouveau noeud est le dernier
 }
 
-list_node_ref_t* insert_list(list_ref_t* list, list_node_ref_t* prev, void* p) {
+node_list_ref_t* insert_list(list_ref_t* list, node_list_ref_t* prev, void* p) {
 	assert(list);
 
 	// On crée un nouveau noeud qui devient le nouveau suivant
-	list_node_ref_t* node = malloc(sizeof(list_node_ref_t));
+	node_list_ref_t* node = malloc(sizeof(node_list_ref_t));
 	if (!node)
 		return NULL;
 
@@ -98,11 +98,11 @@ list_node_ref_t* insert_list(list_ref_t* list, list_node_ref_t* prev, void* p) {
 	return node;  // On retourne le nouveau noeud
 }
 
-list_node_ref_t* push_front_list(list_ref_t* list, void* p) {
+node_list_ref_t* push_front_list(list_ref_t* list, void* p) {
 	assert(list);
 
-	list_node_ref_t* node =
-		malloc(sizeof(list_node_ref_t));  // On crée un nouveau noeud
+	node_list_ref_t* node =
+		malloc(sizeof(node_list_ref_t));  // On crée un nouveau noeud
 	if (!node)
 		return NULL;
 
@@ -117,11 +117,11 @@ list_node_ref_t* push_front_list(list_ref_t* list, void* p) {
 	return node;		 // On retourne le nouveau noeud
 }
 
-list_node_ref_t* push_back_list(list_ref_t* list, void* p) {
+node_list_ref_t* push_back_list(list_ref_t* list, void* p) {
 	assert(list);
 
-	list_node_ref_t* node =
-		malloc(sizeof(list_node_ref_t));  // On crée un nouveau noeud
+	node_list_ref_t* node =
+		malloc(sizeof(node_list_ref_t));  // On crée un nouveau noeud
 	if (!node)
 		return NULL;
 
@@ -145,7 +145,7 @@ void pop_front_list(list_ref_t* list, void** x) {
 			*x = NULL;
 		return;
 	}
-	list_node_ref_t* second =
+	node_list_ref_t* second =
 		list->begin->next;	// On conserve l'adresse du deuxieme noeud
 	if (second)
 		second->prev = NULL;  // Pas de noeud précédant
@@ -167,7 +167,7 @@ void pop_back_list(list_ref_t* list, void** x) {
 			*x = NULL;
 		return;
 	}
-	list_node_ref_t* second = list->end->prev;
+	node_list_ref_t* second = list->end->prev;
 	if (second)
 		second->next = NULL;
 	else
@@ -181,7 +181,7 @@ void pop_back_list(list_ref_t* list, void** x) {
 		list->free_element(ret);
 }
 
-void extract_list(list_ref_t* list, list_node_ref_t* node) {
+void extract_list(list_ref_t* list, node_list_ref_t* node) {
 	assert(node);
 	if (node->prev)
 		node->prev->next = node->next;
@@ -193,7 +193,7 @@ void extract_list(list_ref_t* list, list_node_ref_t* node) {
 		list->end = node->prev;
 }
 
-void remove_list(list_ref_t* list, list_node_ref_t* node, void** x) {
+void remove_list(list_ref_t* list, node_list_ref_t* node, void** x) {
 	extract_list(list, node);
 	if (x)
 		*x = node->p;
@@ -202,7 +202,7 @@ void remove_list(list_ref_t* list, list_node_ref_t* node, void** x) {
 	free(node);
 }
 
-static void free_node(list_ref_t* list, list_node_ref_t* node) {
+static void free_node(list_ref_t* list, node_list_ref_t* node) {
 	if (node) {
 		free_node(list, node->next);  // Libère le noeud suivant
 		if (list->free_element)

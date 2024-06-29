@@ -8,7 +8,7 @@ int main(void) {
 	list_ref_t* list = create_list(sizeof(LIST_TYPE));
 	for (int i = 1; i < TAB_LEN; i += 2)
 		push_back_list(list, ptr(TYPE_INT, i));
-	list_node_ref_t* node = NULL;
+	node_list_ref_t* node = NULL;
 	for (int i = 0; i < TAB_LEN; i += 2) {
 		node = insert_list(list, node, ptr(TYPE_INT, i));
 		node = node->next;

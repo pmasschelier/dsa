@@ -17,7 +17,7 @@ int main(void) {
 	pop_back_list(liste, NULL);
 	push_back_list(liste, ptr(TYPE_INT, 100));
 
-	list_node_ref_t* parcours = liste->begin;
+	node_list_ref_t* parcours = liste->begin;
 	while (parcours != NULL) {
 		int* x = parcours->p;
 		printf("%d\n", *x);
@@ -55,7 +55,7 @@ int main(void) {
 								   (T[]){3 * i, 3 * i + 1, 3 * i + 2}, 3));
 	T contenu[3];
 
-	list_node_ref_t* node = forest->begin;
+	node_list_ref_t* node = forest->begin;
 	while (node) {
 		node_btree_ref_t* p = node->p;
 		btree_preorder_traversal(p, contenu);
@@ -191,7 +191,7 @@ static void print_edges_mat(GRAPH_MAT* g) {
 
 static void print_edges_list(GRAPH_LIST* g) {
 	for (unsigned i = 0; i < g->nb_vert; i++) {
-		list_node_ref_t* node = g->neighbours[i].begin;
+		node_list_ref_t* node = g->neighbours[i].begin;
 		while (node) {
 			EDGE_LIST* e = node->p;
 			printf("%c -> %c\n", (char)i + 'a', (char)(e->p) + 'a');
