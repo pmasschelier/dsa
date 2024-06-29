@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <binarytree.h>
+#include <btree_ref.h>
 
 #define BT_TYPE int
 #define TAB_LEN 15

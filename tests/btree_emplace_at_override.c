@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <binarytree.h>
+#include <btree_ref.h>
 #include "ptr.h"
 
 #define BT_TYPE int
