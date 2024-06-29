@@ -98,7 +98,7 @@ unsigned btree_inorder_traversal(btree_ref_t* tree, void* tab[]);
  * (cf. size(tree))
  * \return 0 si tout c'est bien passé et -1 en cas d'erreur
  */
-int level_order_traversal(node_btree_ref_t* tree, void* tab[]);
+int btree_levelorder_traversal(btree_ref_t* tree, void* tab[]);
 
 /* Arbre binaires parfaits */
 

@@ -30,10 +30,10 @@ int main(void) {
 	print_path(p);
 
 	node_btree_ref_t* tree =
-		perfect_BT_from_tab((T[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 10);
+		btree_perfect_tree_from_tab((T[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 10);
 	const unsigned n = btree_length(tree);
 	T tab[n];
-	int ret = level_order_traversal(tree, tab);
+	int ret = btree_levelorder_traversal(tree, tab);
 	if (ret) {
 		fprintf(stderr,
 				"Erreur lors du parcours en largeur de l'arbre binaire\n");
@@ -51,14 +51,14 @@ int main(void) {
 	forest->free_element = (free_element_fn_t)btree_free;
 
 	for (int i = 0; i < 3; i++)
-		push_back_list(
-			forest, perfect_BT_from_tab((T[]){3 * i, 3 * i + 1, 3 * i + 2}, 3));
+		push_back_list(forest, btree_perfect_tree_from_tab(
+								   (T[]){3 * i, 3 * i + 1, 3 * i + 2}, 3));
 	T contenu[3];
 
 	list_node_ref_t* node = forest->begin;
 	while (node) {
 		node_btree_ref_t* p = node->p;
-		preorder_traversal(p, contenu);
+		btree_preorder_traversal(p, contenu);
 		for (int i = 0; i < 3; i++)
 			printf("%d, ", contenu[i]);
 		printf("\n");

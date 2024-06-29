@@ -200,7 +200,7 @@ void btree_free(btree_ref_t* tree) {
 	free(tree);
 }
 
-int level_order_traversal(node_btree_ref_t* tree, void* tab[]) {
+int btree_levelorder_traversal(btree_ref_t* tree, void* tab[]) {
 	if (tree) {
 		unsigned i = 0;
 		list_ref_t* foret = create_list(sizeof(node_btree_ref_t));
@@ -208,7 +208,7 @@ int level_order_traversal(node_btree_ref_t* tree, void* tab[]) {
 			(void (*)(void*))btree_free;  // Inutile mais présent par sécurité
 		if (!foret)
 			return -1;
-		if (!push_back_list(foret, tree))
+		if (!push_back_list(foret, tree->root))
 			return -1;
 
 		while (!empty_list(foret)) {
