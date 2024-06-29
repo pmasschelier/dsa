@@ -30,7 +30,7 @@ int main(void) {
 		assert(*(BT_TYPE*)node->p == numbers[i]);
 		node = *btree_next_node(node, &path);
 	}
-	for (int i = 0; i < path.length - PATH_LEN; i++) {
+	while (node) {
 		assert(node->p == NULL);
 		node = *btree_next_node(node, &path);
 	}
