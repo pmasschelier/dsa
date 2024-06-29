@@ -232,7 +232,7 @@ int btree_levelorder_traversal(btree_ref_t* tree, void* tab[]) {
 btree_ref_t* btree_perfect_tree_from_tab(void* tab,
 										 size_t size,
 										 unsigned length) {
-	if (size == 0)
+	if (tab == NULL || size == 0 || length == 0)
 		return NULL;
 	btree_ref_t* tree = malloc(sizeof(btree_ref_t));
 	tree->size = size;
