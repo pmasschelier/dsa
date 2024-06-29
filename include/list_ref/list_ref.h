@@ -2,6 +2,7 @@
 #define LIST_H
 
 #include <stdlib.h>
+#include "ptr.h"
 #include "structures.h"
 
 /**

@@ -87,9 +87,9 @@ btree_ref_t* btree_perfect_tree_from_tab(void* tab,
  * suffisante, par exemple en ayant mesuré l'arbre au préalable avec
  * size_BT(tree) \return Nombre de noeuds de l'arbre.
  */
-unsigned preorder_traversal(btree_ref_t* tree, void* tab[]);
-unsigned postorder_traversal(btree_ref_t* tree, void* tab[]);
-unsigned sym_traversal(btree_ref_t* tree, void* tab[]);
+unsigned btree_preorder_traversal(btree_ref_t* tree, void* tab[]);
+unsigned btree_postorder_traversal(btree_ref_t* tree, void* tab[]);
+unsigned btree_inorder_traversal(btree_ref_t* tree, void* tab[]);
 
 /* \brief Parcours en largeur de l'arbre binaire
  * \param Arbre binaire à parcourir

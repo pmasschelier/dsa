@@ -3,8 +3,6 @@
 
 #include <limits.h>
 
-#include "ptr.h"
-
 #define MAX(a, b) ((a < b) ? b : a)
 
 typedef char T;

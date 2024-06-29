@@ -53,7 +53,7 @@ unsigned btree_height(btree_ref_t* tree) {
 }
 
 unsigned btree_length(btree_ref_t* tree) {
-	return preorder_traversal(tree, NULL);
+	return btree_preorder_traversal(tree, NULL);
 }
 
 node_btree_ref_t** btree_next_node(node_btree_ref_t* tree, btree_path_t* p) {
@@ -120,57 +120,57 @@ void btree_emplace_path(btree_ref_t* tree,
 	btree_emplace_path_rec(&tree->root, path, values, -offset, length);
 }
 
-static void preorder_traversal_rec(node_btree_ref_t* tree,
-								   void* tab[],
-								   unsigned* i) {
+static void btree_preorder_traversal_rec(node_btree_ref_t* tree,
+										 void* tab[],
+										 unsigned* i) {
 	if (tree) {
 		if (tab)
 			tab[*i] = tree->p;
 		*i += 1;
-		preorder_traversal_rec(tree->ls, tab, i);
-		preorder_traversal_rec(tree->rs, tab, i);
+		btree_preorder_traversal_rec(tree->ls, tab, i);
+		btree_preorder_traversal_rec(tree->rs, tab, i);
 	}
 }
 
-unsigned preorder_traversal(btree_ref_t* tree, void* tab[]) {
+unsigned btree_preorder_traversal(btree_ref_t* tree, void* tab[]) {
 	unsigned i = 0;
-	preorder_traversal_rec(tree->root, tab, &i);
+	btree_preorder_traversal_rec(tree->root, tab, &i);
 	return i;
 }
 
-static void postorder_traversal_rec(node_btree_ref_t* tree,
-									void* tab[],
-									unsigned* i) {
+static void btree_postorder_traversal_rec(node_btree_ref_t* tree,
+										  void* tab[],
+										  unsigned* i) {
 	if (tree) {
-		postorder_traversal_rec(tree->ls, tab, i);
-		postorder_traversal_rec(tree->rs, tab, i);
+		btree_postorder_traversal_rec(tree->ls, tab, i);
+		btree_postorder_traversal_rec(tree->rs, tab, i);
 		if (tab)
 			tab[*i] = tree->p;
 		*i += 1;
 	}
 }
 
-unsigned postorder_traversal(btree_ref_t* tree, void* tab[]) {
+unsigned btree_postorder_traversal(btree_ref_t* tree, void* tab[]) {
 	unsigned i = 0;
-	postorder_traversal_rec(tree->root, tab, &i);
+	btree_postorder_traversal_rec(tree->root, tab, &i);
 	return i;
 }
 
-static void sym_traversal_rec(node_btree_ref_t* tree,
-							  void* tab[],
-							  unsigned* i) {
+static void btree_inorder_traversal_rec(node_btree_ref_t* tree,
+										void* tab[],
+										unsigned* i) {
 	if (tree) {
-		sym_traversal_rec(tree->ls, tab, i);
+		btree_inorder_traversal_rec(tree->ls, tab, i);
 		if (tab)
 			tab[*i] = tree->p;
 		*i += 1;
-		sym_traversal_rec(tree->rs, tab, i);
+		btree_inorder_traversal_rec(tree->rs, tab, i);
 	}
 }
 
-unsigned sym_traversal(btree_ref_t* tree, void* tab[]) {
+unsigned btree_inorder_traversal(btree_ref_t* tree, void* tab[]) {
 	unsigned i = 0;
-	sym_traversal_rec(tree->root, tab, &i);
+	btree_inorder_traversal_rec(tree->root, tab, &i);
 	return i;
 }
 
