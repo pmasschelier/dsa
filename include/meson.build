@@ -1,9 +1,10 @@
 install_headers(
-  'ptr.h',
-  'list_ref/list_ref.h',
-  'list_ref/algorithms.h',
-  'btree_ref.h',
+  'btree_ref/btree_ref.h',
+  'btree_ref/path.h',
   'graph_list.h',
   'graph_mat.h',
+  'list_ref/list_ref.h',
+  'list_ref/algorithms.h',
+  'ptr.h',
   subdir: 'struct'
 )

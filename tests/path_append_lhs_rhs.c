@@ -1,6 +1,6 @@
 
 #include <assert.h>
-#include <btree_ref.h>
+#include <btree_ref/btree_ref.h>
 
 int main(void) {
 	btree_path_t path = ROOT_PATH;

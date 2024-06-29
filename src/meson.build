@@ -2,7 +2,8 @@ src_files = files(
   'ptr.c',
   'list_ref/list_ref.c',
   'list_ref/algorithms.c',
-  'btree_ref.c',
+  'btree_ref/btree_ref.c',
+  'btree_ref/path.c',
   'graph_list.c',
   'graph_mat.c'
 )

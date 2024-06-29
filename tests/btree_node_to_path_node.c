@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <btree_ref.h>
+#include <btree_ref/btree_ref.h>
 
 #define TAB_LEN 21
 btree_path_t paths[TAB_LEN] = {
