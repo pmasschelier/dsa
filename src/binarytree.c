@@ -142,8 +142,8 @@ static void postorder_traversal_rec(node_btree_ref_t* tree,
 									void* tab[],
 									unsigned* i) {
 	if (tree) {
-		preorder_traversal_rec(tree->ls, tab, i);
-		preorder_traversal_rec(tree->rs, tab, i);
+		postorder_traversal_rec(tree->ls, tab, i);
+		postorder_traversal_rec(tree->rs, tab, i);
 		if (tab)
 			tab[*i] = tree->p;
 		*i += 1;
@@ -160,11 +160,11 @@ static void sym_traversal_rec(node_btree_ref_t* tree,
 							  void* tab[],
 							  unsigned* i) {
 	if (tree) {
-		preorder_traversal_rec(tree->ls, tab, i);
+		sym_traversal_rec(tree->ls, tab, i);
 		if (tab)
 			tab[*i] = tree->p;
 		*i += 1;
-		preorder_traversal_rec(tree->rs, tab, i);
+		sym_traversal_rec(tree->rs, tab, i);
 	}
 }
 
