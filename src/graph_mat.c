@@ -1,6 +1,7 @@
 #include "graph_mat.h"
 #include <stdlib.h>
 #include "list_ref/list_ref.h"
+#include "malloc_fail_macro.h"
 
 const long long int INFINITY = LLONG_MAX;
 
@@ -8,8 +9,7 @@ graph_mat_t* create_graph_mat(unsigned size, BOOL has_weights) {
 	if (size == 0)
 		return NULL;
 	graph_mat_t* g = malloc(sizeof(graph_mat_t));
-	if (!g)
-		return NULL;
+	MALLOC_FAIL_TEST_FUNC(g, NULL, );
 	g->nb_vert = size;
 
 	g->edges = calloc(size * size, sizeof(BOOL));

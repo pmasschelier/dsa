@@ -1,0 +1,1 @@
+option('malloc_fail', type : 'combo', choices : ['abort', 'return', 'nocheck'], value : 'abort')

@@ -27,6 +27,15 @@ else
   cdata.set('HAVE_DOT', 'NO')
 endif
 
+malloc_fail = get_option('malloc_fail')
+if(malloc_fail == 'abort')
+  add_project_arguments('-DMALLOC_FAIL_TEST_ABORT', language : 'c')
+elif(malloc_fail == 'return')
+  add_project_arguments('-DMALLOC_FAIL_TEST_RET', language : 'c')
+elif(malloc_fail == 'nocheck')
+  add_project_arguments('-DMALLOC_FAIL_TEST_NOCHECK', language : 'c')
+endif
+
 subdir('src')
 subdir('include')
 subdir('tests')

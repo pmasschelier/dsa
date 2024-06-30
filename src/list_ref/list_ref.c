@@ -1,12 +1,13 @@
 #include "list_ref/list_ref.h"
+#include "malloc_fail_macro.h"
 
 #include <assert.h>
+#include <stdio.h>
 #include <string.h>
 
 list_ref_t* create_list(size_t size) {
 	list_ref_t* ret = malloc(sizeof(list_ref_t));
-	if (!ret)
-		return NULL;
+	MALLOC_FAIL_TEST_FUNC(ret, NULL, );
 	ret->begin = NULL;
 	ret->end = NULL;
 	ret->free_element = free;
@@ -20,6 +21,7 @@ BOOL empty_list(list_ref_t* list) {
 
 list_ref_t* list_from_tab(void* tab, size_t size, unsigned length) {
 	list_ref_t* ret = create_list(size);
+	MALLOC_FAIL_TEST_FUNC(ret, NULL, );
 
 	if (0 == size)
 		return ret;
@@ -29,12 +31,13 @@ list_ref_t* list_from_tab(void* tab, size_t size, unsigned length) {
 	 * Peut-être à modifier */
 
 	node_list_ref_t* ptr = NULL;
+	void* p = NULL;
 	for (unsigned i = 0; i < length; i++) {
-		void* p = malloc(size);
+		p = malloc(size);
+		MALLOC_FAIL_TEST_FUNC(p, NULL, free_list(ret));
 		memcpy(p, (char*)tab + i * size, size);
 		ptr = insert_list(ret, ptr, p);
 	}
-
 	return ret;
 }
 
@@ -89,8 +92,7 @@ node_list_ref_t* insert_list(list_ref_t* list, node_list_ref_t* prev, void* p) {
 
 	// On crée un nouveau noeud qui devient le nouveau suivant
 	node_list_ref_t* node = malloc(sizeof(node_list_ref_t));
-	if (!node)
-		return NULL;
+	MALLOC_FAIL_TEST_FUNC(node, NULL, );
 
 	// On assigne la valeur voulue au pointeur du nouveau noeud
 	node->p = p;
@@ -103,8 +105,7 @@ node_list_ref_t* push_front_list(list_ref_t* list, void* p) {
 
 	node_list_ref_t* node =
 		malloc(sizeof(node_list_ref_t));  // On crée un nouveau noeud
-	if (!node)
-		return NULL;
+	MALLOC_FAIL_TEST_FUNC(node, NULL, );
 
 	node->p = p;  // On assigne la valeur voulue au pointeur du nouveau noeud
 	node->prev = NULL;		   // Pas de noeud précédant
@@ -122,8 +123,7 @@ node_list_ref_t* push_back_list(list_ref_t* list, void* p) {
 
 	node_list_ref_t* node =
 		malloc(sizeof(node_list_ref_t));  // On crée un nouveau noeud
-	if (!node)
-		return NULL;
+	MALLOC_FAIL_TEST_FUNC(node, NULL, );
 
 	node->prev = list->end;	 // Le noeud précédant est le dernier noeud
 	node->next = NULL;		 // Pas de suivant

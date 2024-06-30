@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "list_ref/list_ref.h"
+#include "malloc_fail_macro.h"
 #include "ptr.h"
 
 btree_ref_t* create_btree(size_t size) {
 	btree_ref_t* tree = malloc(sizeof(btree_ref_t));
-	if (tree == NULL)
-		return NULL;
+	MALLOC_FAIL_TEST_FUNC(tree, NULL, );
 	tree->size = size;
 	tree->free_element = free;
 	tree->root = NULL;
@@ -46,6 +46,7 @@ static node_btree_ref_t* btree_emplace_at_rec(node_btree_ref_t** node_ptr,
 			(*node_ptr)->p = p;
 		} else {
 			*node_ptr = malloc(sizeof(node_btree_ref_t));
+			MALLOC_FAIL_TEST_FUNC(*node_ptr, NULL, );
 			(*node_ptr)->p = p;
 			(*node_ptr)->ls = NULL;
 			(*node_ptr)->rs = NULL;
@@ -74,6 +75,7 @@ static void btree_emplace_path_rec(node_btree_ref_t** node_ptr,
 		return;
 	if (*node_ptr == NULL) {
 		*node_ptr = malloc(sizeof(node_btree_ref_t));
+		MALLOC_FAIL_TEST_FUNC(*node_ptr, , );
 		(*node_ptr)->ls = NULL;
 		(*node_ptr)->rs = NULL;
 		(*node_ptr)->p = NULL;
@@ -210,11 +212,13 @@ btree_ref_t* btree_perfect_tree_from_tab(void* tab,
 	if (tab == NULL || size == 0 || length == 0)
 		return NULL;
 	btree_ref_t* tree = malloc(sizeof(btree_ref_t));
+	MALLOC_FAIL_TEST_FUNC(tree, NULL, );
 	tree->size = size;
 	tree->free_element = free;
 	tree->root = NULL;
 	for (unsigned i = 0; i < length; i++) {
 		void* p = malloc(size);
+		MALLOC_FAIL_TEST_FUNC(p, NULL, btree_free(tree));
 		memcpy(p, (char*)tab + i * size, size);
 		btree_emplace_at(tree, btree_node_to_path(i), p);
 	}
