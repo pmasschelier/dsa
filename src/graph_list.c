@@ -1,4 +1,5 @@
 #include "graph_list.h"
+#include "graph_mat.h"
 #include "list_ref/list_ref.h"
 
 GRAPH_LIST* init_graph_list(unsigned size) {
@@ -62,7 +63,7 @@ void set_edge_list(GRAPH_LIST* g,
 		set_edge_list(g, b, a, val, weight, FALSE);
 }
 
-GRAPH_LIST* graph_mat_to_graph_list(GRAPH_MAT* graph_mat,
+GRAPH_LIST* graph_mat_to_graph_list(graph_mat_t* graph_mat,
 									GRAPH_LIST** graph_list) {
 	if (!graph_list) {
 		graph_list = malloc(sizeof(GRAPH_LIST*));
@@ -75,9 +76,9 @@ GRAPH_LIST* graph_mat_to_graph_list(GRAPH_MAT* graph_mat,
 
 	for (unsigned i = 0; i < size; i++) {
 		for (unsigned j = 0; j < size; j++) {
-			if (graph_mat->mat[i][j].b) {
+			if (graph_mat_get_edge(graph_mat, i, j)) {
 				add_edge_list_noverif(*graph_list, i, j,
-									  graph_mat->mat[i][j].w);
+									  graph_mat_get_weight(graph_mat, i, j));
 			}
 		}
 	}

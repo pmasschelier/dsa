@@ -30,7 +30,7 @@ GRAPH_LIST* init_graph_list(unsigned size);
  * graph_list destination de la copie (on appelle dessus free_graph_list puis
  * init_graph_list) \return graph_list
  */
-GRAPH_LIST* graph_mat_to_graph_list(GRAPH_MAT* graph_mat,
+GRAPH_LIST* graph_mat_to_graph_list(graph_mat_t* graph_mat,
 									GRAPH_LIST** graph_list);
 
 /* \brief Libère un graphe sous forme de listes d'adjacence */

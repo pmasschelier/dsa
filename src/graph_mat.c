@@ -4,45 +4,66 @@
 
 const long long int INFINITY = LLONG_MAX;
 
-GRAPH_MAT* init_graph_mat(unsigned size) {
+graph_mat_t* create_graph_mat(unsigned size, BOOL has_weights) {
 	if (size == 0)
 		return NULL;
-	GRAPH_MAT* g = malloc(sizeof(GRAPH_MAT));
+	graph_mat_t* g = malloc(sizeof(graph_mat_t));
 	if (!g)
 		return NULL;
 	g->nb_vert = size;
 
-	EDGE_MAT* e = calloc(size * size, sizeof(EDGE_MAT));
-	if (!e)
-		return NULL;
-	g->mat = malloc(size * sizeof(EDGE_MAT));
-	for (unsigned i = 0; i < size; i++)
-		g->mat[i] = e + i * size;
-
+	g->edges = calloc(size * size, sizeof(BOOL));
+	if (!g->edges)
+		goto error_alloc;
+	if (has_weights) {
+		g->weights = calloc(size * size, sizeof(long long));
+		if (!g->weights)
+			goto error_alloc2;
+	} else
+		g->weights = NULL;
 	return g;
+error_alloc2:
+	free(g->edges);
+error_alloc:
+	free(g);
+	return NULL;
 }
 
-void free_graph_mat(GRAPH_MAT* g) {
-	free(*g->mat);
-	free(g->mat);
+void free_graph_mat(graph_mat_t* g) {
+	free(g->edges);
+	if (g->weights)
+		free(g->weights);
 	free(g);
 }
 
-void set_edge_mat(GRAPH_MAT* g,
-				  unsigned int a,
-				  unsigned int b,
-				  BOOL val,
-				  long long weight,
-				  BOOL reverse) {
-	g->mat[a][b] = (EDGE_MAT){weight, val};
-	if (reverse)
-		g->mat[b][a] = (EDGE_MAT){weight, val};
+void graph_mat_set_edge(graph_mat_t* g,
+						unsigned int a,
+						unsigned int b,
+						BOOL val,
+						long long weight,
+						BOOL reverse) {
+	g->edges[a * g->nb_vert + b] = val;
+	if (g->weights)
+		g->weights[a * g->nb_vert + b] = weight;
+	if (reverse) {
+		g->edges[b * g->nb_vert + a] = val;
+		if (g->weights)
+			g->weights[b * g->nb_vert + a] = weight;
+	}
+}
+
+BOOL graph_mat_get_edge(graph_mat_t* g, unsigned int a, unsigned b) {
+	return g->edges[a * g->nb_vert + b];
+}
+
+BOOL graph_mat_get_weight(graph_mat_t* g, unsigned int a, unsigned b) {
+	return g->weights[a * g->nb_vert + b];
 }
 
 static int allow_tab_father_mark(unsigned length,
 								 int** tab,
 								 int** father,
-								 char** mark) {
+								 BOOL** mark) {
 	if (tab) {
 		*tab = malloc(length * sizeof(int));
 		if (!*tab)
@@ -50,28 +71,28 @@ static int allow_tab_father_mark(unsigned length,
 	}
 	if (father) {
 		*father = malloc(length * sizeof(int));
-		if (!*father && tab) {
-			free(*tab);
-			return -1;
-		}
+		if (!*father)
+			goto error_alloc;
 	}
-	*mark = calloc(length, sizeof(char));
-	if (!*mark) {
-		if (tab)
-			free(*tab);
-		if (father)
-			free(*father);
-		return -1;
-	}
+	*mark = calloc(length, sizeof(BOOL));
+	if (!*mark)
+		goto error_alloc2;
 	return 0;
+error_alloc2:
+	if (father)
+		free(*father);
+error_alloc:
+	if (tab)
+		free(*tab);
+	return -1;
 }
 
-int mark_and_examine_traversal_mat(GRAPH_MAT* g,
+int mark_and_examine_traversal_mat(graph_mat_t* g,
 								   unsigned r,
 								   int** tab,
 								   int** father,
 								   LIST_STRUCT queue_or_stack) {
-	char* mark;
+	BOOL* mark;
 	if (allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
 		return -1;
 	mark[r] = 1;  // Marquer r
@@ -91,8 +112,8 @@ int mark_and_examine_traversal_mat(GRAPH_MAT* g,
 		index++;
 
 		for (unsigned i = 0; i < g->nb_vert; i++) {
-			if (g->mat[*vertex][i].b && !mark[i]) {
-				mark[i] = 1;
+			if (graph_mat_get_edge(g, *vertex, i) && !mark[i]) {
+				mark[i] = TRUE;
 				if (father)
 					(*father)[i] = *vertex;
 				if (queue_or_stack == STACK)
@@ -106,8 +127,8 @@ int mark_and_examine_traversal_mat(GRAPH_MAT* g,
 	return index;
 }
 
-int DFS_mat(GRAPH_MAT* g, unsigned r, int** tab, int** father) {
-	char* mark;
+int DFS_mat(graph_mat_t* g, unsigned r, int** tab, int** father) {
+	BOOL* mark;
 	if (allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
 		return -1;
 	mark[r] = 1;  // Marquer r
@@ -120,9 +141,11 @@ int DFS_mat(GRAPH_MAT* g, unsigned r, int** tab, int** father) {
 	while (TRUE) {
 		BOOL any_edge = FALSE;
 		for (unsigned i = 0; i < g->nb_vert; i++) {
-			if (g->mat[current][i].b && !mark[i]) {
+			if (graph_mat_get_edge(g, current, i) && !mark[i]) {
 				mark[i] = 1;
-				(*tab)[index++] = i;
+				if (tab)
+					(*tab)[index] = i;
+				index++;
 				if (father)
 					(*father)[i] = current;
 				current = i;
@@ -140,30 +163,65 @@ int DFS_mat(GRAPH_MAT* g, unsigned r, int** tab, int** father) {
 	return index;
 }
 
-static void DFS_mat_recursive_rec(GRAPH_MAT* g,
-								  unsigned current,
-								  int** tab,
-								  int** father,
-								  char* mark,
-								  unsigned* index) {
+static void graph_mat_preorder_dfs_rec(graph_mat_t* g,
+									   unsigned current,
+									   int* values,
+									   int* father,
+									   BOOL* mark,
+									   unsigned* index) {
 	mark[current] = 1;
-	(*tab)[*index] = current;
+	values[*index] = current;
 	*index += 1;
 	for (unsigned i = 0; i < g->nb_vert; i++) {
-		if (g->mat[current][i].b && !mark[i]) {
-			(*father)[i] = current;
-			DFS_mat_recursive_rec(g, i, tab, father, mark, index);
+		if (graph_mat_get_edge(g, current, i) && !mark[i]) {
+			father[i] = current;
+			graph_mat_preorder_dfs_rec(g, i, values, father, mark, index);
 		}
 	}
 }
 
-int DFS_mat_recursive(GRAPH_MAT* g, unsigned r, int** tab, int** father) {
-	char* mark;
-	if (allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
+int graph_mat_preorder_dfs(graph_mat_t* g,
+						   unsigned r,
+						   int* values,
+						   int* father) {
+	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
+	if (!mark)
 		return -1;
-	(*father)[r] = -1;
+	father[r] = -1;
 	unsigned index = 0;
-	DFS_mat_recursive_rec(g, r, tab, father, mark, &index);
+	graph_mat_preorder_dfs_rec(g, r, values, father, mark, &index);
+	free(mark);
+	return index;
+}
+
+static void graph_mat_postorder_dfs_rec(graph_mat_t* g,
+										unsigned current,
+										int* values,
+										int* father,
+										BOOL* mark,
+										unsigned* index) {
+	mark[current] = 1;
+	for (unsigned i = 0; i < g->nb_vert; i++) {
+		if (graph_mat_get_edge(g, current, i) && !mark[i]) {
+			graph_mat_postorder_dfs_rec(g, i, values, father, mark, index);
+			father[i] = current;
+		}
+	}
+	values[*index] = current;
+	*index += 1;
+}
+
+int graph_mat_postorder_dfs(graph_mat_t* g,
+							unsigned r,
+							int* values,
+							int* father) {
+	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
+	if (!mark)
+		return -1;
+	father[r] = -1;
+	unsigned index = 0;
+	graph_mat_postorder_dfs_rec(g, r, values, father, mark, &index);
+	free(mark);
 	return index;
 }
 
@@ -178,25 +236,30 @@ static int allow_father_distance_mark(unsigned length,
 	}
 	if (distance) {
 		*distance = malloc(sizeof(long long int[length]));
-		if (!*distance) {
-			free(*father);
-			return -1;
-		}
+		if (!*distance)
+			goto error_alloc;
 		for (unsigned i = 0; i < length; i++)
 			(*distance)[i] = INFINITY;
 	}
 	if (mark) {
 		*mark = calloc(length, sizeof(BOOL));
-		if (!*mark) {
-			free(*father);
-			free(*distance);
-			return -1;
-		}
+		if (!*mark)
+			goto error_alloc2;
 	}
 	return 0;
+error_alloc2:
+	if (distance)
+		free(*distance);
+error_alloc:
+	if (father)
+		free(*father);
+	return -1;
 }
 
-int Dijkstra_mat(GRAPH_MAT* g, unsigned r, long long** distance, int** father) {
+int Dijkstra_mat(graph_mat_t* g,
+				 unsigned r,
+				 long long** distance,
+				 int** father) {
 	if (!distance)
 		return -1;
 	BOOL* mark;
@@ -213,12 +276,14 @@ int Dijkstra_mat(GRAPH_MAT* g, unsigned r, long long** distance, int** father) {
 	for (unsigned i = 0; i < g->nb_vert - 1; i++) {
 		for (unsigned j = 0; j < g->nb_vert; j++) {	 // Pour tout sommet j
 			if (!mark[j] &&
-				g->mat[pivot][j]
-					.b) {  // non encore dans A et successeur de pivot
+				graph_mat_get_edge(
+					g, pivot, j)) {	 // non encore dans A et successeur de pivot
 				const long long d =
-					(*distance)[pivot] > INFINITY - g->mat[pivot][j].w
+					(*distance)[pivot] >
+							INFINITY - graph_mat_get_weight(g, pivot, j)
 						? INFINITY
-						: (*distance)[pivot] + g->mat[pivot][j].w;
+						: (*distance)[pivot] +
+							  graph_mat_get_weight(g, pivot, j);
 				if (d < (*distance)[j]) {
 					(*distance)[j] = d;
 					if (father)
@@ -245,7 +310,9 @@ int Dijkstra_mat(GRAPH_MAT* g, unsigned r, long long** distance, int** father) {
 	return number;
 }
 
-int topological_numbering_mat(GRAPH_MAT* g, unsigned** num, unsigned** denum) {
+int topological_numbering_mat(graph_mat_t* g,
+							  unsigned** num,
+							  unsigned** denum) {
 	if (g->nb_vert <= 0)
 		return -1;
 	if (num) {
@@ -270,7 +337,7 @@ int topological_numbering_mat(GRAPH_MAT* g, unsigned** num, unsigned** denum) {
 	for (unsigned i = 0; i < g->nb_vert; i++) {
 		degre[i] = 0;
 		for (unsigned j = 0; j < g->nb_vert; j++) {
-			if (g->mat[i][j].b)
+			if (graph_mat_get_edge(g, i, j))
 				degre[i]++;	 // On calcule le degré extérieur du sommet i
 		}
 		if (degre[i] == 0)
@@ -284,7 +351,7 @@ int topological_numbering_mat(GRAPH_MAT* g, unsigned** num, unsigned** denum) {
 			(*denum)[number] = *s;
 		number--;
 		for (unsigned t = 0; t < g->nb_vert; t++) {
-			if (g->mat[t][*s].b)
+			if (graph_mat_get_edge(g, t, *s))
 				if (--degre[t] == 0)
 					push_front_list(pile, ptr(TYPE_INT, t));
 		}
@@ -293,7 +360,10 @@ int topological_numbering_mat(GRAPH_MAT* g, unsigned** num, unsigned** denum) {
 	return number + 1;
 }
 
-int Bellman_mat(GRAPH_MAT* g, unsigned r, long long** distance, int** father) {
+int Bellman_mat(graph_mat_t* g,
+				unsigned r,
+				long long** distance,
+				int** father) {
 	if (!distance)
 		return -1;
 	if (allow_father_distance_mark(g->nb_vert, father, distance, NULL) != 0)
@@ -309,10 +379,11 @@ int Bellman_mat(GRAPH_MAT* g, unsigned r, long long** distance, int** father) {
 		unsigned x = denum[i];
 		int y = -1;
 		for (unsigned j = 0; j < g->nb_vert; j++) {
-			long long d = (*distance)[j] > INFINITY - g->mat[j][x].w
-							  ? INFINITY
-							  : (*distance)[j] + g->mat[j][x].w;
-			if (g->mat[j][x].b && num[j] < i && d < min) {
+			long long d =
+				(*distance)[j] > INFINITY - graph_mat_get_weight(g, j, x)
+					? INFINITY
+					: (*distance)[j] + graph_mat_get_weight(g, j, x);
+			if (graph_mat_get_weight(g, j, x) && num[j] < i && d < min) {
 				min = d;
 				y = j;
 			}

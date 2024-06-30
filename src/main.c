@@ -1,12 +1,12 @@
 #include <assert.h>
 #include <stdio.h>
-#include "binarytree.h"
+#include "btree_ref/btree_ref.h"
 #include "graph_list.h"
 #include "graph_mat.h"
 #include "list_ref/list_ref.h"
 
 static void print_path(btree_path_t path);
-static void print_edges_mat(GRAPH_MAT* g);
+static void print_edges_mat(graph_mat_t* g);
 static void print_edges_list(GRAPH_LIST* g);
 
 int main(void) {
@@ -29,11 +29,11 @@ int main(void) {
 	btree_path_t p = btree_node_to_path(10);
 	print_path(p);
 
-	node_btree_ref_t* tree =
-		btree_perfect_tree_from_tab((T[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 10);
+	btree_ref_t* tree = btree_perfect_tree_from_tab(
+		(T[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, sizeof(T), 10);
 	const unsigned n = btree_length(tree);
 	T tab[n];
-	int ret = btree_levelorder_traversal(tree, tab);
+	int ret = btree_levelorder_traversal(tree, (void*)tab);
 	if (ret) {
 		fprintf(stderr,
 				"Erreur lors du parcours en largeur de l'arbre binaire\n");
@@ -67,7 +67,7 @@ int main(void) {
 
 	free_list(forest);	// Libère tout le contenu de la liste
 
-	GRAPH_MAT* g = init_graph_mat(4);
+	graph_mat_t* g = create_graph_mat(4);
 	set_edge_mat(g, 0, 1, TRUE, 2, TRUE);
 	set_edge_mat(g, 1, 2, TRUE, 3, TRUE);
 	set_edge_mat(g, 1, 3, TRUE, 10, TRUE);
@@ -84,7 +84,7 @@ int main(void) {
 	free(distance);
 	free_graph_mat(g);
 
-	g = init_graph_mat(8);
+	g = create_graph_mat(8);
 	set_edge_mat(g, 0, 1, TRUE, 3, FALSE);
 	set_edge_mat(g, 0, 6, TRUE, 5, FALSE);
 	set_edge_mat(g, 1, 5, TRUE, 1, FALSE);
@@ -180,7 +180,7 @@ static void print_path(btree_path_t path) {
 	}
 }
 
-static void print_edges_mat(GRAPH_MAT* g) {
+static void print_edges_mat(graph_mat_t* g) {
 	for (unsigned i = 0; i < g->nb_vert; i++) {
 		for (unsigned j = 0; j < g->nb_vert; j++) {
 			if (g->mat[i][j].b)
