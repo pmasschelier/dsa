@@ -37,11 +37,14 @@ node_btree_ref_t** btree_next_node(node_btree_ref_t* tree, btree_path_t* p) {
 
 static node_btree_ref_t* btree_emplace_at_rec(node_btree_ref_t** node_ptr,
 											  btree_path_t path,
-											  void* p) {
+											  void* p,
+											  free_element_fn_t free_element) {
 	if (path.length == 0) {
-		if (*node_ptr)
+		if (*node_ptr) {
+			if ((*node_ptr)->p && free_element)
+				free_element((*node_ptr)->p);
 			(*node_ptr)->p = p;
-		else {
+		} else {
 			*node_ptr = malloc(sizeof(node_btree_ref_t));
 			(*node_ptr)->p = p;
 			(*node_ptr)->ls = NULL;
@@ -53,13 +56,13 @@ static node_btree_ref_t* btree_emplace_at_rec(node_btree_ref_t** node_ptr,
 	if (*node_ptr == NULL)
 		return NULL;
 	node_btree_ref_t** son = btree_next_node(*node_ptr, &path);
-	return btree_emplace_at_rec(son, path, p);
+	return btree_emplace_at_rec(son, path, p, free_element);
 }
 
 node_btree_ref_t* btree_emplace_at(btree_ref_t* tree,
 								   btree_path_t path,
 								   void* p) {
-	return btree_emplace_at_rec(&tree->root, path, p);
+	return btree_emplace_at_rec(&tree->root, path, p, tree->free_element);
 }
 
 static void btree_emplace_path_rec(node_btree_ref_t** node_ptr,
