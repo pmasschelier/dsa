@@ -131,7 +131,10 @@ int graph_mat_topological_ordering(graph_mat_t* g,
  * !!! Ils devront être libérés par l'utilisateur !!! \return Nombre de sommets
  * atteints par l'algorithme et -1 en cas d'échec \complexity O(n²)
  */
-int Bellman_mat(graph_mat_t* g, unsigned r, long long** distance, int** father);
+int graph_mat_bellman(graph_mat_t* g,
+					  unsigned r,
+					  graph_weight_t* distance,
+					  int* father);
 
 // int Ford_and_Fulkerson(GRAPH_MAT* g, unsigned src, unsigned well, )
 

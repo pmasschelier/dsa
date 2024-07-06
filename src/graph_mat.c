@@ -62,33 +62,6 @@ graph_weight_t graph_mat_get_weight(graph_mat_t* g,
 	return g->weights ? g->weights[a * g->nb_vert + b] : 1;
 }
 
-// static int allow_tab_father_mark(unsigned length,
-// 								 int** tab,
-// 								 int** father,
-// 								 BOOL** mark) {
-// 	if (tab) {
-// 		*tab = malloc(length * sizeof(int));
-// 		if (!*tab)
-// 			return -1;
-// 	}
-// 	if (father) {
-// 		*father = malloc(length * sizeof(int));
-// 		if (!*father)
-// 			goto error_alloc;
-// 	}
-// 	*mark = calloc(length, sizeof(BOOL));
-// 	if (!*mark)
-// 		goto error_alloc2;
-// 	return 0;
-// error_alloc2:
-// 	if (father)
-// 		free(*father);
-// error_alloc:
-// 	if (tab)
-// 		free(*tab);
-// 	return -1;
-// }
-
 static int mark_and_examine_traversal_mat(graph_mat_t* g,
 										  unsigned r,
 										  int* tab,
@@ -247,37 +220,6 @@ int graph_mat_bfs(graph_mat_t* g, unsigned r, int* values, int* father) {
 	return mark_and_examine_traversal_mat(g, r, values, father, QUEUE);
 }
 
-static int allow_father_distance_mark(unsigned length,
-									  int** father,
-									  long long** distance,
-									  BOOL** mark) {
-	if (father) {
-		*father = malloc(sizeof(int[length]));
-		if (!*father)
-			return -1;
-	}
-	if (distance) {
-		*distance = malloc(sizeof(long long int[length]));
-		if (!*distance)
-			goto error_alloc;
-		for (unsigned i = 0; i < length; i++)
-			(*distance)[i] = GRAPH_WEIGHT_INF;
-	}
-	if (mark) {
-		*mark = calloc(length, sizeof(BOOL));
-		if (!*mark)
-			goto error_alloc2;
-	}
-	return 0;
-error_alloc2:
-	if (distance)
-		free(*distance);
-error_alloc:
-	if (father)
-		free(*father);
-	return -1;
-}
-
 int graph_mat_dijkstra(graph_mat_t* g,
 					   unsigned r,
 					   graph_weight_t* distance,
@@ -304,8 +246,8 @@ int graph_mat_dijkstra(graph_mat_t* g,
 			// which is a successor of pivot and haven't been marked
 			if (!mark[j] && graph_mat_get_edge(g, pivot, j)) {
 				const graph_weight_t w = graph_mat_get_weight(g, pivot, j);
-				const long long d =
-					dist_add_truncate_overflow(distance[pivot], w);
+				const graph_weight_t d =
+					weight_add_truncate_overflow(distance[pivot], w);
 				if (d < distance[j]) {
 					distance[j] = d;
 					if (father)
@@ -356,12 +298,13 @@ unsigned int graph_mat_outdegree(graph_mat_t* g, int vertex) {
 int graph_mat_topological_ordering(graph_mat_t* g,
 								   unsigned* num,
 								   unsigned* denum) {
+	int ret = -1;
 	if (g->nb_vert <= 0)
-		return -1;
+		return ret;
 	if (!num)
-		return -1;
+		return ret;
 
-	int number = g->nb_vert - 1;
+	int number = g->nb_vert;
 
 	list_ref_t* pile = create_list(sizeof(unsigned));
 
@@ -372,58 +315,67 @@ int graph_mat_topological_ordering(graph_mat_t* g,
 			push_front_list(pile, ptr(TYPE_INT, i));
 	}
 	if (empty_list(pile))
-		return -1;
+		goto exit;
 	while (!empty_list(pile)) {
 		unsigned* s = NULL;
 		pop_front_list(pile, (void**)&s);
-		num[*s] = number;
+		num[*s] = --number;
 		if (denum)
 			denum[number] = *s;
-		number--;
 		for (unsigned t = 0; t < g->nb_vert; t++) {
-			if (graph_mat_get_edge(g, t, *s))
-				if (--degre[t] == 0)
-					push_front_list(pile, ptr(TYPE_INT, t));
+			if (graph_mat_get_edge(g, t, *s) && --degre[t] == 0)
+				push_front_list(pile, ptr(TYPE_INT, t));
 		}
 		pile->free_element(s);
 	}
+	if (number != 0)
+		goto exit;
+	ret = 0;
+exit:
 	free_list(pile);
-	return 0;
+	return ret;
 }
 
-int Bellman_mat(graph_mat_t* g,
-				unsigned r,
-				long long** distance,
-				int** father) {
+int graph_mat_bellman(graph_mat_t* g,
+					  unsigned r,
+					  graph_weight_t* distance,
+					  int* father) {
 	if (!distance)
 		return -1;
-	if (allow_father_distance_mark(g->nb_vert, father, distance, NULL) != 0)
-		return -1;
-	(*distance)[r] = 0;
-	(*father)[r] = -1;
+	TEST_FAIL_FUNC(r < g->nb_vert, -1, );
+	for (unsigned i = 0; i < g->nb_vert; i++)
+		distance[i] = GRAPH_WEIGHT_INF;
+	distance[r] = 0;
 
 	unsigned* num = malloc(2 * g->nb_vert * sizeof(unsigned int));
 	TEST_PTR_FAIL_FUNC(num, -1, );
 	unsigned* denum = num + g->nb_vert;
-	if (graph_mat_topological_ordering(g, num, denum) != 0)
-		return -1;
+	int ret = graph_mat_topological_ordering(g, num, denum);
+	TEST_FAIL_FUNC(ret == 0, -1, );
+
+	if (father) {
+		for (unsigned i = 0; i <= num[r]; i++)
+			father[denum[i]] = -1;
+	}
 	for (unsigned i = num[r] + 1; i < g->nb_vert; i++) {
-		long long min = GRAPH_WEIGHT_INF;
-		unsigned x = denum[i];
-		int y = -1;
-		for (unsigned j = 0; j < g->nb_vert; j++) {
-			long long d = (*distance)[j] > GRAPH_WEIGHT_INF -
-											   graph_mat_get_weight(g, j, x)
-							  ? GRAPH_WEIGHT_INF
-							  : (*distance)[j] + graph_mat_get_weight(g, j, x);
-			if (graph_mat_get_weight(g, j, x) && num[j] < i && d < min) {
-				min = d;
-				y = j;
+		graph_weight_t min = GRAPH_WEIGHT_INF;
+		const unsigned x = denum[i];
+		int y_min = -1;
+		for (unsigned j = num[r]; j < i; j++) {
+			int y = denum[j];
+			if (graph_mat_get_edge(g, y, x)) {
+				const graph_weight_t w = graph_mat_get_weight(g, y, x);
+				const graph_weight_t d =
+					weight_add_truncate_overflow(distance[j], w);
+				if (d < min) {
+					min = d;
+					y_min = j;
+				}
 			}
 		}
-		if (y >= 0) {
-			(*distance)[x] = min;
-			(*father)[x] = y;
+		if (y_min >= 0) {
+			distance[x] = min;
+			father[x] = y_min;
 		}
 	}
 
