@@ -1,4 +1,3 @@
-
 #include <assert.h>
 #include <list_ref/list_ref.h>
 

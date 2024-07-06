@@ -1,1 +1,2 @@
-option('malloc_fail', type : 'combo', choices : ['abort', 'return', 'nocheck'], value : 'abort')
+option('test_fail', type : 'combo', choices : ['abort', 'return', 'nocheck'], value : 'abort')
+option('dist_type', type : 'combo', choices : ['byte', 'short', 'int', 'long', 'llong'], value : 'llong')

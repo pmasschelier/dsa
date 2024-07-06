@@ -325,7 +325,7 @@ static int allow_father_index_distance_mark(unsigned length,
 			return -1;
 		}
 		for (unsigned i = 0; i < length; i++)
-			(*distance)[i] = INFINITY;
+			(*distance)[i] = STRUCT_DIST_INF;
 	}
 	if (mark) {
 		*mark = calloc(length, sizeof(BOOL));
@@ -374,8 +374,8 @@ int Dijkstra_list(GRAPH_LIST* g,
 		while (node != NULL) {	// Pour tout successeur de pivot
 			e = node->p;
 
-			int d = (*distance)[pivot] > INFINITY - e->w
-						? INFINITY
+			int d = (*distance)[pivot] > STRUCT_DIST_INF - e->w
+						? STRUCT_DIST_INF
 						: (*distance)[pivot] + e->w;
 			if (d < (*distance)[e->p]) {
 				(*distance)[e->p] = d;

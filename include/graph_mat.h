@@ -1,9 +1,8 @@
 #ifndef GRAPH_MAT_H
 #define GRAPH_MAT_H
 
+#include "dist_type.h"
 #include "structures.h"
-
-extern const long long int INFINITY;
 
 /* Graphe représenté par une matrice d'adjacence */
 typedef struct EDGE_MAT EDGE_MAT;
@@ -60,11 +59,11 @@ BOOL graph_mat_get_weight(graph_mat_t* g, unsigned int a, unsigned b);
  * largeur (BFS) STACK : On a un parcours proche du DFS \return -1 en cas
  * d'erreur et sinon le nombre de sommets rencontrés \complexity 0(n²)
  */
-int mark_and_examine_traversal_mat(graph_mat_t* g,
-								   unsigned r,
-								   int** tab,
-								   int** father,
-								   LIST_STRUCT queue_or_stack);
+// int mark_and_examine_traversal_mat(graph_mat_t* g,
+// 								   unsigned r,
+// 								   int** tab,
+// 								   int** father,
+// 								   LIST_STRUCT queue_or_stack);
 
 /* \brief Parcours en profondeur du graphe
  * \param g Pointeur vers le graphe
@@ -96,10 +95,10 @@ int graph_mat_postorder_dfs(graph_mat_t* g,
  * l'utilisateur !!! \return Nombre de sommets atteints par l'algorithme et -1
  * en cas d'échec \complexity O(n²)
  */
-int Dijkstra_mat(graph_mat_t* g,
-				 unsigned r,
-				 long long** distance,
-				 int** father);
+int graph_mat_dijkstra(graph_mat_t* g,
+					   unsigned r,
+					   dist_t* distance,
+					   int* father);
 
 /* \brief Numérotation topologique du graphe
  * Associe à chaque sommet i d'un graphe orienté acyclique (DAG) un numéro

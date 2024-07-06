@@ -5,7 +5,7 @@ src_files = files(
   'btree_ref/btree_ref.c',
   'btree_ref/path.c',
   'graph_list.c',
-  'graph_mat.c'
+  'graph_mat.c',
 )
 
 lib = library('struct', src_files,
