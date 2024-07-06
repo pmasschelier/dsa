@@ -17,6 +17,7 @@ passing_test_sources = [
   'btree_perfect_tree_from_tab_null_length.c',
   'btree_postorder_traversal_of_perfect_tree.c',
   'btree_preorder_traversal_of_perfect_tree.c',
+  'graph_mat_bfs.c',
   'graph_mat_create_no_edges.c',
   'graph_mat_preorder_dfs.c',
   'graph_mat_postorder_dfs.c',

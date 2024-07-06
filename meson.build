@@ -23,9 +23,9 @@ dist_types = {
   'long': ['long int', 'LONG_MAX'],
   'llong': ['long long int', 'LLONG_MAX'],
 }
-dist_type = dist_types[get_option('dist_type')]
-cdata.set('DIST_TYPE', dist_type[0])
-cdata.set('DIST_MAX', dist_type[1])
+dist_type = dist_types[get_option('weight_type')]
+cdata.set('GRAPH_WEIGHT_TYPE', dist_type[0])
+cdata.set('GRAPH_WEIGHT_INF', dist_type[1])
 
 install_incdir = join_paths(get_option('includedir'), 'struct')
 
