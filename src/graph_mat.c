@@ -1,5 +1,6 @@
 #include "graph_mat.h"
 #include <stdlib.h>
+#include "errors.h"
 #include "list_ref/list_ref.h"
 #include "structures.h"
 #include "test_macros.h"
@@ -40,7 +41,7 @@ void graph_mat_set_edge(graph_mat_t* g,
 						unsigned int a,
 						unsigned int b,
 						BOOL val,
-						long long weight,
+						graph_weight_t weight,
 						BOOL reverse) {
 	g->edges[a * g->nb_vert + b] = val;
 	if (g->weights)
@@ -68,7 +69,7 @@ static int mark_and_examine_traversal_mat(graph_mat_t* g,
 										  int* father,
 										  LIST_STRUCT queue_or_stack) {
 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
-	TEST_PTR_FAIL_FUNC(mark, -1, );
+	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, );
 	mark[r] = TRUE;	 // Marquer r
 	father[r] = -1;
 
@@ -161,7 +162,7 @@ int graph_mat_preorder_dfs(graph_mat_t* g,
 						   int* values,
 						   int* father) {
 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
-	TEST_PTR_FAIL_FUNC(mark, -1, );
+	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, );
 	father[r] = -1;
 	unsigned index = 0;
 	graph_mat_preorder_dfs_rec(g, r, values, father, mark, &index);
@@ -191,7 +192,7 @@ int graph_mat_postorder_dfs(graph_mat_t* g,
 							int* values,
 							int* father) {
 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
-	TEST_PTR_FAIL_FUNC(mark, -1, );
+	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, );
 	father[r] = -1;
 	unsigned index = 0;
 	graph_mat_postorder_dfs_rec(g, r, values, father, mark, &index);
@@ -225,7 +226,7 @@ int graph_mat_dijkstra(graph_mat_t* g,
 					   graph_weight_t* distance,
 					   int* father) {
 	if (!distance)
-		return -1;
+		return -ERROR_INVALID_PARAM3;
 	TEST_FAIL_FUNC(r < g->nb_vert, -1, );
 	for (unsigned i = 0; i < g->nb_vert; i++)
 		distance[i] = GRAPH_WEIGHT_INF;
@@ -235,7 +236,7 @@ int graph_mat_dijkstra(graph_mat_t* g,
 		father[r] = -1;
 
 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
-	TEST_PTR_FAIL_FUNC(mark, -1, );
+	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, );
 	mark[r] = TRUE;
 
 	unsigned pivot = r;
@@ -300,9 +301,9 @@ int graph_mat_topological_ordering(graph_mat_t* g,
 								   unsigned* denum) {
 	int ret = -1;
 	if (g->nb_vert <= 0)
-		return ret;
+		return -ERROR_GRAPH_HAS_NO_NODE;
 	if (!num)
-		return ret;
+		return -ERROR_INVALID_PARAM2;
 
 	int number = g->nb_vert;
 
@@ -341,17 +342,17 @@ int graph_mat_bellman(graph_mat_t* g,
 					  graph_weight_t* distance,
 					  int* father) {
 	if (!distance)
-		return -1;
+		return -ERROR_INVALID_PARAM3;
 	TEST_FAIL_FUNC(r < g->nb_vert, -1, );
 	for (unsigned i = 0; i < g->nb_vert; i++)
 		distance[i] = GRAPH_WEIGHT_INF;
 	distance[r] = 0;
 
 	unsigned* num = malloc(2 * g->nb_vert * sizeof(unsigned int));
-	TEST_PTR_FAIL_FUNC(num, -1, );
+	TEST_PTR_FAIL_FUNC(num, -ERROR_ALLOCATION_FAILED, );
 	unsigned* denum = num + g->nb_vert;
 	int ret = graph_mat_topological_ordering(g, num, denum);
-	TEST_FAIL_FUNC(ret == 0, -1, );
+	TEST_FAIL_FUNC(ret == 0, -ERROR_GRAPH_SHOULDBE_DAG, );
 
 	if (father) {
 		for (unsigned i = 0; i <= num[r]; i++)
@@ -378,6 +379,7 @@ int graph_mat_bellman(graph_mat_t* g,
 			father[x] = y_min;
 		}
 	}
+	free(num);
 
 	return 0;
 }
