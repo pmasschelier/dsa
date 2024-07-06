@@ -102,6 +102,10 @@ int graph_mat_dijkstra(graph_mat_t* g,
 					   graph_weight_t* distance,
 					   int* father);
 
+unsigned int graph_mat_indegree(graph_mat_t* g, int vertex);
+
+unsigned int graph_mat_outdegree(graph_mat_t* g, int vertex);
+
 /* \brief Numérotation topologique du graphe
  * Associe à chaque sommet i d'un graphe orienté acyclique (DAG) un numéro
  * num[i] tel que si j est un ascendant de i (*num)[j] < (*num)[i]

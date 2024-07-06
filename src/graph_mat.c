@@ -330,28 +330,36 @@ int graph_mat_dijkstra(graph_mat_t* g,
 		mark[pivot] = TRUE;
 		count++;
 	}
+	free(mark);
 
 	return count;
 }
 
-int topological_numbering_mat(graph_mat_t* g,
-							  unsigned** num,
-							  unsigned** denum) {
+unsigned int graph_mat_indegree(graph_mat_t* g, int vertex) {
+	unsigned int degree = 0;
+	for (unsigned j = 0; j < g->nb_vert; j++) {
+		if (graph_mat_get_edge(g, j, vertex))
+			degree++;
+	}
+	return degree;
+}
+
+unsigned int graph_mat_outdegree(graph_mat_t* g, int vertex) {
+	unsigned int degree = 0;
+	for (unsigned j = 0; j < g->nb_vert; j++) {
+		if (graph_mat_get_edge(g, vertex, j))
+			degree++;
+	}
+	return degree;
+}
+
+int graph_mat_topological_ordering(graph_mat_t* g,
+								   unsigned* num,
+								   unsigned* denum) {
 	if (g->nb_vert <= 0)
 		return -1;
-	if (num) {
-		*num = malloc(sizeof(unsigned[g->nb_vert]));
-		if (!*num)
-			return -2;
-	} else
+	if (!num)
 		return -1;
-	if (denum) {
-		*denum = malloc(sizeof(unsigned[g->nb_vert]));
-		if (!*denum) {
-			free(num);
-			return -2;
-		}
-	}
 
 	int number = g->nb_vert - 1;
 
