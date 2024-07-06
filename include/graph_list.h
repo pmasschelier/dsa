@@ -3,12 +3,13 @@
 
 #include "graph_mat.h"
 #include "list_ref/list_ref.h"
+#include "weight_type.h"
 
 /* Graphe représenté par des listes d'adjacence */
-typedef struct EDGE_LIST EDGE_LIST;
-struct EDGE_LIST {
-	long long w;  // Poids de l'arcs
-	unsigned p;	  // Cible de l'arc
+typedef struct graph_list_edge graph_list_edge_t;
+struct graph_list_edge {
+	graph_weight_t w;  // Poids de l'arcs
+	unsigned p;		   // Cible de l'arc
 };
 
 typedef struct GRAPH_LIST GRAPH_LIST;

@@ -1,6 +1,5 @@
 #include "graph_list.h"
 #include "graph_mat.h"
-#include "list_ref/list_ref.h"
 
 GRAPH_LIST* init_graph_list(unsigned size) {
 	if (size == 0)
@@ -15,7 +14,7 @@ GRAPH_LIST* init_graph_list(unsigned size) {
 	for (unsigned i = 0; i < size; i++) {
 		g->neighbours[i].begin = NULL;
 		g->neighbours[i].end = NULL;
-		g->neighbours[i].size = sizeof(EDGE_LIST);
+		g->neighbours[i].size = sizeof(graph_list_edge_t);
 		g->neighbours[i].free_element = free;
 	}
 
@@ -27,10 +26,10 @@ static int add_edge_list_noverif(GRAPH_LIST* g,
 								 unsigned int b,
 								 long long weight) {
 	list_ref_t* neighbours = &g->neighbours[a];
-	EDGE_LIST* e = malloc(sizeof(EDGE_LIST));
+	graph_list_edge_t* e = malloc(sizeof(graph_list_edge_t));
 	if (!e)
 		return -1;
-	*e = (EDGE_LIST){weight, b};
+	*e = (graph_list_edge_t){weight, b};
 	push_back_list(neighbours, e);
 
 	return 0;
@@ -45,7 +44,7 @@ void set_edge_list(GRAPH_LIST* g,
 	list_ref_t* neighbours = &g->neighbours[a];
 	node_list_ref_t* node = neighbours->begin;
 
-	EDGE_LIST* e = NULL;
+	graph_list_edge_t* e = NULL;
 	while (node) {
 		e = node->p;
 		if (e->p == b)
@@ -147,7 +146,7 @@ int mark_and_examine_traversal_list(GRAPH_LIST* g,
 		index++;
 
 		node_list_ref_t* node = g->neighbours[*vertex].begin;
-		EDGE_LIST* e = NULL;
+		graph_list_edge_t* e = NULL;
 		while (node) {
 			e = node->p;
 			if (!mark[e->p]) {
@@ -181,7 +180,7 @@ int DFS_list(GRAPH_LIST* g, unsigned r, int** tab, int** father) {
 		BOOL any_edge = FALSE;
 
 		node_list_ref_t* node = g->neighbours[current].begin;
-		EDGE_LIST* e = NULL;
+		graph_list_edge_t* e = NULL;
 		while (node) {
 			e = node->p;
 			if (!mark[e->p]) {
@@ -215,7 +214,7 @@ static void DFS_list_recursive_rec(GRAPH_LIST* g,
 	(*tab)[*index] = current;
 	*index += 1;
 	node_list_ref_t* node = g->neighbours[current].begin;
-	EDGE_LIST* e = NULL;
+	graph_list_edge_t* e = NULL;
 	while (node) {
 		if (!mark[e->p]) {
 			(*father)[e->p] = current;
@@ -370,7 +369,7 @@ int Dijkstra_list(GRAPH_LIST* g,
 		mark[index[size]] = TRUE;  // Marquer ce sommet
 
 		node_list_ref_t* node = g->neighbours[index[size - 1]].begin;
-		EDGE_LIST* e = NULL;
+		graph_list_edge_t* e = NULL;
 		while (node != NULL) {	// Pour tout successeur de pivot
 			e = node->p;
 

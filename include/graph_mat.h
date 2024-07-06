@@ -57,7 +57,7 @@ void graph_mat_set_edge(graph_mat_t* g,
 						unsigned int a,
 						unsigned int b,
 						BOOL val,
-						long long weight,
+						graph_weight_t weight,
 						BOOL reverse);
 
 /**
