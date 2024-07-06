@@ -6,6 +6,6 @@ install_headers(
   'list_ref/list_ref.h',
   'list_ref/algorithms.h',
   'ptr.h',
-  'dist_type.h',
+  'weight_type.h',
   subdir: 'struct'
 )

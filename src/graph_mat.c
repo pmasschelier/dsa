@@ -1,6 +1,6 @@
 #include "graph_mat.h"
 #include <stdlib.h>
-#include "dist_type.h"
+#include "weight_type.h"
 #include "list_ref/list_ref.h"
 #include "structures.h"
 #include "test_macros.h"
@@ -56,8 +56,10 @@ BOOL graph_mat_get_edge(graph_mat_t* g, unsigned int a, unsigned b) {
 	return g->edges[a * g->nb_vert + b];
 }
 
-BOOL graph_mat_get_weight(graph_mat_t* g, unsigned int a, unsigned b) {
-	return g->weights[a * g->nb_vert + b];
+graph_weight_t graph_mat_get_weight(graph_mat_t* g,
+									unsigned int a,
+									unsigned b) {
+	return g->weights ? g->weights[a * g->nb_vert + b] : 1;
 }
 
 static int allow_tab_father_mark(unsigned length,
@@ -123,6 +125,8 @@ static int mark_and_examine_traversal_mat(graph_mat_t* g,
 		}
 		free(vertex);
 	}
+	free_list(waiting_list);
+	free(mark);
 	return index;
 }
 
@@ -257,7 +261,7 @@ static int allow_father_distance_mark(unsigned length,
 		if (!*distance)
 			goto error_alloc;
 		for (unsigned i = 0; i < length; i++)
-			(*distance)[i] = STRUCT_DIST_INF;
+			(*distance)[i] = GRAPH_WEIGHT_INF;
 	}
 	if (mark) {
 		*mark = calloc(length, sizeof(BOOL));
@@ -276,13 +280,13 @@ error_alloc:
 
 int graph_mat_dijkstra(graph_mat_t* g,
 					   unsigned r,
-					   dist_t* distance,
+					   graph_weight_t* distance,
 					   int* father) {
 	if (!distance)
 		return -1;
 	TEST_FAIL_FUNC(r < g->nb_vert, -1, );
 	for (unsigned i = 0; i < g->nb_vert; i++)
-		distance[i] = STRUCT_DIST_INF;
+		distance[i] = GRAPH_WEIGHT_INF;
 	distance[r] = 0;
 
 	if (father)
@@ -299,7 +303,7 @@ int graph_mat_dijkstra(graph_mat_t* g,
 		for (unsigned j = 0; j < g->nb_vert; j++) {	 // For each vertex j
 			// which is a successor of pivot and haven't been marked
 			if (!mark[j] && graph_mat_get_edge(g, pivot, j)) {
-				const dist_t w = graph_mat_get_weight(g, pivot, j);
+				const graph_weight_t w = graph_mat_get_weight(g, pivot, j);
 				const long long d =
 					dist_add_truncate_overflow(distance[pivot], w);
 				if (d < distance[j]) {
@@ -311,7 +315,7 @@ int graph_mat_dijkstra(graph_mat_t* g,
 		}
 
 		// Finds the reached vertex not already marked, with the lowest value
-		dist_t min = STRUCT_DIST_INF;
+		graph_weight_t min = GRAPH_WEIGHT_INF;
 		int jmin = -1;
 		for (unsigned j = 0; j < g->nb_vert; j++) {	 // For each vertex j
 			if (!mark[j] && distance[j] >= 0 && distance[j] < min) {
@@ -395,13 +399,13 @@ int Bellman_mat(graph_mat_t* g,
 	if (topological_numbering_mat(g, &num, &denum) != 0)
 		return -1;
 	for (unsigned i = num[r] + 1; i < g->nb_vert; i++) {
-		long long min = STRUCT_DIST_INF;
+		long long min = GRAPH_WEIGHT_INF;
 		unsigned x = denum[i];
 		int y = -1;
 		for (unsigned j = 0; j < g->nb_vert; j++) {
 			long long d =
-				(*distance)[j] > STRUCT_DIST_INF - graph_mat_get_weight(g, j, x)
-					? STRUCT_DIST_INF
+				(*distance)[j] > GRAPH_WEIGHT_INF - graph_mat_get_weight(g, j, x)
+					? GRAPH_WEIGHT_INF
 					: (*distance)[j] + graph_mat_get_weight(g, j, x);
 			if (graph_mat_get_weight(g, j, x) && num[j] < i && d < min) {
 				min = d;

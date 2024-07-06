@@ -1,7 +1,7 @@
 #ifndef GRAPH_MAT_H
 #define GRAPH_MAT_H
 
-#include "dist_type.h"
+#include "weight_type.h"
 #include "structures.h"
 
 /* Graphe représenté par une matrice d'adjacence */
@@ -45,7 +45,7 @@ void graph_mat_set_edge(graph_mat_t* g,
 						BOOL reverse);
 
 BOOL graph_mat_get_edge(graph_mat_t* g, unsigned int a, unsigned b);
-BOOL graph_mat_get_weight(graph_mat_t* g, unsigned int a, unsigned b);
+graph_weight_t graph_mat_get_weight(graph_mat_t* g, unsigned int a, unsigned b);
 
 /* \brief Parcours "marquer et examiner" du graphe
  * \param g Pointeur vers le graphe
@@ -85,6 +85,8 @@ int graph_mat_postorder_dfs(graph_mat_t* g,
 							int* values,
 							int* father);
 
+int graph_mat_bfs(graph_mat_t* g, unsigned r, int* values, int* father);
+
 /* \brief Implémentation de l'algorithme de Dijkstra avec un graphe sous forme
  * de matrice d'adjacence \param Pointeur vers le graphe, !!! Les arêtes du
  * graphe ne doivent avoir que des poids posisitfs. \param Racine du graphe
@@ -97,7 +99,7 @@ int graph_mat_postorder_dfs(graph_mat_t* g,
  */
 int graph_mat_dijkstra(graph_mat_t* g,
 					   unsigned r,
-					   dist_t* distance,
+					   graph_weight_t* distance,
 					   int* father);
 
 /* \brief Numérotation topologique du graphe
