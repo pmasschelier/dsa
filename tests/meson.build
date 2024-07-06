@@ -25,6 +25,7 @@ passing_test_sources = [
   'graph_mat_preorder_dfs.c',
   'graph_mat_postorder_dfs.c',
   'graph_mat_set_get_edge.c',
+  'graph_mat_topological_ordering.c',
   'list_clean.c',
   'list_create_empty.c',
   'list_find_in.c',

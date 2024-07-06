@@ -62,32 +62,32 @@ graph_weight_t graph_mat_get_weight(graph_mat_t* g,
 	return g->weights ? g->weights[a * g->nb_vert + b] : 1;
 }
 
-static int allow_tab_father_mark(unsigned length,
-								 int** tab,
-								 int** father,
-								 BOOL** mark) {
-	if (tab) {
-		*tab = malloc(length * sizeof(int));
-		if (!*tab)
-			return -1;
-	}
-	if (father) {
-		*father = malloc(length * sizeof(int));
-		if (!*father)
-			goto error_alloc;
-	}
-	*mark = calloc(length, sizeof(BOOL));
-	if (!*mark)
-		goto error_alloc2;
-	return 0;
-error_alloc2:
-	if (father)
-		free(*father);
-error_alloc:
-	if (tab)
-		free(*tab);
-	return -1;
-}
+// static int allow_tab_father_mark(unsigned length,
+// 								 int** tab,
+// 								 int** father,
+// 								 BOOL** mark) {
+// 	if (tab) {
+// 		*tab = malloc(length * sizeof(int));
+// 		if (!*tab)
+// 			return -1;
+// 	}
+// 	if (father) {
+// 		*father = malloc(length * sizeof(int));
+// 		if (!*father)
+// 			goto error_alloc;
+// 	}
+// 	*mark = calloc(length, sizeof(BOOL));
+// 	if (!*mark)
+// 		goto error_alloc2;
+// 	return 0;
+// error_alloc2:
+// 	if (father)
+// 		free(*father);
+// error_alloc:
+// 	if (tab)
+// 		free(*tab);
+// 	return -1;
+// }
 
 static int mark_and_examine_traversal_mat(graph_mat_t* g,
 										  unsigned r,
@@ -367,29 +367,28 @@ int graph_mat_topological_ordering(graph_mat_t* g,
 
 	unsigned degre[g->nb_vert];
 	for (unsigned i = 0; i < g->nb_vert; i++) {
-		degre[i] = 0;
-		for (unsigned j = 0; j < g->nb_vert; j++) {
-			if (graph_mat_get_edge(g, i, j))
-				degre[i]++;	 // On calcule le degré extérieur du sommet i
-		}
+		degre[i] = graph_mat_outdegree(g, i);
 		if (degre[i] == 0)
 			push_front_list(pile, ptr(TYPE_INT, i));
 	}
+	if (empty_list(pile))
+		return -1;
 	while (!empty_list(pile)) {
 		unsigned* s = NULL;
 		pop_front_list(pile, (void**)&s);
-		(*num)[*s] = number;
+		num[*s] = number;
 		if (denum)
-			(*denum)[number] = *s;
+			denum[number] = *s;
 		number--;
 		for (unsigned t = 0; t < g->nb_vert; t++) {
 			if (graph_mat_get_edge(g, t, *s))
 				if (--degre[t] == 0)
 					push_front_list(pile, ptr(TYPE_INT, t));
 		}
-		free(s);
+		pile->free_element(s);
 	}
-	return number + 1;
+	free_list(pile);
+	return 0;
 }
 
 int Bellman_mat(graph_mat_t* g,
@@ -403,18 +402,20 @@ int Bellman_mat(graph_mat_t* g,
 	(*distance)[r] = 0;
 	(*father)[r] = -1;
 
-	unsigned *num, *denum;
-	if (topological_numbering_mat(g, &num, &denum) != 0)
+	unsigned* num = malloc(2 * g->nb_vert * sizeof(unsigned int));
+	TEST_PTR_FAIL_FUNC(num, -1, );
+	unsigned* denum = num + g->nb_vert;
+	if (graph_mat_topological_ordering(g, num, denum) != 0)
 		return -1;
 	for (unsigned i = num[r] + 1; i < g->nb_vert; i++) {
 		long long min = GRAPH_WEIGHT_INF;
 		unsigned x = denum[i];
 		int y = -1;
 		for (unsigned j = 0; j < g->nb_vert; j++) {
-			long long d =
-				(*distance)[j] > GRAPH_WEIGHT_INF - graph_mat_get_weight(g, j, x)
-					? GRAPH_WEIGHT_INF
-					: (*distance)[j] + graph_mat_get_weight(g, j, x);
+			long long d = (*distance)[j] > GRAPH_WEIGHT_INF -
+											   graph_mat_get_weight(g, j, x)
+							  ? GRAPH_WEIGHT_INF
+							  : (*distance)[j] + graph_mat_get_weight(g, j, x);
 			if (graph_mat_get_weight(g, j, x) && num[j] < i && d < min) {
 				min = d;
 				y = j;

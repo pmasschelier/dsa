@@ -118,7 +118,9 @@ unsigned int graph_mat_outdegree(graph_mat_t* g, int vertex);
  * NULL ou g->nb_vert == 0 -2 s'il y a eu une erreur d'allocation >0 si g
  * n'était pas un DAG \complexity 0(n²)
  */
-int topological_numbering_mat(graph_mat_t* g, unsigned** num, unsigned** denum);
+int graph_mat_topological_ordering(graph_mat_t* g,
+								   unsigned* num,
+								   unsigned* denum);
 
 /* \brief Implémentation de l'algorithme de Bellman avec un graphe sous forme de
  * matrice d'adjacence \param Pointeur vers le graphe, !!! Ce doit être un DAG
