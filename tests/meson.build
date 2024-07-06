@@ -19,6 +19,7 @@ passing_test_sources = [
   'btree_preorder_traversal_of_perfect_tree.c',
   'graph_mat_bfs.c',
   'graph_mat_create_no_edges.c',
+  'graph_mat_dijkstra_unit_weights.c',
   'graph_mat_preorder_dfs.c',
   'graph_mat_postorder_dfs.c',
   'graph_mat_set_get_edge.c',
