@@ -1,9 +1,9 @@
 #include "graph_mat.h"
 #include <stdlib.h>
-#include "weight_type.h"
 #include "list_ref/list_ref.h"
 #include "structures.h"
 #include "test_macros.h"
+#include "weight_type.h"
 
 graph_mat_t* create_graph_mat(unsigned size, BOOL has_weights) {
 	if (size == 0)

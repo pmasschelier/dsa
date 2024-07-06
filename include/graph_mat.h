@@ -1,8 +1,8 @@
 #ifndef GRAPH_MAT_H
 #define GRAPH_MAT_H
 
-#include "weight_type.h"
 #include "structures.h"
+#include "weight_type.h"
 
 /* Graphe représenté par une matrice d'adjacence */
 typedef struct EDGE_MAT EDGE_MAT;
