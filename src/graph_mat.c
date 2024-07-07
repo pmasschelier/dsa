@@ -6,7 +6,7 @@
 #include "test_macros.h"
 #include "weight_type.h"
 
-graph_mat_t* create_graph_mat(unsigned size, BOOL has_weights) {
+graph_mat_t* create_graph_mat(unsigned size, BOOL is_weighted) {
 	if (size == 0)
 		return NULL;
 	graph_mat_t* g = malloc(sizeof(graph_mat_t));
@@ -14,20 +14,13 @@ graph_mat_t* create_graph_mat(unsigned size, BOOL has_weights) {
 	g->nb_vert = size;
 
 	g->edges = calloc(size * size, sizeof(BOOL));
-	if (!g->edges)
-		goto error_alloc;
-	if (has_weights) {
-		g->weights = calloc(size * size, sizeof(long long));
-		if (!g->weights)
-			goto error_alloc2;
+	TEST_PTR_FAIL_FUNC(g->edges, NULL, free(g));
+	if (is_weighted) {
+		g->weights = calloc(size * size, sizeof(graph_weight_t));
+		TEST_PTR_FAIL_FUNC(g->weights, NULL, free_graph_mat(g));
 	} else
 		g->weights = NULL;
 	return g;
-error_alloc2:
-	free(g->edges);
-error_alloc:
-	free(g);
-	return NULL;
 }
 
 void free_graph_mat(graph_mat_t* g) {
@@ -225,9 +218,8 @@ int graph_mat_dijkstra(graph_mat_t* g,
 					   unsigned r,
 					   graph_weight_t* distance,
 					   int* father) {
-	if (!distance)
-		return -ERROR_INVALID_PARAM3;
-	TEST_FAIL_FUNC(r < g->nb_vert, -1, );
+	TEST_PTR_FAIL_FUNC(distance, -ERROR_INVALID_PARAM3, );
+	TEST_FAIL_FUNC(r < g->nb_vert, -ERROR_INVALID_PARAM2, );
 	for (unsigned i = 0; i < g->nb_vert; i++)
 		distance[i] = GRAPH_WEIGHT_INF;
 	distance[r] = 0;
@@ -300,10 +292,8 @@ int graph_mat_topological_ordering(graph_mat_t* g,
 								   unsigned* num,
 								   unsigned* denum) {
 	int ret = -1;
-	if (g->nb_vert <= 0)
-		return -ERROR_GRAPH_HAS_NO_NODE;
-	if (!num)
-		return -ERROR_INVALID_PARAM2;
+	TEST_FAIL_FUNC(g->nb_vert != 0, -ERROR_GRAPH_HAS_NO_NODE, );
+	TEST_PTR_FAIL_FUNC(num, -ERROR_INVALID_PARAM2, );
 
 	int number = g->nb_vert;
 

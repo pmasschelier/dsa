@@ -31,11 +31,11 @@ struct graph_mat {
  * __Every graph created with this function should be freed using
  * free_graph_mat__
  * @param[in] size Number of vertices in the graph (should be strictly positive)
- * @param[in] has_weights Should the graph be weighted
+ * @param[in] is_weighted Should the graph be weighted
  * @return a pointer to the newly created graph or NULL if the function failed
  * @see free_graph_mat()
  */
-graph_mat_t* create_graph_mat(unsigned size, BOOL has_weights);
+graph_mat_t* create_graph_mat(unsigned size, BOOL is_weighted);
 
 /**
  * @brief Frees the graph

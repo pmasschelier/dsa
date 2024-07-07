@@ -1,16 +1,21 @@
 #include "graph_list.h"
+#include <stdlib.h>
+#include "errors.h"
 #include "graph_mat.h"
+#include "list_ref/list_ref.h"
+#include "test_macros.h"
+#include "weight_type.h"
 
-GRAPH_LIST* init_graph_list(unsigned size) {
+graph_list_t* create_graph_list(unsigned size, BOOL is_weighted) {
 	if (size == 0)
 		return NULL;
-	GRAPH_LIST* g = malloc(sizeof(GRAPH_LIST));
-	if (!g)
-		return NULL;
+	graph_list_t* g = malloc(sizeof(graph_list_t));
+	TEST_PTR_FAIL_FUNC(g, NULL, );
 	g->nb_vert = size;
 	g->neighbours = malloc(size * sizeof(list_ref_t));
-	if (!g->neighbours)
-		return NULL;
+	TEST_PTR_FAIL_FUNC(g->neighbours, NULL, free(g));
+	g->is_weighted = is_weighted;
+
 	for (unsigned i = 0; i < size; i++) {
 		g->neighbours[i].begin = NULL;
 		g->neighbours[i].end = NULL;
@@ -21,57 +26,68 @@ GRAPH_LIST* init_graph_list(unsigned size) {
 	return g;
 }
 
-static int add_edge_list_noverif(GRAPH_LIST* g,
+static int add_edge_list_noverif(graph_list_t* g,
 								 unsigned int a,
 								 unsigned int b,
 								 long long weight) {
 	list_ref_t* neighbours = &g->neighbours[a];
 	graph_list_edge_t* e = malloc(sizeof(graph_list_edge_t));
-	if (!e)
-		return -1;
+	TEST_PTR_FAIL_FUNC(e, -ERROR_ALLOCATION_FAILED, );
 	*e = (graph_list_edge_t){weight, b};
 	push_back_list(neighbours, e);
 
 	return 0;
 }
 
-void set_edge_list(GRAPH_LIST* g,
-				   unsigned int a,
-				   unsigned int b,
-				   BOOL val,
-				   long long weight,
-				   BOOL reverse) {
+static node_list_ref_t* find_edge(graph_list_t* g,
+								  unsigned int a,
+								  unsigned int b) {
 	list_ref_t* neighbours = &g->neighbours[a];
 	node_list_ref_t* node = neighbours->begin;
 
 	graph_list_edge_t* e = NULL;
 	while (node) {
 		e = node->p;
-		if (e->p == b)
-			break;
+		if (e->to == b)
+			return node;
 		node = node->next;
 	}
-	if (node && !val)
-		remove_list(neighbours, node, NULL);
-	if (node && !val)
-		e->w = weight;
-	if (!node && val) {
-		add_edge_list_noverif(g, a, b, weight);
-	}
-	if (reverse)
-		set_edge_list(g, b, a, val, weight, FALSE);
+	return NULL;
 }
 
-GRAPH_LIST* graph_mat_to_graph_list(graph_mat_t* graph_mat,
-									GRAPH_LIST** graph_list) {
+BOOL graph_list_get_edge(graph_list_t* g, unsigned int a, unsigned int b) {
+	return find_edge(g, a, b) != NULL;
+}
+
+void graph_list_set_edge(graph_list_t* g,
+						 unsigned int a,
+						 unsigned int b,
+						 BOOL val,
+						 graph_weight_t weight,
+						 BOOL reverse) {
+	if (g->is_weighted == FALSE)
+		weight = 1;
+	node_list_ref_t* node = find_edge(g, a, b);
+	if (node && !val)
+		remove_list(&g->neighbours[a], node, NULL);
+	if (node && val)
+		((graph_list_edge_t*)node->p)->w = weight;
+	if (!node && val)
+		add_edge_list_noverif(g, a, b, weight);
+	if (reverse)
+		graph_list_set_edge(g, b, a, val, weight, FALSE);
+}
+
+graph_list_t* graph_mat_to_graph_list(graph_mat_t* graph_mat,
+									  graph_list_t** graph_list) {
 	if (!graph_list) {
-		graph_list = malloc(sizeof(GRAPH_LIST*));
+		graph_list = malloc(sizeof(graph_list_t*));
 		*graph_list = NULL;
 	}
 
 	free_graph_list(*graph_list);
 	const size_t size = graph_mat->nb_vert;
-	*graph_list = init_graph_list(size);
+	*graph_list = create_graph_list(size, graph_mat->weights != NULL);
 
 	for (unsigned i = 0; i < size; i++) {
 		for (unsigned j = 0; j < size; j++) {
@@ -85,7 +101,7 @@ GRAPH_LIST* graph_mat_to_graph_list(graph_mat_t* graph_mat,
 	return *graph_list;
 }
 
-void free_graph_list(GRAPH_LIST* g) {
+void free_graph_list(graph_list_t* g) {
 	if (g) {
 		for (unsigned i = 0; i < g->nb_vert; i++)
 			clean_list(&g->neighbours[i]);
@@ -94,69 +110,43 @@ void free_graph_list(GRAPH_LIST* g) {
 	}
 }
 
-static int allow_tab_father_mark(unsigned length,
-								 int** tab,
-								 int** father,
-								 char** mark) {
-	if (tab) {
-		*tab = malloc(length * sizeof(int));
-		if (!*tab)
-			return -1;
-	}
-	if (father) {
-		*father = malloc(length * sizeof(int));
-		if (!*father && tab) {
-			free(*tab);
-			return -1;
-		}
-	}
-	*mark = calloc(length, sizeof(char));
-	if (!*mark) {
-		if (tab)
-			free(*tab);
-		if (father)
-			free(*father);
-		return -1;
-	}
-	return 0;
-}
-
-int mark_and_examine_traversal_list(GRAPH_LIST* g,
+int mark_and_examine_traversal_list(graph_list_t* g,
 									unsigned r,
-									int** tab,
-									int** father,
+									int* tab,
+									int* father,
 									LIST_STRUCT queue_or_stack) {
-	char* mark;
-	if (allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
-		return -1;
-	mark[r] = 1;  // Marquer r
-	(*father)[r] = -1;
+	TEST_PTR_FAIL_FUNC(tab, -ERROR_INVALID_PARAM3, );
+	if (father)
+		father[r] = -1;
 
-	list_ref_t* waiting_list = create_list(sizeof(int));  // Création d'une file
-	push_back_list(waiting_list,
-				   ptr(TYPE_INT, r));  // Ajouter r à la liste d'attente
+	char* mark = calloc(g->nb_vert, sizeof(BOOL));
+	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, );
+	mark[r] = 1;  // Marquer r
+
+	// We create a queue an put the root inside
+	list_ref_t* waiting_list = create_list(sizeof(int));
+	push_back_list(waiting_list, ptr(TYPE_INT, r));
 
 	unsigned index = 0;
 
 	while (!empty_list(waiting_list)) {
 		int* vertex;
 		pop_front_list(waiting_list, (void**)&vertex);
-		if (tab)
-			(*tab)[index] = *vertex;
+		tab[index] = *vertex;
 		index++;
 
 		node_list_ref_t* node = g->neighbours[*vertex].begin;
 		graph_list_edge_t* e = NULL;
 		while (node) {
 			e = node->p;
-			if (!mark[e->p]) {
-				mark[e->p] = TRUE;
+			if (!mark[e->to]) {
+				mark[e->to] = TRUE;
 				if (father)
-					(*father)[e->p] = *vertex;
+					father[e->to] = *vertex;
 				if (queue_or_stack == STACK)
-					push_front_list(waiting_list, ptr(TYPE_INT, e->p));
+					push_front_list(waiting_list, ptr(TYPE_INT, e->to));
 				else
-					push_back_list(waiting_list, ptr(TYPE_INT, e->p));
+					push_back_list(waiting_list, ptr(TYPE_INT, e->to));
 			}
 			node = node->next;
 		}
@@ -165,72 +155,83 @@ int mark_and_examine_traversal_list(GRAPH_LIST* g,
 	return index;
 }
 
-int DFS_list(GRAPH_LIST* g, unsigned r, int** tab, int** father) {
-	char* mark;
-	if (allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
-		return -1;
-	mark[r] = 1;  // Marquer r
-	(*father)[r] = -1;
-	(*tab)[0] = r;
+// int DFS_list(graph_list_t* g, unsigned r, int** tab, int** father) {
+// 	char* mark;
+// 	if (allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
+// 		return -1;
+// 	mark[r] = 1;  // Marquer r
+// 	(*father)[r] = -1;
+// 	(*tab)[0] = r;
+//
+// 	unsigned current = r;
+// 	unsigned index = 1;
+//
+// 	while (TRUE) {
+// 		BOOL any_edge = FALSE;
+//
+// 		node_list_ref_t* node = g->neighbours[current].begin;
+// 		graph_list_edge_t* e = NULL;
+// 		while (node) {
+// 			e = node->p;
+// 			if (!mark[e->to]) {
+// 				mark[e->to] = 1;
+// 				(*tab)[index++] = e->to;
+// 				if (father)
+// 					(*father)[e->to] = current;
+// 				current = e->to;
+// 				any_edge = TRUE;
+// 				break;
+// 			}
+// 			node = node->next;
+// 		}
+// 		if (!any_edge) {
+// 			if (current != r)
+// 				current = (*father)[current];
+// 			else
+// 				break;
+// 		}
+// 	}
+// 	return index;
+// }
 
-	unsigned current = r;
-	unsigned index = 1;
-
-	while (TRUE) {
-		BOOL any_edge = FALSE;
-
-		node_list_ref_t* node = g->neighbours[current].begin;
-		graph_list_edge_t* e = NULL;
-		while (node) {
-			e = node->p;
-			if (!mark[e->p]) {
-				mark[e->p] = 1;
-				(*tab)[index++] = e->p;
-				if (father)
-					(*father)[e->p] = current;
-				current = e->p;
-				any_edge = TRUE;
-				break;
-			}
-			node = node->next;
-		}
-		if (!any_edge) {
-			if (current != r)
-				current = (*father)[current];
-			else
-				break;
-		}
-	}
-	return index;
-}
-
-static void DFS_list_recursive_rec(GRAPH_LIST* g,
-								   unsigned current,
-								   int** tab,
-								   int** father,
-								   char* mark,
-								   unsigned* index) {
-	mark[current] = 1;
-	(*tab)[*index] = current;
+static void graph_list_preorder_dfs_rec(graph_list_t* g,
+										unsigned current,
+										int* tab,
+										int* father,
+										char* mark,
+										unsigned* index) {
+	mark[current] = TRUE;
+	tab[*index] = current;
 	*index += 1;
 	node_list_ref_t* node = g->neighbours[current].begin;
 	graph_list_edge_t* e = NULL;
 	while (node) {
-		if (!mark[e->p]) {
-			(*father)[e->p] = current;
-			DFS_list_recursive_rec(g, e->p, tab, father, mark, index);
+		e = node->p;
+		if (!mark[e->to]) {
+			if (father)
+				father[e->to] = current;
+			graph_list_preorder_dfs_rec(g, e->to, tab, father, mark, index);
 		}
+		node = node->next;
 	}
 }
 
-int DFS_list_recursive(GRAPH_LIST* g, unsigned r, int** tab, int** father) {
-	char* mark;
-	if (allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
-		return -1;
-	(*father)[r] = -1;
+int graph_list_preorder_dfs(graph_list_t* g,
+							unsigned r,
+							int* tab,
+							int* father) {
+	TEST_PTR_FAIL_FUNC(tab, -ERROR_INVALID_PARAM3, );
+	char* mark = calloc(g->nb_vert, sizeof(BOOL));
+	if (father)
+		father[r] = -1;
 	unsigned index = 0;
-	DFS_list_recursive_rec(g, r, tab, father, mark, &index);
+	graph_list_preorder_dfs_rec(g, r, tab, father, mark, &index);
+	free(mark);
 	return index;
+}
+
+int graph_list_bfs(graph_list_t* g, unsigned r, int* values, int* father) {
+	return mark_and_examine_traversal_list(g, r, values, father, QUEUE);
 }
 
 static unsigned father_heap(unsigned i) {
@@ -267,6 +268,7 @@ void pulldown_heap(unsigned* index, long long* val, unsigned size, unsigned n) {
 	int i_min;
 
 	while (!found && ls_heap(n) < size) {
+		// We compute the son with the lowest value
 		if (ls_heap(n) == size - 1)
 			i_min = size - 1;
 		else if (val[ls_heap(n)] <= val[rs_heap(n)])
@@ -274,12 +276,18 @@ void pulldown_heap(unsigned* index, long long* val, unsigned size, unsigned n) {
 		else
 			i_min = rs_heap(n);
 
+		// If the vertex vertex has a lower value that is lowest son
 		if (val[key] < val[i_min]) {
+			// We replace the vertex by its node
 			index[n] = index[i_min];
 			n = i_min;
-		} else
+		} else {
+			// Otherwise the vertex is lower than its children and should not go
+			// further down
 			found = TRUE;
+		}
 	}
+	// We overwrite the last moved son with the original vertex
 	index[n] = key;
 }
 
@@ -297,95 +305,58 @@ static void heap_sort(unsigned* index, long long*  val, unsigned size) {
 		}
 } */
 
-static int allow_father_index_distance_mark(unsigned length,
-											int** father,
-											unsigned** index,
-											long long** distance,
-											BOOL** mark) {
-	if (father) {
-		*father = malloc(sizeof(int[length]));
-		if (!*father)
-			return -1;
-	}
-	if (index) {
-		*index = malloc(sizeof(unsigned[length]));
-		if (!*index) {
-			free(*father);
-			return -1;
-		}
-		for (unsigned i = 0; i < length; i++)
-			(*index)[i] = i;
-	}
-	if (distance) {
-		*distance = malloc(sizeof(long long[length]));
-		if (!*distance) {
-			free(*index);
-			free(*father);
-			return -1;
-		}
-		for (unsigned i = 0; i < length; i++)
-			(*distance)[i] = GRAPH_WEIGHT_INF;
-	}
-	if (mark) {
-		*mark = calloc(length, sizeof(BOOL));
-		if (!*mark) {
-			free(*father);
-			free(*index);
-			free(*distance);
-			return -1;
-		}
-	}
-	return 0;
-}
+int graph_list_dijkstra(graph_list_t* g,
+						unsigned r,
+						graph_weight_t* distance,
+						int* father) {
+	TEST_PTR_FAIL_FUNC(distance, -ERROR_INVALID_PARAM3, );
+	TEST_FAIL_FUNC(r < g->nb_vert, -ERROR_INVALID_PARAM2, );
+	for (unsigned i = 0; i < g->nb_vert; i++)
+		distance[i] = GRAPH_WEIGHT_INF;
+	distance[r] = 0;
 
-int Dijkstra_list(GRAPH_LIST* g,
-				  unsigned r,
-				  long long** distance,
-				  int** father) {
-	if (!distance)
-		return -1;
-	BOOL* mark;
-	unsigned* index;
-	if (allow_father_index_distance_mark(g->nb_vert, father, &index, distance,
-										 &mark) != 0)
-		return -1;
-	mark[r] = TRUE;
-	(*distance)[r] = 0;
 	if (father)
-		(*father)[r] = -1;
+		father[r] = -1;
+
+	unsigned* index = malloc(g->nb_vert * sizeof(unsigned int));
+	TEST_PTR_FAIL_FUNC(index, -ERROR_ALLOCATION_FAILED, );
+	for (unsigned i = 0; i < g->nb_vert; i++)
+		index[i] = i;
 
 	unsigned size = g->nb_vert;
-	swap(index, 0,
-		 r);  // On place r en tête de (index, distance), ce qui en fait un tas
+	// We put r at the root of (index, distance) which makes it a heap
+	swap(index, 0, r);
 
-	unsigned pivot = r;
-	unsigned number = 0;  // nombre de sommets atteints par l'algorithme
+	// Number of vertices reached by the algorithm
+	unsigned number = 0;
 
-	while (size >
-		   0) {	 // Tant qu'il existe un sommet non marqué (donc dans le tas)
+	// While there is a vertex left in the heap
+	while (size > 0) {
+		// Take the root of the heap (which is the non-marked vertex with the
+		// lowest distance to the root)
 		swap(index, 0, size - 1);
-		pulldown_heap(index, *distance, --size,
-					  0);		   // Choisir un sommet de distance minimale
-		mark[index[size]] = TRUE;  // Marquer ce sommet
+		pulldown_heap(index, distance, --size, 0);
+		unsigned pivot = index[size];
 
-		node_list_ref_t* node = g->neighbours[index[size - 1]].begin;
+		node_list_ref_t* node = g->neighbours[pivot].begin;
 		graph_list_edge_t* e = NULL;
-		while (node != NULL) {	// Pour tout successeur de pivot
+		// For each successor of pivot
+		while (node != NULL) {
 			e = node->p;
 
-			int d = (*distance)[pivot] > GRAPH_WEIGHT_INF - e->w
-						? GRAPH_WEIGHT_INF
-						: (*distance)[pivot] + e->w;
-			if (d < (*distance)[e->p]) {
-				(*distance)[e->p] = d;
+			graph_weight_t d =
+				weight_add_truncate_overflow(distance[pivot], e->w);
+			if (d < distance[e->to]) {
+				distance[e->to] = d;
 				if (father)
-					(*father)[e->p] = pivot;
-				number++;
+					father[e->to] = pivot;
 			}
 
 			node = node->next;
 		}
 	}
+
+	free(index);
 
 	return number;
 }
