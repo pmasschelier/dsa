@@ -1,4 +1,4 @@
-#include "graph_mat.h"
+#include "graph/graph_mat.h"
 #include <stdlib.h>
 #include "errors.h"
 #include "list_ref/list_ref.h"

@@ -1,8 +1,8 @@
 #include <assert.h>
 #include <stdio.h>
 #include "btree_ref/btree_ref.h"
-#include "graph_list.h"
-#include "graph_mat.h"
+#include "graph/graph_list.h"
+#include "graph/graph_mat.h"
 #include "list_ref/list_ref.h"
 
 static void print_path(btree_path_t path);

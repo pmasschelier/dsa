@@ -5,7 +5,7 @@
 #include "weight_type.h"
 
 /**
- * @file graph_mat.h
+ * @file graph/graph_mat.h
  * @brief Graphs defined with adjacency matrix
  *
  * Defines functions to create, free and manipulate adjacency matrices

@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <graph_mat.h>
+#include <graph/graph_mat.h>
 
 #define EDGE_COUNT 3
 #define NODE_COUNT 3

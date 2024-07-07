@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <graph_mat.h>
+#include <graph/graph_mat.h>
 #include <weight_type.h>
 #include "config.h"
 

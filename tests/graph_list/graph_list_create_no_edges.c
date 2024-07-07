@@ -1,4 +1,4 @@
-#include <graph_list.h>
+#include <graph/graph_list.h>
 
 int main(void) {
 	graph_list_t* g = create_graph_list(5, FALSE);

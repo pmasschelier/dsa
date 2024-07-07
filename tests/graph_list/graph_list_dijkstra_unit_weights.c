@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <graph_list.h>
+#include <graph/graph_list.h>
 #include <weight_type.h>
 
 #define EDGE_COUNT 6
