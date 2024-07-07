@@ -1,7 +1,6 @@
 #include "graph/graph_list.h"
 #include <stdlib.h>
 #include "errors.h"
-#include "graph/graph_mat.h"
 #include "list_ref/list_ref.h"
 #include "test_macros.h"
 #include "weight_type.h"
@@ -26,10 +25,10 @@ graph_list_t* create_graph_list(unsigned size, BOOL is_weighted) {
 	return g;
 }
 
-static int add_edge_list_noverif(graph_list_t* g,
-								 unsigned int a,
-								 unsigned int b,
-								 long long weight) {
+int graph_list_add_edge_noverif(graph_list_t* g,
+								unsigned int a,
+								unsigned int b,
+								long long weight) {
 	list_ref_t* neighbours = &g->neighbours[a];
 	graph_list_edge_t* e = malloc(sizeof(graph_list_edge_t));
 	TEST_PTR_FAIL_FUNC(e, -ERROR_ALLOCATION_FAILED, );
@@ -73,32 +72,9 @@ void graph_list_set_edge(graph_list_t* g,
 	if (node && val)
 		((graph_list_edge_t*)node->p)->w = weight;
 	if (!node && val)
-		add_edge_list_noverif(g, a, b, weight);
+		graph_list_add_edge_noverif(g, a, b, weight);
 	if (reverse)
 		graph_list_set_edge(g, b, a, val, weight, FALSE);
-}
-
-graph_list_t* graph_mat_to_graph_list(graph_mat_t* graph_mat,
-									  graph_list_t** graph_list) {
-	if (!graph_list) {
-		graph_list = malloc(sizeof(graph_list_t*));
-		*graph_list = NULL;
-	}
-
-	free_graph_list(*graph_list);
-	const size_t size = graph_mat->nb_vert;
-	*graph_list = create_graph_list(size, graph_mat->weights != NULL);
-
-	for (unsigned i = 0; i < size; i++) {
-		for (unsigned j = 0; j < size; j++) {
-			if (graph_mat_get_edge(graph_mat, i, j)) {
-				add_edge_list_noverif(*graph_list, i, j,
-									  graph_mat_get_weight(graph_mat, i, j));
-			}
-		}
-	}
-
-	return *graph_list;
 }
 
 void free_graph_list(graph_list_t* g) {

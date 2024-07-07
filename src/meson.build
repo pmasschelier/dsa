@@ -4,8 +4,9 @@ src_files = files(
   'list_ref/algorithms.c',
   'btree_ref/btree_ref.c',
   'btree_ref/path.c',
-  'graph_list.c',
-  'graph_mat.c',
+  'graph/graph_cast.c',
+  'graph/graph_list.c',
+  'graph/graph_mat.c',
 )
 
 lib = library('struct', src_files,
