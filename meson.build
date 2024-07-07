@@ -7,7 +7,8 @@ project('structures', 'c',
     'buildtype=debug',
     # 'buildtype=debugoptimized',
     'warning_level=3',
-    'default_library=both'
+    'default_library=both',
+    'c_std=c99'
   ]
 )
 
