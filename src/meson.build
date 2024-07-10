@@ -4,6 +4,7 @@ src_files = files(
   'list_ref/algorithms.c',
   'btree_ref/btree_ref.c',
   'btree_ref/path.c',
+  'heap_view.c',
   'graph/graph_cast.c',
   'graph/graph_list.c',
   'graph/graph_mat.c',

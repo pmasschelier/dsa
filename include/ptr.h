@@ -2,6 +2,7 @@
 #define STRUCT_PTR_H
 
 typedef void (*free_element_fn_t)(void*);
+typedef int (*compare_fn_t)(void*, void*);
 
 enum type { TYPE_INT, TYPE_DOUBLE };
 
@@ -13,5 +14,11 @@ enum type { TYPE_INT, TYPE_DOUBLE };
  * libéré avec free !!!
  */
 void* ptr(enum type t, ...);
+
+static inline void swap_ref(void** refs, int i, int j) {
+	void* a = refs[i];
+	refs[i] = refs[j];
+	refs[j] = a;
+}
 
 #endif
