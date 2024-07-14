@@ -52,6 +52,17 @@ void* tab_from_list(list_ref_t* list, void* tab) {
 	return tab;
 }
 
+#ifdef STRUCT_RECURSIVE_IMPL
+static unsigned length_list_rec(node_list_ref_t* node, unsigned int acc) {
+	if (node == NULL)
+		return acc;
+	return length_list_rec(node->next, acc + 1);
+}
+
+unsigned length_list(list_ref_t* list) {
+	return length_list_rec(list->begin, 0);
+}
+#else
 unsigned length_list(list_ref_t* list) {
 	if (empty_list(list))
 		return 0;
@@ -62,6 +73,7 @@ unsigned length_list(list_ref_t* list) {
 	} while ((node = node->next));
 	return l;
 }
+#endif
 
 void insert_list_node(list_ref_t* list,
 					  node_list_ref_t* prev,
@@ -202,13 +214,15 @@ void remove_list(list_ref_t* list, node_list_ref_t* node, void** x) {
 	free(node);
 }
 
+#ifdef STRUCT_RECURSIVE_IMPL
 static void free_node(list_ref_t* list, node_list_ref_t* node) {
-	if (node) {
-		free_node(list, node->next);  // Libère le noeud suivant
-		if (list->free_element)
-			list->free_element(node->p);  // Libère l'élément pointé
-		free(node);						  // Libère le noeud courant
-	}
+	if (!node)
+		return;
+	node_list_ref_t* next = node->next;
+	if (list->free_element)
+		list->free_element(node->p);  // Libère l'élément pointé
+	free(node);						  // Libère le noeud courant
+	free_node(list, next);			  // Libère le noeud suivant
 }
 
 void clean_list(list_ref_t* list) {
@@ -218,11 +232,26 @@ void clean_list(list_ref_t* list) {
 		list->end = NULL;
 	}
 }
+#else
+void clean_list(list_ref_t* list) {
+	TEST_PTR_FAIL_FUNC(list, , );
+	node_list_ref_t* node = list->begin;
+	node_list_ref_t* next;
+	while (node != NULL) {
+		next = node->next;
+		if (list->free_element)
+			list->free_element(node->p);
+		free(node);
+		node = next;
+	}
+	list->begin = NULL;
+	list->end = NULL;
+}
+#endif
 
 void free_list(list_ref_t* list) {
-	if (list) {
-		if (list->begin)
-			free_node(list, list->begin);
-		free(list);
-	}
+	if (!list)
+		return;
+	clean_list(list);
+	free(list);
 }
