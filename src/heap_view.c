@@ -18,35 +18,76 @@ static unsigned rs_heap(unsigned i) {
 	return (i + 1) * 2;
 }
 
-static void pullup_heap(heap_view_t* heap, unsigned n) {
-	void* key = heap->data[n];
-
-	while (n != 0 && heap->compare(key, heap->data[father_heap(n)]) == 1) {
-		heap->data[n] = heap->data[father_heap(n)];
-		n = father_heap(n);
-	}
-	heap->data[n] = key;
+static void write_heap(heap_view_t* heap,
+					   /* void* elem, */
+					   unsigned int idx,
+					   unsigned int to) {
+	heap->idx_to_pos[idx] = to;
+	heap->pos_to_idx[to] = idx;
+	/* heap->data[to] = elem; */
 }
 
-static void* pulldown_heap(heap_view_t* heap, unsigned n) {
+static void move_heap(heap_view_t* heap, unsigned int from, unsigned int to) {
+	unsigned idx = heap->pos_to_idx[from];
+	heap->idx_to_pos[idx] = to;
+	heap->pos_to_idx[to] = idx;
+	/* heap->data[to] = heap->data[from]; */
+}
+
+static void swap_heap(heap_view_t* heap, unsigned int a, unsigned int b) {
+	unsigned int idxA = heap->pos_to_idx[a];
+	unsigned int idxB = heap->pos_to_idx[b];
+	heap->idx_to_pos[idxA] = b;
+	heap->idx_to_pos[idxB] = a;
+	heap->pos_to_idx[a] = idxB;
+	heap->pos_to_idx[b] = idxA;
+}
+
+static void* heap_get_ptr(heap_view_t* heap, unsigned int pos) {
+	return (char*)heap->data + heap->size_bytes * heap->pos_to_idx[pos];
+}
+
+static void pullup_heap(heap_view_t* heap, unsigned n) {
+	unsigned int idx = heap->pos_to_idx[n];
+	void* key = heap_get_ptr(heap, n);
+
+	while (n != 0 &&
+		   heap->compare(key, heap_get_ptr(heap, father_heap(n))) == 1) {
+		move_heap(heap, father_heap(n), n);
+		/* heap->data[n] = heap->data[father_heap(n)]; */
+		n = father_heap(n);
+	}
+	write_heap(heap, idx, n);
+	/* heap->data[n] = key; */
+}
+
+static unsigned pulldown_heap(heap_view_t* heap, unsigned n) {
 	BOOL found = FALSE;
-	void* key = heap->data[n];
+	unsigned int idx = heap->pos_to_idx[n];
+	void* key = heap_get_ptr(heap, n);
 	int i_max;
 
 	while (!found && ls_heap(n) < heap->size) {
 		// We compute the son with the lowest value
-		if (ls_heap(n) == heap->size - 1)
+		void* max_son_ptr = NULL;
+		if (ls_heap(n) == heap->size - 1) {
 			i_max = heap->size - 1;
-		else if (heap->compare(heap->data[ls_heap(n)],
-							   heap->data[rs_heap(n)]) == 1)
-			i_max = ls_heap(n);
-		else
-			i_max = rs_heap(n);
-
+			max_son_ptr = heap_get_ptr(heap, ls_heap(n));
+		} else {
+			void* ls_ptr = heap_get_ptr(heap, ls_heap(n));
+			void* rs_ptr = heap_get_ptr(heap, rs_heap(n));
+			if (heap->compare(ls_ptr, rs_ptr) == 1) {
+				i_max = ls_heap(n);
+				max_son_ptr = ls_ptr;
+			} else {
+				i_max = rs_heap(n);
+				max_son_ptr = rs_ptr;
+			}
+		}
 		// If the vertex has a lower value that is biggest son
-		if (heap->compare(key, heap->data[i_max]) == -1) {
+		if (heap->compare(key, max_son_ptr) == -1) {
 			// We replace the vertex by its node
-			heap->data[n] = heap->data[i_max];
+			move_heap(heap, i_max, n);
 			n = i_max;
 		} else {
 			// Otherwise the vertex is lower than its children and should not go
@@ -55,8 +96,8 @@ static void* pulldown_heap(heap_view_t* heap, unsigned n) {
 		}
 	}
 	// We overwrite the last moved son with the original vertex
-	heap->data[n] = key;
-	return heap->data[heap->size];
+	write_heap(heap, idx, n);
+	return heap->pos_to_idx[heap->size];
 }
 
 /*
@@ -67,67 +108,100 @@ static void heap_sort(unsigned* index, long long*  val, unsigned size) {
 		}
 } */
 
-heap_view_t* create_heap(unsigned capacity, compare_fn_t compare) {
+static unsigned int getid(unsigned int* id) {
+	return *id;
+}
+
+static heap_view_t* create_heap_no_data(unsigned capacity,
+										size_t size_bytes,
+										compare_fn_t compare) {
 	heap_view_t* ret = malloc(sizeof(heap_view_t));
 	TEST_PTR_FAIL_FUNC(ret, NULL, );
-	ret->data = calloc(capacity, sizeof(void*));
-	TEST_PTR_FAIL_FUNC(ret->data, NULL, free(ret));
+
+	ret->idx_to_pos = malloc(capacity * sizeof(unsigned));
+	TEST_PTR_FAIL_FUNC(ret->idx_to_pos, NULL, free(ret->data); free(ret));
+	for (unsigned i = 0; i < capacity; i++)
+		ret->idx_to_pos[i] = i;
+
+	ret->pos_to_idx = malloc(capacity * sizeof(unsigned));
+	TEST_PTR_FAIL_FUNC(ret->pos_to_idx, NULL, free(ret->data); free(ret));
+	for (unsigned i = 0; i < capacity; i++)
+		ret->pos_to_idx[i] = i;
+
 	ret->capacity = capacity;
 	ret->size = 0;
+	ret->size_bytes = size_bytes;
 	ret->compare = compare;
+	ret->getid = (getid_fn_t)getid;
 	return ret;
 }
 
-heap_view_t* build_heap(void** tab, unsigned size, compare_fn_t compare) {
-	heap_view_t* heap = create_heap(size, compare);
-	TEST_PTR_FAIL_FUNC(heap, NULL, );
-	for (unsigned i = 0; i < size; i++)
-		insert_heap(heap, tab[i]);
-	return heap;
-}
-
-heap_view_t* heap_from_array(unsigned size,
-							 size_t size_bytes,
-							 void* data,
-							 compare_fn_t compare) {
+heap_view_t* create_heap(unsigned capacity,
+						 size_t size_bytes,
+						 void* data,
+						 compare_fn_t compare) {
 	TEST_PTR_FAIL_FUNC(data, NULL, );
-	heap_view_t* ret = malloc(sizeof(heap_view_t));
+	heap_view_t* ret = create_heap_no_data(capacity, size_bytes, compare);
 	TEST_PTR_FAIL_FUNC(ret, NULL, );
-	ret->data = malloc(size * sizeof(void*));
-	TEST_PTR_FAIL_FUNC(ret->data, NULL, free(ret));
-	for (unsigned i = 0; i < size; i++)
-		ret->data[i] = (char*)data + i * size_bytes;
-	ret->capacity = size;
-	ret->size = size;
-	ret->compare = compare;
+
+	ret->data = data;
 	return ret;
 }
 
-void* heap_get_root(heap_view_t* heap) {
+/* heap_view_t* build_heap(void** tab, unsigned size, compare_fn_t compare) { */
+/* 	heap_view_t* heap = create_heap(size, compare); */
+/* 	TEST_PTR_FAIL_FUNC(heap, NULL, ); */
+/* 	for (unsigned i = 0; i < size; i++) */
+/* 		insert_heap(heap, tab[i]); */
+/* 	return heap; */
+/* } */
+
+heap_view_t* create_heap_no_check(unsigned size,
+								  size_t size_bytes,
+								  void* data,
+								  compare_fn_t compare) {
+	TEST_PTR_FAIL_FUNC(data, NULL, );
+	heap_view_t* ret = create_heap_no_data(size, size_bytes, compare);
+	TEST_PTR_FAIL_FUNC(ret, NULL, );
+	/* memcpy(ret->data, data, size * size_bytes); */
+	ret->data = data;
+	ret->size = size;
+
+	return ret;
+}
+
+int heap_get_root(heap_view_t* heap) {
 	if (heap->size == 0)
-		return NULL;
-	if (heap->size == 1)
-		return heap->data[0];
-	swap_ref(heap->data, 0, heap->size - 1);
+		return -1;
+	if (heap->size == 1) {
+		heap->size = 0;
+		return heap->pos_to_idx[0];
+	}
+
+	swap_heap(heap, 0, heap->size - 1);
+	heap->size--;
 	return pulldown_heap(heap, 0);
 }
 
 int insert_heap(heap_view_t* heap, void* elem) {
 	TEST_FAIL_FUNC(heap->size < heap->capacity, -ERROR_CAPACITY_EXCEEDED, );
-	heap->data[heap->size] = elem;
-	pullup_heap(heap, heap->size++);
+
+	memcpy((char*)heap->data + heap->size * heap->size_bytes, (char*)elem,
+		   heap->size_bytes);
+	pullup_heap(heap, heap->size);
+	heap->size++;
 	return 0;
+}
+
+void heap_update_up(heap_view_t* heap, unsigned int idx) {
+	pullup_heap(heap, heap->idx_to_pos[idx]);
 }
 
 void free_heap(heap_view_t* heap) {
 	if (heap == NULL)
 		return;
-	// if (heap->free_element) {
-	// 	for (unsigned i = 0; i < heap->size; i++) {
-	// 		if (heap->data[i] != NULL)
-	// 			free(heap->data[i]);
-	// 	}
-	// }
-	free(heap->data);
+	/* free(heap->data); */
+	free(heap->idx_to_pos);
+	free(heap->pos_to_idx);
 	free(heap);
 }
