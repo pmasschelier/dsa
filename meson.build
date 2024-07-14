@@ -59,5 +59,5 @@ add_project_arguments(f'-D@fail_test_token@', language : 'c')
 subdir('src')
 subdir('include')
 subdir('tests')
-
+subdir('benchmarks')
 
