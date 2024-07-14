@@ -220,24 +220,62 @@ static void graph_list_preorder_dfs_rec(graph_list_t* g,
 	}
 }
 
-int graph_list_preorder_dfs(graph_list_t* g,
-							unsigned r,
-							int* tab,
-							int* father) {
+static void graph_list_postorder_dfs_rec(graph_list_t* g,
+										 unsigned current,
+										 int* tab,
+										 int* father,
+										 char* mark,
+										 unsigned* index) {
+	mark[current] = TRUE;
+	node_list_ref_t* node = g->neighbours[current].begin;
+	graph_list_edge_t* e = NULL;
+	while (node) {
+		e = node->p;
+		if (!mark[e->to]) {
+			if (father)
+				father[e->to] = current;
+			graph_list_postorder_dfs_rec(g, e->to, tab, father, mark, index);
+		}
+		node = node->next;
+	}
+	tab[*index] = current;
+	*index += 1;
+}
+typedef void (*graph_list_dfs_rec_fn_t)(graph_list_t* g,
+										unsigned current,
+										int* tab,
+										int* father,
+										char* mark,
+										unsigned* index);
+
+int graph_list_init_dfs(graph_list_t* g,
+						unsigned r,
+						int* tab,
+						int* father,
+						graph_list_dfs_rec_fn_t f) {
 	TEST_PTR_FAIL_FUNC(tab, -ERROR_INVALID_PARAM3, );
 	char* mark = calloc(g->nb_vert, sizeof(BOOL));
 	if (father)
 		father[r] = -1;
 	unsigned index = 0;
-	graph_list_preorder_dfs_rec(g, r, tab, father, mark, &index);
+	f(g, r, tab, father, mark, &index);
 	free(mark);
 	return index;
+}
+
+int graph_list_preorder_dfs(graph_list_t* g,
+							unsigned r,
+							int* tab,
+							int* father) {
+	return graph_list_init_dfs(g, r, tab, father, graph_list_preorder_dfs_rec);
 }
 
 int graph_list_postorder_dfs(graph_list_t* g,
 							 unsigned r,
 							 int* tab,
-							 int* father);
+							 int* father) {
+	return graph_list_init_dfs(g, r, tab, father, graph_list_postorder_dfs_rec);
+}
 
 int graph_list_bfs(graph_list_t* g, unsigned r, int* values, int* father) {
 	return mark_and_examine_traversal_list(g, r, values, father, QUEUE);
@@ -308,10 +346,6 @@ int graph_list_bfs(graph_list_t* g, unsigned r, int* values, int* father) {
 // 	index[i] = index[j];
 // 	index[j] = a;
 // }
-
-static inline graph_list_path_node_t init_root(unsigned r) {
-	return (graph_list_path_node_t){.index = r, .dist = 0, .father = -1};
-}
 
 static inline graph_list_path_node_t init_node(unsigned i) {
 	return (graph_list_path_node_t){

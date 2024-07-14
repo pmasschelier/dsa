@@ -99,18 +99,6 @@ graph_list_edge_t* graph_list_get_edge(graph_list_t* g,
 									   unsigned int a,
 									   unsigned int b);
 
-/* \brief Parcours en profondeur du graphe
- * \param g Pointeur vers le graphe
- * \param r Racine du parcours
- * \param tab Liste des sommets dans l'ordre rencontrés
- * \param father Tableau tel que father[i] soit le père de i si i a été
- * rencontré lors du parcours Ces deux derniers pointeurs vont être modifiés
- * pour pointer vers des tableau alloués de la taille graphe->nb_vert !!! Ils
- * devront être libérés par l'utilisateur !!! \return -1 en cas d'erreur et
- * sinon le nombre de sommets rencontrés
- */
-// int DFS_list(graph_list_t* g, unsigned r, int** tab, int** father);
-
 /**
  * @brief Preorder Depth-First Search Traversal of a graph
  *
