@@ -1,7 +1,10 @@
 #include "graph/graph_list.h"
 #include <stdlib.h>
+#include "config.h"
 #include "errors.h"
+#include "heap_view.h"
 #include "list_ref/list_ref.h"
+#include "ptr.h"
 #include "test_macros.h"
 #include "weight_type.h"
 
@@ -38,6 +41,25 @@ int graph_list_add_edge_noverif(graph_list_t* g,
 	return 0;
 }
 
+#ifdef STRUCT_RECURSIVE_IMPL
+static node_list_ref_t* find_edge_rec(node_list_ref_t* node, unsigned int b) {
+	if (node == NULL)
+		return NULL;
+	graph_list_edge_t* e = node->p;
+	if (e->to == b)
+		return node;
+	return find_edge_rec(node->next, b);
+}
+
+static node_list_ref_t* find_edge(graph_list_t* g,
+								  unsigned int a,
+								  unsigned int b) {
+	list_ref_t* neighbours = &g->neighbours[a];
+	node_list_ref_t* node = neighbours->begin;
+
+	return find_edge_rec(node, b);
+}
+#else
 static node_list_ref_t* find_edge(graph_list_t* g,
 								  unsigned int a,
 								  unsigned int b) {
@@ -53,9 +75,13 @@ static node_list_ref_t* find_edge(graph_list_t* g,
 	}
 	return NULL;
 }
+#endif
 
-BOOL graph_list_get_edge(graph_list_t* g, unsigned int a, unsigned int b) {
-	return find_edge(g, a, b) != NULL;
+graph_list_edge_t* graph_list_get_edge(graph_list_t* g,
+									   unsigned int a,
+									   unsigned int b) {
+	node_list_ref_t* node = find_edge(g, a, b);
+	return node == NULL ? NULL : node->p;
 }
 
 void graph_list_set_edge(graph_list_t* g,
@@ -128,6 +154,8 @@ int mark_and_examine_traversal_list(graph_list_t* g,
 		}
 		free(vertex);
 	}
+	free(mark);
+	free_list(waiting_list);
 	return index;
 }
 
@@ -206,133 +234,145 @@ int graph_list_preorder_dfs(graph_list_t* g,
 	return index;
 }
 
+int graph_list_postorder_dfs(graph_list_t* g,
+							 unsigned r,
+							 int* tab,
+							 int* father);
+
 int graph_list_bfs(graph_list_t* g, unsigned r, int* values, int* father) {
 	return mark_and_examine_traversal_list(g, r, values, father, QUEUE);
 }
 
-static unsigned father_heap(unsigned i) {
-	return i == 0 ? 0 : (i + 1) / 2 - 1;
+// static unsigned father_heap(unsigned i) {
+// 	return i == 0 ? 0 : (i + 1) / 2 - 1;
+// }
+//
+// static unsigned ls_heap(unsigned i) {
+// 	return (i + 1) * 2 - 1;
+// }
+//
+// static unsigned rs_heap(unsigned i) {
+// 	return (i + 1) * 2;
+// }
+//
+// static void pullup_heap(unsigned* index, long long* val, unsigned end) {
+// 	unsigned i = end;
+// 	unsigned key = index[end];
+//
+// 	while (i >= 1 && val[key] < val[father_heap(i)]) {
+// 		index[i] = index[father_heap(i)];
+// 		i = father_heap(i);
+// 	}
+// 	index[i] = key;
+// }
+//
+// static void build_heap(unsigned* index, long long* val, unsigned size) {
+// 	for (unsigned i = 0; i < size; i++)
+// 		pullup_heap(index, val, i);
+// }
+//
+// static void pulldown_heap(unsigned* index,
+// 						  long long* val,
+// 						  unsigned size,
+// 						  unsigned n) {
+// 	BOOL found = FALSE;
+// 	unsigned key = index[n];
+// 	int i_min;
+//
+// 	while (!found && ls_heap(n) < size) {
+// 		// We compute the son with the lowest value
+// 		if (ls_heap(n) == size - 1)
+// 			i_min = size - 1;
+// 		else if (val[ls_heap(n)] <= val[rs_heap(n)])
+// 			i_min = ls_heap(n);
+// 		else
+// 			i_min = rs_heap(n);
+//
+// 		// If the vertex vertex has a lower value that is lowest son
+// 		if (val[key] < val[i_min]) {
+// 			// We replace the vertex by its node
+// 			index[n] = index[i_min];
+// 			n = i_min;
+// 		} else {
+// 			// Otherwise the vertex is lower than its children and should not go
+// 			// further down
+// 			found = TRUE;
+// 		}
+// 	}
+// 	// We overwrite the last moved son with the original vertex
+// 	index[n] = key;
+// }
+//
+// static void swap(unsigned* index, int i, int j) {
+// 	unsigned a = index[i];
+// 	index[i] = index[j];
+// 	index[j] = a;
+// }
+
+static inline graph_list_path_node_t init_root(unsigned r) {
+	return (graph_list_path_node_t){.index = r, .dist = 0, .father = -1};
 }
 
-static unsigned ls_heap(unsigned i) {
-	return (i + 1) * 2 - 1;
+static inline graph_list_path_node_t init_node(unsigned i) {
+	return (graph_list_path_node_t){
+		.index = i, .dist = GRAPH_WEIGHT_INF, .father = -1};
 }
 
-static unsigned rs_heap(unsigned i) {
-	return (i + 1) * 2;
+static int min_weight(graph_list_path_node_t* a, graph_list_path_node_t* b) {
+	return (a->dist < b->dist) - (b->dist < a->dist);
 }
-
-void pullup_heap(unsigned* index, long long* val, unsigned end) {
-	unsigned i = end;
-	unsigned key = index[end];
-
-	while (i >= 1 && val[key] < val[father_heap(i)]) {
-		index[i] = index[father_heap(i)];
-		i = father_heap(i);
-	}
-	index[i] = key;
-}
-
-void build_heap(unsigned* index, long long* val, unsigned size) {
-	for (unsigned i = 0; i < size; i++)
-		pullup_heap(index, val, i);
-}
-
-void pulldown_heap(unsigned* index, long long* val, unsigned size, unsigned n) {
-	BOOL found = FALSE;
-	unsigned key = index[n];
-	int i_min;
-
-	while (!found && ls_heap(n) < size) {
-		// We compute the son with the lowest value
-		if (ls_heap(n) == size - 1)
-			i_min = size - 1;
-		else if (val[ls_heap(n)] <= val[rs_heap(n)])
-			i_min = ls_heap(n);
-		else
-			i_min = rs_heap(n);
-
-		// If the vertex vertex has a lower value that is lowest son
-		if (val[key] < val[i_min]) {
-			// We replace the vertex by its node
-			index[n] = index[i_min];
-			n = i_min;
-		} else {
-			// Otherwise the vertex is lower than its children and should not go
-			// further down
-			found = TRUE;
-		}
-	}
-	// We overwrite the last moved son with the original vertex
-	index[n] = key;
-}
-
-static void swap(unsigned* index, int i, int j) {
-	unsigned a = index[i];
-	index[i] = index[j];
-	index[j] = a;
-}
-
-/*
-static void heap_sort(unsigned* index, long long*  val, unsigned size) {
-		for(int p=size-1; p>0; p--) {
-				swap(index, 0, p);
-				pulldown_heap(index, val, p, 0);
-		}
-} */
 
 int graph_list_dijkstra(graph_list_t* g,
 						unsigned r,
-						graph_weight_t* distance,
-						int* father) {
-	TEST_PTR_FAIL_FUNC(distance, -ERROR_INVALID_PARAM3, );
+						graph_list_path_node_t* result) {
+	TEST_PTR_FAIL_FUNC(result, -ERROR_INVALID_PARAM3, );
 	TEST_FAIL_FUNC(r < g->nb_vert, -ERROR_INVALID_PARAM2, );
+
 	for (unsigned i = 0; i < g->nb_vert; i++)
-		distance[i] = GRAPH_WEIGHT_INF;
-	distance[r] = 0;
+		result[i] = init_node(i);
+	result[r].dist = 0;
 
-	if (father)
-		father[r] = -1;
+	heap_view_t* heap =
+		create_heap_no_check(g->nb_vert, sizeof(graph_list_path_node_t), result,
+							 (compare_fn_t)min_weight);
 
-	unsigned* index = malloc(g->nb_vert * sizeof(unsigned int));
-	TEST_PTR_FAIL_FUNC(index, -ERROR_ALLOCATION_FAILED, );
-	for (unsigned i = 0; i < g->nb_vert; i++)
-		index[i] = i;
-
-	unsigned size = g->nb_vert;
 	// We put r at the root of (index, distance) which makes it a heap
-	swap(index, 0, r);
+	heap->idx_to_pos[r] = 0;
+	heap->idx_to_pos[0] = r;
+	heap->pos_to_idx[r] = 0;
+	heap->pos_to_idx[0] = r;
 
 	// Number of vertices reached by the algorithm
 	unsigned number = 0;
+	graph_list_path_node_t* pivot = NULL;
+	int pivot_idx;
 
 	// While there is a vertex left in the heap
-	while (size > 0) {
+	while ((pivot_idx = heap_get_root(heap)) != -1) {
 		// Take the root of the heap (which is the non-marked vertex with the
 		// lowest distance to the root)
-		swap(index, 0, size - 1);
-		pulldown_heap(index, distance, --size, 0);
-		unsigned pivot = index[size];
+		pivot = &result[pivot_idx];
+		if (pivot->dist == GRAPH_WEIGHT_INF)
+			break;
 
-		node_list_ref_t* node = g->neighbours[pivot].begin;
+		node_list_ref_t* node = g->neighbours[pivot->index].begin;
 		graph_list_edge_t* e = NULL;
 		// For each successor of pivot
 		while (node != NULL) {
 			e = node->p;
 
 			graph_weight_t d =
-				weight_add_truncate_overflow(distance[pivot], e->w);
-			if (d < distance[e->to]) {
-				distance[e->to] = d;
-				if (father)
-					father[e->to] = pivot;
+				weight_add_truncate_overflow(result[pivot->index].dist, e->w);
+			if (d < result[e->to].dist) {
+				result[e->to].dist = d;
+				result[e->to].father = pivot->index;
+				heap_update_up(heap, e->to);
 			}
 
 			node = node->next;
 		}
 	}
-
-	free(index);
+	free_heap(heap);
 
 	return number;
 }
