@@ -1,4 +1,4 @@
-testdirs = ['list_ref', 'btree_ref', 'graph_mat', 'graph_list', 'path']
+testdirs = ['list_ref', 'btree_ref', 'graph_mat', 'graph_list', 'path', 'heap_view']
 foreach dirname : testdirs
   subdir(dirname)
   foreach test_source : passing_test_sources
