@@ -7,6 +7,12 @@ else
   doxy_data.set('HAVE_DOT', 'NO')
 endif
 
+if find_program('pdf2svg', required : false).found() or find_program('inkscape', required: false).found()
+  doxy_data.set('HTML_FORMULA_FORMAT', 'svg')
+else
+  doxy_data.set('HTML_FORMULA_FORMAT', 'png')
+endif
+
 doxy_data.set('TOP_SRCDIR', meson.project_source_root())
 doxy_data.set('TOP_BUILDDIR', meson.project_build_root())
 

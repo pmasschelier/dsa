@@ -157,24 +157,6 @@ int graph_list_postorder_dfs(graph_list_t* g,
  */
 int graph_list_bfs(graph_list_t* g, unsigned r, int* values, int* father);
 
-/* \brief Parcours "marquer et examiner" du graphe
- * \param g Pointeur vers le graphe
- * \param r Racine du parcours
- * \param tab Liste des sommets dans l'ordre rencontrés
- * \param father Tableau tel que father[i] soit le père de i si i a été
- * rencontré lors du parcours Ces deux derniers pointeurs vont être modifiés
- * pour pointer vers des tableau alloués de la taille graphe->nb_vert !!! Ils
- * devront être libérés par l'utilisateur !!! \param queue_or_stack Type de la
- * file d'attente, doit valoir QUEUE ou STACK QUEUE : On a un parcours en
- * largeur (BFS) STACK : On a un parcours proche du DFS \return -1 en cas
- * d'erreur et sinon le nombre de sommets rencontrés \complexity 0(n·m)
- */
-int mark_and_examine_traversal_list(graph_list_t* g,
-									unsigned r,
-									int* tab,
-									int* father,
-									LIST_STRUCT queue_or_stack);
-
 /* \brief Implémentation de l'algorithme de Dijkstra avec un graphe sous forme
  * de listes d'adjacence \param g Pointeur vers le graphe, !!! Les arêtes du
  * graphe ne doivent avoir que des poids posisitfs. \param r Racine du graphe
