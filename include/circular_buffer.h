@@ -21,6 +21,8 @@ int circular_buffer_pop_front(circular_buffer_t* b, void* p);
 
 int circular_buffer_pop_back(circular_buffer_t* b, void* p);
 
+int circular_buffer_push_front(circular_buffer_t* b, void* d);
+
 int circular_buffer_push_back(circular_buffer_t* b, void* d);
 
 int circular_buffer_size(circular_buffer_t* b);

@@ -6,6 +6,7 @@
 
 circular_buffer_t* create_circular_buffer(unsigned size_bytes,
 										  unsigned capacity) {
+	when_true_ret(capacity == 0, NULL);
 	circular_buffer_t* ret;
 	circular_buffer_t* cbuffer = malloc(sizeof(circular_buffer_t));
 	when_null_ret(cbuffer, NULL);
@@ -52,8 +53,8 @@ int circular_buffer_pop_back(circular_buffer_t* b, void* p) {
 int circular_buffer_push_front(circular_buffer_t* b, void* d) {
 	if (b->size == (int)b->capacity)
 		return -ERROR_CAPACITY_EXCEEDED;
-	memcpy(b->data + b->first * b->size_bytes, d, b->size_bytes);
 	b->first = (b->first + b->capacity - 1) % b->capacity;
+	memcpy(b->data + b->first * b->size_bytes, d, b->size_bytes);
 	b->size++;
 	return -ERROR_NO_ERROR;
 }
@@ -61,8 +62,8 @@ int circular_buffer_push_front(circular_buffer_t* b, void* d) {
 int circular_buffer_push_back(circular_buffer_t* b, void* d) {
 	if (b->size == (int)b->capacity)
 		return -ERROR_CAPACITY_EXCEEDED;
-	memcpy(b->data + b->last * b->size_bytes, d, b->size_bytes);
 	b->last = (b->last + 1) % b->capacity;
+	memcpy(b->data + b->last * b->size_bytes, d, b->size_bytes);
 	b->size++;
 	return -ERROR_NO_ERROR;
 }
