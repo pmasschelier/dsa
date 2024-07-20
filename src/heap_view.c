@@ -108,10 +108,6 @@ static void heap_sort(unsigned* index, long long*  val, unsigned size) {
 		}
 } */
 
-static unsigned int getid(unsigned int* id) {
-	return *id;
-}
-
 static heap_view_t* create_heap_no_data(unsigned capacity,
 										size_t size_bytes,
 										compare_fn_t compare) {
@@ -119,12 +115,12 @@ static heap_view_t* create_heap_no_data(unsigned capacity,
 	TEST_PTR_FAIL_FUNC(ret, NULL, );
 
 	ret->idx_to_pos = malloc(capacity * sizeof(unsigned));
-	TEST_PTR_FAIL_FUNC(ret->idx_to_pos, NULL, free(ret->data); free(ret));
+	TEST_PTR_FAIL_FUNC(ret->idx_to_pos, NULL, free(ret));
 	for (unsigned i = 0; i < capacity; i++)
 		ret->idx_to_pos[i] = i;
 
 	ret->pos_to_idx = malloc(capacity * sizeof(unsigned));
-	TEST_PTR_FAIL_FUNC(ret->pos_to_idx, NULL, free(ret->data); free(ret));
+	TEST_PTR_FAIL_FUNC(ret->pos_to_idx, NULL, free(ret));
 	for (unsigned i = 0; i < capacity; i++)
 		ret->pos_to_idx[i] = i;
 
@@ -132,7 +128,6 @@ static heap_view_t* create_heap_no_data(unsigned capacity,
 	ret->size = 0;
 	ret->size_bytes = size_bytes;
 	ret->compare = compare;
-	ret->getid = (getid_fn_t)getid;
 	return ret;
 }
 
@@ -183,17 +178,22 @@ int heap_get_root(heap_view_t* heap) {
 	return pulldown_heap(heap, 0);
 }
 
+static void copy_elem(heap_view_t* heap, unsigned int idx, void* elem) {
+	memcpy((char*)heap->data + idx * heap->size_bytes, (char*)elem,
+		   heap->size_bytes);
+}
+
 int insert_heap(heap_view_t* heap, void* elem) {
 	TEST_FAIL_FUNC(heap->size < heap->capacity, -ERROR_CAPACITY_EXCEEDED, );
 
-	memcpy((char*)heap->data + heap->size * heap->size_bytes, (char*)elem,
-		   heap->size_bytes);
+	copy_elem(heap, heap->size, elem);
 	pullup_heap(heap, heap->size);
-	heap->size++;
-	return 0;
+
+	return ++heap->size;
 }
 
-void heap_update_up(heap_view_t* heap, unsigned int idx) {
+void heap_update_up(heap_view_t* heap, unsigned int idx, void* elem) {
+	copy_elem(heap, idx, elem);
 	pullup_heap(heap, heap->idx_to_pos[idx]);
 }
 
