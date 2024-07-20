@@ -7,20 +7,26 @@
 #include "weight_type.h"
 
 graph_mat_t* create_graph_mat(unsigned size, BOOL is_weighted) {
+	graph_mat_t* ret;
 	if (size == 0)
 		return NULL;
 	graph_mat_t* g = malloc(sizeof(graph_mat_t));
-	TEST_PTR_FAIL_FUNC(g, NULL, );
+	when_null_ret(g, NULL);
 	g->nb_vert = size;
 
 	g->edges = calloc(size * size, sizeof(BOOL));
-	TEST_PTR_FAIL_FUNC(g->edges, NULL, free(g));
+	when_null_jmp(g->edges, NULL, error);
 	if (is_weighted) {
 		g->weights = calloc(size * size, sizeof(graph_weight_t));
-		TEST_PTR_FAIL_FUNC(g->weights, NULL, free_graph_mat(g));
+		when_null_jmp(g->weights, NULL, error2);
 	} else
 		g->weights = NULL;
 	return g;
+error2:
+	free(g->edges);
+error:
+	free(g);
+	return ret;
 }
 
 void free_graph_mat(graph_mat_t* g) {
@@ -56,19 +62,41 @@ graph_weight_t graph_mat_get_weight(graph_mat_t* g,
 	return g->weights ? g->weights[a * g->nb_vert + b] : 1;
 }
 
+/* static int mark_and_examine_traversal_mat(graph_mat_t* g, */
+/* 										  unsigned r, */
+/* 										  int* tab, */
+/* 										  int* father, */
+/* 										  LIST_STRUCT queue_or_stack) { */
+/* 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL)); */
+/* 	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, ); */
+/* 	int* list = malloc(g->nb_vert * sizeof(int)); */
+/* 	TEST_PTR_FAIL_FUNC(list, -ERROR_ALLOCATION_FAILED, ); */
+/**/
+/* 	int list_len = 0; */
+/* 	list[list_len++] = r; */
+/* 	int current; */
+/* 	while (list_len != 0) { */
+/* 		current mark[current] = TRUE; */
+/* 		for (unsigned i = 0; i < g->nb_vert; i++) { */
+/* 			if (graph_mat_get_edge(g, *vertex, i) && !mark[i]) { */
+/* 			} */
+/* 		} */
+/* 	} */
+/* } */
+
 static int mark_and_examine_traversal_mat(graph_mat_t* g,
 										  unsigned r,
 										  int* tab,
 										  int* father,
 										  LIST_STRUCT queue_or_stack) {
 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
-	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, );
+	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
 	mark[r] = TRUE;	 // Marquer r
 	father[r] = -1;
 
 	list_ref_t* waiting_list = create_list(sizeof(int));  // Création d'une file
-	push_back_list(waiting_list,
-				   ptr(TYPE_INT, r));  // Ajouter r à la liste d'attente
+	// Add the root element to the waiting list
+	push_back_list(waiting_list, ptr(TYPE_INT, r));
 
 	unsigned index = 0;
 
@@ -80,15 +108,15 @@ static int mark_and_examine_traversal_mat(graph_mat_t* g,
 		index++;
 
 		for (unsigned i = 0; i < g->nb_vert; i++) {
-			if (graph_mat_get_edge(g, *vertex, i) && !mark[i]) {
-				mark[i] = TRUE;
-				if (father)
-					father[i] = *vertex;
-				if (queue_or_stack == STACK)
-					push_front_list(waiting_list, ptr(TYPE_INT, i));
-				else
-					push_back_list(waiting_list, ptr(TYPE_INT, i));
-			}
+			if (mark[i] == TRUE || graph_mat_get_edge(g, *vertex, i) == FALSE)
+				continue;
+			mark[i] = TRUE;
+			if (father)
+				father[i] = *vertex;
+			if (queue_or_stack == STACK)
+				push_front_list(waiting_list, ptr(TYPE_INT, i));
+			else
+				push_back_list(waiting_list, ptr(TYPE_INT, i));
 		}
 		free(vertex);
 	}
@@ -97,42 +125,7 @@ static int mark_and_examine_traversal_mat(graph_mat_t* g,
 	return index;
 }
 
-// int DFS_mat(graph_mat_t* g, unsigned r, int** tab, int** father) {
-// 	BOOL* mark;
-// 	if (allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
-// 		return -1;
-// 	mark[r] = 1;  // Marquer r
-// 	(*father)[r] = -1;
-// 	(*tab)[0] = r;
-//
-// 	unsigned current = r;
-// 	unsigned index = 1;
-//
-// 	while (TRUE) {
-// 		BOOL any_edge = FALSE;
-// 		for (unsigned i = 0; i < g->nb_vert; i++) {
-// 			if (graph_mat_get_edge(g, current, i) && !mark[i]) {
-// 				mark[i] = 1;
-// 				if (tab)
-// 					(*tab)[index] = i;
-// 				index++;
-// 				if (father)
-// 					(*father)[i] = current;
-// 				current = i;
-// 				any_edge = TRUE;
-// 				break;
-// 			}
-// 		}
-// 		if (!any_edge) {
-// 			if (current != r)
-// 				current = (*father)[current];
-// 			else
-// 				break;
-// 		}
-// 	}
-// 	return index;
-// }
-
+#ifndef STRUCT_RECURSIVE_IMPL
 static void graph_mat_preorder_dfs_rec(graph_mat_t* g,
 									   unsigned current,
 									   int* values,
@@ -155,7 +148,7 @@ int graph_mat_preorder_dfs(graph_mat_t* g,
 						   int* values,
 						   int* father) {
 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
-	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, );
+	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
 	father[r] = -1;
 	unsigned index = 0;
 	graph_mat_preorder_dfs_rec(g, r, values, father, mark, &index);
@@ -173,10 +166,12 @@ static void graph_mat_postorder_dfs_rec(graph_mat_t* g,
 	for (unsigned i = 0; i < g->nb_vert; i++) {
 		if (graph_mat_get_edge(g, current, i) && !mark[i]) {
 			graph_mat_postorder_dfs_rec(g, i, values, father, mark, index);
-			father[i] = current;
+			if (father != NULL)
+				father[i] = current;
 		}
 	}
-	values[*index] = current;
+	if (values != NULL)
+		values[*index] = current;
 	*index += 1;
 }
 
@@ -185,13 +180,56 @@ int graph_mat_postorder_dfs(graph_mat_t* g,
 							int* values,
 							int* father) {
 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
-	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, );
+	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
 	father[r] = -1;
 	unsigned index = 0;
 	graph_mat_postorder_dfs_rec(g, r, values, father, mark, &index);
 	free(mark);
 	return index;
 }
+#else
+
+int graph_mat_preorder_dfs(graph_mat_t* g,
+						   unsigned r,
+						   int* values,
+						   int* father) {
+	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
+	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, );
+	unsigned index = 0;
+
+	unsigned current = r;
+	if (values != NULL)
+		values[index] = current;
+	index++;
+	if (father != NULL)
+		father[r] = -1;
+
+	while (TRUE) {
+		BOOL any_edge = FALSE;
+		for (unsigned i = 0; i < g->nb_vert; i++) {
+			if (graph_mat_get_edge(g, current, i) && !mark[i]) {
+				mark[i] = TRUE;
+				if (values != NULL)
+					values[index] = i;
+				index++;
+				if (father != NULL)
+					father[i] = current;
+				current = i;
+				any_edge = TRUE;
+				break;
+			}
+		}
+		if (!any_edge) {
+			if (current != r)
+				current = father[current];
+			else
+				break;
+		}
+	}
+	return index;
+}
+
+#endif /* ifdef STRUCT_RECURSIVE_IMPL */
 
 // static void graph_mat_bfs_rec(graph_mat_t* g,
 // 							  unsigned current,
@@ -218,8 +256,8 @@ int graph_mat_dijkstra(graph_mat_t* g,
 					   unsigned r,
 					   graph_weight_t* distance,
 					   int* father) {
-	TEST_PTR_FAIL_FUNC(distance, -ERROR_INVALID_PARAM3, );
-	TEST_FAIL_FUNC(r < g->nb_vert, -ERROR_INVALID_PARAM2, );
+	when_null_ret(distance, -ERROR_INVALID_PARAM3);
+	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
 	for (unsigned i = 0; i < g->nb_vert; i++)
 		distance[i] = GRAPH_WEIGHT_INF;
 	distance[r] = 0;
@@ -228,7 +266,7 @@ int graph_mat_dijkstra(graph_mat_t* g,
 		father[r] = -1;
 
 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
-	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, );
+	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
 	mark[r] = TRUE;
 
 	unsigned pivot = r;
@@ -237,19 +275,20 @@ int graph_mat_dijkstra(graph_mat_t* g,
 		// Updates the distance of all the pivots's neighbours
 		for (unsigned j = 0; j < g->nb_vert; j++) {	 // For each vertex j
 			// which is a successor of pivot and haven't been marked
-			if (!mark[j] && graph_mat_get_edge(g, pivot, j)) {
-				const graph_weight_t w = graph_mat_get_weight(g, pivot, j);
-				const graph_weight_t d =
-					weight_add_truncate_overflow(distance[pivot], w);
-				if (d < distance[j]) {
-					distance[j] = d;
-					if (father)
-						father[j] = pivot;
-				}
+			if (mark[j] == TRUE || graph_mat_get_edge(g, pivot, j) == FALSE)
+				continue;
+			const graph_weight_t w = graph_mat_get_weight(g, pivot, j);
+			const graph_weight_t d =
+				weight_add_truncate_overflow(distance[pivot], w);
+			if (d < distance[j]) {
+				distance[j] = d;
+				if (father)
+					father[j] = pivot;
 			}
 		}
 
-		// Finds the reached vertex not already marked, with the lowest value
+		// Finds the reached vertex not already marked, with the lowest
+		// value
 		graph_weight_t min = GRAPH_WEIGHT_INF;
 		int jmin = -1;
 		for (unsigned j = 0; j < g->nb_vert; j++) {	 // For each vertex j
@@ -292,8 +331,8 @@ int graph_mat_topological_ordering(graph_mat_t* g,
 								   unsigned* num,
 								   unsigned* denum) {
 	int ret = -1;
-	TEST_FAIL_FUNC(g->nb_vert != 0, -ERROR_GRAPH_HAS_NO_NODE, );
-	TEST_PTR_FAIL_FUNC(num, -ERROR_INVALID_PARAM2, );
+	when_true_ret(g->nb_vert == 0, -ERROR_GRAPH_HAS_NO_NODE);
+	when_null_ret(num, -ERROR_INVALID_PARAM2);
 
 	int number = g->nb_vert;
 
@@ -333,16 +372,16 @@ int graph_mat_bellman(graph_mat_t* g,
 					  int* father) {
 	if (!distance)
 		return -ERROR_INVALID_PARAM3;
-	TEST_FAIL_FUNC(r < g->nb_vert, -1, );
+	when_false_ret(r < g->nb_vert, -ERROR_GRAPH_HAS_NO_NODE);
 	for (unsigned i = 0; i < g->nb_vert; i++)
 		distance[i] = GRAPH_WEIGHT_INF;
 	distance[r] = 0;
 
 	unsigned* num = malloc(2 * g->nb_vert * sizeof(unsigned int));
-	TEST_PTR_FAIL_FUNC(num, -ERROR_ALLOCATION_FAILED, );
+	when_null_ret(num, -ERROR_ALLOCATION_FAILED);
 	unsigned* denum = num + g->nb_vert;
 	int ret = graph_mat_topological_ordering(g, num, denum);
-	TEST_FAIL_FUNC(ret == 0, -ERROR_GRAPH_SHOULDBE_DAG, );
+	when_false_jmp(ret == ERROR_NO_ERROR, ret, exit);
 
 	if (father) {
 		for (unsigned i = 0; i <= num[r]; i++)
@@ -369,7 +408,8 @@ int graph_mat_bellman(graph_mat_t* g,
 			father[x] = y_min;
 		}
 	}
-	free(num);
 
-	return 0;
+exit:
+	free(num);
+	return ret;
 }

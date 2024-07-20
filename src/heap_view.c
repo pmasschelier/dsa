@@ -111,23 +111,29 @@ static void heap_sort(unsigned* index, long long*  val, unsigned size) {
 static heap_view_t* create_heap_no_data(unsigned capacity,
 										size_t size_bytes,
 										compare_fn_t compare) {
-	heap_view_t* ret = malloc(sizeof(heap_view_t));
-	TEST_PTR_FAIL_FUNC(ret, NULL, );
+	heap_view_t* ret;
+	heap_view_t* heap = malloc(sizeof(heap_view_t));
+	when_null_ret(heap, NULL);
 
-	ret->idx_to_pos = malloc(capacity * sizeof(unsigned));
-	TEST_PTR_FAIL_FUNC(ret->idx_to_pos, NULL, free(ret));
+	heap->idx_to_pos = malloc(capacity * sizeof(unsigned));
+	when_null_jmp(heap->idx_to_pos, NULL, error);
 	for (unsigned i = 0; i < capacity; i++)
-		ret->idx_to_pos[i] = i;
+		heap->idx_to_pos[i] = i;
 
-	ret->pos_to_idx = malloc(capacity * sizeof(unsigned));
-	TEST_PTR_FAIL_FUNC(ret->pos_to_idx, NULL, free(ret));
+	heap->pos_to_idx = malloc(capacity * sizeof(unsigned));
+	when_null_jmp(heap->pos_to_idx, NULL, error2);
 	for (unsigned i = 0; i < capacity; i++)
-		ret->pos_to_idx[i] = i;
+		heap->pos_to_idx[i] = i;
 
-	ret->capacity = capacity;
-	ret->size = 0;
-	ret->size_bytes = size_bytes;
-	ret->compare = compare;
+	heap->capacity = capacity;
+	heap->size = 0;
+	heap->size_bytes = size_bytes;
+	heap->compare = compare;
+	return heap;
+error2:
+	free(heap->idx_to_pos);
+error:
+	free(heap);
 	return ret;
 }
 
@@ -135,9 +141,9 @@ heap_view_t* create_heap(unsigned capacity,
 						 size_t size_bytes,
 						 void* data,
 						 compare_fn_t compare) {
-	TEST_PTR_FAIL_FUNC(data, NULL, );
+	when_null_ret(data, NULL);
 	heap_view_t* ret = create_heap_no_data(capacity, size_bytes, compare);
-	TEST_PTR_FAIL_FUNC(ret, NULL, );
+	when_null_ret(ret, NULL);
 
 	ret->data = data;
 	return ret;
@@ -155,9 +161,9 @@ heap_view_t* create_heap_no_check(unsigned size,
 								  size_t size_bytes,
 								  void* data,
 								  compare_fn_t compare) {
-	TEST_PTR_FAIL_FUNC(data, NULL, );
+	when_null_ret(data, NULL);
 	heap_view_t* ret = create_heap_no_data(size, size_bytes, compare);
-	TEST_PTR_FAIL_FUNC(ret, NULL, );
+	when_null_ret(ret, NULL);
 	/* memcpy(ret->data, data, size * size_bytes); */
 	ret->data = data;
 	ret->size = size;
@@ -184,7 +190,7 @@ static void copy_elem(heap_view_t* heap, unsigned int idx, void* elem) {
 }
 
 int insert_heap(heap_view_t* heap, void* elem) {
-	TEST_FAIL_FUNC(heap->size < heap->capacity, -ERROR_CAPACITY_EXCEEDED, );
+	when_false_ret(heap->size < heap->capacity, -ERROR_CAPACITY_EXCEEDED);
 
 	copy_elem(heap, heap->size, elem);
 	pullup_heap(heap, heap->size);

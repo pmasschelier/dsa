@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <stdio.h>
 #include "heap_view.h"
 #include "ptr.h"
 
@@ -18,8 +17,7 @@ int main(void) {
 	int root;
 	unsigned i = 0;
 	while ((root = heap_get_root(heap)) != -1) {
-		printf("%d\n", ((int*)heap->data)[root]);
-		/* assert(*root == expected[i]); */
+		assert(data[root] == expected[i]);
 		i++;
 	}
 	assert(i == HEAP_SIZE);

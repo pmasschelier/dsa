@@ -1,28 +1,37 @@
 #include "btree_ref/btree_ref.h"
 #include <stdlib.h>
 #include <string.h>
+#include "btree_ref/path.h"
+#include "errors.h"
 #include "list_ref/list_ref.h"
-#include "test_macros.h"
 #include "ptr.h"
+#include "test_macros.h"
 
 btree_ref_t* create_btree(size_t size) {
-	btree_ref_t* tree = malloc(sizeof(btree_ref_t));
-	TEST_PTR_FAIL_FUNC(tree, NULL, );
-	tree->size = size;
-	tree->free_element = free;
-	tree->root = NULL;
-	return tree;
+	btree_ref_t* ret = malloc(sizeof(btree_ref_t));
+	when_null_ret(ret, NULL);
+	ret->size = size;
+	ret->free_element = free;
+	ret->root = NULL;
+	return ret;
 }
 
-static unsigned btree_height_rec(node_btree_ref_t* node) {
+#ifndef STRUCT_RECURSIVE_IMPL
+static unsigned btree_height_rec(node_btree_ref_t* node, unsigned height) {
 	if (node)
-		return 1 + MAX(btree_height_rec(node->ls), btree_height_rec(node->rs));
-	return 0;
+		return 1 + MAX(btree_height_rec(node->ls, height),
+					   btree_height_rec(node->rs, height));
+	return height;
 }
 
 unsigned btree_height(btree_ref_t* tree) {
-	return btree_height_rec(tree->root);
+	return btree_height_rec(tree->root, 0);
 }
+#else
+unsigned btree_height(btree_ref_t* tree) {
+	btree_path_t path = {0, 0};
+}
+#endif /* ifdef STRUCT_RECURSIVE_IMPL */
 
 unsigned btree_length(btree_ref_t* tree) {
 	return btree_preorder_traversal(tree, NULL);
@@ -46,7 +55,7 @@ static node_btree_ref_t* btree_emplace_at_rec(node_btree_ref_t** node_ptr,
 			(*node_ptr)->p = p;
 		} else {
 			*node_ptr = malloc(sizeof(node_btree_ref_t));
-			TEST_PTR_FAIL_FUNC(*node_ptr, NULL, );
+			when_null_ret(*node_ptr, NULL);
 			(*node_ptr)->p = p;
 			(*node_ptr)->ls = NULL;
 			(*node_ptr)->rs = NULL;
@@ -66,27 +75,26 @@ node_btree_ref_t* btree_emplace_at(btree_ref_t* tree,
 	return btree_emplace_at_rec(&tree->root, path, p, tree->free_element);
 }
 
-static void btree_emplace_path_rec(node_btree_ref_t** node_ptr,
-								   btree_path_t path,
-								   void* values[],
-								   int index,
-								   size_t length) {
-	if (path.length == 0)
-		return;
+static int btree_emplace_path_rec(node_btree_ref_t** node_ptr,
+								  btree_path_t path,
+								  void* values[],
+								  int index,
+								  size_t length) {
 	if (*node_ptr == NULL) {
 		*node_ptr = malloc(sizeof(node_btree_ref_t));
-		TEST_PTR_FAIL_FUNC(*node_ptr, , );
+		when_null_ret(*node_ptr, -ERROR_ALLOCATION_FAILED);
 		(*node_ptr)->ls = NULL;
 		(*node_ptr)->rs = NULL;
 		(*node_ptr)->p = NULL;
 	}
-	if (*node_ptr) {
-		if (index >= 0 && index < (int)length && values[index])
-			(*node_ptr)->p = values[index];
-	}
+	if (index >= 0 && index < (int)length && values[index])
+		(*node_ptr)->p = values[index];
+
+	if (path.length == 0)
+		return ERROR_NO_ERROR;
 
 	node_btree_ref_t** son = btree_next_node(*node_ptr, &path);
-	btree_emplace_path_rec(son, path, values, index + 1, length);
+	return btree_emplace_path_rec(son, path, values, index + 1, length);
 }
 
 void btree_emplace_path(btree_ref_t* tree,
@@ -209,18 +217,22 @@ int btree_levelorder_traversal(btree_ref_t* tree, void* tab[]) {
 btree_ref_t* btree_perfect_tree_from_tab(void* tab,
 										 size_t size,
 										 unsigned length) {
-	if (tab == NULL || size == 0 || length == 0)
-		return NULL;
+	btree_ref_t* ret;
+	when_true_ret(size == 0 || (length != 0 && tab == NULL), NULL);
 	btree_ref_t* tree = malloc(sizeof(btree_ref_t));
-	TEST_PTR_FAIL_FUNC(tree, NULL, );
+	when_null_ret(tree, NULL);
 	tree->size = size;
 	tree->free_element = free;
 	tree->root = NULL;
+
 	for (unsigned i = 0; i < length; i++) {
 		void* p = malloc(size);
-		TEST_PTR_FAIL_FUNC(p, NULL, btree_free(tree));
+		when_null_jmp(p, NULL, error);
 		memcpy(p, (char*)tab + i * size, size);
 		btree_emplace_at(tree, btree_node_to_path(i), p);
 	}
 	return tree;
+error:
+	btree_free(tree);
+	return ret;
 }

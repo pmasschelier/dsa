@@ -9,13 +9,15 @@
 #include "weight_type.h"
 
 graph_list_t* create_graph_list(unsigned size, BOOL is_weighted) {
-	if (size == 0)
-		return NULL;
+	graph_list_t* ret;
+	when_true_ret(size == 0, NULL);
+
 	graph_list_t* g = malloc(sizeof(graph_list_t));
-	TEST_PTR_FAIL_FUNC(g, NULL, );
+	when_null_ret(g, NULL);
+
 	g->nb_vert = size;
 	g->neighbours = malloc(size * sizeof(list_ref_t));
-	TEST_PTR_FAIL_FUNC(g->neighbours, NULL, free(g));
+	when_null_jmp(g->neighbours, NULL, error);
 	g->is_weighted = is_weighted;
 
 	for (unsigned i = 0; i < size; i++) {
@@ -26,6 +28,9 @@ graph_list_t* create_graph_list(unsigned size, BOOL is_weighted) {
 	}
 
 	return g;
+error:
+	free(g);
+	return ret;
 }
 
 int graph_list_add_edge_noverif(graph_list_t* g,
@@ -34,7 +39,7 @@ int graph_list_add_edge_noverif(graph_list_t* g,
 								long long weight) {
 	list_ref_t* neighbours = &g->neighbours[a];
 	graph_list_edge_t* e = malloc(sizeof(graph_list_edge_t));
-	TEST_PTR_FAIL_FUNC(e, -ERROR_ALLOCATION_FAILED, );
+	when_null_ret(e, -ERROR_ALLOCATION_FAILED);
 	*e = (graph_list_edge_t){weight, b};
 	push_back_list(neighbours, e);
 
@@ -117,12 +122,12 @@ int mark_and_examine_traversal_list(graph_list_t* g,
 									int* tab,
 									int* father,
 									LIST_STRUCT queue_or_stack) {
-	TEST_PTR_FAIL_FUNC(tab, -ERROR_INVALID_PARAM3, );
+	when_null_ret(tab, -ERROR_INVALID_PARAM3);
 	if (father)
 		father[r] = -1;
 
 	char* mark = calloc(g->nb_vert, sizeof(BOOL));
-	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, );
+	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
 	mark[r] = 1;  // Marquer r
 
 	// We create a queue an put the root inside
@@ -253,7 +258,7 @@ int graph_list_init_dfs(graph_list_t* g,
 						int* tab,
 						int* father,
 						graph_list_dfs_rec_fn_t f) {
-	TEST_PTR_FAIL_FUNC(tab, -ERROR_INVALID_PARAM3, );
+	when_null_ret(tab, -ERROR_INVALID_PARAM3);
 	char* mark = calloc(g->nb_vert, sizeof(BOOL));
 	if (father)
 		father[r] = -1;
@@ -355,8 +360,8 @@ int graph_list_dijkstra(graph_list_t* g,
 						unsigned r,
 						graph_weight_t* distance,
 						int* father) {
-	TEST_PTR_FAIL_FUNC(distance, -ERROR_INVALID_PARAM3, );
-	TEST_FAIL_FUNC(r < g->nb_vert, -ERROR_INVALID_PARAM2, );
+	when_null_ret(distance, -ERROR_INVALID_PARAM3);
+	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
 
 	for (unsigned i = 0; i < g->nb_vert; i++)
 		distance[i] = GRAPH_WEIGHT_INF;
@@ -424,8 +429,8 @@ int graph_list_topological_ordering(graph_list_t* g,
 									unsigned* num,
 									unsigned* denum) {
 	int ret = -1;
-	TEST_FAIL_FUNC(g->nb_vert != 0, -ERROR_GRAPH_HAS_NO_NODE, );
-	TEST_PTR_FAIL_FUNC(num, -ERROR_INVALID_PARAM2, );
+	when_true_ret(g->nb_vert == 0, -ERROR_GRAPH_HAS_NO_NODE);
+	when_null_ret(num, -ERROR_INVALID_PARAM2);
 
 	int number = g->nb_vert;
 
@@ -465,16 +470,16 @@ int graph_list_bellman(graph_list_t* g,
 					   int* father) {
 	if (!distance)
 		return -ERROR_INVALID_PARAM3;
-	TEST_FAIL_FUNC(r < g->nb_vert, -1, );
+	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
 	for (unsigned i = 0; i < g->nb_vert; i++)
 		distance[i] = GRAPH_WEIGHT_INF;
 	distance[r] = 0;
 
 	unsigned* num = malloc(2 * g->nb_vert * sizeof(unsigned int));
-	TEST_PTR_FAIL_FUNC(num, -ERROR_ALLOCATION_FAILED, );
+	when_null_ret(num, -ERROR_ALLOCATION_FAILED);
 	unsigned* denum = num + g->nb_vert;
 	int ret = graph_list_topological_ordering(g, num, denum);
-	TEST_FAIL_FUNC(ret == 0, -ERROR_GRAPH_SHOULDBE_DAG, );
+	when_false_ret(ret == ERROR_NO_ERROR, ret);
 
 	if (father) {
 		for (unsigned i = 0; i <= num[r]; i++)

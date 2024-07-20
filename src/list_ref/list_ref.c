@@ -7,7 +7,7 @@
 
 list_ref_t* create_list(size_t size) {
 	list_ref_t* ret = malloc(sizeof(list_ref_t));
-	TEST_PTR_FAIL_FUNC(ret, NULL, );
+	when_null_ret(ret, NULL);
 	ret->begin = NULL;
 	ret->end = NULL;
 	ret->free_element = free;
@@ -20,11 +20,12 @@ BOOL empty_list(list_ref_t* list) {
 }
 
 list_ref_t* list_from_tab(void* tab, size_t size, unsigned length) {
-	list_ref_t* ret = create_list(size);
-	TEST_PTR_FAIL_FUNC(ret, NULL, );
+	list_ref_t* ret;
+	list_ref_t* list = create_list(size);
+	when_null_ret(list, NULL);
 
 	if (0 == size)
-		return ret;
+		return list;
 
 	/* NOTE: On ne copie pas le tableau d'un seul bloc parce que sinon il
 	 * faudrait gérer la libération de la mémoire et c'est complique :/
@@ -34,10 +35,14 @@ list_ref_t* list_from_tab(void* tab, size_t size, unsigned length) {
 	void* p = NULL;
 	for (unsigned i = 0; i < length; i++) {
 		p = malloc(size);
-		TEST_PTR_FAIL_FUNC(p, NULL, free_list(ret));
+		when_null_jmp(p, NULL, exit);
 		memcpy(p, (char*)tab + i * size, size);
-		ptr = insert_list(ret, ptr, p);
+		ptr = insert_list(list, ptr, p);
 	}
+
+	return list;
+exit:
+	free_list(list);
 	return ret;
 }
 
@@ -104,7 +109,7 @@ node_list_ref_t* insert_list(list_ref_t* list, node_list_ref_t* prev, void* p) {
 
 	// On crée un nouveau noeud qui devient le nouveau suivant
 	node_list_ref_t* node = malloc(sizeof(node_list_ref_t));
-	TEST_PTR_FAIL_FUNC(node, NULL, );
+	when_null_ret(node, NULL);
 
 	// On assigne la valeur voulue au pointeur du nouveau noeud
 	node->p = p;
@@ -117,7 +122,7 @@ node_list_ref_t* push_front_list(list_ref_t* list, void* p) {
 
 	node_list_ref_t* node =
 		malloc(sizeof(node_list_ref_t));  // On crée un nouveau noeud
-	TEST_PTR_FAIL_FUNC(node, NULL, );
+	when_null_ret(node, NULL);
 
 	node->p = p;  // On assigne la valeur voulue au pointeur du nouveau noeud
 	node->prev = NULL;		   // Pas de noeud précédant
@@ -135,7 +140,7 @@ node_list_ref_t* push_back_list(list_ref_t* list, void* p) {
 
 	node_list_ref_t* node =
 		malloc(sizeof(node_list_ref_t));  // On crée un nouveau noeud
-	TEST_PTR_FAIL_FUNC(node, NULL, );
+	when_null_ret(node, NULL);
 
 	node->prev = list->end;	 // Le noeud précédant est le dernier noeud
 	node->next = NULL;		 // Pas de suivant
@@ -234,7 +239,7 @@ void clean_list(list_ref_t* list) {
 }
 #else
 void clean_list(list_ref_t* list) {
-	TEST_PTR_FAIL_FUNC(list, , );
+	when_null_ret(list, );
 	node_list_ref_t* node = list->begin;
 	node_list_ref_t* next;
 	while (node != NULL) {

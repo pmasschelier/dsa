@@ -13,7 +13,7 @@
  */
 
 #define foreach_node_node(list, node) \
-	for (node_list_ref* node = list->begin; node != NULL; node = node->next)
+	for (node_list_ref_t* node = list->begin; node != NULL; node = node->next)
 
 #define foreach_node_value(list, value, type)                    \
 	type* value = (list->begin != NULL) ? list->begin->p : NULL; \

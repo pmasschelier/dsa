@@ -1,8 +1,8 @@
 #ifndef ERRORS_H
 #define ERRORS_H
 
+#define ERROR_NO_ERROR 0
 #define ERROR_ALLOCATION_FAILED 1
-
 #define ERROR_CAPACITY_EXCEEDED 2
 
 #define ERROR_INVALID_PARAM (1 << 3)
