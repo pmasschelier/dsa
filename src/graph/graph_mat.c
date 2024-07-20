@@ -270,7 +270,7 @@ int graph_mat_dijkstra(graph_mat_t* g,
 	return count;
 }
 
-unsigned int graph_mat_indegree(graph_mat_t* g, int vertex) {
+unsigned int graph_mat_indegree(graph_mat_t* g, unsigned vertex) {
 	unsigned int degree = 0;
 	for (unsigned j = 0; j < g->nb_vert; j++) {
 		if (graph_mat_get_edge(g, j, vertex))
@@ -279,7 +279,7 @@ unsigned int graph_mat_indegree(graph_mat_t* g, int vertex) {
 	return degree;
 }
 
-unsigned int graph_mat_outdegree(graph_mat_t* g, int vertex) {
+unsigned int graph_mat_outdegree(graph_mat_t* g, unsigned vertex) {
 	unsigned int degree = 0;
 	for (unsigned j = 0; j < g->nb_vert; j++) {
 		if (graph_mat_get_edge(g, vertex, j))
@@ -297,33 +297,33 @@ int graph_mat_topological_ordering(graph_mat_t* g,
 
 	int number = g->nb_vert;
 
-	list_ref_t* pile = create_list(sizeof(unsigned));
+	list_ref_t* stack = create_list(sizeof(unsigned));
 
 	unsigned degre[g->nb_vert];
 	for (unsigned i = 0; i < g->nb_vert; i++) {
 		degre[i] = graph_mat_outdegree(g, i);
 		if (degre[i] == 0)
-			push_front_list(pile, ptr(TYPE_INT, i));
+			push_front_list(stack, ptr(TYPE_INT, i));
 	}
-	if (empty_list(pile))
+	if (empty_list(stack))
 		goto exit;
-	while (!empty_list(pile)) {
+	while (!empty_list(stack)) {
 		unsigned* s = NULL;
-		pop_front_list(pile, (void**)&s);
+		pop_front_list(stack, (void**)&s);
 		num[*s] = --number;
 		if (denum)
 			denum[number] = *s;
 		for (unsigned t = 0; t < g->nb_vert; t++) {
 			if (graph_mat_get_edge(g, t, *s) && --degre[t] == 0)
-				push_front_list(pile, ptr(TYPE_INT, t));
+				push_front_list(stack, ptr(TYPE_INT, t));
 		}
-		pile->free_element(s);
+		stack->free_element(s);
 	}
 	if (number != 0)
 		goto exit;
 	ret = 0;
 exit:
-	free_list(pile);
+	free_list(stack);
 	return ret;
 }
 
