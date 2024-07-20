@@ -1,13 +1,14 @@
 src_files = files(
-  'ptr.c',
-  'list_ref/list_ref.c',
-  'list_ref/algorithms.c',
   'btree_ref/btree_ref.c',
   'btree_ref/path.c',
-  'heap_view.c',
+  'circular_buffer.c',
   'graph/graph_cast.c',
   'graph/graph_list.c',
   'graph/graph_mat.c',
+  'heap_view.c',
+  'ptr.c',
+  'list_ref/list_ref.c',
+  'list_ref/algorithms.c',
 )
 
 lib = library('struct', src_files,

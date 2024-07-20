@@ -1,6 +1,7 @@
 header_files = files(
   'btree_ref/btree_ref.h',
   'btree_ref/path.h',
+  'circular_buffer.h',
   'heap_view.h',
   'graph/graph_cast.h',
   'graph/graph_list.h',
