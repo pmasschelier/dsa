@@ -13,6 +13,13 @@ else
   doxy_data.set('HTML_FORMULA_FORMAT', 'png')
 endif
 
+if find_program('latex', required : false).found() and find_program('gs', required : false).found() and find_program('dvips', required : false).found()
+  doxy_data.set('USE_MATHJAX', 'no')
+else
+  doxy_data.set('USE_MATHJAX', 'yes')
+endif
+
+
 doxy_data.set('TOP_SRCDIR', meson.project_source_root())
 doxy_data.set('TOP_BUILDDIR', meson.project_build_root())
 
@@ -25,6 +32,7 @@ datadir = join_paths(get_option('datadir'), 'doc', 'struct')
 
 html_target = custom_target('doc',
                             input: doxyfile,
+                            depend_files: header_files,
                             output: 'html',
                             command: [doxygen, doxyfile],
                             install: true,

@@ -347,28 +347,27 @@ int graph_list_bfs(graph_list_t* g, unsigned r, int* values, int* father) {
 // 	index[j] = a;
 // }
 
-static inline graph_list_path_node_t init_node(unsigned i) {
-	return (graph_list_path_node_t){
-		.index = i, .dist = GRAPH_WEIGHT_INF, .father = -1};
-}
-
-static int min_weight(graph_list_path_node_t* a, graph_list_path_node_t* b) {
-	return (a->dist < b->dist) - (b->dist < a->dist);
+static int min_weight(graph_weight_t* a, graph_weight_t* b) {
+	return (*a < *b) - (*b < *a);
 }
 
 int graph_list_dijkstra(graph_list_t* g,
 						unsigned r,
-						graph_list_path_node_t* result) {
-	TEST_PTR_FAIL_FUNC(result, -ERROR_INVALID_PARAM3, );
+						graph_weight_t* distance,
+						int* father) {
+	TEST_PTR_FAIL_FUNC(distance, -ERROR_INVALID_PARAM3, );
 	TEST_FAIL_FUNC(r < g->nb_vert, -ERROR_INVALID_PARAM2, );
 
 	for (unsigned i = 0; i < g->nb_vert; i++)
-		result[i] = init_node(i);
-	result[r].dist = 0;
+		distance[i] = GRAPH_WEIGHT_INF;
+	if (father) {
+		for (unsigned i = 0; i < g->nb_vert; i++)
+			father[i] = -1;
+	}
+	distance[r] = 0;
 
-	heap_view_t* heap =
-		create_heap_no_check(g->nb_vert, sizeof(graph_list_path_node_t), result,
-							 (compare_fn_t)min_weight);
+	heap_view_t* heap = create_heap_no_check(
+		g->nb_vert, sizeof(graph_weight_t), distance, (compare_fn_t)min_weight);
 
 	// We put r at the root of (index, distance) which makes it a heap
 	heap->idx_to_pos[r] = 0;
@@ -378,29 +377,25 @@ int graph_list_dijkstra(graph_list_t* g,
 
 	// Number of vertices reached by the algorithm
 	unsigned number = 0;
-	graph_list_path_node_t* pivot = NULL;
-	int pivot_idx;
+	int pivot;
 
 	// While there is a vertex left in the heap
-	while ((pivot_idx = heap_get_root(heap)) != -1) {
+	while ((pivot = heap_get_root(heap)) != -1) {
 		// Take the root of the heap (which is the non-marked vertex with the
 		// lowest distance to the root)
-		pivot = &result[pivot_idx];
-		if (pivot->dist == GRAPH_WEIGHT_INF)
+		if (distance[pivot] == GRAPH_WEIGHT_INF)
 			break;
 
-		node_list_ref_t* node = g->neighbours[pivot->index].begin;
+		node_list_ref_t* node = g->neighbours[pivot].begin;
 		graph_list_edge_t* e = NULL;
 		// For each successor of pivot
 		while (node != NULL) {
 			e = node->p;
 
 			graph_weight_t d =
-				weight_add_truncate_overflow(result[pivot->index].dist, e->w);
-			if (d < result[e->to].dist) {
-				result[e->to].dist = d;
-				result[e->to].father = pivot->index;
-				heap_update_up(heap, e->to);
+				weight_add_truncate_overflow(distance[pivot], e->w);
+			if (d < distance[e->to]) {
+				heap_update_up(heap, e->to, &d);
 			}
 
 			node = node->next;
@@ -409,4 +404,104 @@ int graph_list_dijkstra(graph_list_t* g,
 	free_heap(heap);
 
 	return number;
+}
+
+unsigned int graph_list_indegree(graph_list_t* g, unsigned vertex) {
+	unsigned degree = 0;
+	for (unsigned i = 0; i < g->nb_vert; i++) {
+		list_ref_t* neighbours = &g->neighbours[i];
+		foreach_node(neighbours, edge, graph_list_edge_t) degree +=
+			edge->to == vertex;
+	}
+	return degree;
+}
+
+unsigned int graph_list_outdegree(graph_list_t* g, unsigned vertex) {
+	return length_list(&g->neighbours[vertex]);
+}
+
+int graph_list_topological_ordering(graph_list_t* g,
+									unsigned* num,
+									unsigned* denum) {
+	int ret = -1;
+	TEST_FAIL_FUNC(g->nb_vert != 0, -ERROR_GRAPH_HAS_NO_NODE, );
+	TEST_PTR_FAIL_FUNC(num, -ERROR_INVALID_PARAM2, );
+
+	int number = g->nb_vert;
+
+	list_ref_t* stack = create_list(sizeof(unsigned));
+
+	unsigned degre[g->nb_vert];
+	for (unsigned i = 0; i < g->nb_vert; i++) {
+		degre[i] = graph_list_outdegree(g, i);
+		if (degre[i] == 0)
+			push_front_list(stack, ptr(TYPE_INT, i));
+	}
+	if (empty_list(stack))
+		goto exit;
+	while (!empty_list(stack)) {
+		unsigned* s = NULL;
+		pop_front_list(stack, (void**)&s);
+		num[*s] = --number;
+		if (denum)
+			denum[number] = *s;
+		for (unsigned t = 0; t < g->nb_vert; t++) {
+			if (graph_list_get_edge(g, t, *s) && --degre[t] == 0)
+				push_front_list(stack, ptr(TYPE_INT, t));
+		}
+		stack->free_element(s);
+	}
+	if (number != 0)
+		goto exit;
+	ret = 0;
+exit:
+	free_list(stack);
+	return ret;
+}
+
+int graph_list_bellman(graph_list_t* g,
+					   unsigned r,
+					   graph_weight_t* distance,
+					   int* father) {
+	if (!distance)
+		return -ERROR_INVALID_PARAM3;
+	TEST_FAIL_FUNC(r < g->nb_vert, -1, );
+	for (unsigned i = 0; i < g->nb_vert; i++)
+		distance[i] = GRAPH_WEIGHT_INF;
+	distance[r] = 0;
+
+	unsigned* num = malloc(2 * g->nb_vert * sizeof(unsigned int));
+	TEST_PTR_FAIL_FUNC(num, -ERROR_ALLOCATION_FAILED, );
+	unsigned* denum = num + g->nb_vert;
+	int ret = graph_list_topological_ordering(g, num, denum);
+	TEST_FAIL_FUNC(ret == 0, -ERROR_GRAPH_SHOULDBE_DAG, );
+
+	if (father) {
+		for (unsigned i = 0; i <= num[r]; i++)
+			father[denum[i]] = -1;
+	}
+	for (unsigned i = num[r] + 1; i < g->nb_vert; i++) {
+		graph_weight_t min = GRAPH_WEIGHT_INF;
+		const unsigned x = denum[i];
+		int y_min = -1;
+		for (unsigned j = num[r]; j < i; j++) {
+			int y = denum[j];
+			if (graph_list_get_edge(g, y, x)) {
+				const graph_weight_t w = graph_list_get_edge(g, y, x)->w;
+				const graph_weight_t d =
+					weight_add_truncate_overflow(distance[j], w);
+				if (d < min) {
+					min = d;
+					y_min = j;
+				}
+			}
+		}
+		if (y_min >= 0) {
+			distance[x] = min;
+			father[x] = y_min;
+		}
+	}
+	free(num);
+
+	return 0;
 }

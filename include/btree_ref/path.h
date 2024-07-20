@@ -5,6 +5,7 @@
  * @file path.h
  * @brief Binary tree path definition
  * Defines functions to manipulate a path in a binary tree.
+ * @ingroup btree_ref
  */
 
 typedef struct btree_path btree_path_t;
@@ -15,13 +16,27 @@ typedef struct btree_path btree_path_t;
  * A path in a binary tree is downward starting from a given node
  * (by default the root node). Each bit, starting from the 0th bit (LSB)
  * and up to the length-th bit (MSB), describe which branch should be taken.
- * A 0 bit means "left" and a 1 bit means "right".
  *
  * \see ROOT_PATH LHS_PATH RHS_PATH
  *
  */
 struct btree_path {
+	/**
+	 * @brief Length of the path
+	 *
+	 * Length of the path in the btree, the length of the path is equal to the
+	 * height of the target node in the btree.
+	 */
 	unsigned char length;
+	/**
+	 * @brief Encoded path
+	 *
+	 * A path always goes down in a binary tree. Starting from the LSB of path
+	 * we will read #path bits. Each bits corresponds to the choice between the
+	 * left and the right son of the current node.
+	 *
+	 * A 0 bit means "left" and a 1 bit means "right".
+	 */
 	long unsigned int path;
 };
 

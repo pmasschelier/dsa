@@ -41,6 +41,8 @@ conf = configure_file(input: 'config.h.in',
 
 inc_dir = include_directories('.', 'include')
 
+subdir('include')
+
 doxygen = find_program('doxygen', required : false)
 if doxygen.found()
   subdir('doc')
@@ -57,7 +59,6 @@ fail_test_token = fail_test_tokens[get_option('test_fail')]
 add_project_arguments(f'-D@fail_test_token@', language : 'c')
 
 subdir('src')
-subdir('include')
 subdir('tests')
 subdir('benchmarks')
 

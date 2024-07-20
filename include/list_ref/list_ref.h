@@ -9,8 +9,31 @@
  * @file list_ref.h
  * @brief Doubly linked lists definition
  * Defines functions to create, free and manipulate doubly-linked lists
+ * @ingroup list_ref
  */
 
+#define foreach_node_node(list, node) \
+	for (node_list_ref* node = list->begin; node != NULL; node = node->next)
+
+#define foreach_node_value(list, value, type)                    \
+	type* value = (list->begin != NULL) ? list->begin->p : NULL; \
+	for (node_list_ref_t* node = list->begin; node != NULL;      \
+		 node = node->next, value = (node != NULL) ? node->p : NULL)
+
+#define GET_MACRO(_1, _2, _3, NAME, ...) NAME
+#define foreach_node(...) \
+	GET_MACRO(__VA_ARGS__, foreach_node_value, foreach_node_node)(__VA_ARGS__)
+
+/**
+ * @defgroup list_ref Doubly-linked lists
+ * @{
+ */
+
+/**
+ * @typedef node_list_ref_t
+ * @brief Typedef for the node_list_ref structure
+ *
+ */
 typedef struct node_list_ref node_list_ref_t;
 
 /**
@@ -28,6 +51,13 @@ struct node_list_ref {
 };
 
 /**
+ * @typedef list_ref_t
+ * @brief Typedef for the list_ref structure
+ *
+ */
+typedef struct list_ref list_ref_t;
+
+/**
  * @struct list_ref
  * @brief Doubly linked list
  * @see list_node_ref
@@ -42,8 +72,6 @@ struct list_ref {
 	node_list_ref_t* end;
 	/**< Pointer to the last element of the list */
 };
-
-typedef struct list_ref list_ref_t;
 
 /**
  * @brief Create an empty list
@@ -143,10 +171,10 @@ void insert_list_node(list_ref_t* list,
  * @param[in] list pointer to the list
  * @param[in] prev node after which the insertion should occur. Passing NULL
  * will cause it insert at the beginning of the list
- * @param[in] node pointer to the node to insert
+ * @param[in] p pointer to the value the new node will reference
  * @return pointer to the newly created node
  */
-node_list_ref_t* insert_list(list_ref_t* list, node_list_ref_t* node, void* p);
+node_list_ref_t* insert_list(list_ref_t* list, node_list_ref_t* prev, void* p);
 
 /**
  * @brief Append an element to the beginning of the list
@@ -231,6 +259,8 @@ void extract_list(list_ref_t* list, node_list_ref_t* node);
  * _Complexity: O(1)_
  * @param[in] list pointer to the list
  * @param[in] node node to remove
+ * @param[out] x reference to a pointer which will contain the removed node
+ * value.
  *
  */
 void remove_list(list_ref_t* list, node_list_ref_t* node, void** x);
@@ -252,5 +282,7 @@ void clean_list(list_ref_t* list);
  * @param[in] list pointer to the list
  */
 void free_list(list_ref_t* list);
+
+/** @} */  // end of list_ref
 
 #endif

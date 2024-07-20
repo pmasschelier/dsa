@@ -1,4 +1,4 @@
-install_headers(
+header_files = files(
   'btree_ref/btree_ref.h',
   'btree_ref/path.h',
   'heap_view.h',
@@ -9,5 +9,6 @@ install_headers(
   'list_ref/algorithms.h',
   'ptr.h',
   'weight_type.h',
-  subdir: 'struct'
 )
+
+install_headers(header_files, subdir: meson.project_name())

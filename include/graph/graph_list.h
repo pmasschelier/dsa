@@ -7,12 +7,18 @@
 /**
  * @file graph/graph_list.h
  * @brief Graphs defined with adjacency lists
+ * @ingroup graph
  *
  * Defines functions to create, free and manipulate adjacency lists
  */
 
-/* Graphe représenté par des listes d'adjacence */
+/**
+ * @typedef graph_list_edge_t
+ * @brief Typedef for the graph_list_edge structure
+ *
+ */
 typedef struct graph_list_edge graph_list_edge_t;
+
 /**
  * @struct graph_list_edge
  * @brief A graph edge
@@ -24,31 +30,48 @@ struct graph_list_edge {
 	unsigned to;	  /**< Destination vertex */
 };
 
+/**
+ * @typedef graph_list_path_node_t
+ * @brief Typedef for the graph_list_path_node structure
+ *
+ */
 typedef struct graph_list_path_node graph_list_path_node_t;
 
-struct graph_list_path_node {
-	unsigned index;
-	int father;
-	graph_weight_t dist;
-};
-
+/**
+ * @typedef graph_list_t
+ * @brief Typedef for the graph_list structure
+ *
+ */
 typedef struct graph_list graph_list_t;
+
 /**
  * @struct graph_list
  * @brief Weighted graph defined with adjacency lists
+ *
+ * For adjacency lists the complexity of the algorithms are defined using:
+ * - \f$n\f$: the number of vertices
+ * - \f$d+\f$: the maximum number of neighbours of a vertex
  */
 struct graph_list {
+	/**
+	 * @brief Number of vertices in the graph
+	 */
 	unsigned nb_vert;
+	/**
+	 * @brief Array of lists of graph_list_edge
+	 *
+	 * neighbours[i] contains the list of edges coming out of the i-th node of
+	 * the graph
+	 */
 	list_ref_t* neighbours;
+	/** Does the graph is weighted ? */
+	/**
+	 * @brief Is the graph weighted
+	 *
+	 * If the graph is not weighted, all the edges' weights will be forced to 1.
+	 */
 	BOOL is_weighted;
 };
-
-/* \brief Crée un graphe sous forme de listes d'adjacence
- * \param Nombre de sommets du graphe (doit être strictement positif)
- * \return Renvoie un pointeur vers le graphe alloué (toutes les cases mémoire
- * ont été mises à zéro avec calloc) le graphe doit être libéré avec
- * free_graph_list(g); La fonction renvoie nulle si l'allocation à échoué.
- */
 
 /**
  * @brief Creates a graph_list_t with no edge
@@ -65,11 +88,15 @@ graph_list_t* create_graph_list(unsigned size, BOOL is_weighted);
 /**
  * @brief Frees the graph
  * @param[in] g pointer to the graph
+ *
+ * _Complexity:_ \f$O(n\times d^+)\f$
  */
 void free_graph_list(graph_list_t* g);
 
 /**
  * @brief Creates or remove an edge between two vertices
+ *
+ * _Complexity:_ \f$O(d^+)\f$
  *
  * @param[inout] g pointer to the graph
  * @param a origin vertex
@@ -88,7 +115,7 @@ void graph_list_set_edge(graph_list_t* g,
 /**
  * @brief Tests if the graph has an (a, b) edge
  *
- * Complexity: O(E)
+ * _Complexity:_ \f$O(d^+)\f$
  *
  * @param[in] g pointer to the graph
  * @param a origin vertex
@@ -107,7 +134,7 @@ graph_list_edge_t* graph_list_get_edge(graph_list_t* g,
  * If father != NULL, it will be set so that father[i] would be the father of i
  * if i was encountered during the traversal.
  *
- * Complexity: O(n)
+ * _Complexity:_ \f$O(n\times d^+)\f$
  *
  * @param[in] g pointer to the graph
  * @param r Starting vertex
@@ -115,7 +142,10 @@ graph_list_edge_t* graph_list_get_edge(graph_list_t* g,
  * @param[out] father list of predecessors
  * @return number of nodes reached
  */
-int graph_list_preorder_dfs(graph_list_t* g, unsigned r, int* tab, int* father);
+int graph_list_preorder_dfs(graph_list_t* g,
+							unsigned r,
+							int* values,
+							int* father);
 
 /**
  * @brief Postorder Depth-First Search Traversal of a graph
@@ -125,7 +155,7 @@ int graph_list_preorder_dfs(graph_list_t* g, unsigned r, int* tab, int* father);
  * If father != NULL, it will be set so that father[i] would be the father of i
  * if i was encountered during the traversal.
  *
- * Complexity: O(n)
+ * _Complexity:_ \f$O(n\times d^+)\f$
  *
  * @param[in] g pointer to the graph
  * @param r Starting vertex
@@ -135,7 +165,7 @@ int graph_list_preorder_dfs(graph_list_t* g, unsigned r, int* tab, int* father);
  */
 int graph_list_postorder_dfs(graph_list_t* g,
 							 unsigned r,
-							 int* tab,
+							 int* values,
 							 int* father);
 
 /**
@@ -146,60 +176,111 @@ int graph_list_postorder_dfs(graph_list_t* g,
  * If father != NULL, it will be set so that father[i] would be the father of i
  * if i was encountered during the traversal.
  *
- * Complexity: O(n)
+ * _Complexity:_ \f$O(n\times d^+)\f$
  *
  * @param[in] g pointer to the graph
  * @param r Starting vertex
- * @param[out] values[out] vertices index in the order they were encountered
+ * @param[out] values vertices index in the order they were encountered
  * (ordered by index for a same level)
- * @param[out] father[out] list of predecessors
+ * @param[out] father list of predecessors
  * @return number of nodes reached
  */
 int graph_list_bfs(graph_list_t* g, unsigned r, int* values, int* father);
 
-/* \brief Implémentation de l'algorithme de Dijkstra avec un graphe sous forme
- * de listes d'adjacence \param g Pointeur vers le graphe, !!! Les arêtes du
- * graphe ne doivent avoir que des poids posisitfs. \param r Racine du graphe
- * \param distance Après la fonction distance[i] = d(r, i) et INFINI si le
- * sommet n'est pas atteint \param father Si father != NULL, après la fonction
- * father[i] est le père de i Ces deux derniers pointeurs vont être modifiés
- * pour pointer vers des tableau alloués de la taille graphe->nb_vert !!! Ils
- * devront être libérés par l'utilisateur !!! \return Nombre de sommets atteints
- * par l'algorithme et -1 en cas d'échec \complexity O(n²)
+/**
+ * @brief Dijkstra algorithm implementation with adjacency lists
+ *
+ * __The weights of the edges have to be positive.__
+ *
+ * values and father parameters should be allocated arrays of size g->nb_vert.
+ * father is facultative and can be left NULL.
+ * If father != NULL, it will be set so that father[i] would be the father of i
+ * if i was encountered during the traversal.
+ *
+ * _Complexity:_ \f$O(n \times \ln{n}\times d^+)\f$
+ *
+ * @param[in] g pointer to the graph
+ * @param r Starting vertex (root)
+ * @param[out] distance minimum distance from r to distance[i] (GRAPH_WEIGHT_INF
+ * if there is no path to i)
+ * @param[out] father list of predecessors
+ * @return number of nodes reached or a negative error code
  */
 int graph_list_dijkstra(graph_list_t* g,
 						unsigned r,
-						graph_list_path_node_t* result);
+						graph_weight_t* distance,
+						int* father);
 
-/* \brief Numérotation topologique du graphe
- * Associe à chaque sommet i d'un graphe orienté acyclique (DAG) un numéro
- * num[i] tel que si j est un ascendant de i (*num)[j] < (*num)[i]
- * \param g Pointeur vers le graphe, !!! Ce doit être un DAG !!!
- * \param num Après la fonction (*num)[i] est le numéro topologique de i
- * \param denum si denum != NULL : après la fonction (*denum)[num[i]]=i
- * Ces trois derniers pointeurs vont être modifiés pour pointer vers des tableau
- * alloués de la taille graphe->nb_vert !!! Ils devront être libérés par
- * l'utilisateur !!! \return 0 si la numérotation a bien eu lieu -1 si father ==
- * NULL ou g->nb_vert == 0 -2 s'il y a eu une erreur d'allocation >0 si g
- * n'était pas un DAG \complexity 0(n²)
+/**
+ * @brief Computes the indegree of a vertex
+ *
+ * The indegree of a vertex is the number of edges going towards this vertex in
+ * the graph.
+ *
+ * _Complexity:_ \f$O(n \times d^+)\f$
+ *
+ * @param g pointer to the graph
+ * @param vertex index of the vertex
  */
-int topological_numbering_list(graph_list_t* g,
-							   unsigned** num,
-							   unsigned** denum);
+unsigned int graph_list_indegree(graph_list_t* g, unsigned vertex);
 
-/* \brief Implémentation de l'algorithme de Bellman avec un graphe sous forme de
- * listes d'adjacence \param g Pointeur vers le graphe, !!! Ce doit être un DAG
- * !!! \param r Racine du graphe \param distance Après la fonction distance[i] =
- * d(r, i) et INFINI si le sommet n'est pas atteint \param father Si father !=
- * NULL, après la fonction father[i] est le père de i Ces deux derniers
- * pointeurs vont être modifiés pour pointer vers des tableau alloués de la
- * taille graphe->nb_vert !!! Ils devront être libérés par l'utilisateur !!!
- * \return Nombre de sommets atteints par l'algorithme et -1 en cas d'échec
- * \complexity O(n²)
+/**
+ * @brief Computes the outdegree of a vertex
+ *
+ * Complexity: \f$O(d^+)\f$
+ *
+ * The outdegree of a vertex is the number of edges going outward this vertex.
+ * @param g pointer to the graph
+ * @param vertex index of the vertex
  */
-int Bellman_list(graph_list_t* g,
-				 unsigned r,
-				 long long** distance,
-				 int** father);
+unsigned int graph_list_outdegree(graph_list_t* g, unsigned vertex);
+
+/**
+ * @brief Topological ordering of a graph
+ *
+ * Computes for each vertex of the a directly oriented acyclic graph (DAG) a
+ * number num[i] such that is j is a predecessor of i, num[j] < num[i]
+ *
+ * g shoud be a DAG otherwise -ERROR_GRAPH_SHOULDBE_DAG will be returned (which
+ * makes this function useful to test if a graph is a DAG).
+ *
+ * denum is facultative and can be left NULL, if it is not NULL it will contains
+ * the node indices in topological order, such that i = denum[num[i]]
+ *
+ * _Complexity:_ \f$O(n^2 \times d^+)\f$
+ *
+ * @param g pointer to the graph
+ * @param num num[i] is the topological number of the i vertex
+ * @param denum denum[i] is the index of the vertex of topological number i
+ * @return -ERROR_GRAPH_SHOULDBE_DAG if g is not a DAG and  otherwise
+ */
+int graph_list_topological_ordering(graph_list_t* g,
+									unsigned* num,
+									unsigned* denum);
+
+/**
+ * @brief Bellman algorithm implementation with adjacency matrix
+ *
+ * __g must be a Directed Acyclic Graph (DAG)__
+ *
+ * values and father parameters should be allocated arrays of size g->nb_vert.
+ * father is facultative and can be left NULL.
+ * If father != NULL, it will be set so that father[i] would be the predecessor
+ * of i in the shortest path from r to i if i can be reached from r and -1
+ * otherwise.
+ *
+ * _Complexity:_ \f$O(n^2 \times d^+)\f$
+ *
+ * @param[in] g pointer to the graph
+ * @param r Starting vertex (root)
+ * @param[out] distance minimum distance from r to distance[i] (GRAPH_WEIGHT_INF
+ * if there is no path to i)
+ * @param[out] father list of predecessors
+ * @return number of nodes reached or a negative error code
+ */
+int graph_list_bellman(graph_list_t* g,
+					   unsigned r,
+					   graph_weight_t* distance,
+					   int* father);
 
 #endif

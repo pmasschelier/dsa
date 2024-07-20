@@ -5,23 +5,43 @@
 #include "weight_type.h"
 
 /**
+ * @defgroup graph Graphs
+ */
+
+/**
  * @file graph/graph_mat.h
  * @brief Graphs defined with adjacency matrix
+ * @ingroup graph
  *
  * Defines functions to create, free and manipulate adjacency matrices
  */
 
+/**
+ * @typedef graph_mat_t
+ * @brief Typedef to the graph_mat struct
+ *
+ */
 typedef struct graph_mat graph_mat_t;
+
 /**
  * @struct graph_mat
  * @brief Weighted graph defined with adjacency matrix
  */
 struct graph_mat {
-	/**< Number of vertices in the graph */
+	/**
+	 * @brief Number of vertices in the graph
+	 */
 	unsigned nb_vert;
-	/**< n*n matrix containing the edges' weights */
+	/**
+	 * @brief n*n matrix containing the edges' weights
+	 *
+	 * If the graph is not weighted this field will be NULL. Otherwise weights[i
+	 * * size + j] will contains the weight of all the edges (i, j),
+	 */
 	graph_weight_t* weights;
-	/**< n*n matrix, edges[i][j] == TRUE iif an edge (i, j) exists */
+	/**
+	 * @brief n*n matrix, edges[i][j] == TRUE iif an edge (i, j) exists
+	 */
 	BOOL* edges;
 };
 
@@ -39,12 +59,17 @@ graph_mat_t* create_graph_mat(unsigned size, BOOL is_weighted);
 
 /**
  * @brief Frees the graph
+ *
+ * _Complexity: O(1)_
+ *
  * @param[in] g pointer to the graph
  */
 void free_graph_mat(graph_mat_t* g);
 
 /**
  * @brief Creates or remove an edge between two vertices
+ *
+ * _Complexity: O(1)_
  *
  * @param[inout] g pointer to the graph
  * @param a origin vertex
@@ -63,7 +88,7 @@ void graph_mat_set_edge(graph_mat_t* g,
 /**
  * @brief Tests if the graph has an (a, b) edge
  *
- * Complexity: O(1)
+ * _Complexity: O(1)_
  *
  * @param[in] g pointer to the graph
  * @param a origin vertex
@@ -75,7 +100,7 @@ BOOL graph_mat_get_edge(graph_mat_t* g, unsigned int a, unsigned b);
 /**
  * @brief Returns the weight of the (a, b) edge
  *
- * Complexity: O(1)
+ * _Complexity: O(1)_
  *
  * @param[in] g pointer to the graph
  * @param a origin vertex
@@ -83,24 +108,6 @@ BOOL graph_mat_get_edge(graph_mat_t* g, unsigned int a, unsigned b);
  * @return weight of the edge (if g is not a weighted graph returns 1)
  */
 graph_weight_t graph_mat_get_weight(graph_mat_t* g, unsigned int a, unsigned b);
-
-/* \brief Parcours "marquer et examiner" du graphe
- * \param g Pointeur vers le graphe
- * \param r Racine du parcours
- * \param tab Liste des sommets dans l'ordre rencontrés
- * \param father Tableau tel que father[i] soit le père de i si i a été
- * rencontré lors du parcours Ces deux derniers pointeurs vont être modifiés
- * pour pointer vers des tableau alloués de la taille graphe->nb_vert !!! Ils
- * devront être libérés par l'utilisateur !!! \param queue_or_stack Type de la
- * file d'attente, doit valoir QUEUE ou STACK QUEUE : On a un parcours en
- * largeur (BFS) STACK : On a un parcours proche du DFS \return -1 en cas
- * d'erreur et sinon le nombre de sommets rencontrés \complexity 0(n²)
- */
-// int mark_and_examine_traversal_mat(graph_mat_t* g,
-// 								   unsigned r,
-// 								   int** tab,
-// 								   int** father,
-// 								   LIST_STRUCT queue_or_stack);
 
 /**
  * @brief Preorder Depth-First Search Traversal of a graph
@@ -110,8 +117,10 @@ graph_weight_t graph_mat_get_weight(graph_mat_t* g, unsigned int a, unsigned b);
  * If father != NULL, it will be set so that father[i] would be the father of i
  * if i was encountered during the traversal.
  *
- * Complexity: O(n)
+ * _Complexity:_ \f$O(n^2)\f$
  *
+ * Because of the graph implementation, for each vertex we have to check all
+ * other vertices, which causes the quadratic complexity
  * @param[in] g pointer to the graph
  * @param r Starting vertex
  * @param[out] values vertices index in the order they were encountered
@@ -131,8 +140,10 @@ int graph_mat_preorder_dfs(graph_mat_t* g,
  * If father != NULL, it will be set so that father[i] would be the father of i
  * if i was encountered during the traversal.
  *
- * Complexity: O(n)
+ * _Complexity: O(n)_
  *
+ * Because of the graph implementation, for each vertex we have to check all
+ * other vertices, which causes the quadratic complexity
  * @param[in] g pointer to the graph
  * @param r Starting vertex
  * @param[out] values vertices index in the order they were encountered
@@ -152,13 +163,15 @@ int graph_mat_postorder_dfs(graph_mat_t* g,
  * If father != NULL, it will be set so that father[i] would be the father of i
  * if i was encountered during the traversal.
  *
- * Complexity: O(n)
+ * _Complexity: O(n)_
  *
+ * Because of the graph implementation, for each vertex we have to check all
+ * other vertices, which causes the quadratic complexity
  * @param[in] g pointer to the graph
  * @param r Starting vertex
- * @param[out] values[out] vertices index in the order they were encountered
+ * @param[out] values vertices index in the order they were encountered
  * (ordered by index for a same level)
- * @param[out] father[out] list of predecessors
+ * @param[out] father list of predecessors
  * @return number of nodes reached
  */
 int graph_mat_bfs(graph_mat_t* g, unsigned r, int* values, int* father);
@@ -173,13 +186,13 @@ int graph_mat_bfs(graph_mat_t* g, unsigned r, int* values, int* father);
  * If father != NULL, it will be set so that father[i] would be the father of i
  * if i was encountered during the traversal.
  *
- * Complexity: O(n²)
+ * _Complexity:_ \f$O(n^2)\f$
  *
  * @param[in] g pointer to the graph
  * @param r Starting vertex (root)
- * @param distance[out] minimum distance from r to distance[i] (GRAPH_WEIGHT_INF
+ * @param[out] distance minimum distance from r to distance[i] (GRAPH_WEIGHT_INF
  * if there is no path to i)
- * @param father[out] list of predecessors
+ * @param[out] father list of predecessors
  * @return number of nodes reached or a negative error code
  */
 int graph_mat_dijkstra(graph_mat_t* g,
@@ -193,36 +206,23 @@ int graph_mat_dijkstra(graph_mat_t* g,
  * The indegree of a vertex is the number of edges going towards this vertex in
  * the graph.
  *
- * Complexity: O(n)
+ * _Complexity: O(n)_
  *
  * @param g pointer to the graph
  * @param vertex index of the vertex
  */
-unsigned int graph_mat_indegree(graph_mat_t* g, int vertex);
+unsigned int graph_mat_indegree(graph_mat_t* g, unsigned vertex);
 
 /**
  * @brief Computes the outdegree of a vertex
  *
- * Complexity: O(n)
+ * _Complexity: O(n)_
  *
  * The outdegree of a vertex is the number of edges going outward this vertex.
  * @param g pointer to the graph
  * @param vertex index of the vertex
  */
-unsigned int graph_mat_outdegree(graph_mat_t* g, int vertex);
-
-/* \brief Numérotation topologique du graphe
- * Associe à chaque sommet i d'un graphe orienté acyclique (DAG) un numéro
- * num[i] tel que si j est un ascendant de i (*num)[j] < (*num)[i]
- * \param g Pointeur vers le graphe, !!! Ce doit être un DAG !!!
- * \param après la fonction (*num)[i] est le numéro topologique de i
- * \param si denum != NULL : après la fonction (*denum)[num[i]]=i
- * Ces trois derniers pointeurs vont être modifiés pour pointer vers des tableau
- * alloués de la taille graphe->nb_vert !!! Ils devront être libérés par
- * l'utilisateur !!! \return 0 si la numérotation a bien eu lieu -1 si father ==
- * NULL ou g->nb_vert == 0 -2 s'il y a eu une erreur d'allocation >0 si g
- * n'était pas un DAG \complexity 0(n²)
- */
+unsigned int graph_mat_outdegree(graph_mat_t* g, unsigned vertex);
 
 /**
  * @brief Topological ordering of a graph
@@ -236,7 +236,7 @@ unsigned int graph_mat_outdegree(graph_mat_t* g, int vertex);
  * denum is facultative and can be left NULL, if it is not NULL it will contains
  * the node indices in topological order, such that i = denum[num[i]]
  *
- * Complexity: O(n²)
+ * _Complexity:_ \f$O(n^2)\f$
  *
  * @param g pointer to the graph
  * @param num num[i] is the topological number of the i vertex
@@ -258,13 +258,13 @@ int graph_mat_topological_ordering(graph_mat_t* g,
  * of i in the shortest path from r to i if i can be reached from r and -1
  * otherwise.
  *
- * Complexity: O(n²)
+ * _Complexity:_ \f$O(n^2)\f$
  *
  * @param[in] g pointer to the graph
  * @param r Starting vertex (root)
- * @param distance[out] minimum distance from r to distance[i] (GRAPH_WEIGHT_INF
+ * @param[out] distance minimum distance from r to distance[i] (GRAPH_WEIGHT_INF
  * if there is no path to i)
- * @param father[out] list of predecessors
+ * @param[out] father list of predecessors
  * @return number of nodes reached or a negative error code
  */
 int graph_mat_bellman(graph_mat_t* g,

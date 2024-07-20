@@ -11,7 +11,18 @@
  * Defines functions to create, free and manipulate binary trees
  */
 
+/**
+ * @defgroup btree_ref Binary trees
+ * @{
+ */
+
+/**
+ * @typedef node_btree_ref_t
+ * @brief Typedef for the node_btree_ref structure
+ *
+ */
 typedef struct node_btree_ref node_btree_ref_t;
+
 /**
  * @struct node_btree_ref
  * @brief A binary-tree node.
@@ -26,7 +37,13 @@ struct node_btree_ref {
 	node_btree_ref_t* rs; /**< Pointer to its right son */
 };
 
+/**
+ * @typedef btree_ref_t
+ * @brief Typedef for the btree_ref structure
+ *
+ */
 typedef struct btree_ref btree_ref_t;
+
 /**
  * @struct btree_ref
  * @brief Binary tree
@@ -36,8 +53,28 @@ typedef struct btree_ref btree_ref_t;
  * @see node_btree_ref
  */
 struct btree_ref {
+	/**
+	 * @brief Size (in bytes) on a element
+	 *
+	 * This field should be equals to the size (in bytes) of the memory region
+	 * referenced by node_btree_ref_t#p
+	 */
 	size_t size;
+	/**
+	 * @brief Function used to free the elements
+	 *
+	 * This field should be a pointer to a function that will be called to free
+	 * the memory region referenced by node_btree_ref_t#p. If the btree was
+	 * created using the API it will default to free from libc. However you can
+	 * turn a btree in a simple view on the data by setting this pointer to
+	 * NULL.
+	 */
 	free_element_fn_t free_element;
+	/**
+	 * @brief Root of the binary tree
+	 *
+	 * If root == NULL the binary tree is empty
+	 */
 	node_btree_ref_t* root;
 };
 
@@ -220,5 +257,7 @@ int btree_levelorder_traversal(btree_ref_t* tree, void* tab[]);
  * @param tree pointer to the tree
  */
 void btree_free(btree_ref_t* tree);
+
+/** @} */  // end of btree_ref
 
 #endif

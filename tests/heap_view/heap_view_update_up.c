@@ -19,8 +19,8 @@ int main(void) {
 	unsigned int pos = heap->idx_to_pos[idx];
 	assert(pos == HEAP_SIZE - 2);
 
-	data[idx] = 0xE;
-	heap_update_up(heap, idx);
+	int value = 0xE;
+	heap_update_up(heap, idx, &value);
 
 	for (int i = 0; i < HEAP_SIZE; i++)
 		assert(expected[i] == data[heap->pos_to_idx[i]]);
