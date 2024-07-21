@@ -192,6 +192,23 @@ node_list_ref_t* insert_list(list_ref_t* list, node_list_ref_t* prev, void* p);
 node_list_ref_t* push_front_list(list_ref_t* list, void* x);
 
 /**
+ * @brief Copy an element to the beginning of the list
+ *
+ * The list **won't** take ownership of the element but allocate a new memory
+ * region and copy the element.
+ * @warning If you use this function your list_ref#free_element shouldn't be
+ * NULL, otherwise the allocated region will never be freed.
+ * Under the hood this function allocate a new memory region, copy the data into
+ * it and call push_front_list() with the pointer to the memory region.
+ *
+ * _Complexity: O(1)_
+ * @param list Pointer to the list to extend
+ * @param p Pointer to the data to copy at the beginning of the list
+ * @return Pointer to the newly created node (NULL in case of failure)
+ */
+node_list_ref_t* append_front_list(list_ref_t* list, void* p);
+
+/**
  * @brief Append an element to the end of the list
  *
  * The list will take ownership of the element and free it when the times come.
@@ -205,6 +222,23 @@ node_list_ref_t* push_front_list(list_ref_t* list, void* x);
  * @return pointer to the newly created node (NULL in case of failure)
  */
 node_list_ref_t* push_back_list(list_ref_t* list, void* x);
+
+/**
+ * @brief Copy an element to the end of the list
+ *
+ * The list **won't** take ownership of the element but allocate a new memory
+ * region and copy the element.
+ * @warning If you use this function your list_ref#free_element shouldn't be
+ * NULL, otherwise the allocated region will never be freed.
+ * Under the hood this function allocate a new memory region, copy the data into
+ * it and call push_back_list() with the pointer to the memory region.
+ *
+ * _Complexity: O(1)_
+ * @param list Pointer to the list to extend
+ * @param p Pointer to the data to copy at the beginning of the list
+ * @return Pointer to the newly created node (NULL in case of failure)
+ */
+node_list_ref_t* append_back_list(list_ref_t* list, void* p);
 
 /**
  * @brief Remove the first element of the list

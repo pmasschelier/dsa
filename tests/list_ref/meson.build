@@ -1,4 +1,6 @@
 passing_test_sources = [
+  'list_ref_append_back.c',
+  'list_ref_append_front.c',
   'list_ref_clean.c',
   'list_ref_create_empty.c',
   'list_ref_find_in.c',

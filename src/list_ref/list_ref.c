@@ -3,6 +3,7 @@
 
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 list_ref_t* create_list(size_t size) {
@@ -135,6 +136,12 @@ node_list_ref_t* push_front_list(list_ref_t* list, void* p) {
 	return node;		 // On retourne le nouveau noeud
 }
 
+node_list_ref_t* append_front_list(list_ref_t* list, void* p) {
+	void* elem = malloc(list->size);
+	memcpy(elem, p, list->size);
+	return push_front_list(list, elem);
+}
+
 node_list_ref_t* push_back_list(list_ref_t* list, void* p) {
 	assert(list);
 
@@ -154,6 +161,12 @@ node_list_ref_t* push_back_list(list_ref_t* list, void* p) {
 			node;	   // Le nouveau noeud devient le suivant du dernier noeud
 	list->end = node;  // Le dernier noeud devient le nouveau
 	return node;	   // On retourne le nouveau noeud
+}
+
+node_list_ref_t* append_back_list(list_ref_t* list, void* p) {
+	void* elem = malloc(list->size);
+	memcpy(elem, p, list->size);
+	return push_back_list(list, elem);
 }
 
 void pop_front_list(list_ref_t* list, void** x) {
