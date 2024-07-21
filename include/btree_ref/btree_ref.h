@@ -154,12 +154,14 @@ node_btree_ref_t* btree_emplace_at(btree_ref_t* tree,
  * @param values the pointers to data to be written into the node
  * @param length length of the values array
  * @param offset first node in the path which should be be modified with a value
+ * @return The number of element from values written into the binary tree in
+ * case of succes. A negative error otherwise.
  */
-void btree_emplace_path(btree_ref_t* tree,
-						btree_path_t path,
-						void* values[],
-						size_t length,
-						size_t offset);
+int btree_emplace_path(btree_ref_t* tree,
+					   btree_path_t path,
+					   void* values[],
+					   size_t length,
+					   size_t offset);
 
 /**
  * @brief Create a perfect binary tree from an array
@@ -196,8 +198,10 @@ btree_ref_t* btree_perfect_tree_from_tab(void* tab,
  * @param tree pointer to the tree
  * @param tab array to fill, it should be allocated with a sufficient size, the
  * count of node can be get with the btree_length() function.
+ * @return The number of node in the tree in case of success, a negative error
+ * otherwise.
  */
-unsigned btree_preorder_traversal(btree_ref_t* tree, void* tab[]);
+int btree_preorder_traversal(btree_ref_t* tree, void* tab[]);
 
 /**
  * @brief Postorder traversal of the binary tree.
@@ -210,8 +214,10 @@ unsigned btree_preorder_traversal(btree_ref_t* tree, void* tab[]);
  * @param tree pointer to the tree.
  * @param tab array to fill, it should be allocated with a sufficient size, the
  * count of node can be get with the btree_length() function.
+ * @return The number of node in the tree in case of success, a negative error
+ * otherwise.
  */
-unsigned btree_postorder_traversal(btree_ref_t* tree, void* tab[]);
+int btree_postorder_traversal(btree_ref_t* tree, void* tab[]);
 
 /**
  * @brief Inorder traversal of the binary tree.
@@ -224,8 +230,10 @@ unsigned btree_postorder_traversal(btree_ref_t* tree, void* tab[]);
  * @param tree pointer to the tree.
  * @param tab array to fill, it should be allocated with a sufficient size, the
  * count of node can be get with the btree_length() function.
+ * @return The number of node in the tree in case of success, a negative error
+ * otherwise.
  */
-unsigned btree_inorder_traversal(btree_ref_t* tree, void* tab[]);
+int btree_inorder_traversal(btree_ref_t* tree, void* tab[]);
 
 /* \brief Parcours en largeur de l'arbre binaire
  * \param Arbre binaire à parcourir
