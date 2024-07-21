@@ -112,6 +112,7 @@ unsigned btree_length(btree_ref_t* tree);
  * modified to remove the first branch so that next call with the same path and
  * the returned node will return the following node in the path.
  *
+ * _Complexity:_ \f$O(1)\f$
  * @param[in] tree pointer to the tree
  * @param[inout] p pointer to the path to the next node.
  * @return a pointer to node_btree_ref#ls or node_btree_ref#rs
@@ -127,6 +128,7 @@ node_btree_ref_t** btree_next_node(node_btree_ref_t* tree, btree_path_t* p);
  * the parent node exists a node will be created. Otherwise nothing is modified
  * and the value NULL is returned.
  *
+ * _Complexity:_ \f$O(path.length)\f$
  * @param[out] tree pointer to the tree
  * @param[in] path path indicating where the value should be written
  * @param[in] p value to be referenced by the node
@@ -149,6 +151,7 @@ node_btree_ref_t* btree_emplace_at(btree_ref_t* tree,
  *  - with a NULL value if i if greater than offset + length
  *  - with values[i - offset] otherwise
  *
+ * _Complexity:_ \f$O(path.length)\f$
  * @param tree pointer to the tree
  * @param path path alongside we want to place the values
  * @param values the pointers to data to be written into the node
@@ -170,6 +173,7 @@ int btree_emplace_path(btree_ref_t* tree,
  * the leaves of a perfect binary tree.<br>
  * **The created binary tree should be freed using the btree_free() function**
  *
+ * _Complexity:_ \f$O(size)\f$
  * @param tab pointer to the array to copy
  * @param size size (in bytes) of the elements in the array
  * @param length length of the array
@@ -180,13 +184,6 @@ btree_ref_t* btree_perfect_tree_from_tab(void* tab,
 										 size_t size,
 										 unsigned length);
 
-/* \brief Parcours respectiverment en ordre prefixe, suffixe et infixe l'arbre
- * binaire et écrit les éléments dans le tableau
- * \param Arbre à parcourir
- * \param Tableau à remplir, il doit pointer vers une zone allouée de taille
- * suffisante, par exemple en ayant mesuré l'arbre au préalable avec
- * size_BT(tree) \return Nombre de noeuds de l'arbre.
- */
 /**
  * @brief Preorder traversal of the binary tree.
  *
@@ -195,6 +192,7 @@ btree_ref_t* btree_perfect_tree_from_tab(void* tab,
  * For each node the value of node_btree_ref#p is written in the tab array in
  * the order of the traversal.
  *
+ * _Complexity:_ \f$O(n)\f$
  * @param tree pointer to the tree
  * @param tab array to fill, it should be allocated with a sufficient size, the
  * count of node can be get with the btree_length() function.
@@ -211,6 +209,7 @@ int btree_preorder_traversal(btree_ref_t* tree, void* tab[]);
  * For each node the value of node_btree_ref#p is written in the tab array in
  * the order of the traversal.
  *
+ * _Complexity:_ \f$O(n)\f$
  * @param tree pointer to the tree.
  * @param tab array to fill, it should be allocated with a sufficient size, the
  * count of node can be get with the btree_length() function.
@@ -227,6 +226,7 @@ int btree_postorder_traversal(btree_ref_t* tree, void* tab[]);
  * For each node the value of node_btree_ref#p is written in the
  * tab array in the order of the traversal.
  *
+ * _Complexity:_ \f$O(n)\f$
  * @param tree pointer to the tree.
  * @param tab array to fill, it should be allocated with a sufficient size, the
  * count of node can be get with the btree_length() function.
@@ -235,13 +235,6 @@ int btree_postorder_traversal(btree_ref_t* tree, void* tab[]);
  */
 int btree_inorder_traversal(btree_ref_t* tree, void* tab[]);
 
-/* \brief Parcours en largeur de l'arbre binaire
- * \param Arbre binaire à parcourir
- * \param Pointeur vers le tableau à remplir dans l'ordre du parcours
- * Ce dernier doit avoir été alloué avec une taille suffisante
- * (cf. size(tree))
- * \return 0 si tout c'est bien passé et -1 en cas d'erreur
- */
 /**
  * @brief Level-order traversal of the binary tree.
  *
@@ -250,6 +243,7 @@ int btree_inorder_traversal(btree_ref_t* tree, void* tab[]);
  * For each node the value of node_btree_ref#p is written in the tab
  * array in the order of the traversal.
  *
+ * _Complexity:_ \f$O(n)\f$
  * @param tree pointer to the tree.
  * @param tab array to fill, it should be allocated with a sufficient size, the
  * count of node can be get with the btree_length() function.
@@ -262,6 +256,7 @@ int btree_levelorder_traversal(btree_ref_t* tree, void* tab[]);
  * Frees the data referenced by the nodes of the binary tree with the
  * btree_ref_t#free_element if its not NULL.
  *
+ * _Complexity:_ \f$O(n)\f$
  * @param tree pointer to the tree
  */
 void btree_free(btree_ref_t* tree);
