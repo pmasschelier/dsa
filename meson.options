@@ -1,2 +1,3 @@
 option('test_fail', type : 'combo', choices : ['abort', 'return', 'nocheck'], value : 'abort')
 option('weight_type', type : 'combo', choices : ['byte', 'short', 'int', 'long', 'llong'], value : 'llong')
+option('recursive', type : 'boolean', value : false)

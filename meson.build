@@ -62,6 +62,12 @@ if get_option('test_fail') != 'return'
   add_project_arguments('-Wno-unused-label', language: 'c')
 endif
 
+if get_option('recursive')
+  add_project_arguments(f'-DSTRUCT_RECURSIVE_IMPL', language : 'c')
+else
+  add_project_arguments('-Wno-implicit-fallthrough', language: 'c')
+endif
+
 subdir('src')
 subdir('tests')
 subdir('benchmarks')
