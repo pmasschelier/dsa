@@ -2,10 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "btree_ref/path.h"
-#include "circular_buffer.h"
 #include "errors.h"
 #include "list_ref/list_ref.h"
-#include "ptr.h"
 #include "test_macros.h"
 
 btree_ref_t* create_btree(size_t size) {
@@ -202,7 +200,7 @@ int btree_emplace_path(btree_ref_t* tree,
 #ifdef STRUCT_RECURSIVE_IMPL
 static void btree_preorder_traversal_rec(node_btree_ref_t* tree,
 										 void* tab[],
-										 int* i) {
+										 unsigned* i) {
 	if (tree) {
 		if (tab)
 			tab[*i] = tree->p;
@@ -230,7 +228,7 @@ static void btree_postorder_traversal_rec(node_btree_ref_t* tree,
 	}
 }
 
-unsigned btree_postorder_traversal(btree_ref_t* tree, void* tab[]) {
+int btree_postorder_traversal(btree_ref_t* tree, void* tab[]) {
 	unsigned i = 0;
 	btree_postorder_traversal_rec(tree->root, tab, &i);
 	return i;
@@ -248,7 +246,7 @@ static void btree_inorder_traversal_rec(node_btree_ref_t* tree,
 	}
 }
 
-unsigned btree_inorder_traversal(btree_ref_t* tree, void* tab[]) {
+int btree_inorder_traversal(btree_ref_t* tree, void* tab[]) {
 	unsigned i = 0;
 	btree_inorder_traversal_rec(tree->root, tab, &i);
 	return i;
@@ -285,9 +283,11 @@ typedef enum dfs_status { DOWNWARD, UPWARD_LEFT, UPWARD_RIGHT } dfs_status_t;
 	when_null_ret(tree, -ERROR_INVALID_PARAM1);                 \
 	if (tree->root == NULL)                                     \
 		return 0;                                               \
+                                                                \
 	list_ref_t* forest = create_list(sizeof(node_btree_ref_t)); \
 	when_null_ret(forest, -ERROR_ALLOCATION_FAILED);            \
 	forest->free_element = NULL;                                \
+                                                                \
 	node_btree_ref_t* node;                                     \
 	dfs_status_t status = DOWNWARD;                             \
 	push_back_list(forest, tree->root);                         \
