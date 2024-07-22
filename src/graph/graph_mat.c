@@ -62,70 +62,7 @@ graph_weight_t graph_mat_get_weight(graph_mat_t* g,
 	return g->weights ? g->weights[a * g->nb_vert + b] : 1;
 }
 
-/* static int mark_and_examine_traversal_mat(graph_mat_t* g, */
-/* 										  unsigned r, */
-/* 										  int* tab, */
-/* 										  int* father, */
-/* 										  LIST_STRUCT queue_or_stack) { */
-/* 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL)); */
-/* 	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, ); */
-/* 	int* list = malloc(g->nb_vert * sizeof(int)); */
-/* 	TEST_PTR_FAIL_FUNC(list, -ERROR_ALLOCATION_FAILED, ); */
-/**/
-/* 	int list_len = 0; */
-/* 	list[list_len++] = r; */
-/* 	int current; */
-/* 	while (list_len != 0) { */
-/* 		current mark[current] = TRUE; */
-/* 		for (unsigned i = 0; i < g->nb_vert; i++) { */
-/* 			if (graph_mat_get_edge(g, *vertex, i) && !mark[i]) { */
-/* 			} */
-/* 		} */
-/* 	} */
-/* } */
-
-static int mark_and_examine_traversal_mat(graph_mat_t* g,
-										  unsigned r,
-										  int* tab,
-										  int* father,
-										  LIST_STRUCT queue_or_stack) {
-	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
-	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
-	mark[r] = TRUE;	 // Marquer r
-	father[r] = -1;
-
-	list_ref_t* waiting_list = create_list(sizeof(int));  // Création d'une file
-	// Add the root element to the waiting list
-	push_back_list(waiting_list, ptr(TYPE_INT, r));
-
-	unsigned index = 0;
-
-	while (!empty_list(waiting_list)) {
-		int* vertex;
-		pop_front_list(waiting_list, (void**)&vertex);
-		if (tab)
-			tab[index] = *vertex;
-		index++;
-
-		for (unsigned i = 0; i < g->nb_vert; i++) {
-			if (mark[i] == TRUE || graph_mat_get_edge(g, *vertex, i) == FALSE)
-				continue;
-			mark[i] = TRUE;
-			if (father)
-				father[i] = *vertex;
-			if (queue_or_stack == STACK)
-				push_front_list(waiting_list, ptr(TYPE_INT, i));
-			else
-				push_back_list(waiting_list, ptr(TYPE_INT, i));
-		}
-		free(vertex);
-	}
-	free_list(waiting_list);
-	free(mark);
-	return index;
-}
-
-#ifndef STRUCT_RECURSIVE_IMPL
+#ifdef STRUCT_RECURSIVE_IMPL
 static void graph_mat_preorder_dfs_rec(graph_mat_t* g,
 									   unsigned current,
 									   int* values,
@@ -188,65 +125,142 @@ int graph_mat_postorder_dfs(graph_mat_t* g,
 	return index;
 }
 #else
+#include "circular_buffer.h"
 
 int graph_mat_preorder_dfs(graph_mat_t* g,
 						   unsigned r,
 						   int* values,
 						   int* father) {
+	when_null_ret(g, -ERROR_INVALID_PARAM1);
+	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
-	TEST_PTR_FAIL_FUNC(mark, -ERROR_ALLOCATION_FAILED, );
-	unsigned index = 0;
+	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
+	mark[r] = TRUE;
 
-	unsigned current = r;
-	if (values != NULL)
-		values[index] = current;
-	index++;
 	if (father != NULL)
 		father[r] = -1;
 
-	while (TRUE) {
-		BOOL any_edge = FALSE;
+	circular_buffer_t* stack = create_circular_buffer(sizeof(int), g->nb_vert);
+	circular_buffer_push_back(stack, &r);
+
+	unsigned index = 0;
+	unsigned current;
+	while (circular_buffer_size(stack) != 0) {
+		circular_buffer_pop_back(stack, &current);
+		if (values != NULL)
+			values[index] = current;
+		index++;
 		for (unsigned i = 0; i < g->nb_vert; i++) {
-			if (graph_mat_get_edge(g, current, i) && !mark[i]) {
-				mark[i] = TRUE;
-				if (values != NULL)
-					values[index] = i;
-				index++;
+			int neighbour = g->nb_vert - i - 1;
+			if (graph_mat_get_edge(g, current, neighbour) && !mark[neighbour]) {
+				mark[neighbour] = TRUE;
+				circular_buffer_push_back(stack, &neighbour);
 				if (father != NULL)
-					father[i] = current;
-				current = i;
-				any_edge = TRUE;
-				break;
+					father[neighbour] = current;
 			}
 		}
-		if (!any_edge) {
-			if (current != r)
-				current = father[current];
-			else
-				break;
-		}
 	}
+
+	free_circular_buffer(stack);
+	free(mark);
 	return index;
 }
 
+typedef enum dfs_status { UNVISITED, VISITED, SUBTREEDONE } dfs_status_t;
+
+int graph_mat_postorder_dfs(graph_mat_t* g,
+							unsigned r,
+							int* values,
+							int* father) {
+	when_null_ret(g, -ERROR_INVALID_PARAM1);
+	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
+
+	dfs_status_t* mark = calloc(g->nb_vert, sizeof(dfs_status_t));
+	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
+	mark[r] = VISITED;
+
+	if (father != NULL)
+		father[r] = -1;
+
+	circular_buffer_t* stack = create_circular_buffer(sizeof(int), g->nb_vert);
+	when_null_ret(stack, -ERROR_ALLOCATION_FAILED);
+	circular_buffer_push_back(stack, &r);
+
+	unsigned index = 0;
+	unsigned current;
+
+	while (circular_buffer_size(stack) != 0) {
+		current = *get_buffer_last(stack, int);
+		if (mark[current] == SUBTREEDONE) {
+			if (values != NULL)
+				values[index] = current;
+			index++;
+			circular_buffer_pop_back(stack, NULL);
+			continue;
+		}
+		/* circular_buffer_pop_back(stack, &current); */
+		BOOL has_neighbours = FALSE;
+		for (unsigned i = 0; i < g->nb_vert; i++) {
+			int neighbour = g->nb_vert - i - 1;
+			if (graph_mat_get_edge(g, current, neighbour) &&
+				mark[neighbour] == UNVISITED) {
+				mark[neighbour] = VISITED;
+				circular_buffer_push_back(stack, &neighbour);
+				if (father != NULL)
+					father[neighbour] = current;
+				has_neighbours = TRUE;
+			}
+		}
+		if (has_neighbours == FALSE)
+			mark[current] = SUBTREEDONE;
+	}
+
+	free_circular_buffer(stack);
+	free(mark);
+	return index;
+}
 #endif /* ifdef STRUCT_RECURSIVE_IMPL */
 
-// static void graph_mat_bfs_rec(graph_mat_t* g,
-// 							  unsigned current,
-// 							  int* values,
-// 							  int* father,
-// 							  BOOL* mark,
-// 							  unsigned* index) {
-// 	mark[current] = 1;
-// 	values[*index] = current;
-// 	for (unsigned i = 0; i < g->nb_vert; i++) {
-// 		if (graph_mat_get_edge(g, current, i) && !mark[i]) {
-// 			*index += 1;
-// 			graph_mat_bfs_rec(g, i, values, father, mark, index);
-// 			father[i] = current;
-// 		}
-// 	}
-// }
+static int mark_and_examine_traversal_mat(graph_mat_t* g,
+										  unsigned r,
+										  int* tab,
+										  int* father,
+										  LIST_STRUCT queue_or_stack) {
+	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
+	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
+	mark[r] = TRUE;	 // Marquer r
+	father[r] = -1;
+
+	list_ref_t* waiting_list = create_list(sizeof(int));  // Création d'une file
+	// Add the root element to the waiting list
+	push_back_list(waiting_list, ptr(TYPE_INT, r));
+
+	unsigned index = 0;
+
+	while (!empty_list(waiting_list)) {
+		int* vertex;
+		pop_front_list(waiting_list, (void**)&vertex);
+		if (tab)
+			tab[index] = *vertex;
+		index++;
+
+		for (unsigned i = 0; i < g->nb_vert; i++) {
+			if (mark[i] == TRUE || graph_mat_get_edge(g, *vertex, i) == FALSE)
+				continue;
+			mark[i] = TRUE;
+			if (father)
+				father[i] = *vertex;
+			if (queue_or_stack == STACK)
+				push_front_list(waiting_list, ptr(TYPE_INT, i));
+			else
+				push_back_list(waiting_list, ptr(TYPE_INT, i));
+		}
+		free(vertex);
+	}
+	free_list(waiting_list);
+	free(mark);
+	return index;
+}
 
 int graph_mat_bfs(graph_mat_t* g, unsigned r, int* values, int* father) {
 	return mark_and_examine_traversal_mat(g, r, values, father, QUEUE);

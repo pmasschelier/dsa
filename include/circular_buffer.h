@@ -1,6 +1,9 @@
 #ifndef STRUCT_CBUFFER_H
 #define STRUCT_CBUFFER_H
 
+#define get_buffer_last(buffer, type) \
+	(type*)((buffer)->data + buffer->last * buffer->size_bytes)
+
 typedef struct cbuffer_ref circular_buffer_t;
 
 struct cbuffer_ref {
