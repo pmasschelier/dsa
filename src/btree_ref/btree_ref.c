@@ -116,17 +116,18 @@ node_btree_ref_t* btree_emplace_at(btree_ref_t* tree,
 		node_ptr = btree_next_node(*node_ptr, &path);
 	}
 
-	if (*node_ptr != NULL) {
-		if ((*node_ptr)->p && tree->free_element)
-			tree->free_element((*node_ptr)->p);
-		(*node_ptr)->p = p;
-	} else {
+	if (*node_ptr == NULL) {
 		*node_ptr = malloc(sizeof(node_btree_ref_t));
 		when_null_ret(*node_ptr, NULL);
 		(*node_ptr)->p = p;
 		(*node_ptr)->ls = NULL;
 		(*node_ptr)->rs = NULL;
+	} else {
+		if ((*node_ptr)->p && tree->free_element)
+			tree->free_element((*node_ptr)->p);
+		(*node_ptr)->p = p;
 	}
+
 	return *node_ptr;
 }
 #endif /* ifdef STRUCT_RECURSIVE_IMPL */
@@ -183,8 +184,13 @@ int btree_emplace_path(btree_ref_t* tree,
 			(*node_ptr)->ls = NULL;
 			(*node_ptr)->rs = NULL;
 			(*node_ptr)->p = NULL;
+		} else {
 		}
+
 		if (index >= 0 && index < (int)length && values[index]) {
+			if ((*node_ptr)->p && tree->free_element)
+				tree->free_element((*node_ptr)->p);
+
 			(*node_ptr)->p = values[index];
 			written_count++;
 		}
@@ -379,7 +385,7 @@ void btree_free(btree_ref_t* tree) {
 			push_back_list(stack, node->rs);
 		if (node->ls)
 			push_back_list(stack, node->ls);
-		if (tree->free_element)
+		if (tree->free_element && node->p)
 			tree->free_element(node->p);
 		free(node);
 	}

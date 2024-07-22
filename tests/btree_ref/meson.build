@@ -7,6 +7,7 @@ passing_test_sources = [
   'btree_ref_emplace_path_begin_to_end.c',
   'btree_ref_emplace_path_offset_to_end.c',
   'btree_ref_emplace_path_offset_to_length.c',
+  'btree_ref_emplace_path_override.c',
   'btree_ref_height.c',
   'btree_ref_inorder_traversal_of_perfect_tree.c',
   'btree_ref_levelorder_traversal_of_perfect_tree.c',

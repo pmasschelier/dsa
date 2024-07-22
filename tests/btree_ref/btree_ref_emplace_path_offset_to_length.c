@@ -12,12 +12,20 @@ void* values[TAB_LEN];
 
 btree_path_t pathA = {10, 0x35B};
 
+const int FREE_COUNT = TAB_LEN;
+int free_count;
+
+static void free_counter(void* ptr) {
+	(void)ptr;
+	free_count++;
+}
+
 int main(void) {
 	for (int i = 0; i < TAB_LEN; i++)
 		values[i] = &numbers[i];
 
 	btree_ref_t* btree = create_btree(sizeof(BT_TYPE));
-	btree->free_element = NULL;
+	btree->free_element = free_counter;
 
 	btree_emplace_path(btree, pathA, values, TAB_LEN, VAL_OFFSET);
 
@@ -35,5 +43,6 @@ int main(void) {
 		node = *btree_next_node(node, &pathA);
 	}
 	btree_free(btree);
+	assert(free_count == FREE_COUNT);
 	return 0;
 }
