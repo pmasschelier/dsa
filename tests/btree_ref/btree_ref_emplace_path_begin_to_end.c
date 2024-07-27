@@ -1,7 +1,6 @@
 #include <assert.h>
 #include <btree_ref/btree_ref.h>
 #include <ptr.h>
-#include <stdlib.h>
 
 #define BT_TYPE int
 #define PATH_LEN 9
