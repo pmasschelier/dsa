@@ -54,10 +54,19 @@ typedef struct btree_ref btree_ref_t;
  */
 struct btree_ref {
 	/**
+	 * @brief Root of the binary tree
+	 *
+	 * If root == NULL the binary tree is empty
+	 */
+	node_btree_ref_t* root;
+	/**
 	 * @brief Size (in bytes) on a element
 	 *
 	 * This field should be equals to the size (in bytes) of the memory region
 	 * referenced by node_btree_ref_t#p
+	 *
+	 * \note This field is not used by any function and is mainly here for
+	 * information.
 	 */
 	size_t size;
 	/**
@@ -70,12 +79,6 @@ struct btree_ref {
 	 * NULL.
 	 */
 	free_element_fn_t free_element;
-	/**
-	 * @brief Root of the binary tree
-	 *
-	 * If root == NULL the binary tree is empty
-	 */
-	node_btree_ref_t* root;
 };
 
 /**
