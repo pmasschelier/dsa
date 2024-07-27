@@ -102,4 +102,39 @@ void path_append_branch(btree_path_t* path_from_root, btree_path_t next_branch);
  */
 btree_path_t btree_node_to_path(long unsigned int pos);
 
+/**
+ * @brief Walks past to the next branch of the path and return the corresponding
+ * alternative
+ *
+ * After the call to this function path will be consumed, which means
+ * - avl_tree_path#length -= 1
+ * - avl_tree_path#path >>= 1
+ *
+ * @param path the path to consume
+ * @param choice_left the pointer to return in case of left turn
+ * @param choice_right the pointer to return in case of right turn
+ * @return if the LSB of path is 0 choice_left is returned, otherwise
+ * choice_right is returned.
+ */
+void* path_walk_forward(btree_path_t* path,
+						void* choice_left,
+						void* choice_right);
+
+/**
+ * @brief Walks back up the previous branch of the path and return the
+ * corresponding alternative
+ *
+ * After the call to this function path will be consumed, which means
+ * - avl_tree_path#length -= 1
+ *
+ * @param path the path to consume
+ * @param choice_left the pointer to return in case of left turn
+ * @param choice_right the pointer to return in case of right turn
+ * @return if the LSB of path[avl_tree_path#length] is 0 choice_left is
+ * returned, otherwise choice_right is returned.
+ */
+void* path_walk_backward(btree_path_t* path,
+						 void* choice_left,
+						 void* choice_right);
+
 #endif

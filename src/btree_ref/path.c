@@ -33,3 +33,20 @@ btree_path_t btree_node_to_path(long unsigned int pos) {
 	}
 	return path;
 }
+
+void* path_walk_forward(btree_path_t* p,
+						void* choice_left,
+						void* choice_right) {
+	void* ret = (p->path & 1) ? choice_right : choice_left;
+	p->length -= 1;
+	p->path >>= 1;
+	return ret;
+}
+
+void* path_walk_backward(btree_path_t* p,
+						 void* choice_left,
+						 void* choice_right) {
+	p->length -= 1;
+	void* ret = ((p->path >> p->length) & 1) ? choice_right : choice_left;
+	return ret;
+}
