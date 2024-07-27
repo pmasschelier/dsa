@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 #include "compare.h"
-#include "ptr.h"
 
 typedef unsigned (*getid_fn_t)(void*);
 

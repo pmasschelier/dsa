@@ -247,6 +247,8 @@ BOOL avl_tree_remove(avl_tree_ref_t* tree, void* value) {
 
 node_avl_tree_ref_t* avl_tree_min(avl_tree_ref_t* tree) {
 	node_avl_tree_ref_t* node = tree->root;
+	if (node == NULL)
+		return NULL;
 	while (node->ls != NULL)
 		node = node->ls;
 	return node;
@@ -254,6 +256,8 @@ node_avl_tree_ref_t* avl_tree_min(avl_tree_ref_t* tree) {
 
 node_avl_tree_ref_t* avl_tree_max(avl_tree_ref_t* tree) {
 	node_avl_tree_ref_t* node = tree->root;
+	if (node == NULL)
+		return NULL;
 	while (node->rs != NULL)
 		node = node->rs;
 	return node;
