@@ -1,4 +1,5 @@
 src_files = files(
+  'btree_ref/avl_tree_ref.c',
   'btree_ref/btree_ref.c',
   'btree_ref/path.c',
   'circular_buffer.c',
