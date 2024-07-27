@@ -25,7 +25,7 @@ BOOL dynarray_empty(dynarray_t* array) {
 static void ensure_sufficient_capacity(dynarray_t* array) {
 	if (array->size >= array->capacity) {
 		if (array->capacity < DYNARRAY_MIN_CAPACITY)
-			array->capacity = DYNARRAY_MIN_CAPACITY;
+			array->capacity = DYNARRAY_MIN_CAPACITY * array->size_bytes;
 		else
 			array->capacity *= 2;
 		array->data = realloc(array->data, array->capacity * array->size_bytes);
@@ -60,9 +60,8 @@ static void shift_left(dynarray_t* array) {
 }
 
 BOOL dynarray_pop_front(dynarray_t* array, void* value) {
-	if (dynarray_empty(array)) {
+	if (dynarray_empty(array))
 		return FALSE;
-	}
 
 	if (value != NULL) {
 		memcpy(value, array->data, array->size_bytes);
@@ -73,9 +72,8 @@ BOOL dynarray_pop_front(dynarray_t* array, void* value) {
 }
 
 BOOL dynarray_pop_back(dynarray_t* array, void* value) {
-	if (dynarray_empty(array)) {
+	if (dynarray_empty(array))
 		return FALSE;
-	}
 
 	if (value != NULL) {
 		char* ptr = array->data + array->size_bytes * (array->size - 1);

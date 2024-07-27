@@ -4,6 +4,7 @@
 #include "btree_ref/path.h"
 #include "errors.h"
 #include "list_ref/list_ref.h"
+#include "stack_view.h"
 #include "test_macros.h"
 
 btree_ref_t* create_btree(size_t size) {
@@ -35,30 +36,28 @@ struct node_height {
 unsigned btree_height(btree_ref_t* tree) {
 	if (tree->root == NULL)
 		return 0;
-	list_ref_t* queue = create_list(sizeof(struct node_height));
-	when_null_ret(queue, -ERROR_ALLOCATION_FAILED);
+	stack_view_t* stack = create_stack_copy(sizeof(struct node_height));
+	when_null_ret(stack, -ERROR_ALLOCATION_FAILED);
 
 	struct node_height root = {tree->root, 1};
-	append_back_list(queue, &root);
+	stack_copy_push(stack, &root);
 
-	struct node_height* node;
+	struct node_height node;
 	unsigned int max_height = 0;
-	while (empty_list(queue) == FALSE) {
-		pop_front_list(queue, (void**)&node);
-		if (node->height > max_height)
-			max_height = node->height;
-		if (node->node->ls) {
-			struct node_height ls = {node->node->ls, node->height + 1};
-			append_back_list(queue, &ls);
+	while (empty_stack(stack) == FALSE) {
+		stack_copy_pop(stack, (void*)&node);
+		if (node.height > max_height)
+			max_height = node.height;
+		if (node.node->ls) {
+			struct node_height ls = {node.node->ls, node.height + 1};
+			stack_copy_push(stack, &ls);
 		}
-		if (node->node->rs) {
-			struct node_height rs = {node->node->rs, node->height + 1};
-			append_back_list(queue, &rs);
+		if (node.node->rs) {
+			struct node_height rs = {node.node->rs, node.height + 1};
+			stack_copy_push(stack, &rs);
 		}
-
-		free(node);
 	}
-	free_list(queue);
+	free_stack(stack);
 	return max_height;
 }
 #endif /* ifdef STRUCT_RECURSIVE_IMPL */
@@ -261,70 +260,68 @@ int btree_preorder_traversal(btree_ref_t* tree, void* tab[]) {
 		return 0;
 	unsigned i = 0;
 
-	list_ref_t* forest = create_list(sizeof(node_btree_ref_t));
+	stack_view_t* forest = create_stack_view(sizeof(node_btree_ref_t*));
 	when_null_ret(forest, -ERROR_ALLOCATION_FAILED);
-	forest->free_element = NULL;
 
 	node_btree_ref_t* node = tree->root;
 
-	push_back_list(forest, node);
-	while (empty_list(forest) == FALSE) {
-		pop_back_list(forest, (void**)&node);
+	stack_view_push(forest, node);
+	while (empty_stack(forest) == FALSE) {
+		stack_view_pop(forest, (void**)&node);
 		tab[i++] = node->p;
 		if (node->rs != NULL)
-			push_back_list(forest, node->rs);
+			stack_view_push(forest, node->rs);
 		if (node->ls != NULL)
-			push_back_list(forest, node->ls);
+			stack_view_push(forest, node->ls);
 	}
-	free_list(forest);
+	free_stack(forest);
 	return i;
 }
 
 typedef enum dfs_status { DOWNWARD, UPWARD_LEFT, UPWARD_RIGHT } dfs_status_t;
 
-#define btree_dfs(tree, node, preorder, inorder, postorder)     \
-	when_null_ret(tree, -ERROR_INVALID_PARAM1);                 \
-	if (tree->root == NULL)                                     \
-		return 0;                                               \
-                                                                \
-	list_ref_t* forest = create_list(sizeof(node_btree_ref_t)); \
-	when_null_ret(forest, -ERROR_ALLOCATION_FAILED);            \
-	forest->free_element = NULL;                                \
-                                                                \
-	node_btree_ref_t* node;                                     \
-	dfs_status_t status = DOWNWARD;                             \
-	push_back_list(forest, tree->root);                         \
-	while ((node = forest->end->p) != NULL) {                   \
-		switch (status) {                                       \
-		case DOWNWARD:                                          \
-			preorder;                                           \
-			if (node->ls != NULL) {                             \
-				push_back_list(forest, node->ls);               \
-				break;                                          \
-			}                                                   \
-		case UPWARD_LEFT:                                       \
-			inorder;                                            \
-			if (node->rs != NULL) {                             \
-				push_back_list(forest, node->rs);               \
-				status = DOWNWARD;                              \
-				break;                                          \
-			}                                                   \
-		case UPWARD_RIGHT:                                      \
-			postorder;                                          \
-			pop_back_list(forest, NULL);                        \
-			if (forest->end) {                                  \
-				node_btree_ref_t* next = forest->end->p;        \
-				if (next->ls == node)                           \
-					status = UPWARD_LEFT;                       \
-				if (next->rs == node)                           \
-					status = UPWARD_RIGHT;                      \
-				break;                                          \
-			}                                                   \
-			goto exit;                                          \
-		}                                                       \
-	}                                                           \
-	exit:                                                       \
-	free_list(forest);
+#define btree_dfs(tree, node, preorder, inorder, postorder)              \
+	when_null_ret(tree, -ERROR_INVALID_PARAM1);                          \
+	if (tree->root == NULL)                                              \
+		return 0;                                                        \
+                                                                         \
+	stack_view_t* forest = create_stack_view(sizeof(node_btree_ref_t*)); \
+	when_null_ret(forest, -ERROR_ALLOCATION_FAILED);                     \
+                                                                         \
+	node_btree_ref_t* node = tree->root;                                 \
+	dfs_status_t status = DOWNWARD;                                      \
+	stack_view_push(forest, node);                                       \
+	do {                                                                 \
+		switch (status) {                                                \
+		case DOWNWARD:                                                   \
+			preorder;                                                    \
+			if (node->ls != NULL) {                                      \
+				stack_view_push(forest, node->ls);                       \
+				break;                                                   \
+			}                                                            \
+		case UPWARD_LEFT:                                                \
+			inorder;                                                     \
+			if (node->rs != NULL) {                                      \
+				stack_view_push(forest, node->rs);                       \
+				status = DOWNWARD;                                       \
+				break;                                                   \
+			}                                                            \
+		case UPWARD_RIGHT:                                               \
+			postorder;                                                   \
+			stack_view_pop(forest, NULL);                                \
+			node_btree_ref_t* next =                                     \
+				stack_view_peak(forest, node_btree_ref_t);               \
+			if (next == NULL)                                            \
+				goto exit;                                               \
+			if (next->ls == node)                                        \
+				status = UPWARD_LEFT;                                    \
+			else if (next->rs == node)                                   \
+				status = UPWARD_RIGHT;                                   \
+		}                                                                \
+		node = stack_view_peak(forest, node_btree_ref_t);                \
+	} while (node != NULL);                                              \
+	exit:                                                                \
+	free_stack(forest);
 
 int btree_postorder_traversal(btree_ref_t* tree, void* tab[]) {
 	unsigned i = 0;
@@ -370,23 +367,22 @@ void btree_free(btree_ref_t* tree) {
 	when_null_ret(tree, -ERROR_INVALID_PARAM1);
 	if (tree->root == NULL)
 		goto exit;
-	list_ref_t* stack = create_list(sizeof(node_btree_ref_t));
+	stack_view_t* stack = create_stack_view(sizeof(node_btree_ref_t));
 	when_null_ret(stack, -ERROR_ALLOCATION_FAILED);
-	stack->free_element = NULL;
 
 	node_btree_ref_t* node;
-	push_back_list(stack, tree->root);
-	while (empty_list(stack) == FALSE) {
-		pop_back_list(stack, (void**)&node);
+	stack_view_push(stack, tree->root);
+	while (empty_stack(stack) == FALSE) {
+		stack_view_pop(stack, (void**)&node);
 		if (node->rs)
-			push_back_list(stack, node->rs);
+			stack_view_push(stack, node->rs);
 		if (node->ls)
-			push_back_list(stack, node->ls);
+			stack_view_push(stack, node->ls);
 		if (tree->free_element && node->p)
 			tree->free_element(node->p);
 		free(node);
 	}
-	free_list(stack);
+	free_stack(stack);
 exit:
 	free(tree);
 }

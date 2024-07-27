@@ -50,6 +50,13 @@ else
   warning('doxygen not found: doc target will not be generated')
 endif
 
+stack_impls = {
+  'list_ref': 'STACK_IMPL_LIST_REF',
+  'dynarray': 'STACK_IMPL_DYNARRAY',
+}
+stack_impl = stack_impls[get_option('stack_impl')]
+add_project_arguments(f'-D@stack_impl@', language : 'c')
+
 fail_test_tokens = {
   'abort': 'TEST_FAIL_FUNC_ABORT',
   'return': 'TEST_FAIL_FUNC_RET',

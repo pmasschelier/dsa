@@ -13,6 +13,7 @@ header_files = files(
   'errors.h',
   'heap_view.h',
   'ptr.h',
+  'stack_view.h',
   'structures.h',
   'test_macros.h',
   'weight_type.h',
