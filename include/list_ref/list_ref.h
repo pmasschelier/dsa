@@ -12,6 +12,8 @@
  * @ingroup list_ref
  */
 
+#define get_node_ref(node, type) ((type*)(node)->p)
+
 #define foreach_node_node(list, node) \
 	for (node_list_ref_t* node = list->begin; node != NULL; node = node->next)
 

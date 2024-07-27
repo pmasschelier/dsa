@@ -68,10 +68,7 @@ unsigned btree_length(btree_ref_t* tree) {
 }
 
 node_btree_ref_t** btree_next_node(node_btree_ref_t* node, btree_path_t* p) {
-	node_btree_ref_t** ret = (p->path & 1) ? &node->rs : &node->ls;
-	p->length -= 1;
-	p->path >>= 1;
-	return ret;
+	return path_walk_forward(p, &node->ls, &node->rs);
 }
 
 #ifdef STRUCT_RECURSIVE_IMPL
