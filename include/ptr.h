@@ -2,7 +2,6 @@
 #define STRUCT_PTR_H
 
 typedef void (*free_element_fn_t)(void*);
-typedef int (*compare_fn_t)(void*, void*);
 
 enum type { TYPE_INT, TYPE_DOUBLE };
 

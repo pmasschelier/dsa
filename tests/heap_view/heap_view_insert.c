@@ -1,19 +1,16 @@
 #include <assert.h>
 #include "heap_view.h"
-#include "ptr.h"
 
 #define HEAP_SIZE 4
 
-static int compare(int* a, int* b) {
-	return (*a > *b) - (*b > *a);
-}
+DEFINE_COMPARE_SCALAR(int)
 
 int data[HEAP_SIZE] = {9, 8, 7, 10};
 int heap_array[HEAP_SIZE];
 
 int main(void) {
 	heap_view_t* heap =
-		create_heap(HEAP_SIZE, sizeof(int), heap_array, (compare_fn_t)compare);
+		create_heap(HEAP_SIZE, sizeof(int), heap_array, compare_int);
 	for (int i = 0; i < 3; i++)
 		insert_heap(heap, data + i);
 	assert(heap->size == 3);
