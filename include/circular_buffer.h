@@ -30,18 +30,24 @@ typedef struct circular_buffer circular_buffer_t;
  * A circular buffer holds a pointer to its data, the size (in bytes) of an
  * element of the buffer, the max number of elements in the buffer, the actual
  * number of elements in the buffer, the index of the first element and the
- * index of the last element of the buffer. (NULL if it is the first node) and a
- * pointer to its successor (NULL if it is the last node)
+ * index of the last element of the buffer.
  */
 struct circular_buffer {
 	char* data; /**< Pointer to the allocated memory for the circular buffer */
 	unsigned size_bytes; /**< Size (in bytes) of an element of the buffer */
 	unsigned capacity;	 /**< The maximum number of elements in the buffer */
+	int size;			 /**< The number of elements in the buffer */
 	int first;			 /**< The index of the first element of the buffer */
 	int last;			 /**< The index of the last element of the buffer */
-	int size;			 /**< The number of elements in the buffer */
 };
 
+/**
+ * @brief Creates an empty circular buffer
+ *
+ * @param size_bytes Size (in bytes) of an element in the buffer
+ * @param capacity The maximum number of elements in the buffer
+ * @return A pointer to the newly created buffer
+ */
 circular_buffer_t* create_circular_buffer(unsigned size_bytes,
 										  unsigned capacity);
 
