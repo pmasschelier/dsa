@@ -18,15 +18,15 @@ cdata.set('VERSION_MAJOR', version[0])
 cdata.set('VERSION_MINOR', version[1])
 
 dist_types = {
-  'byte': ['signed char', 'SCHAR_MAX'],
-  'short': ['short', 'SHRT_MAX'],
-  'int': ['int', 'INT_MAX'],
-  'long': ['long int', 'LONG_MAX'],
-  'llong': ['long long int', 'LLONG_MAX'],
+  'byte': ['signed char', 'SCHAR'],
+  'short': ['short', 'SHRT'],
+  'int': ['int', 'INT'],
+  'long': ['long int', 'LONG'],
+  'llong': ['long long int', 'LLONG'],
 }
 dist_type = dist_types[get_option('weight_type')]
 cdata.set('GRAPH_WEIGHT_TYPE', dist_type[0])
-cdata.set('GRAPH_WEIGHT_INF', dist_type[1])
+cdata.set('GRAPH_WEIGHT_TOKEN', dist_type[1])
 
 install_incdir = join_paths(get_option('includedir'), 'struct')
 

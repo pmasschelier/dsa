@@ -1,4 +1,5 @@
 passing_test_sources = [
+  'graph_mat_bellman_negative_weights.c',
   'graph_mat_bellman_unit_weights.c',
   'graph_mat_bfs.c',
   'graph_mat_create_no_edges.c',

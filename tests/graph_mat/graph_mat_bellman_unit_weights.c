@@ -1,7 +1,6 @@
 #include <assert.h>
 #include <graph/graph_mat.h>
 #include <weight_type.h>
-#include "config.h"
 
 #define EDGE_COUNT 6
 #define NODE_COUNT 6

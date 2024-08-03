@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "errors.h"
 #include "fixed_xifo_view.h"
-#include "list_ref/list_ref.h"
 #include "structures.h"
 #include "test_macros.h"
 #include "weight_type.h"
@@ -417,33 +416,33 @@ int graph_mat_topological_ordering(graph_mat_t* g,
 
 	int number = g->nb_vert;
 
-	list_ref_t* stack = create_list(sizeof(unsigned));
+	fixed_xifo_view_t* stack =
+		create_fixed_xifo_copy(sizeof(unsigned), g->nb_vert);
 
 	unsigned degre[g->nb_vert];
 	for (unsigned i = 0; i < g->nb_vert; i++) {
 		degre[i] = graph_mat_outdegree(g, i);
 		if (degre[i] == 0)
-			push_front_list(stack, ptr(TYPE_INT, i));
+			fixed_xifo_copy_push_front(stack, &i);
 	}
-	if (empty_list(stack))
+	if (empty_fixed_xifo(stack) == TRUE)
 		goto exit;
-	while (!empty_list(stack)) {
-		unsigned* s = NULL;
-		pop_front_list(stack, (void**)&s);
-		num[*s] = --number;
+	do {
+		unsigned s;
+		fixed_xifo_view_pop_front(stack, &s);
+		num[s] = --number;
 		if (denum)
-			denum[number] = *s;
+			denum[number] = s;
 		for (unsigned t = 0; t < g->nb_vert; t++) {
-			if (graph_mat_get_edge(g, t, *s) && --degre[t] == 0)
-				push_front_list(stack, ptr(TYPE_INT, t));
+			if (graph_mat_get_edge(g, t, s) && --degre[t] == 0)
+				fixed_xifo_copy_push_front(stack, &t);
 		}
-		stack->free_element(s);
-	}
+	} while (empty_fixed_xifo(stack) == FALSE);
 	if (number != 0)
 		goto exit;
 	ret = 0;
 exit:
-	free_list(stack);
+	free_fixed_xifo(stack);
 	return ret;
 }
 
@@ -477,10 +476,10 @@ int graph_mat_bellman(graph_mat_t* g,
 			if (graph_mat_get_edge(g, y, x)) {
 				const graph_weight_t w = graph_mat_get_weight(g, y, x);
 				const graph_weight_t d =
-					weight_add_truncate_overflow(distance[j], w);
+					weight_add_truncate_overflow(distance[y], w);
 				if (d < min) {
 					min = d;
-					y_min = j;
+					y_min = y;
 				}
 			}
 		}
