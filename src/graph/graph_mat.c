@@ -367,6 +367,7 @@ int graph_mat_dijkstra(graph_mat_t* g,
 		// lowest distance to the root)
 		if (distance[pivot] == GRAPH_WEIGHT_INF)
 			break;
+		number++;
 
 		// Updates the distance of all the pivots's neighbours
 		for (unsigned j = 0; j < g->nb_vert; j++) {	 // For each vertex j
