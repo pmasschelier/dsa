@@ -175,18 +175,23 @@ void pop_front_list(list_ref_t* list, void** x) {
 			*x = NULL;
 		return;
 	}
-	node_list_ref_t* second =
-		list->begin->next;	// On conserve l'adresse du deuxieme noeud
-	if (second)
-		second->prev = NULL;  // Pas de noeud précédant
-	else					  // Si maintenant la liste est vide
-		list->end = NULL;	  // Il n'y a plus de dernier élément
-	void* ret =
-		list->begin->p;	 // On conserve l'adresse contenue dans le premier noeud
-	free(list->begin);	 // On libère le premier noeud
-	list->begin = second;  // Le deuxième noeud devient le premier
+	// We store the address of the second node
+	node_list_ref_t* second = list->begin->next;
+	// And set its predecessor to NULL
+	if (second != NULL)
+		second->prev = NULL;
+	else
+		list->end = NULL;
+	// We store the address of the data of the first node
+	void* ret = list->begin->p;
+	// Frees the first node
+	free(list->begin);
+	// The second node become the first one
+	list->begin = second;
+	// If the pointer is not NULL, set the referenced pointer to the poped out
+	// data or free the data if applicable
 	if (x)
-		*x = ret;  // On retourne l'adresse qui était dans le premier noeud
+		*x = ret;
 	else if (list->free_element)
 		list->free_element(ret);
 }
