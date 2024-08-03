@@ -6,6 +6,8 @@
 #include "ptr.h"
 #include "structures.h"
 
+#include "btree_ref.h"
+
 #define free_avl_tree_ref(tree) btree_free((btree_ref_t*)(tree))
 
 /**
