@@ -5,8 +5,11 @@
 #include "errors.h"
 #include "list_ref/list_ref.h"
 #include "ptr.h"
-#include "stack_view.h"
 #include "test_macros.h"
+
+#ifndef STRUCT_RECURSIVE_IMPL
+#include "stack_view.h"
+#endif
 
 btree_ref_t* create_btree(size_t size) {
 	btree_ref_t* ret = malloc(sizeof(btree_ref_t));
