@@ -108,6 +108,7 @@ heap_view_t* create_heap_no_check(unsigned size,
 /**
  * @brief Return the maximum element of the heap and remove it from the heap
  *
+ * If the heap is already empty, -ERROR_IS_EMPTY is returned.
  *
  * Complexity: O(ln(n))
  * @param heap Pointer to the heap

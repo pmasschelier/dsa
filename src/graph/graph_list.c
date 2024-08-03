@@ -348,7 +348,7 @@ int graph_list_dijkstra(graph_list_t* g,
 	int pivot;
 
 	// While there is a vertex left in the heap
-	while ((pivot = heap_get_root(heap)) != -1) {
+	while ((pivot = heap_get_root(heap)) != -ERROR_IS_EMPTY) {
 		// Take the root of the heap (which is the non-marked vertex with the
 		// lowest distance to the root)
 		if (distance[pivot] == GRAPH_WEIGHT_INF)

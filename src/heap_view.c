@@ -173,7 +173,7 @@ heap_view_t* create_heap_no_check(unsigned size,
 
 int heap_get_root(heap_view_t* heap) {
 	if (heap->size == 0)
-		return -1;
+		return -ERROR_IS_EMPTY;
 	if (heap->size == 1) {
 		heap->size = 0;
 		return heap->pos_to_idx[0];
