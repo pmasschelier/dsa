@@ -1,6 +1,5 @@
 #include <assert.h>
 #include <graph/graph_list.h>
-#include <stdio.h>
 #include <weight_type.h>
 
 #define EDGE_COUNT 6
@@ -27,9 +26,8 @@ int main(void) {
 		graph_list_set_edge(g, edges[i][0], edges[i][1], TRUE, 0, FALSE);
 	graph_list_dijkstra(g, 1, distance, father);
 	for (unsigned i = 0; i < NODE_COUNT; i++) {
-		printf("%lld %d\n", distance[i], father[i]);
-		/* assert(expected[i] == distance[i]); */
-		/* assert(expected_fathers[i] == father[i]); */
+		assert(expected[i] == distance[i]);
+		assert(expected_fathers[i] == father[i]);
 	}
 	free_graph_list(g);
 	return 0;

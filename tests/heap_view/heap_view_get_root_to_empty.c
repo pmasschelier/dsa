@@ -1,4 +1,5 @@
 #include <assert.h>
+#include "errors.h"
 #include "heap_view.h"
 
 #define HEAP_SIZE 10
@@ -13,7 +14,7 @@ int main(void) {
 		create_heap_no_check(10, sizeof(int), data, compare_int);
 	int root;
 	unsigned i = 0;
-	while ((root = heap_get_root(heap)) != -1) {
+	while ((root = heap_get_root(heap)) != -ERROR_IS_EMPTY) {
 		assert(data[root] == expected[i]);
 		i++;
 	}

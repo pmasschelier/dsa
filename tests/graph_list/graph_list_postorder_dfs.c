@@ -1,6 +1,5 @@
 #include <assert.h>
 #include <graph/graph_list.h>
-#include <stdio.h>
 
 #define EDGE_COUNT 6
 #define NODE_COUNT 4
@@ -25,9 +24,8 @@ int main(void) {
 		graph_list_set_edge(g, edges[i][0], edges[i][1], TRUE, 0, FALSE);
 	graph_list_postorder_dfs(g, 1, tab, father);
 	for (int i = 0; i < NODE_COUNT; i++) {
-		printf("%d\n", tab[i]);
-		/* assert(expected[i] == tab[i]); */
-		/* assert(expected_fathers[i] == father[i]); */
+		assert(expected[i] == tab[i]);
+		assert(expected_fathers[i] == father[i]);
 	}
 	free_graph_list(g);
 	return 0;
