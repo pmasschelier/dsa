@@ -1,6 +1,7 @@
 #include "graph/graph_mat.h"
 #include <stdlib.h>
 #include "errors.h"
+#include "fixed_xifo_view.h"
 #include "list_ref/list_ref.h"
 #include "structures.h"
 #include "test_macros.h"
@@ -231,33 +232,33 @@ static int mark_and_examine_traversal_mat(graph_mat_t* g,
 	mark[r] = TRUE;	 // Marquer r
 	father[r] = -1;
 
-	list_ref_t* waiting_list = create_list(sizeof(int));  // Création d'une file
+	fixed_xifo_view_t* waiting_list =
+		create_fixed_xifo_copy(sizeof(int), g->nb_vert);
 	// Add the root element to the waiting list
-	push_back_list(waiting_list, ptr(TYPE_INT, r));
+	fixed_xifo_copy_push_back(waiting_list, &r);
 
 	unsigned index = 0;
 
-	while (!empty_list(waiting_list)) {
-		int* vertex;
-		pop_front_list(waiting_list, (void**)&vertex);
-		if (tab)
-			tab[index] = *vertex;
+	while (empty_fixed_xifo(waiting_list) == FALSE) {
+		int vertex;
+		fixed_xifo_copy_pop_front(waiting_list, (void*)&vertex);
+		if (tab != NULL)
+			tab[index] = vertex;
 		index++;
 
 		for (unsigned i = 0; i < g->nb_vert; i++) {
-			if (mark[i] == TRUE || graph_mat_get_edge(g, *vertex, i) == FALSE)
+			if (mark[i] == TRUE || graph_mat_get_edge(g, vertex, i) == FALSE)
 				continue;
 			mark[i] = TRUE;
 			if (father)
-				father[i] = *vertex;
+				father[i] = vertex;
 			if (queue_or_stack == STACK)
-				push_front_list(waiting_list, ptr(TYPE_INT, i));
+				fixed_xifo_copy_push_front(waiting_list, &i);
 			else
-				push_back_list(waiting_list, ptr(TYPE_INT, i));
+				fixed_xifo_copy_push_back(waiting_list, &i);
 		}
-		free(vertex);
 	}
-	free_list(waiting_list);
+	free_fixed_xifo(waiting_list);
 	free(mark);
 	return index;
 }
