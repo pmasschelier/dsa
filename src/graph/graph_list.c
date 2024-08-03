@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "config.h"
 #include "errors.h"
+#include "fixed_xifo_view.h"
 #include "heap_view.h"
 #include "list_ref/list_ref.h"
 #include "ptr.h"
@@ -131,77 +132,39 @@ int mark_and_examine_traversal_list(graph_list_t* g,
 	mark[r] = 1;  // Marquer r
 
 	// We create a queue an put the root inside
-	list_ref_t* waiting_list = create_list(sizeof(int));
-	push_back_list(waiting_list, ptr(TYPE_INT, r));
+	fixed_xifo_view_t* waiting_list =
+		create_fixed_xifo_copy(sizeof(int), g->nb_vert);
+	fixed_xifo_copy_push_back(waiting_list, &r);
 
 	unsigned index = 0;
 
-	while (!empty_list(waiting_list)) {
-		int* vertex;
-		pop_front_list(waiting_list, (void**)&vertex);
-		tab[index] = *vertex;
+	while (!empty_fixed_xifo(waiting_list)) {
+		int vertex;
+		fixed_xifo_copy_pop_front(waiting_list, (void*)&vertex);
+		if (tab != NULL)
+			tab[index] = vertex;
 		index++;
 
-		node_list_ref_t* node = g->neighbours[*vertex].begin;
+		node_list_ref_t* node = g->neighbours[vertex].begin;
 		graph_list_edge_t* e = NULL;
 		while (node) {
 			e = node->p;
 			if (!mark[e->to]) {
 				mark[e->to] = TRUE;
 				if (father)
-					father[e->to] = *vertex;
+					father[e->to] = vertex;
 				if (queue_or_stack == STACK)
-					push_front_list(waiting_list, ptr(TYPE_INT, e->to));
+					fixed_xifo_copy_push_front(waiting_list, &e->to);
 				else
-					push_back_list(waiting_list, ptr(TYPE_INT, e->to));
+					fixed_xifo_copy_push_back(waiting_list, &e->to);
 			}
 			node = node->next;
 		}
-		free(vertex);
 	}
 	free(mark);
-	free_list(waiting_list);
+	free_fixed_xifo(waiting_list);
 	return index;
 }
-
-// int DFS_list(graph_list_t* g, unsigned r, int** tab, int** father) {
-// 	char* mark;
-// 	if (allow_tab_father_mark(g->nb_vert, tab, father, &mark) != 0)
-// 		return -1;
-// 	mark[r] = 1;  // Marquer r
-// 	(*father)[r] = -1;
-// 	(*tab)[0] = r;
-//
-// 	unsigned current = r;
-// 	unsigned index = 1;
-//
-// 	while (TRUE) {
-// 		BOOL any_edge = FALSE;
-//
-// 		node_list_ref_t* node = g->neighbours[current].begin;
-// 		graph_list_edge_t* e = NULL;
-// 		while (node) {
-// 			e = node->p;
-// 			if (!mark[e->to]) {
-// 				mark[e->to] = 1;
-// 				(*tab)[index++] = e->to;
-// 				if (father)
-// 					(*father)[e->to] = current;
-// 				current = e->to;
-// 				any_edge = TRUE;
-// 				break;
-// 			}
-// 			node = node->next;
-// 		}
-// 		if (!any_edge) {
-// 			if (current != r)
-// 				current = (*father)[current];
-// 			else
-// 				break;
-// 		}
-// 	}
-// 	return index;
-// }
 
 static void graph_list_preorder_dfs_rec(graph_list_t* g,
 										unsigned current,
