@@ -4,6 +4,7 @@
 #include "btree_ref/path.h"
 #include "errors.h"
 #include "list_ref/list_ref.h"
+#include "ptr.h"
 #include "stack_view.h"
 #include "test_macros.h"
 
@@ -134,6 +135,7 @@ static int btree_emplace_path_rec(node_btree_ref_t** node_ptr,
 								  void* values[],
 								  int index,
 								  size_t length,
+								  free_element_fn_t free_elements,
 								  unsigned written_count) {
 	if (*node_ptr == NULL) {
 		*node_ptr = malloc(sizeof(node_btree_ref_t));
@@ -143,6 +145,8 @@ static int btree_emplace_path_rec(node_btree_ref_t** node_ptr,
 		(*node_ptr)->p = NULL;
 	}
 	if (index >= 0 && index < (int)length && values[index]) {
+		if ((*node_ptr)->p && free_elements)
+			free_elements((*node_ptr)->p);
 		(*node_ptr)->p = values[index];
 		written_count++;
 	}
@@ -152,7 +156,7 @@ static int btree_emplace_path_rec(node_btree_ref_t** node_ptr,
 
 	node_btree_ref_t** son = btree_next_node(*node_ptr, &path);
 	return btree_emplace_path_rec(son, path, values, index + 1, length,
-								  written_count);
+								  free_elements, written_count);
 }
 
 int btree_emplace_path(btree_ref_t* tree,
@@ -161,7 +165,7 @@ int btree_emplace_path(btree_ref_t* tree,
 					   size_t length,
 					   size_t offset) {
 	return btree_emplace_path_rec(&tree->root, path, values, -offset, length,
-								  0);
+								  tree->free_element, 0);
 }
 #else
 int btree_emplace_path(btree_ref_t* tree,
@@ -339,27 +343,30 @@ int btree_inorder_traversal(btree_ref_t* tree, void* tab[]) {
 #ifdef STRUCT_RECURSIVE_IMPL
 static void btree_free_rec(node_btree_ref_t* node,
 						   free_element_fn_t free_elements) {
-	if (node) {
+	if (node->ls)
 		btree_free_rec(node->ls, free_elements);
+	if (node->rs)
 		btree_free_rec(node->rs, free_elements);
+	if (node->p)
 		free_elements(node->p);
-		free(node);
-	}
+	free(node);
 }
 
 static void btree_free_rec_no_free(node_btree_ref_t* node) {
-	if (node) {
+	if (node->ls)
 		btree_free_rec_no_free(node->ls);
+	if (node->rs)
 		btree_free_rec_no_free(node->rs);
-		free(node);
-	}
+	free(node);
 }
 
 void btree_free(btree_ref_t* tree) {
-	if (tree->free_element)
-		btree_free_rec(tree->root, tree->free_element);
-	else
-		btree_free_rec_no_free(tree->root);
+	if (tree->root != NULL) {
+		if (tree->free_element)
+			btree_free_rec(tree->root, tree->free_element);
+		else
+			btree_free_rec_no_free(tree->root);
+	}
 	free(tree);
 }
 #else
