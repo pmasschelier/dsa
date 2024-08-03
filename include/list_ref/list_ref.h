@@ -17,9 +17,9 @@
 #define foreach_node_node(list, node) \
 	for (node_list_ref_t* node = list->begin; node != NULL; node = node->next)
 
-#define foreach_node_value(list, value, type)                    \
-	type* value = (list->begin != NULL) ? list->begin->p : NULL; \
-	for (node_list_ref_t* node = list->begin; node != NULL;      \
+#define foreach_node_value(list, value, type)                        \
+	type* value = ((list)->begin != NULL) ? (list)->begin->p : NULL; \
+	for (node_list_ref_t* node = (list)->begin; node != NULL;        \
 		 node = node->next, value = (node != NULL) ? node->p : NULL)
 
 #define GET_MACRO(_1, _2, _3, NAME, ...) NAME

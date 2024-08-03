@@ -27,8 +27,20 @@ typedef int (*compare_fn_t)(void*, void*);
  * ints.
  */
 #define DEFINE_COMPARE_SCALAR(type)                               \
-	int compare_##type(void* a, void* b) {                        \
+	static inline int compare_##type(void* a, void* b) {          \
 		return (*(type*)a > *(type*)b) - (*(type*)a < *(type*)b); \
+	}
+
+/**
+ * @brief Defines a function to compare scalar values
+ * @param type The type of the values we want to compare
+ * For instance calling this macro with `DEFINE_COMPARE_SCALAR(int)` will define
+ * the function compare_int which will be the accurate function to compare two
+ * ints.
+ */
+#define DEFINE_COMPARE_MIN_SCALAR(type)                           \
+	static inline int compare_min_##type(void* a, void* b) {      \
+		return (*(type*)a < *(type*)b) - (*(type*)a > *(type*)b); \
 	}
 
 #endif	// !COMPARE_H

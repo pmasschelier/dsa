@@ -3,7 +3,6 @@
 #include "config.h"
 #include "errors.h"
 #include "fixed_xifo_view.h"
-#include "heap_view.h"
 #include "list_ref/list_ref.h"
 #include "ptr.h"
 #include "test_macros.h"
@@ -315,10 +314,7 @@ int graph_list_bfs(graph_list_t* g, unsigned r, int* values, int* father) {
 // 	index[j] = a;
 // }
 
-static int min_weight(graph_weight_t* a, graph_weight_t* b) {
-	return (*a < *b) - (*b < *a);
-}
-
+#ifndef DIJKSTRA_HEAP_IMPL
 int graph_list_dijkstra(graph_list_t* g,
 						unsigned r,
 						graph_weight_t* distance,
@@ -334,8 +330,75 @@ int graph_list_dijkstra(graph_list_t* g,
 	}
 	distance[r] = 0;
 
-	heap_view_t* heap = create_heap_no_check(
-		g->nb_vert, sizeof(graph_weight_t), distance, (compare_fn_t)min_weight);
+	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
+	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
+	mark[r] = TRUE;
+
+	unsigned pivot = r;
+	unsigned count = 1;	 // count of vertices reached by the algorithm
+	for (unsigned i = 0; i < g->nb_vert - 1; i++) {
+		// Updates the distance of all the pivots's neighbours
+		/* node_list_ref_t* node = g->neighbours[pivot].begin; */
+		/* graph_list_edge_t* e = NULL; */
+		// For each successor of pivot
+		foreach_node(&g->neighbours[pivot], e, graph_list_edge_t) {
+			if (mark[e->to] == TRUE)
+				continue;
+
+			graph_weight_t d =
+				weight_add_truncate_overflow(distance[pivot], e->w);
+			if (d < distance[e->to]) {
+				distance[e->to] = d;
+				if (father)
+					father[e->to] = pivot;
+			}
+		}
+
+		// Finds the reached vertex not already marked, with the lowest
+		// value
+		graph_weight_t min = GRAPH_WEIGHT_INF;
+		int jmin = -1;
+		for (unsigned j = 0; j < g->nb_vert; j++) {	 // For each vertex j
+			if (mark[j] == FALSE && distance[j] >= 0 && distance[j] < min) {
+				min = distance[j];
+				jmin = j;
+			}
+		}
+		// If none was found, the algorithm is terminated
+		if (jmin == -1)
+			break;
+		pivot = jmin;
+		mark[pivot] = TRUE;
+		count++;
+	}
+	free(mark);
+
+	return count;
+}
+#else
+#include "compare.h"
+#include "heap_view.h"
+
+DEFINE_COMPARE_MIN_SCALAR(graph_weight_t)
+
+int graph_list_dijkstra(graph_list_t* g,
+						unsigned r,
+						graph_weight_t* distance,
+						int* father) {
+	when_null_ret(distance, -ERROR_INVALID_PARAM3);
+	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
+
+	for (unsigned i = 0; i < g->nb_vert; i++)
+		distance[i] = GRAPH_WEIGHT_INF;
+	if (father != NULL) {
+		for (unsigned i = 0; i < g->nb_vert; i++)
+			father[i] = -1;
+	}
+	distance[r] = 0;
+
+	heap_view_t* heap =
+		create_heap_no_check(g->nb_vert, sizeof(graph_weight_t), distance,
+							 compare_min_graph_weight_t);
 
 	// We put r at the root of (index, distance) which makes it a heap
 	heap->idx_to_pos[r] = 0;
@@ -354,25 +417,22 @@ int graph_list_dijkstra(graph_list_t* g,
 		if (distance[pivot] == GRAPH_WEIGHT_INF)
 			break;
 
-		node_list_ref_t* node = g->neighbours[pivot].begin;
-		graph_list_edge_t* e = NULL;
 		// For each successor of pivot
-		while (node != NULL) {
-			e = node->p;
-
+		foreach_node(&g->neighbours[pivot], e, graph_list_edge_t) {
 			graph_weight_t d =
 				weight_add_truncate_overflow(distance[pivot], e->w);
 			if (d < distance[e->to]) {
 				heap_update_up(heap, e->to, &d);
+				if (father != NULL)
+					father[e->to] = pivot;
 			}
-
-			node = node->next;
 		}
 	}
 	free_heap(heap);
 
 	return number;
 }
+#endif	// DIJKSTRA_HEAP_IMPL
 
 unsigned int graph_list_indegree(graph_list_t* g, unsigned vertex) {
 	unsigned degree = 0;

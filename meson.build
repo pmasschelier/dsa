@@ -65,6 +65,10 @@ fail_test_tokens = {
 fail_test_token = fail_test_tokens[get_option('test_fail')]
 add_project_arguments(f'-D@fail_test_token@', language : 'c')
 
+if get_option('dijkstra_heap')
+  add_project_arguments('-DDIJKSTRA_HEAP_IMPL', language : 'c')
+endif
+
 if get_option('test_fail') != 'return'
   add_project_arguments('-Wno-unused-label', language: 'c')
 endif

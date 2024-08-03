@@ -267,18 +267,21 @@ int graph_mat_bfs(graph_mat_t* g, unsigned r, int* values, int* father) {
 	return mark_and_examine_traversal_mat(g, r, values, father, QUEUE);
 }
 
+#ifndef DIJKSTRA_HEAP_IMPL
 int graph_mat_dijkstra(graph_mat_t* g,
 					   unsigned r,
 					   graph_weight_t* distance,
 					   int* father) {
 	when_null_ret(distance, -ERROR_INVALID_PARAM3);
 	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
+
 	for (unsigned i = 0; i < g->nb_vert; i++)
 		distance[i] = GRAPH_WEIGHT_INF;
+	if (father) {
+		for (unsigned i = 0; i < g->nb_vert; i++)
+			father[i] = -1;
+	}
 	distance[r] = 0;
-
-	if (father)
-		father[r] = -1;
 
 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
 	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
@@ -307,7 +310,7 @@ int graph_mat_dijkstra(graph_mat_t* g,
 		graph_weight_t min = GRAPH_WEIGHT_INF;
 		int jmin = -1;
 		for (unsigned j = 0; j < g->nb_vert; j++) {	 // For each vertex j
-			if (!mark[j] && distance[j] >= 0 && distance[j] < min) {
+			if (mark[j] == FALSE && distance[j] >= 0 && distance[j] < min) {
 				min = distance[j];
 				jmin = j;
 			}
@@ -323,6 +326,69 @@ int graph_mat_dijkstra(graph_mat_t* g,
 
 	return count;
 }
+
+#else
+#include "compare.h"
+#include "heap_view.h"
+
+DEFINE_COMPARE_MIN_SCALAR(graph_weight_t)
+
+int graph_mat_dijkstra(graph_mat_t* g,
+					   unsigned r,
+					   graph_weight_t* distance,
+					   int* father) {
+	when_null_ret(distance, -ERROR_INVALID_PARAM3);
+	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
+
+	for (unsigned i = 0; i < g->nb_vert; i++)
+		distance[i] = GRAPH_WEIGHT_INF;
+	if (father != NULL) {
+		for (unsigned i = 0; i < g->nb_vert; i++)
+			father[i] = -1;
+	}
+	distance[r] = 0;
+
+	heap_view_t* heap =
+		create_heap_no_check(g->nb_vert, sizeof(graph_weight_t), distance,
+							 compare_min_graph_weight_t);
+
+	// We put r at the root of (index, distance) which makes it a heap
+	heap->idx_to_pos[r] = 0;
+	heap->idx_to_pos[0] = r;
+	heap->pos_to_idx[r] = 0;
+	heap->pos_to_idx[0] = r;
+
+	// Number of vertices reached by the algorithm
+	unsigned number = 0;
+	int pivot;
+
+	// While there is a vertex left in the heap
+	while ((pivot = heap_get_root(heap)) != -ERROR_IS_EMPTY) {
+		// Take the root of the heap (which is the non-marked vertex with the
+		// lowest distance to the root)
+		if (distance[pivot] == GRAPH_WEIGHT_INF)
+			break;
+
+		// Updates the distance of all the pivots's neighbours
+		for (unsigned j = 0; j < g->nb_vert; j++) {	 // For each vertex j
+			// which is a successor of pivot and haven't been marked
+			if (graph_mat_get_edge(g, pivot, j) == FALSE)
+				continue;
+			const graph_weight_t w = graph_mat_get_weight(g, pivot, j);
+			const graph_weight_t d =
+				weight_add_truncate_overflow(distance[pivot], w);
+			if (d < distance[j]) {
+				heap_update_up(heap, j, (void*)&d);
+				if (father != NULL)
+					father[j] = pivot;
+			}
+		}
+	}
+	free_heap(heap);
+
+	return number;
+}
+#endif	// DIJKSTRA_HEAP_IMPL
 
 unsigned int graph_mat_indegree(graph_mat_t* g, unsigned vertex) {
 	unsigned int degree = 0;
