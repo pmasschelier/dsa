@@ -4,7 +4,6 @@
 #include "btree_ref/path.h"
 #include "errors.h"
 #include "list_ref/list_ref.h"
-#include "ptr.h"
 #include "test_macros.h"
 
 #ifndef STRUCT_RECURSIVE_IMPL
@@ -374,11 +373,12 @@ void btree_free(btree_ref_t* tree) {
 }
 #else
 void btree_free(btree_ref_t* tree) {
-	when_null_ret(tree, -ERROR_INVALID_PARAM1);
+	if (tree == NULL)
+		return;
 	if (tree->root == NULL)
 		goto exit;
 	stack_view_t* stack = create_stack_view(sizeof(node_btree_ref_t));
-	when_null_ret(stack, -ERROR_ALLOCATION_FAILED);
+	when_null_ret(stack, );
 
 	node_btree_ref_t* node;
 	stack_view_push(stack, tree->root);
