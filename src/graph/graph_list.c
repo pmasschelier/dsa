@@ -45,6 +45,17 @@ int graph_list_add_edge_noverif(graph_list_t* g,
 	return 0;
 }
 
+graph_list_t* create_graph_list_from_predecessors(unsigned size, int* father) {
+	graph_list_t* ret = create_graph_list(size, FALSE);
+	when_null_ret(ret, NULL);
+
+	for (unsigned i = 0; i < size; i++) {
+		if (father[i] != -1)
+			graph_list_add_edge_noverif(ret, father[i], i, 1);
+	}
+	return ret;
+}
+
 #ifdef STRUCT_RECURSIVE_IMPL
 static node_list_ref_t* find_edge_rec(node_list_ref_t* node, unsigned int b) {
 	if (node == NULL)
@@ -313,21 +324,23 @@ int graph_list_bfs(graph_list_t* g, unsigned r, int* values, int* father) {
 // 	index[j] = a;
 // }
 
+#define SSSHORTESTPATH_INIT                                \
+	when_null_ret(distance, -ERROR_INVALID_PARAM3);        \
+	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2); \
+	for (unsigned i = 0; i < g->nb_vert; i++)              \
+		distance[i] = GRAPH_WEIGHT_INF;                    \
+	if (father) {                                          \
+		for (unsigned i = 0; i < g->nb_vert; i++)          \
+			father[i] = -1;                                \
+	}                                                      \
+	distance[r] = 0;
+
 #ifndef DIJKSTRA_HEAP_IMPL
 int graph_list_dijkstra(graph_list_t* g,
 						unsigned r,
 						graph_weight_t* distance,
 						int* father) {
-	when_null_ret(distance, -ERROR_INVALID_PARAM3);
-	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
-
-	for (unsigned i = 0; i < g->nb_vert; i++)
-		distance[i] = GRAPH_WEIGHT_INF;
-	if (father) {
-		for (unsigned i = 0; i < g->nb_vert; i++)
-			father[i] = -1;
-	}
-	distance[r] = 0;
+	SSSHORTESTPATH_INIT
 
 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
 	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
@@ -384,16 +397,7 @@ int graph_list_dijkstra(graph_list_t* g,
 						unsigned r,
 						graph_weight_t* distance,
 						int* father) {
-	when_null_ret(distance, -ERROR_INVALID_PARAM3);
-	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
-
-	for (unsigned i = 0; i < g->nb_vert; i++)
-		distance[i] = GRAPH_WEIGHT_INF;
-	if (father != NULL) {
-		for (unsigned i = 0; i < g->nb_vert; i++)
-			father[i] = -1;
-	}
-	distance[r] = 0;
+	SSSHORTESTPATH_INIT
 
 	heap_view_t* heap =
 		create_heap_no_check(g->nb_vert, sizeof(graph_weight_t), distance,
@@ -405,6 +409,9 @@ int graph_list_dijkstra(graph_list_t* g,
 	heap->pos_to_idx[r] = 0;
 	heap->pos_to_idx[0] = r;
 
+	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
+	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
+
 	// Number of vertices reached by the algorithm
 	unsigned number = 0;
 	int pivot;
@@ -415,9 +422,13 @@ int graph_list_dijkstra(graph_list_t* g,
 		// lowest distance to the root)
 		if (distance[pivot] == GRAPH_WEIGHT_INF)
 			break;
+		mark[pivot] = TRUE;
+		number++;
 
 		// For each successor of pivot
 		foreach_node(&g->neighbours[pivot], e, graph_list_edge_t) {
+			if (mark[e->to] == TRUE)
+				continue;
 			graph_weight_t d =
 				weight_add_truncate_overflow(distance[pivot], e->w);
 			if (d < distance[e->to]) {
@@ -428,6 +439,7 @@ int graph_list_dijkstra(graph_list_t* g,
 		}
 	}
 	free_heap(heap);
+	free(mark);
 
 	return number;
 }
@@ -450,7 +462,7 @@ unsigned int graph_list_outdegree(graph_list_t* g, unsigned vertex) {
 int graph_list_topological_ordering(graph_list_t* g,
 									unsigned* num,
 									unsigned* denum) {
-	int ret = -1;
+	int ret = -ERROR_GRAPH_SHOULDBE_DAG;
 	when_true_ret(g->nb_vert == 0, -ERROR_GRAPH_HAS_NO_NODE);
 	when_null_ret(num, -ERROR_INVALID_PARAM2);
 
@@ -474,13 +486,13 @@ int graph_list_topological_ordering(graph_list_t* g,
 		if (denum)
 			denum[number] = s;
 		for (unsigned t = 0; t < g->nb_vert; t++) {
-			if (graph_list_get_edge(g, t, s) && --degre[t] == 0)
+			if (graph_list_get_edge(g, t, s) != NULL && --degre[t] == 0)
 				fixed_xifo_copy_push_front(stack, &t);
 		}
 	} while (empty_fixed_xifo(stack) == FALSE);
 	if (number != 0)
 		goto exit;
-	ret = 0;
+	ret = -ERROR_NO_ERROR;
 exit:
 	free_fixed_xifo(stack);
 	return ret;
@@ -490,45 +502,164 @@ int graph_list_bellman(graph_list_t* g,
 					   unsigned r,
 					   graph_weight_t* distance,
 					   int* father) {
-	if (!distance)
-		return -ERROR_INVALID_PARAM3;
-	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
-	for (unsigned i = 0; i < g->nb_vert; i++)
-		distance[i] = GRAPH_WEIGHT_INF;
-	distance[r] = 0;
+	SSSHORTESTPATH_INIT
 
 	unsigned* num = malloc(2 * g->nb_vert * sizeof(unsigned int));
 	when_null_ret(num, -ERROR_ALLOCATION_FAILED);
 	unsigned* denum = num + g->nb_vert;
 	int ret = graph_list_topological_ordering(g, num, denum);
-	when_false_ret(ret == ERROR_NO_ERROR, ret);
+	when_false_jmp(ret == ERROR_NO_ERROR, ret, exit);
 
-	if (father) {
-		for (unsigned i = 0; i <= num[r]; i++)
-			father[denum[i]] = -1;
-	}
-	for (unsigned i = num[r] + 1; i < g->nb_vert; i++) {
-		graph_weight_t min = GRAPH_WEIGHT_INF;
+	for (unsigned i = num[r]; i < g->nb_vert - 1; i++) {
 		const unsigned x = denum[i];
-		int y_min = -1;
-		for (unsigned j = num[r]; j < i; j++) {
-			int y = denum[j];
-			if (graph_list_get_edge(g, y, x)) {
-				const graph_weight_t w = graph_list_get_edge(g, y, x)->w;
+		foreach_node(&g->neighbours[x], e, graph_list_edge_t) {
+			const graph_weight_t d =
+				weight_add_truncate_overflow(distance[x], e->w);
+			if (d < distance[e->to]) {
+				distance[e->to] = d;
+				if (father != NULL)
+					father[e->to] = x;
+			}
+		}
+	}
+
+exit:
+	free(num);
+	return ret;
+}
+
+/* int graph_list_bellman(graph_list_t* g, */
+/* 					   unsigned r, */
+/* 					   graph_weight_t* distance, */
+/* 					   int* father) { */
+/* 	SSSHORTESTPATH_INIT */
+/**/
+/* 	unsigned* num = malloc(2 * g->nb_vert * sizeof(unsigned int)); */
+/* 	when_null_ret(num, -ERROR_ALLOCATION_FAILED); */
+/* 	unsigned* denum = num + g->nb_vert; */
+/* 	int ret = graph_list_topological_ordering(g, num, denum); */
+/* 	when_false_jmp(ret == ERROR_NO_ERROR, ret, exit); */
+/**/
+/* 	for (unsigned i = num[r] + 1; i < g->nb_vert; i++) { */
+/* 		graph_weight_t min = GRAPH_WEIGHT_INF; */
+/* 		const unsigned x = denum[i]; */
+/* 		int y_min = -1; */
+/* 		for (unsigned j = num[r]; j < i; j++) { */
+/* 			int y = denum[j]; */
+/* 			if (graph_list_get_edge(g, y, x) == FALSE) */
+/* 				continue; */
+/* 			const graph_weight_t w = graph_list_get_edge(g, y, x)->w; */
+/* 			const graph_weight_t d = */
+/* 				weight_add_truncate_overflow(distance[y], w); */
+/* 			if (d < min) { */
+/* 				min = d; */
+/* 				y_min = y; */
+/* 			} */
+/* 		} */
+/* 		if (y_min >= 0) { */
+/* 			distance[x] = min; */
+/* 			father[x] = y_min; */
+/* 		} */
+/* 	} */
+/**/
+/* exit: */
+/* 	free(num); */
+/* 	return ret; */
+/* } */
+
+int graph_list_ford(graph_list_t* g,
+					unsigned r,
+					graph_weight_t* distance,
+					int* father) {
+	SSSHORTESTPATH_INIT
+
+	BOOL changed;
+	unsigned k = 0;
+
+	do {
+		changed = FALSE;
+		k++;
+		for (unsigned i = 0; i < g->nb_vert; i++) {
+			// Finds the predecessor of i which will allow us to minimize the
+			// distance
+			foreach_node(&g->neighbours[i], e, graph_list_edge_t) {
 				const graph_weight_t d =
-					weight_add_truncate_overflow(distance[y], w);
-				if (d < min) {
-					min = d;
-					y_min = y;
+					weight_add_truncate_overflow(distance[i], e->w);
+				if (d < distance[e->to]) {
+					changed = TRUE;
+					distance[e->to] = d;
+					if (father != NULL)
+						father[e->to] = i;
 				}
 			}
 		}
-		if (y_min >= 0) {
-			distance[x] = min;
-			father[x] = y_min;
-		}
-	}
-	free(num);
+	} while (k != g->nb_vert && changed == TRUE);
+	if (changed == TRUE)
+		return -ERROR_GRAPH_HAS_ABSORBING_CIRCUIT;
+	return -ERROR_NO_ERROR;
+}
 
-	return 0;
+static BOOL test_if_edge_create_cycle(int* father, int a, int b) {
+	int current = a;
+	while (current != -1) {
+		if (current == b)
+			return TRUE;
+		current = father[current];
+	}
+	return FALSE;
+}
+
+int graph_list_ford_dantzig(graph_list_t* g,
+							unsigned r,
+							graph_weight_t* distance,
+							int* father,
+							int* cycle) {
+	when_null_ret(father, -ERROR_INVALID_PARAM4);
+	int ret = graph_list_dijkstra(g, r, distance, father);
+	when_false_ret(ret >= 0, ret);
+	fixed_xifo_view_t* update_queue =
+		create_fixed_xifo_copy(sizeof(int), g->nb_vert);
+	when_null_ret(update_queue, -ERROR_ALLOCATION_FAILED);
+
+	while (TRUE) {
+		BOOL found = FALSE;
+		int x, y;
+		graph_weight_t d;
+		for (unsigned i = 0; i < g->nb_vert && found == FALSE; i++) {
+			foreach_node(&g->neighbours[i], e, graph_list_edge_t) {
+				d = weight_add_truncate_overflow(distance[i], e->w);
+				if (d < distance[e->to]) {
+					x = i;
+					y = e->to;
+					found = TRUE;
+					break;
+				}
+			}
+		}
+		if (found == FALSE)
+			break;
+		distance[y] = d;
+		father[y] = x;
+		if (test_if_edge_create_cycle(father, x, y) == TRUE) {
+			*cycle = x;
+			ret = -ERROR_GRAPH_HAS_ABSORBING_CIRCUIT;
+			goto exit;
+		}
+		fixed_xifo_copy_push_back(update_queue, &y);
+
+		do {
+			fixed_xifo_copy_pop_front(update_queue, &x);
+			foreach_node(&g->neighbours[x], e, graph_list_edge_t) {
+				if (father[e->to] == x) {
+					d = weight_add_truncate_overflow(distance[x], e->w);
+					distance[e->to] = d;
+					fixed_xifo_copy_push_back(update_queue, &e->to);
+				}
+			}
+		} while (empty_fixed_xifo(update_queue) == FALSE);
+	}
+
+exit:
+	free_fixed_xifo(update_queue);
+	return ret;
 }

@@ -266,21 +266,24 @@ int graph_mat_bfs(graph_mat_t* g, unsigned r, int* values, int* father) {
 	return mark_and_examine_traversal_mat(g, r, values, father, QUEUE);
 }
 
+#define SSSHORTESTPATH_INIT                                \
+	when_null_ret(g, -ERROR_INVALID_PARAM1);               \
+	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2); \
+	when_null_ret(distance, -ERROR_INVALID_PARAM3);        \
+	for (unsigned i = 0; i < g->nb_vert; i++)              \
+		distance[i] = GRAPH_WEIGHT_INF;                    \
+	if (father) {                                          \
+		for (unsigned i = 0; i < g->nb_vert; i++)          \
+			father[i] = -1;                                \
+	}                                                      \
+	distance[r] = 0;
+
 #ifndef DIJKSTRA_HEAP_IMPL
 int graph_mat_dijkstra(graph_mat_t* g,
 					   unsigned r,
 					   graph_weight_t* distance,
 					   int* father) {
-	when_null_ret(distance, -ERROR_INVALID_PARAM3);
-	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
-
-	for (unsigned i = 0; i < g->nb_vert; i++)
-		distance[i] = GRAPH_WEIGHT_INF;
-	if (father) {
-		for (unsigned i = 0; i < g->nb_vert; i++)
-			father[i] = -1;
-	}
-	distance[r] = 0;
+	SSSHORTESTPATH_INIT
 
 	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
 	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
@@ -336,26 +339,21 @@ int graph_mat_dijkstra(graph_mat_t* g,
 					   unsigned r,
 					   graph_weight_t* distance,
 					   int* father) {
-	when_null_ret(distance, -ERROR_INVALID_PARAM3);
-	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
-
-	for (unsigned i = 0; i < g->nb_vert; i++)
-		distance[i] = GRAPH_WEIGHT_INF;
-	if (father != NULL) {
-		for (unsigned i = 0; i < g->nb_vert; i++)
-			father[i] = -1;
-	}
-	distance[r] = 0;
+	SSSHORTESTPATH_INIT
 
 	heap_view_t* heap =
 		create_heap_no_check(g->nb_vert, sizeof(graph_weight_t), distance,
 							 compare_min_graph_weight_t);
+	when_null_ret(heap, -ERROR_ALLOCATION_FAILED);
 
 	// We put r at the root of (index, distance) which makes it a heap
 	heap->idx_to_pos[r] = 0;
 	heap->idx_to_pos[0] = r;
 	heap->pos_to_idx[r] = 0;
 	heap->pos_to_idx[0] = r;
+
+	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
+	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
 
 	// Number of vertices reached by the algorithm
 	unsigned number = 0;
@@ -367,12 +365,13 @@ int graph_mat_dijkstra(graph_mat_t* g,
 		// lowest distance to the root)
 		if (distance[pivot] == GRAPH_WEIGHT_INF)
 			break;
+		mark[pivot] = TRUE;
 		number++;
 
 		// Updates the distance of all the pivots's neighbours
 		for (unsigned j = 0; j < g->nb_vert; j++) {	 // For each vertex j
 			// which is a successor of pivot and haven't been marked
-			if (graph_mat_get_edge(g, pivot, j) == FALSE)
+			if (mark[j] == TRUE || graph_mat_get_edge(g, pivot, j) == FALSE)
 				continue;
 			const graph_weight_t w = graph_mat_get_weight(g, pivot, j);
 			const graph_weight_t d =
@@ -385,6 +384,7 @@ int graph_mat_dijkstra(graph_mat_t* g,
 		}
 	}
 	free_heap(heap);
+	free(mark);
 
 	return number;
 }
@@ -411,7 +411,7 @@ unsigned int graph_mat_outdegree(graph_mat_t* g, unsigned vertex) {
 int graph_mat_topological_ordering(graph_mat_t* g,
 								   unsigned* num,
 								   unsigned* denum) {
-	int ret = -1;
+	int ret = -ERROR_GRAPH_SHOULDBE_DAG;
 	when_true_ret(g->nb_vert == 0, -ERROR_GRAPH_HAS_NO_NODE);
 	when_null_ret(num, -ERROR_INVALID_PARAM2);
 
@@ -419,6 +419,7 @@ int graph_mat_topological_ordering(graph_mat_t* g,
 
 	fixed_xifo_view_t* stack =
 		create_fixed_xifo_copy(sizeof(unsigned), g->nb_vert);
+	when_null_ret(stack, -ERROR_ALLOCATION_FAILED);
 
 	unsigned degre[g->nb_vert];
 	for (unsigned i = 0; i < g->nb_vert; i++) {
@@ -441,7 +442,7 @@ int graph_mat_topological_ordering(graph_mat_t* g,
 	} while (empty_fixed_xifo(stack) == FALSE);
 	if (number != 0)
 		goto exit;
-	ret = 0;
+	ret = -ERROR_NO_ERROR;
 exit:
 	free_fixed_xifo(stack);
 	return ret;
@@ -451,12 +452,7 @@ int graph_mat_bellman(graph_mat_t* g,
 					  unsigned r,
 					  graph_weight_t* distance,
 					  int* father) {
-	if (!distance)
-		return -ERROR_INVALID_PARAM3;
-	when_false_ret(r < g->nb_vert, -ERROR_GRAPH_HAS_NO_NODE);
-	for (unsigned i = 0; i < g->nb_vert; i++)
-		distance[i] = GRAPH_WEIGHT_INF;
-	distance[r] = 0;
+	SSSHORTESTPATH_INIT
 
 	unsigned* num = malloc(2 * g->nb_vert * sizeof(unsigned int));
 	when_null_ret(num, -ERROR_ALLOCATION_FAILED);
@@ -464,33 +460,140 @@ int graph_mat_bellman(graph_mat_t* g,
 	int ret = graph_mat_topological_ordering(g, num, denum);
 	when_false_jmp(ret == ERROR_NO_ERROR, ret, exit);
 
-	if (father) {
-		for (unsigned i = 0; i <= num[r]; i++)
-			father[denum[i]] = -1;
-	}
 	for (unsigned i = num[r] + 1; i < g->nb_vert; i++) {
 		graph_weight_t min = GRAPH_WEIGHT_INF;
 		const unsigned x = denum[i];
 		int y_min = -1;
 		for (unsigned j = num[r]; j < i; j++) {
 			int y = denum[j];
-			if (graph_mat_get_edge(g, y, x)) {
-				const graph_weight_t w = graph_mat_get_weight(g, y, x);
-				const graph_weight_t d =
-					weight_add_truncate_overflow(distance[y], w);
-				if (d < min) {
-					min = d;
-					y_min = y;
-				}
+			if (graph_mat_get_edge(g, y, x) == FALSE)
+				continue;
+			const graph_weight_t w = graph_mat_get_weight(g, y, x);
+			const graph_weight_t d =
+				weight_add_truncate_overflow(distance[y], w);
+			if (d < min) {
+				min = d;
+				y_min = y;
 			}
 		}
 		if (y_min >= 0) {
 			distance[x] = min;
-			father[x] = y_min;
+			if (father != NULL)
+				father[x] = y_min;
 		}
 	}
 
 exit:
 	free(num);
+	return ret;
+}
+
+int graph_mat_ford(graph_mat_t* g,
+				   unsigned r,
+				   graph_weight_t* distance,
+				   int* father) {
+	SSSHORTESTPATH_INIT
+
+	BOOL changed;
+	unsigned k = 0;
+
+	do {
+		changed = FALSE;
+		// We extend all paths (which are for now at most k-segments long)
+		k++;
+		for (unsigned i = 0; i < g->nb_vert; i++) {
+			for (unsigned j = 0; j < g->nb_vert; j++) {
+				if (graph_mat_get_edge(g, i, j) == FALSE)
+					continue;
+
+				// For each edge we try to update the target
+				const graph_weight_t w = graph_mat_get_weight(g, i, j);
+				const graph_weight_t d =
+					weight_add_truncate_overflow(distance[i], w);
+				if (d < distance[j]) {
+					changed = TRUE;
+					distance[j] = d;
+					if (father != NULL)
+						father[j] = i;
+				}
+			}
+		}
+	} while (k != g->nb_vert && changed == TRUE);
+	// If a path of size n-1 was extended to a path of size n it means there is
+	// an absorbent circuit in the graph (because shortest paths cannot be
+	// longer than n-1).
+	if (changed == TRUE)
+		return -ERROR_GRAPH_HAS_ABSORBING_CIRCUIT;
+	return -ERROR_NO_ERROR;
+}
+
+static BOOL test_if_edge_create_cycle(int* father, int a, int b) {
+	int current = a;
+	while (current != -1) {
+		if (current == b)
+			return TRUE;
+		current = father[current];
+	}
+	return FALSE;
+}
+
+int graph_mat_ford_dantzig(graph_mat_t* g,
+						   unsigned r,
+						   graph_weight_t* distance,
+						   int* father,
+						   int* cycle) {
+	when_null_ret(father, -ERROR_INVALID_PARAM4);
+	int ret = graph_mat_dijkstra(g, r, distance, father);
+	when_false_ret(ret >= 0, ret);
+	fixed_xifo_view_t* update_queue =
+		create_fixed_xifo_copy(sizeof(int), g->nb_vert);
+	when_null_ret(update_queue, -ERROR_ALLOCATION_FAILED);
+
+	while (TRUE) {
+		BOOL found = FALSE;
+		int x, y;
+		graph_weight_t d;
+		for (unsigned i = 0; i < g->nb_vert && found == FALSE; i++) {
+			for (unsigned j = 0; j < g->nb_vert; j++) {
+				if (graph_mat_get_edge(g, i, j) == FALSE)
+					continue;
+
+				// For each edge we test if the target can be updated
+				const graph_weight_t w = graph_mat_get_weight(g, i, j);
+				d = weight_add_truncate_overflow(distance[i], w);
+				if (d < distance[j]) {
+					x = i;
+					y = j;
+					found = TRUE;
+					break;
+				}
+			}
+		}
+		if (found == FALSE)
+			break;
+		distance[y] = d;
+		father[y] = x;
+		if (test_if_edge_create_cycle(father, x, y) == TRUE) {
+			*cycle = x;
+			ret = -ERROR_GRAPH_HAS_ABSORBING_CIRCUIT;
+			goto exit;
+		}
+		fixed_xifo_copy_push_back(update_queue, &y);
+
+		do {
+			fixed_xifo_copy_pop_front(update_queue, &x);
+			for (unsigned y = 0; y < g->nb_vert; y++) {
+				if (father[y] == x) {
+					const graph_weight_t w = graph_mat_get_weight(g, y, x);
+					d = weight_add_truncate_overflow(distance[x], w);
+					distance[y] = d;
+					fixed_xifo_copy_push_back(update_queue, &y);
+				}
+			}
+		} while (empty_fixed_xifo(update_queue) == FALSE);
+	}
+
+exit:
+	free_fixed_xifo(update_queue);
 	return ret;
 }

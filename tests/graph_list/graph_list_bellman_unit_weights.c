@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <graph/graph_list.h>
+#include <stdio.h>
 #include <weight_type.h>
 
 #define EDGE_COUNT 6
@@ -27,6 +28,7 @@ int main(void) {
 	assert(0 == graph_list_bellman(g, 1, distance, father));
 
 	for (int i = 0; i < NODE_COUNT; i++) {
+		/* printf("%lld %d\n", distance[i], father[i]); */
 		assert(expected[i] == distance[i]);
 		assert(expected_fathers[i] == father[i]);
 	}
