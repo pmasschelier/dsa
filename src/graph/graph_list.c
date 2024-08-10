@@ -175,35 +175,27 @@ int mark_and_examine_traversal_list(graph_list_t* g,
 	return index;
 }
 
-static void graph_list_preorder_dfs_rec(graph_list_t* g,
-										unsigned current,
-										int* tab,
-										int* father,
-										char* mark,
-										unsigned* index) {
-	mark[current] = TRUE;
-	tab[*index] = current;
-	*index += 1;
-	node_list_ref_t* node = g->neighbours[current].begin;
-	graph_list_edge_t* e = NULL;
-	while (node) {
-		e = node->p;
-		if (!mark[e->to]) {
-			if (father)
-				father[e->to] = current;
-			graph_list_preorder_dfs_rec(g, e->to, tab, father, mark, index);
-		}
-		node = node->next;
-	}
-}
+#define DFS_INIT_MARK(type)                                \
+	unsigned index = 0;                                    \
+	when_null_ret(g, -ERROR_INVALID_PARAM1);               \
+	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2); \
+	type* mark = calloc(g->nb_vert, sizeof(type));         \
+	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);         \
+	if (father != NULL)                                    \
+		father[r] = -1;
 
-static void graph_list_postorder_dfs_rec(graph_list_t* g,
+#define DFS_DEINIT_MARK free(mark);
+
+#ifdef STRUCT_RECURSIVE_IMPL
+static void graph_list_preorder_dfs_impl(graph_list_t* g,
 										 unsigned current,
 										 int* tab,
 										 int* father,
 										 char* mark,
 										 unsigned* index) {
 	mark[current] = TRUE;
+	tab[*index] = current;
+	*index += 1;
 	node_list_ref_t* node = g->neighbours[current].begin;
 	graph_list_edge_t* e = NULL;
 	while (node) {
@@ -211,48 +203,123 @@ static void graph_list_postorder_dfs_rec(graph_list_t* g,
 		if (!mark[e->to]) {
 			if (father)
 				father[e->to] = current;
-			graph_list_postorder_dfs_rec(g, e->to, tab, father, mark, index);
+			graph_list_preorder_dfs_impl(g, e->to, tab, father, mark, index);
+		}
+		node = node->next;
+	}
+}
+
+static void graph_list_postorder_dfs_impl(graph_list_t* g,
+										  unsigned current,
+										  int* tab,
+										  int* father,
+										  char* mark,
+										  unsigned* index) {
+	mark[current] = TRUE;
+	node_list_ref_t* node = g->neighbours[current].begin;
+	graph_list_edge_t* e = NULL;
+	while (node) {
+		e = node->p;
+		if (!mark[e->to]) {
+			if (father)
+				father[e->to] = current;
+			graph_list_postorder_dfs_impl(g, e->to, tab, father, mark, index);
 		}
 		node = node->next;
 	}
 	tab[*index] = current;
 	*index += 1;
 }
-typedef void (*graph_list_dfs_rec_fn_t)(graph_list_t* g,
-										unsigned current,
-										int* tab,
-										int* father,
-										char* mark,
-										unsigned* index);
-
-int graph_list_init_dfs(graph_list_t* g,
-						unsigned r,
-						int* tab,
-						int* father,
-						graph_list_dfs_rec_fn_t f) {
-	when_null_ret(tab, -ERROR_INVALID_PARAM3);
-	char* mark = calloc(g->nb_vert, sizeof(BOOL));
-	if (father)
-		father[r] = -1;
-	unsigned index = 0;
-	f(g, r, tab, father, mark, &index);
-	free(mark);
-	return index;
-}
 
 int graph_list_preorder_dfs(graph_list_t* g,
 							unsigned r,
 							int* tab,
 							int* father) {
-	return graph_list_init_dfs(g, r, tab, father, graph_list_preorder_dfs_rec);
+	DFS_INIT_MARK(char)
+	graph_list_preorder_dfs_impl(g, r, tab, father, mark, &index);
+	DFS_DEINIT_MARK
+	return index;
 }
 
 int graph_list_postorder_dfs(graph_list_t* g,
 							 unsigned r,
 							 int* tab,
 							 int* father) {
-	return graph_list_init_dfs(g, r, tab, father, graph_list_postorder_dfs_rec);
+	DFS_INIT_MARK(char)
+	graph_list_postorder_dfs_impl(g, r, tab, father, mark, &index);
+	DFS_DEINIT_MARK
+	return index;
 }
+#else
+int graph_list_preorder_dfs(graph_list_t* g,
+							unsigned r,
+							int* tab,
+							int* father) {
+	DFS_INIT_MARK(char)
+	fixed_xifo_view_t* waiting_list =
+		create_fixed_xifo_copy(sizeof(int), g->nb_vert);
+	when_null_ret(waiting_list, -ERROR_ALLOCATION_FAILED);
+
+	int pivot = r;
+	fixed_xifo_copy_push_back(waiting_list, &pivot);
+	do {
+		fixed_xifo_copy_pop_back(waiting_list, &pivot);
+		mark[pivot] = TRUE;
+		tab[index++] = pivot;
+		foreach_node_rev(&g->neighbours[pivot], e, graph_list_edge_t) {
+			if (mark[e->to] == FALSE) {
+				fixed_xifo_copy_push_back(waiting_list, &e->to);
+				if (father != NULL)
+					father[e->to] = pivot;
+			}
+		}
+
+	} while (empty_fixed_xifo(waiting_list) == FALSE);
+	free_fixed_xifo(waiting_list);
+	DFS_DEINIT_MARK
+	return index;
+}
+
+typedef enum dfs_status { UNVISITED, VISITED, SUBTREEDONE } dfs_status_t;
+
+int graph_list_postorder_dfs(graph_list_t* g,
+							 unsigned r,
+							 int* tab,
+							 int* father) {
+	DFS_INIT_MARK(dfs_status_t)
+	fixed_xifo_view_t* waiting_list =
+		create_fixed_xifo_copy(sizeof(int), g->nb_vert);
+	when_null_ret(waiting_list, -ERROR_ALLOCATION_FAILED);
+
+	int pivot = r;
+	fixed_xifo_copy_push_back(waiting_list, &pivot);
+	mark[pivot] = VISITED;
+	do {
+		/* fixed_xifo_copy_pop_back(waiting_list, &pivot); */
+		pivot = fixed_xifo_copy_back(waiting_list, int);
+		if (mark[pivot] == SUBTREEDONE) {
+			if (tab != NULL)
+				tab[index] = pivot;
+			index++;
+			fixed_xifo_copy_pop_back(waiting_list, NULL);
+			continue;
+		}
+		foreach_node_rev(&g->neighbours[pivot], e, graph_list_edge_t) {
+			if (mark[e->to] == UNVISITED) {
+				fixed_xifo_copy_push_back(waiting_list, &e->to);
+				mark[e->to] = VISITED;
+				if (father != NULL)
+					father[e->to] = pivot;
+			}
+		}
+		mark[pivot] = SUBTREEDONE;
+
+	} while (empty_fixed_xifo(waiting_list) == FALSE);
+	free_fixed_xifo(waiting_list);
+	DFS_DEINIT_MARK
+	return index;
+}
+#endif	// STRUCT_RECURSIVE_IMPL
 
 int graph_list_bfs(graph_list_t* g, unsigned r, int* values, int* father) {
 	return mark_and_examine_traversal_list(g, r, values, father, QUEUE);

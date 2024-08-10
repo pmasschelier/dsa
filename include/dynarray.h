@@ -56,4 +56,6 @@ BOOL dynarray_pop_front(dynarray_t* array, void* value);
 
 BOOL dynarray_pop_back(dynarray_t* array, void* value);
 
+/** @} */
+
 #endif	// !DYNARRAY_H

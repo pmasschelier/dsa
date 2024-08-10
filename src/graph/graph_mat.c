@@ -62,6 +62,16 @@ graph_weight_t graph_mat_get_weight(graph_mat_t* g,
 	return g->weights ? g->weights[a * g->nb_vert + b] : 1;
 }
 
+#define DFS_INIT_MARK(type)                                \
+	unsigned index = 0;                                    \
+	when_null_ret(g, -ERROR_INVALID_PARAM1);               \
+	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2); \
+	type* mark = calloc(g->nb_vert, sizeof(type));         \
+	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);         \
+	if (father != NULL)                                    \
+		father[r] = -1;
+#define DFS_DEINIT_MARK free(mark);
+
 #ifdef STRUCT_RECURSIVE_IMPL
 static void graph_mat_preorder_dfs_rec(graph_mat_t* g,
 									   unsigned current,
@@ -84,12 +94,9 @@ int graph_mat_preorder_dfs(graph_mat_t* g,
 						   unsigned r,
 						   int* values,
 						   int* father) {
-	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
-	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
-	father[r] = -1;
-	unsigned index = 0;
+	DFS_INIT_MARK(BOOL)
 	graph_mat_preorder_dfs_rec(g, r, values, father, mark, &index);
-	free(mark);
+	DFS_DEINIT_MARK
 	return index;
 }
 
@@ -116,37 +123,26 @@ int graph_mat_postorder_dfs(graph_mat_t* g,
 							unsigned r,
 							int* values,
 							int* father) {
-	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
-	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
-	father[r] = -1;
-	unsigned index = 0;
+	DFS_INIT_MARK(BOOL)
 	graph_mat_postorder_dfs_rec(g, r, values, father, mark, &index);
-	free(mark);
+	DFS_DEINIT_MARK
 	return index;
 }
 #else
-#include "circular_buffer.h"
-
 int graph_mat_preorder_dfs(graph_mat_t* g,
 						   unsigned r,
 						   int* values,
 						   int* father) {
-	when_null_ret(g, -ERROR_INVALID_PARAM1);
-	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
-	BOOL* mark = calloc(g->nb_vert, sizeof(BOOL));
-	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
+	DFS_INIT_MARK(char)
 	mark[r] = TRUE;
 
-	if (father != NULL)
-		father[r] = -1;
+	fixed_xifo_view_t* waiting_list =
+		create_fixed_xifo_copy(sizeof(int), g->nb_vert);
+	fixed_xifo_copy_push_back(waiting_list, &r);
 
-	circular_buffer_t* stack = create_circular_buffer(sizeof(int), g->nb_vert);
-	circular_buffer_push_back(stack, &r);
-
-	unsigned index = 0;
 	unsigned current;
-	while (circular_buffer_size(stack) != 0) {
-		circular_buffer_pop_back(stack, &current);
+	do {
+		fixed_xifo_copy_pop_back(waiting_list, &current);
 		if (values != NULL)
 			values[index] = current;
 		index++;
@@ -154,15 +150,15 @@ int graph_mat_preorder_dfs(graph_mat_t* g,
 			int neighbour = g->nb_vert - i - 1;
 			if (graph_mat_get_edge(g, current, neighbour) && !mark[neighbour]) {
 				mark[neighbour] = TRUE;
-				circular_buffer_push_back(stack, &neighbour);
+				fixed_xifo_copy_push_back(waiting_list, &neighbour);
 				if (father != NULL)
 					father[neighbour] = current;
 			}
 		}
-	}
+	} while (empty_fixed_xifo(waiting_list) == FALSE);
 
-	free_circular_buffer(stack);
-	free(mark);
+	free_fixed_xifo(waiting_list);
+	DFS_DEINIT_MARK
 	return index;
 }
 
@@ -172,51 +168,40 @@ int graph_mat_postorder_dfs(graph_mat_t* g,
 							unsigned r,
 							int* values,
 							int* father) {
-	when_null_ret(g, -ERROR_INVALID_PARAM1);
-	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2);
-
-	dfs_status_t* mark = calloc(g->nb_vert, sizeof(dfs_status_t));
-	when_null_ret(mark, -ERROR_ALLOCATION_FAILED);
+	DFS_INIT_MARK(dfs_status_t)
 	mark[r] = VISITED;
 
-	if (father != NULL)
-		father[r] = -1;
+	fixed_xifo_view_t* waiting_list =
+		create_fixed_xifo_copy(sizeof(int), g->nb_vert);
+	when_null_ret(waiting_list, -ERROR_ALLOCATION_FAILED);
+	fixed_xifo_copy_push_back(waiting_list, &r);
 
-	circular_buffer_t* stack = create_circular_buffer(sizeof(int), g->nb_vert);
-	when_null_ret(stack, -ERROR_ALLOCATION_FAILED);
-	circular_buffer_push_back(stack, &r);
-
-	unsigned index = 0;
 	unsigned current;
-
-	while (circular_buffer_size(stack) != 0) {
-		current = *get_buffer_last(stack, int);
+	do {
+		current = fixed_xifo_copy_back(waiting_list, int);
 		if (mark[current] == SUBTREEDONE) {
 			if (values != NULL)
 				values[index] = current;
 			index++;
-			circular_buffer_pop_back(stack, NULL);
+			fixed_xifo_copy_pop_back(waiting_list, NULL);
 			continue;
 		}
 		/* circular_buffer_pop_back(stack, &current); */
-		BOOL has_neighbours = FALSE;
 		for (unsigned i = 0; i < g->nb_vert; i++) {
 			int neighbour = g->nb_vert - i - 1;
 			if (graph_mat_get_edge(g, current, neighbour) &&
 				mark[neighbour] == UNVISITED) {
 				mark[neighbour] = VISITED;
-				circular_buffer_push_back(stack, &neighbour);
+				fixed_xifo_copy_push_back(waiting_list, &neighbour);
 				if (father != NULL)
 					father[neighbour] = current;
-				has_neighbours = TRUE;
 			}
 		}
-		if (has_neighbours == FALSE)
-			mark[current] = SUBTREEDONE;
-	}
+		mark[current] = SUBTREEDONE;
+	} while (empty_fixed_xifo(waiting_list) == FALSE);
 
-	free_circular_buffer(stack);
-	free(mark);
+	free_fixed_xifo(waiting_list);
+	DFS_DEINIT_MARK
 	return index;
 }
 #endif /* ifdef STRUCT_RECURSIVE_IMPL */
@@ -431,7 +416,7 @@ int graph_mat_topological_ordering(graph_mat_t* g,
 		goto exit;
 	do {
 		unsigned s;
-		fixed_xifo_view_pop_front(stack, &s);
+		fixed_xifo_copy_pop_front(stack, (void*)&s);
 		num[s] = --number;
 		if (denum)
 			denum[number] = s;

@@ -8,8 +8,11 @@
  * @ingroup cbuffer_ref
  */
 
+#define get_buffer_first(buffer, type) \
+	(type*)((buffer)->data + (buffer)->first * (buffer)->size_bytes)
+
 #define get_buffer_last(buffer, type) \
-	(type*)((buffer)->data + buffer->last * buffer->size_bytes)
+	(type*)((buffer)->data + (buffer)->last * (buffer)->size_bytes)
 
 /**
  * @defgroup cbuffer_ref Circular buffers

@@ -22,9 +22,20 @@
 	for (node_list_ref_t* node = (list)->begin; node != NULL;        \
 		 node = node->next, value = (node != NULL) ? node->p : NULL)
 
+#define foreach_node_node_rev(list, node) \
+	for (node_list_ref_t* node = list->end; node != NULL; node = node->prev)
+
+#define foreach_node_value_rev(list, value, type)                \
+	type* value = ((list)->end != NULL) ? (list)->end->p : NULL; \
+	for (node_list_ref_t* node = (list)->end; node != NULL;      \
+		 node = node->prev, value = (node != NULL) ? node->p : NULL)
+
 #define GET_MACRO(_1, _2, _3, NAME, ...) NAME
 #define foreach_node(...) \
 	GET_MACRO(__VA_ARGS__, foreach_node_value, foreach_node_node)(__VA_ARGS__)
+#define foreach_node_rev(...)                                             \
+	GET_MACRO(__VA_ARGS__, foreach_node_value_rev, foreach_node_node_rev) \
+	(__VA_ARGS__)
 
 /**
  * @defgroup list_ref Doubly-linked lists
