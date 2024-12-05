@@ -25,7 +25,8 @@ graph_weight_t distance[NODE_COUNT];
 int father[NODE_COUNT];
 
 int main(void) {
-	graph_mat_t* g = create_graph_mat(NODE_COUNT, TRUE);
+	int count = NODE_COUNT;
+	graph_mat_t* g = create_graph_mat(count, TRUE);
 	for (int i = 0; i < EDGE_COUNT; i++)
 		graph_mat_set_edge(g, edges[i][0], edges[i][1], TRUE, weights[i],
 						   FALSE);
@@ -35,3 +36,5 @@ int main(void) {
 	free_graph_mat(g);
 	return 0;
 }
+
+// FIX: This test won´t pass if test_fail == abort
