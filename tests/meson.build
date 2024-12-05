@@ -6,7 +6,8 @@ testdirs = [
   'path', 'heap_view',
   'circular_buffer',
   'avl_tree_ref',
-  'dynarray'
+  'dynarray',
+  'weight_type',
 ]
 
 foreach dirname : testdirs

@@ -11,6 +11,7 @@ src_files = files(
   'dynarray.c',
   'heap_view.c',
   'ptr.c',
+  'weight_type.c',
 )
 
 lib = library('struct', src_files,
