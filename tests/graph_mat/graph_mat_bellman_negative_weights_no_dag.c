@@ -36,5 +36,3 @@ int main(void) {
 	free_graph_mat(g);
 	return 0;
 }
-
-// FIX: This test won´t pass if test_fail == abort

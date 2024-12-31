@@ -297,7 +297,7 @@ int graph_mat_dijkstra(graph_mat_t* g,
 		graph_weight_t min = GRAPH_WEIGHT_INF;
 		int jmin = -1;
 		for (unsigned j = 0; j < g->nb_vert; j++) {	 // For each vertex j
-			if (mark[j] == FALSE && distance[j] >= 0 && distance[j] < min) {
+			if (mark[j] == FALSE && distance[j] < min) {
 				min = distance[j];
 				jmin = j;
 			}

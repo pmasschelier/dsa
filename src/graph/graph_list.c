@@ -396,7 +396,7 @@ int graph_list_bfs(graph_list_t* g, unsigned r, int* values, int* father) {
 	when_false_ret(r < g->nb_vert, -ERROR_INVALID_PARAM2); \
 	for (unsigned i = 0; i < g->nb_vert; i++)              \
 		distance[i] = GRAPH_WEIGHT_INF;                    \
-	if (father) {                                          \
+	if (father != NULL) {                                  \
 		for (unsigned i = 0; i < g->nb_vert; i++)          \
 			father[i] = -1;                                \
 	}                                                      \
@@ -417,8 +417,6 @@ int graph_list_dijkstra(graph_list_t* g,
 	unsigned count = 1;	 // count of vertices reached by the algorithm
 	for (unsigned i = 0; i < g->nb_vert - 1; i++) {
 		// Updates the distance of all the pivots's neighbours
-		/* node_list_ref_t* node = g->neighbours[pivot].begin; */
-		/* graph_list_edge_t* e = NULL; */
 		// For each successor of pivot
 		foreach_node(&g->neighbours[pivot], e, graph_list_edge_t) {
 			if (mark[e->to] == TRUE)
@@ -438,7 +436,7 @@ int graph_list_dijkstra(graph_list_t* g,
 		graph_weight_t min = GRAPH_WEIGHT_INF;
 		int jmin = -1;
 		for (unsigned j = 0; j < g->nb_vert; j++) {	 // For each vertex j
-			if (mark[j] == FALSE && distance[j] >= 0 && distance[j] < min) {
+			if (mark[j] == FALSE && distance[j] < min) {
 				min = distance[j];
 				jmin = j;
 			}
