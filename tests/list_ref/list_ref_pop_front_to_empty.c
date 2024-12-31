@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <list_ref/list_ref.h>
+#include <stdlib.h>
 
 #define LIST_TYPE int
 #define TAB_LEN 10

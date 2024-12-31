@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "graph/graph_list.h"
 #include "graph/graph_mat.h"
 
