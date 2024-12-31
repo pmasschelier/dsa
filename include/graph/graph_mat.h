@@ -242,8 +242,8 @@ int graph_mat_topological_ordering(graph_mat_t* g,
  * different implementations according to the assumption you can make on the
  * graph.
  *
- * - Dijkstra for graphs with positive weights.
- * - Bellman for directed acyclic graphs.
+ * - Dijkstra for graphs with positive weights only.
+ * - Bellman for directed acyclic graphs (with possibly negative weights).
  * - Ford in the general case.
  * - Ford-Dantzig which also work for the general case but will return the
  * absorbing circuit in case of failure.
@@ -275,7 +275,8 @@ int graph_mat_topological_ordering(graph_mat_t* g,
  * In Ford-Dantzig implementation father is not facultative so we also have:
  * - -ERROR_INVALID_PARAM4 when father is NULL
  *
- * We can return a -ERROR_ALLOCATION_FAILED in case of malloc failure.
+ * Moreover a -ERROR_ALLOCATION_FAILED can be returned in case of malloc
+ * failure.
  *
  * Bellman will return -ERROR_GRAPH_SHOULDBE_DAG if the graph is not a directed
  * acyclic graph.
