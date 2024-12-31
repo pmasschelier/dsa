@@ -4,8 +4,6 @@ project('structures', 'c',
   license: 'MIT',
   license_files: 'LICENSE',
   default_options: [
-    'buildtype=debug',
-    # 'buildtype=debugoptimized',
     'warning_level=3',
     'default_library=both',
     'c_std=c99'
@@ -16,6 +14,15 @@ cdata = configuration_data()
 version = meson.project_version().split('.')
 cdata.set('VERSION_MAJOR', version[0])
 cdata.set('VERSION_MINOR', version[1])
+
+if host_machine.endian() == 'little'
+  cdata.set('ARCH_ENDIANESS', 'LITTLE_ENDIAN')
+else
+  cdata.set('ARCH_ENDIANESS', 'BIG_ENDIAN')
+endif
+
+longarchs = ['aarch64', 'loongarch64', 'mips64', 'ppc64', 'riscv64', 'sw_64', 'wasm64', 'x86_64']
+cdata.set10('ARCH_64BITS', longarchs.contains(host_machine.cpu_family()))
 
 dist_types = {
   'byte': ['signed char', 'SCHAR'],
