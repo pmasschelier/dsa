@@ -6,6 +6,7 @@ passing_test_sources = [
   'graph_mat_create_no_edges.c',
   'graph_mat_dijkstra_unit_weights.c',
   'graph_mat_ford_absorbing_circuit.c',
+  'graph_mat_ford_dantzig_unit_weights.c',
   'graph_mat_ford_dantzig_absorbing_circuit.c',
   'graph_mat_ford_dantzig_negative_weights_no_dag.c',
   'graph_mat_ford_negative_weights_no_dag.c',
