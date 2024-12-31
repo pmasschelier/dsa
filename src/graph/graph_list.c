@@ -575,6 +575,8 @@ int graph_list_bellman(graph_list_t* g,
 	when_null_ret(num, -ERROR_ALLOCATION_FAILED);
 	unsigned* denum = num + g->nb_vert;
 	int ret = graph_list_topological_ordering(g, num, denum);
+	if (ret == -ERROR_GRAPH_SHOULDBE_DAG)
+		return ret;
 	when_false_jmp(ret == ERROR_NO_ERROR, ret, exit);
 
 	for (unsigned i = num[r]; i < g->nb_vert - 1; i++) {
