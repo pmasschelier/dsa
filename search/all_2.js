@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['c_0',['Data Structures and Algorithms in C',['../index.html',1,'']]],
+  ['capacity_1',['capacity',['../group__cbuffer__ref.html#gac7958e861413285b3347e13ea0aa5805',1,'circular_buffer::capacity'],['../structdynarray.html#a9057e22452c206ebc546f148bc213f22',1,'dynarray::capacity'],['../structheap__view.html#a8d8bb1dff88125e791952c23c591f412',1,'heap_view::capacity']]],
+  ['circular_20buffers_2',['Circular buffers',['../group__cbuffer__ref.html',1,'']]],
+  ['circular_5fbuffer_3',['circular_buffer',['../structcircular__buffer.html',1,'']]],
+  ['circular_5fbuffer_2eh_4',['circular_buffer.h',['../circular__buffer_8h.html',1,'']]],
+  ['circular_5fbuffer_5fpop_5fback_5',['circular_buffer_pop_back',['../group__cbuffer__ref.html#ga6351666127eee263073cb64c95fb31fd',1,'circular_buffer.h']]],
+  ['circular_5fbuffer_5fpop_5ffront_6',['circular_buffer_pop_front',['../group__cbuffer__ref.html#gaeaa2a51891aff4e7ed1834fd8fbad130',1,'circular_buffer.h']]],
+  ['circular_5fbuffer_5fpush_5fback_7',['circular_buffer_push_back',['../group__cbuffer__ref.html#gaee72b50cd8e9920bd5130d5902f2293c',1,'circular_buffer.h']]],
+  ['circular_5fbuffer_5fpush_5ffront_8',['circular_buffer_push_front',['../group__cbuffer__ref.html#gacdef72afd0686d8769086723236c5090',1,'circular_buffer.h']]],
+  ['circular_5fbuffer_5fsize_9',['circular_buffer_size',['../group__cbuffer__ref.html#ga5dae0241d905fd55196286f9891836f8',1,'circular_buffer.h']]],
+  ['clean_5flist_10',['clean_list',['../group__list__ref.html#ga4927ff77275d1385ee5d30639578e65e',1,'list_ref.h']]],
+  ['compare_11',['compare',['../structheap__view.html#a480c5efa2dee97e3f2db6d0231220245',1,'heap_view::compare'],['../group__bsearch__tree__ref.html#ga5fa19b1f456230cb5b9f4b0baeb92c28',1,'bsearch_tree_ref::compare'],['../group__avl__tree__ref.html#gad402ba35093ef070e89d0559f66cd5da',1,'avl_tree_ref::compare']]],
+  ['compare_2eh_12',['compare.h',['../compare_8h.html',1,'']]],
+  ['compare_5ffn_5ft_13',['compare_fn_t',['../compare_8h.html#a5bffd944fdaeefd20b78e74d6a7f8b27',1,'compare.h']]],
+  ['create_5favl_5ftree_14',['create_avl_tree',['../group__avl__tree__ref.html#ga464739520c68ce43096d61815028f98a',1,'avl_tree_ref.h']]],
+  ['create_5fbsearch_5ftree_15',['create_bsearch_tree',['../group__bsearch__tree__ref.html#ga006b2dfc7a53199903dc9b055a293045',1,'bsearch_tree_ref.h']]],
+  ['create_5fbtree_16',['create_btree',['../group__btree__ref.html#ga38391ded30e9bac307f9d83b1fc78959',1,'btree_ref.h']]],
+  ['create_5fcircular_5fbuffer_17',['create_circular_buffer',['../group__cbuffer__ref.html#gae19e8df8c442f39762014ecb4b2c0c42',1,'circular_buffer.h']]],
+  ['create_5fgraph_5flist_18',['create_graph_list',['../group__graph__list.html#ga3301ae7c46c5f3f5ef3ff4a75ad2101f',1,'graph_list.h']]],
+  ['create_5fgraph_5fmat_19',['create_graph_mat',['../group__graph__mat.html#ga562afd0ed49fd973caca089e65aaa371',1,'graph_mat.h']]],
+  ['create_5fheap_20',['create_heap',['../group__heap__view.html#gad48396d0725f9b64574b69fe4492a303',1,'heap_view.h']]],
+  ['create_5fheap_5fno_5fcheck_21',['create_heap_no_check',['../group__heap__view.html#ga1131908d42ca95a7933b296a22737109',1,'heap_view.h']]],
+  ['create_5flist_22',['create_list',['../group__list__ref.html#ga9112e0ebdc43f07605771d5342448892',1,'list_ref.h']]]
+];

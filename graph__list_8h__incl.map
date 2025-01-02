@@ -1,0 +1,20 @@
+<map id="/home/runner/work/dsa/dsa/include/graph/graph_list.h" name="/home/runner/work/dsa/dsa/include/graph/graph_list.h">
+<area shape="rect" id="Node000001" title="Graphs defined with adjacency lists." alt="" coords="167,5,350,60"/>
+<area shape="rect" id="Node000002" href="$list__ref_8h.html" title="Doubly linked lists definition Defines functions to create, free and manipulate doubly&#45;linked lists." alt="" coords="123,108,250,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="239,62,207,99,203,96,235,58"/>
+<area shape="rect" id="Node000007" href="$weight__type_8h_source.html" title=" " alt="" coords="295,108,409,133"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="289,58,331,96,327,100,285,62"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,181,80,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="165,136,80,177,77,173,162,131"/>
+<area shape="rect" id="Node000004" href="$ptr_8h_source.html" title=" " alt="" coords="104,181,155,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="179,135,149,172,145,169,175,132"/>
+<area shape="rect" id="Node000005" href="$structures_8h_source.html" title=" " alt="" coords="179,181,277,207"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="196,132,217,168,212,171,191,135"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="235,255,306,280"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="237,206,259,242,255,244,233,208"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="348,135,286,244,282,241,343,132"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="353,181,426,207"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="361,132,379,168,375,171,356,135"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="450,181,539,207"/>
+<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="376,131,460,173,458,177,374,136"/>
+</map>

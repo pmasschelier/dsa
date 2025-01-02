@@ -1,0 +1,9 @@
+<map id="/home/runner/work/dsa/dsa/include/btree_ref/btree_ref.h" name="/home/runner/work/dsa/dsa/include/btree_ref/btree_ref.h">
+<area shape="rect" id="Node000001" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="82,5,254,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,80,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,62,72,102,69,98,128,58"/>
+<area shape="rect" id="Node000003" href="$path_8h.html" title="Binary tree path definition Defines functions to manipulate a path in a binary tree." alt="" coords="105,108,231,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,60,171,94,165,94,165,60"/>
+<area shape="rect" id="Node000004" href="$ptr_8h_source.html" title=" " alt="" coords="256,108,307,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="204,58,256,97,253,102,201,62"/>
+</map>
