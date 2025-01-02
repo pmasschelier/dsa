@@ -6,6 +6,7 @@ testdirs = [
   'path', 'heap_view',
   'circular_buffer',
   'avl_tree_ref',
+  'bsearch_tree_ref',
   'dynarray',
   'weight_type',
 ]

@@ -1,6 +1,7 @@
 src_files = files(
   'btree_ref/avl_tree_ref.c',
   'btree_ref/btree_ref.c',
+  'btree_ref/bsearch_tree_ref.c',
   'btree_ref/path.c',
   'graph/graph_cast.c',
   'graph/graph_list.c',
