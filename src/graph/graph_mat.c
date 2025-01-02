@@ -6,6 +6,8 @@
 #include "test_macros.h"
 #include "weight_type.h"
 
+// TODO: Alloc one chunk of memory instead of three (check if it improves cache
+// locality)
 graph_mat_t* create_graph_mat(unsigned size, BOOL is_weighted) {
 	graph_mat_t* ret;
 	if (size == 0)

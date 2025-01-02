@@ -1,6 +1,7 @@
 testdirs = [
   'list_ref',
   'btree_ref',
+  'graph_cast',
   'graph_mat',
   'graph_list',
   'path', 'heap_view',

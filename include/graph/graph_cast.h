@@ -23,11 +23,25 @@ struct graph_list;
  * The created graph_list_t will have to be released using free_graph_list()
  *
  * @param graph_mat pointer to the graph to copy
- * @param graph_list Pointer which will reference the newly created graph_list_t
- * after function call
+ * @param graph_list pointer to an existing graph to override, can be left NULL
+ * (a new graph will be allocated)
  * @return *graph_list
  */
 graph_list_t* graph_mat_to_graph_list(graph_mat_t* graph_mat,
-									  graph_list_t** graph_list);
+									  graph_list_t* graph_list);
+
+/**
+ * @brief Converts a graph_list_t into a graph_mat_t
+ *
+ * Copy a graph defined as adjacency lists into a graph defined as a matrix.
+ * The created graph_mat_t will have to be released using free_graph_mat()
+ *
+ * @param graph_list pointer to the graph to copy
+ * @param graph_mat pointer to an existing graph to override, can be left NULL
+ * (a new graph will be allocated)
+ * @return *graph_mat
+ */
+graph_mat_t* graph_list_to_graph_mat(graph_list_t* graph_list,
+									 graph_mat_t* graph_mat);
 
 #endif	// !GRAPHCAST_H

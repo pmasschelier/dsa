@@ -42,11 +42,13 @@ struct graph_mat {
 	 * @brief n*n matrix containing the edges' weights
 	 *
 	 * If the graph is not weighted this field will be NULL. Otherwise weights[i
-	 * * size + j] will contains the weight of all the edges (i, j),
+	 * * graph_mat#nb_vert + j] will contains the weight of all the edges (i,
+	 * j),
 	 */
 	graph_weight_t* weights;
 	/**
-	 * @brief n*n matrix, edges[i][j] == TRUE iif an edge (i, j) exists
+	 * @brief n*n matrix, edges[i * graph_mat#nb_vert + j] == TRUE iif an edge
+	 * (i, j) exists
 	 */
 	BOOL* edges;
 };
