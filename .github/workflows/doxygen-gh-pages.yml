@@ -2,7 +2,7 @@ name: Doxygen GitHub Pages Deploy Action
 
 on:
   workflow_run:
-    workflows: [ci_meson]
+    workflows: [CI Meson]
     types: [completed]
   # push:
   #   branches:
