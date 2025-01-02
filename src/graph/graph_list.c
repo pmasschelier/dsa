@@ -595,45 +595,6 @@ exit:
 	return ret;
 }
 
-/* int graph_list_bellman(graph_list_t* g, */
-/* 					   unsigned r, */
-/* 					   graph_weight_t* distance, */
-/* 					   int* father) { */
-/* 	SSSHORTESTPATH_INIT */
-/**/
-/* 	unsigned* num = malloc(2 * g->nb_vert * sizeof(unsigned int)); */
-/* 	when_null_ret(num, -ERROR_ALLOCATION_FAILED); */
-/* 	unsigned* denum = num + g->nb_vert; */
-/* 	int ret = graph_list_topological_ordering(g, num, denum); */
-/* 	when_false_jmp(ret == ERROR_NO_ERROR, ret, exit); */
-/**/
-/* 	for (unsigned i = num[r] + 1; i < g->nb_vert; i++) { */
-/* 		graph_weight_t min = GRAPH_WEIGHT_INF; */
-/* 		const unsigned x = denum[i]; */
-/* 		int y_min = -1; */
-/* 		for (unsigned j = num[r]; j < i; j++) { */
-/* 			int y = denum[j]; */
-/* 			if (graph_list_get_edge(g, y, x) == FALSE) */
-/* 				continue; */
-/* 			const graph_weight_t w = graph_list_get_edge(g, y, x)->w; */
-/* 			const graph_weight_t d = */
-/* 				weight_add_truncate_overflow(distance[y], w); */
-/* 			if (d < min) { */
-/* 				min = d; */
-/* 				y_min = y; */
-/* 			} */
-/* 		} */
-/* 		if (y_min >= 0) { */
-/* 			distance[x] = min; */
-/* 			father[x] = y_min; */
-/* 		} */
-/* 	} */
-/**/
-/* exit: */
-/* 	free(num); */
-/* 	return ret; */
-/* } */
-
 int graph_list_ford(graph_list_t* g,
 					unsigned r,
 					graph_weight_t* distance,
@@ -646,6 +607,9 @@ int graph_list_ford(graph_list_t* g,
 	do {
 		changed = FALSE;
 		k++;
+		// On step k we know distance[] for paths of k-1 edges
+		// So we compute distance[] for paths of k edges by iterating over each
+		// edge of the graph
 		for (unsigned i = 0; i < g->nb_vert; i++) {
 			// Finds the predecessor of i which will allow us to minimize the
 			// distance
@@ -661,6 +625,9 @@ int graph_list_ford(graph_list_t* g,
 			}
 		}
 	} while (k != g->nb_vert && changed == TRUE);
+	// If on step n-1 new shorter path as been discovered it means that the
+	// graph contains an absorbing circuit (because elementary paths have at
+	// most n-1 edges).
 	if (changed == TRUE)
 		return -ERROR_GRAPH_HAS_ABSORBING_CIRCUIT;
 	return -ERROR_NO_ERROR;
@@ -682,6 +649,11 @@ int graph_list_ford_dantzig(graph_list_t* g,
 							int* father,
 							int* cycle) {
 	when_null_ret(father, -ERROR_INVALID_PARAM4);
+	// We start from a covering tree of root r and a distance function such that
+	// distance[j] = distance[i] + weight(i, j)
+	// These can be computed from the dijkstra algorithm
+	// TODO: Replace this with a simple DFS and check if it improves
+	// performances.
 	int ret = graph_list_dijkstra(g, r, distance, father);
 	when_false_ret(ret >= 0, ret);
 	fixed_xifo_view_t* update_queue =
@@ -692,6 +664,8 @@ int graph_list_ford_dantzig(graph_list_t* g,
 		BOOL found = FALSE;
 		int x, y;
 		graph_weight_t d;
+		// Find an edge which would reduce the distance of node if added to the
+		// covering tree.
 		for (unsigned i = 0; i < g->nb_vert && found == FALSE; i++) {
 			foreach_node(&g->neighbours[i], e, graph_list_edge_t) {
 				d = weight_add_truncate_overflow(distance[i], e->w);
@@ -703,17 +677,38 @@ int graph_list_ford_dantzig(graph_list_t* g,
 				}
 			}
 		}
+		// If no edge was found the computed distance is optimal.
+		// Proof:
+		// Let's assume that no edge can improve our computed distances but that
+		// there is a path C from r to a node x such that
+		//   weight(C) < distance[x].
+		// Then it exists an arc (u, v) such that:
+		// - weight(C[r:u]) >= distance[u]
+		// - weight(C[r:v]) < distance[v]
+		// So: distance[v] > distance[u] + weight(u, v)
+		// (u, v) should enter in the tree, hence the contradicton.
 		if (found == FALSE)
 			break;
+		// Otherwise we update the tree and the distance
 		distance[y] = d;
 		father[y] = x;
+		// Then we test if adding this edge created a cycle, in which case we
+		// found an absorbing cycle.
+		// Proof:
+		// - For each edge (a, b) in the tree:
+		//   distance[b] - distance[a] = weight(a, b)
+		// - For (x, y): distance[y] - distance[x] > weight(x, y)
+		// Hence, summing these relations for all edges of the circuit we have:
+		//  0 > weight(circuit)
 		if (test_if_edge_create_cycle(father, x, y) == TRUE) {
 			*cycle = x;
 			ret = -ERROR_GRAPH_HAS_ABSORBING_CIRCUIT;
 			goto exit;
 		}
-		fixed_xifo_copy_push_back(update_queue, &y);
 
+		// Update the distance of all descendant of y in the covering tree with
+		// a BFS.
+		fixed_xifo_copy_push_back(update_queue, &y);
 		do {
 			fixed_xifo_copy_pop_front(update_queue, &x);
 			foreach_node(&g->neighbours[x], e, graph_list_edge_t) {
