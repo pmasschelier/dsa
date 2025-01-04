@@ -254,10 +254,20 @@ int btree_inorder_traversal(btree_ref_t* tree, void* tab[]);
 int btree_levelorder_traversal(btree_ref_t* tree, void* tab[]);
 
 /**
- * @brief Frees the binary tree and the owned elements.
+ * @brief Clear the binary tree
  *
  * Frees the data referenced by the nodes of the binary tree with the
  * btree_ref_t#free_element if its not NULL.
+ *
+ * _Complexity:_ \f$O(n)\f$
+ * @param tree pointer to the tree
+ */
+void btree_clean(btree_ref_t* tree);
+
+/**
+ * @brief Frees the binary tree and the owned elements.
+ *
+ * Calls btree_clean and free the binary tree.
  *
  * _Complexity:_ \f$O(n)\f$
  * @param tree pointer to the tree

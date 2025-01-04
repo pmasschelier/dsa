@@ -343,8 +343,8 @@ int btree_inorder_traversal(btree_ref_t* tree, void* tab[]) {
 #endif /* ifdef STRUCT_RECURSIVE_IMPL */
 
 #ifdef STRUCT_RECURSIVE_IMPL
-static void btree_free_rec(node_btree_ref_t* node,
-						   free_element_fn_t free_elements) {
+static void btree_clean_rec(node_btree_ref_t* node,
+							free_element_fn_t free_elements) {
 	if (node->ls)
 		btree_free_rec(node->ls, free_elements);
 	if (node->rs)
@@ -354,7 +354,7 @@ static void btree_free_rec(node_btree_ref_t* node,
 	free(node);
 }
 
-static void btree_free_rec_no_free(node_btree_ref_t* node) {
+static void btree_clean_rec_no_free(node_btree_ref_t* node) {
 	if (node->ls)
 		btree_free_rec_no_free(node->ls);
 	if (node->rs)
@@ -362,21 +362,21 @@ static void btree_free_rec_no_free(node_btree_ref_t* node) {
 	free(node);
 }
 
-void btree_free(btree_ref_t* tree) {
+void btree_clean(btree_ref_t* tree) {
 	if (tree->root != NULL) {
 		if (tree->free_element)
 			btree_free_rec(tree->root, tree->free_element);
 		else
 			btree_free_rec_no_free(tree->root);
 	}
-	free(tree);
+	tree->root = NULL;
 }
 #else
-void btree_free(btree_ref_t* tree) {
+void btree_clean(btree_ref_t* tree) {
 	if (tree == NULL)
 		return;
 	if (tree->root == NULL)
-		goto exit;
+		return;
 	stack_view_t* stack = create_stack_view(sizeof(node_btree_ref_t));
 	when_null_ret(stack, );
 
@@ -393,10 +393,14 @@ void btree_free(btree_ref_t* tree) {
 		free(node);
 	}
 	free_stack(stack);
-exit:
-	free(tree);
+	tree->root = NULL;
 }
 #endif /* ifdef STRUCT_RECURSIVE_IMPL */
+
+void btree_free(btree_ref_t* tree) {
+	btree_clean(tree);
+	free(tree);
+}
 
 int btree_levelorder_traversal(btree_ref_t* tree, void* tab[]) {
 	when_null_ret(tree, -ERROR_INVALID_PARAM1);
