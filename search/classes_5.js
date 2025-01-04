@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['heap_5fview_0',['heap_view',['../structheap__view.html',1,'']]]
+  ['list_5fref_0',['list_ref',['../structlist__ref.html',1,'']]]
 ];

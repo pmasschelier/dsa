@@ -10,5 +10,5 @@ var searchData=
   ['list_5fref_2eh_7',['list_ref.h',['../list__ref_8h.html',1,'']]],
   ['list_5fref_5ft_8',['list_ref_t',['../group__list__ref.html#ga7633c3e9fc84c0c501b6c84deca8fba2',1,'list_ref.h']]],
   ['lists_9',['lists',['../group__graph__list.html',1,'Adjacency lists'],['../group__list__ref.html',1,'Doubly-linked lists']]],
-  ['ls_10',['ls',['../group__avl__tree__ref.html#ga72d66853f782cad88c3db471a342cf59',1,'node_avl_tree_ref::ls'],['../group__bsearch__tree__ref.html#ga51f45bf9c49d5f2f8e134455761ab7d0',1,'node_bsearch_tree_ref::ls'],['../structnode__btree__ref.html#a5b52057432db82a211e74b88742f5766',1,'node_btree_ref::ls']]]
+  ['ls_10',['ls',['../group__bsearch__tree__ref.html#ga51f45bf9c49d5f2f8e134455761ab7d0',1,'node_bsearch_tree_ref::ls'],['../structnode__btree__ref.html#a5b52057432db82a211e74b88742f5766',1,'node_btree_ref::ls']]]
 ];

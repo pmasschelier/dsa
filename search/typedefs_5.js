@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['heap_5fview_5ft_0',['heap_view_t',['../group__heap__view.html#ga7156e0924910499ba5bc426eeca50eb5',1,'heap_view.h']]]
+  ['list_5fref_5ft_0',['list_ref_t',['../group__list__ref.html#ga7633c3e9fc84c0c501b6c84deca8fba2',1,'list_ref.h']]]
 ];

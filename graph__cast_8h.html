@@ -118,9 +118,12 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ab84b42f90c62e11cd4fa60a1a56d0cd7" id="r_ab84b42f90c62e11cd4fa60a1a56d0cd7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgraph__list.html">graph_list_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="graph__cast_8h.html#ab84b42f90c62e11cd4fa60a1a56d0cd7">graph_mat_to_graph_list</a> (<a class="el" href="structgraph__mat.html">graph_mat_t</a> *<a class="el" href="structgraph__mat.html">graph_mat</a>, <a class="el" href="structgraph__list.html">graph_list_t</a> **<a class="el" href="structgraph__list.html">graph_list</a>)</td></tr>
-<tr class="memdesc:ab84b42f90c62e11cd4fa60a1a56d0cd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a graph_mat_t into a graph_list_t.  <br /></td></tr>
-<tr class="separator:ab84b42f90c62e11cd4fa60a1a56d0cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c64af369f77f899f469bbcb260858ff" id="r_a5c64af369f77f899f469bbcb260858ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgraph__list.html">graph_list_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="graph__cast_8h.html#a5c64af369f77f899f469bbcb260858ff">graph_mat_to_graph_list</a> (<a class="el" href="structgraph__mat.html">graph_mat_t</a> *<a class="el" href="structgraph__mat.html">graph_mat</a>, <a class="el" href="structgraph__list.html">graph_list_t</a> *<a class="el" href="structgraph__list.html">graph_list</a>)</td></tr>
+<tr class="memdesc:a5c64af369f77f899f469bbcb260858ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a graph_mat_t into a graph_list_t.  <br /></td></tr>
+<tr class="separator:a5c64af369f77f899f469bbcb260858ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcac71c8f5ff2ab2092c56e074450c7d" id="r_abcac71c8f5ff2ab2092c56e074450c7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgraph__mat.html">graph_mat_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="graph__cast_8h.html#abcac71c8f5ff2ab2092c56e074450c7d">graph_list_to_graph_mat</a> (<a class="el" href="structgraph__list.html">graph_list_t</a> *<a class="el" href="structgraph__list.html">graph_list</a>, <a class="el" href="structgraph__mat.html">graph_mat_t</a> *<a class="el" href="structgraph__mat.html">graph_mat</a>)</td></tr>
+<tr class="memdesc:abcac71c8f5ff2ab2092c56e074450c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a graph_list_t into a graph_mat_t.  <br /></td></tr>
+<tr class="separator:abcac71c8f5ff2ab2092c56e074450c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Conversion functions for different graph implementations. </p>
@@ -161,8 +164,47 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ab84b42f90c62e11cd4fa60a1a56d0cd7" name="ab84b42f90c62e11cd4fa60a1a56d0cd7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab84b42f90c62e11cd4fa60a1a56d0cd7">&#9670;&#160;</a></span>graph_mat_to_graph_list()</h2>
+<a id="abcac71c8f5ff2ab2092c56e074450c7d" name="abcac71c8f5ff2ab2092c56e074450c7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcac71c8f5ff2ab2092c56e074450c7d">&#9670;&#160;</a></span>graph_list_to_graph_mat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structgraph__mat.html">graph_mat_t</a> * graph_list_to_graph_mat </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgraph__list.html">graph_list_t</a> *&#160;</td>
+          <td class="paramname"><em>graph_list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structgraph__mat.html">graph_mat_t</a> *&#160;</td>
+          <td class="paramname"><em>graph_mat</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converts a graph_list_t into a graph_mat_t. </p>
+<p>Copy a graph defined as adjacency lists into a graph defined as a matrix. The created graph_mat_t will have to be released using <a class="el" href="group__graph__mat.html#gacfceec795d4cdc215ab83dd61548ce83" title="Frees the graph.">free_graph_mat()</a></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="structgraph__list.html" title="Weighted graph defined with adjacency lists.">graph_list</a></td><td>pointer to the graph to copy </td></tr>
+    <tr><td class="paramname"><a class="el" href="structgraph__mat.html" title="Weighted graph defined with adjacency matrix.">graph_mat</a></td><td>pointer to an existing graph to override, can be left NULL (a new graph will be allocated) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>*graph_mat </dd></dl>
+
+</div>
+</div>
+<a id="a5c64af369f77f899f469bbcb260858ff" name="a5c64af369f77f899f469bbcb260858ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c64af369f77f899f469bbcb260858ff">&#9670;&#160;</a></span>graph_mat_to_graph_list()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,7 +218,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structgraph__list.html">graph_list_t</a> **&#160;</td>
+          <td class="paramtype"><a class="el" href="structgraph__list.html">graph_list_t</a> *&#160;</td>
           <td class="paramname"><em>graph_list</em>&#160;</td>
         </tr>
         <tr>
@@ -192,7 +234,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname"><a class="el" href="structgraph__mat.html" title="Weighted graph defined with adjacency matrix.">graph_mat</a></td><td>pointer to the graph to copy </td></tr>
-    <tr><td class="paramname"><a class="el" href="structgraph__list.html" title="Weighted graph defined with adjacency lists.">graph_list</a></td><td>Pointer which will reference the newly created graph_list_t after function call </td></tr>
+    <tr><td class="paramname"><a class="el" href="structgraph__list.html" title="Weighted graph defined with adjacency lists.">graph_list</a></td><td>pointer to an existing graph to override, can be left NULL (a new graph will be allocated) </td></tr>
   </table>
   </dd>
 </dl>

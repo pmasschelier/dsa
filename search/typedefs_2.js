@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['compare_5ffn_5ft_0',['compare_fn_t',['../compare_8h.html#a5bffd944fdaeefd20b78e74d6a7f8b27',1,'compare.h']]]
+  ['dynarray_5ft_0',['dynarray_t',['../group__dynarray.html#ga8aea71239316a7941e7f279a012d271a',1,'dynarray.h']]]
 ];

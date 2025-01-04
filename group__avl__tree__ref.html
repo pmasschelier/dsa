@@ -99,10 +99,7 @@ $(document).ready(function(){initNavTree('group__avl__tree__ref.html',''); initR
 <div class="header">
   <div class="summary">
 <a href="#files">Files</a> &#124;
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">AVL binary search trees</div></div>
 </div><!--header-->
 <div class="contents">
@@ -124,149 +121,51 @@ Files</h2></td></tr>
 <tr class="memdesc:compare_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Comparison function type definition Defines compare_fn_t type function. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnode__avl__tree__ref.html">node_avl_tree_ref</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A binary-tree node.  <a href="structnode__avl__tree__ref.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structavl__tree__ref.html">avl_tree_ref</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary tree.  <a href="structavl__tree__ref.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gaa84cd1310b0c62f4caff7ce88e9f5a27" id="r_gaa84cd1310b0c62f4caff7ce88e9f5a27"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structnode__avl__tree__ref.html">node_avl_tree_ref</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a></td></tr>
-<tr class="memdesc:gaa84cd1310b0c62f4caff7ce88e9f5a27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for the <a class="el" href="structnode__avl__tree__ref.html" title="A binary-tree node.">node_avl_tree_ref</a> structure.  <br /></td></tr>
-<tr class="separator:gaa84cd1310b0c62f4caff7ce88e9f5a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaac854409fd8cbdbd276e4035d35ce0ce" id="r_gaac854409fd8cbdbd276e4035d35ce0ce"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structavl__tree__ref.html">avl_tree_ref</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a></td></tr>
-<tr class="memdesc:gaac854409fd8cbdbd276e4035d35ce0ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for the <a class="el" href="structavl__tree__ref.html" title="Binary tree.">avl_tree_ref</a> structure.  <br /></td></tr>
-<tr class="separator:gaac854409fd8cbdbd276e4035d35ce0ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga464739520c68ce43096d61815028f98a" id="r_ga464739520c68ce43096d61815028f98a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#ga464739520c68ce43096d61815028f98a">create_avl_tree</a> (size_t size_bytes, <a class="el" href="compare_8h.html#a5bffd944fdaeefd20b78e74d6a7f8b27">compare_fn_t</a> compare)</td></tr>
-<tr class="memdesc:ga464739520c68ce43096d61815028f98a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an empty avl binary tree.  <br /></td></tr>
-<tr class="separator:ga464739520c68ce43096d61815028f98a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2db1e08e9dd00f7cb922a95ffd2b8ae3" id="r_ga2db1e08e9dd00f7cb922a95ffd2b8ae3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#ga2db1e08e9dd00f7cb922a95ffd2b8ae3">avl_tree_insert</a> (<a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a> *tree, void *value, <a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a> **found)</td></tr>
-<tr class="memdesc:ga2db1e08e9dd00f7cb922a95ffd2b8ae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts an element into the tree.  <br /></td></tr>
-<tr class="separator:ga2db1e08e9dd00f7cb922a95ffd2b8ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga787abcede69217912465d1b39ebffcc0" id="r_ga787abcede69217912465d1b39ebffcc0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#ga787abcede69217912465d1b39ebffcc0">avl_tree_find</a> (<a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a> *tree, void *value)</td></tr>
-<tr class="memdesc:ga787abcede69217912465d1b39ebffcc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds if the element is present in the tree.  <br /></td></tr>
-<tr class="separator:ga787abcede69217912465d1b39ebffcc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga36fdbc5754dc075a077d7764ca84aa33" id="r_ga36fdbc5754dc075a077d7764ca84aa33"><td class="memItemLeft" align="right" valign="top">BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#ga36fdbc5754dc075a077d7764ca84aa33">avl_tree_remove</a> (<a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a> *tree, void *value)</td></tr>
-<tr class="memdesc:ga36fdbc5754dc075a077d7764ca84aa33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an element from the tree.  <br /></td></tr>
-<tr class="separator:ga36fdbc5754dc075a077d7764ca84aa33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6539a5b824c6cb8ccd5b747f46e191a4" id="r_ga6539a5b824c6cb8ccd5b747f46e191a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#ga6539a5b824c6cb8ccd5b747f46e191a4">avl_tree_min</a> (<a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a> *tree)</td></tr>
-<tr class="memdesc:ga6539a5b824c6cb8ccd5b747f46e191a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the minimum element of the tree.  <br /></td></tr>
-<tr class="separator:ga6539a5b824c6cb8ccd5b747f46e191a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2c788f1065687309d2947a5c05c3791" id="r_gad2c788f1065687309d2947a5c05c3791"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#gad2c788f1065687309d2947a5c05c3791">avl_tree_max</a> (<a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a> *tree)</td></tr>
-<tr class="memdesc:gad2c788f1065687309d2947a5c05c3791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the maximum element of the tree.  <br /></td></tr>
-<tr class="separator:gad2c788f1065687309d2947a5c05c3791"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:gabe5a8c47e6644b1372334079f15a69dd" id="r_gabe5a8c47e6644b1372334079f15a69dd"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#gabe5a8c47e6644b1372334079f15a69dd">node_avl_tree_ref::p</a></td></tr>
-<tr class="separator:gabe5a8c47e6644b1372334079f15a69dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga72d66853f782cad88c3db471a342cf59" id="r_ga72d66853f782cad88c3db471a342cf59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#ga72d66853f782cad88c3db471a342cf59">node_avl_tree_ref::ls</a></td></tr>
-<tr class="separator:ga72d66853f782cad88c3db471a342cf59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac5e92d097f1d30041dd808a62643b042" id="r_gac5e92d097f1d30041dd808a62643b042"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#gac5e92d097f1d30041dd808a62643b042">node_avl_tree_ref::rs</a></td></tr>
-<tr class="separator:gac5e92d097f1d30041dd808a62643b042"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga76ea049ef22f0cadf55ba613f7a98094" id="r_ga76ea049ef22f0cadf55ba613f7a98094"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#ga76ea049ef22f0cadf55ba613f7a98094">node_avl_tree_ref::father</a></td></tr>
-<tr class="separator:ga76ea049ef22f0cadf55ba613f7a98094"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaed6bc4b7e93a722927f74b3b72ecd22e" id="r_gaed6bc4b7e93a722927f74b3b72ecd22e"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#gaed6bc4b7e93a722927f74b3b72ecd22e">node_avl_tree_ref::subtree</a></td></tr>
-<tr class="separator:gaed6bc4b7e93a722927f74b3b72ecd22e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1495e46d2bb34e54a2d9fea0fafb3015" id="r_ga1495e46d2bb34e54a2d9fea0fafb3015"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#ga1495e46d2bb34e54a2d9fea0fafb3015">avl_tree_ref::root</a></td></tr>
-<tr class="memdesc:ga1495e46d2bb34e54a2d9fea0fafb3015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Root of the binary tree.  <br /></td></tr>
-<tr class="separator:ga1495e46d2bb34e54a2d9fea0fafb3015"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadefa114df5a9905a5f8d752db34825e0" id="r_gadefa114df5a9905a5f8d752db34825e0"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#gadefa114df5a9905a5f8d752db34825e0">avl_tree_ref::size</a></td></tr>
-<tr class="memdesc:gadefa114df5a9905a5f8d752db34825e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size (in bytes) on a element.  <br /></td></tr>
-<tr class="separator:gadefa114df5a9905a5f8d752db34825e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga63f21d265d0cf0a9861acb1ff0ac9ce4" id="r_ga63f21d265d0cf0a9861acb1ff0ac9ce4"><td class="memItemLeft" align="right" valign="top">free_element_fn_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#ga63f21d265d0cf0a9861acb1ff0ac9ce4">avl_tree_ref::free_element</a></td></tr>
-<tr class="memdesc:ga63f21d265d0cf0a9861acb1ff0ac9ce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function used to free the elements.  <br /></td></tr>
-<tr class="separator:ga63f21d265d0cf0a9861acb1ff0ac9ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad402ba35093ef070e89d0559f66cd5da" id="r_gad402ba35093ef070e89d0559f66cd5da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="compare_8h.html#a5bffd944fdaeefd20b78e74d6a7f8b27">compare_fn_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#gad402ba35093ef070e89d0559f66cd5da">avl_tree_ref::compare</a></td></tr>
-<tr class="memdesc:gad402ba35093ef070e89d0559f66cd5da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function used to compare to elements in the tree.  <br /></td></tr>
-<tr class="separator:gad402ba35093ef070e89d0559f66cd5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa23d3fe051f05408be4c0f332f62a03e" id="r_gaa23d3fe051f05408be4c0f332f62a03e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#gaa23d3fe051f05408be4c0f332f62a03e">avl_tree_insert</a> (<a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *tree, void *value, <a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> **found)</td></tr>
+<tr class="memdesc:gaa23d3fe051f05408be4c0f332f62a03e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts an element into the tree.  <br /></td></tr>
+<tr class="separator:gaa23d3fe051f05408be4c0f332f62a03e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaebdd2f1d41d5433bc8d0d695789fe6cc" id="r_gaebdd2f1d41d5433bc8d0d695789fe6cc"><td class="memItemLeft" align="right" valign="top">BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#gaebdd2f1d41d5433bc8d0d695789fe6cc">avl_tree_remove</a> (<a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *tree, void *value)</td></tr>
+<tr class="memdesc:gaebdd2f1d41d5433bc8d0d695789fe6cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an element from the tree.  <br /></td></tr>
+<tr class="separator:gaebdd2f1d41d5433bc8d0d695789fe6cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3eae0954e8efa87b6185d260b7fb9edf" id="r_ga3eae0954e8efa87b6185d260b7fb9edf"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#ga3eae0954e8efa87b6185d260b7fb9edf">avl_tree_height</a> (<a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *tree)</td></tr>
+<tr class="memdesc:ga3eae0954e8efa87b6185d260b7fb9edf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the height of an AVL tree.  <br /></td></tr>
+<tr class="separator:ga3eae0954e8efa87b6185d260b7fb9edf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="gaac854409fd8cbdbd276e4035d35ce0ce" name="gaac854409fd8cbdbd276e4035d35ce0ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaac854409fd8cbdbd276e4035d35ce0ce">&#9670;&#160;</a></span>avl_tree_ref_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Typedef for the <a class="el" href="structavl__tree__ref.html" title="Binary tree.">avl_tree_ref</a> structure. </p>
-
-<p class="definition">Definition at line <a class="el" href="avl__tree__ref_8h_source.html#l00052">52</a> of file <a class="el" href="avl__tree__ref_8h_source.html">avl_tree_ref.h</a>.</p>
-
-</div>
-</div>
-<a id="gaa84cd1310b0c62f4caff7ce88e9f5a27" name="gaa84cd1310b0c62f4caff7ce88e9f5a27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa84cd1310b0c62f4caff7ce88e9f5a27">&#9670;&#160;</a></span>node_avl_tree_ref_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Typedef for the <a class="el" href="structnode__avl__tree__ref.html" title="A binary-tree node.">node_avl_tree_ref</a> structure. </p>
-
-<p class="definition">Definition at line <a class="el" href="avl__tree__ref_8h_source.html#l00029">29</a> of file <a class="el" href="avl__tree__ref_8h_source.html">avl_tree_ref.h</a>.</p>
-
-</div>
-</div>
+<p>AVL Balanced binary search tree uses balance factors on each node to keep the tree balanced on each insertion or deletion.</p>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga787abcede69217912465d1b39ebffcc0" name="ga787abcede69217912465d1b39ebffcc0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga787abcede69217912465d1b39ebffcc0">&#9670;&#160;</a></span>avl_tree_find()</h2>
+<a id="ga3eae0954e8efa87b6185d260b7fb9edf" name="ga3eae0954e8efa87b6185d260b7fb9edf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3eae0954e8efa87b6185d260b7fb9edf">&#9670;&#160;</a></span>avl_tree_height()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a> * avl_tree_find </td>
+          <td class="memname">unsigned avl_tree_height </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a> *&#160;</td>
-          <td class="paramname"><em>tree</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *&#160;</td>
+          <td class="paramname"><em>tree</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Finds if the element is present in the tree. </p>
-<p><em>Complexity</em>: \(O(ln(n))\) </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Compute the height of an AVL tree. </p>
+<p>The usual way to compute the height of a binary tree is a logarithmic operation. However to equilibrate an AVL tree we keep the height of each node across insertion and deletion. Therefore this function provide a very efficient way (a simple read) to retrieve the height of the root of an AVL tree.</p>
+<p>Complexity_: \(O(1)\) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tree</td><td>Pointer to the tree </td></tr>
-    <tr><td class="paramname">value</td><td>Pointer to the element to find </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>If value was found, returns the pointer to the node containing value, otherwise returns NULL </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The height of the tree (0 if the tree is empty ie. has no root) </dd></dl>
 
 </div>
 </div>
-<a id="ga2db1e08e9dd00f7cb922a95ffd2b8ae3" name="ga2db1e08e9dd00f7cb922a95ffd2b8ae3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2db1e08e9dd00f7cb922a95ffd2b8ae3">&#9670;&#160;</a></span>avl_tree_insert()</h2>
+<a id="gaa23d3fe051f05408be4c0f332f62a03e" name="gaa23d3fe051f05408be4c0f332f62a03e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa23d3fe051f05408be4c0f332f62a03e">&#9670;&#160;</a></span>avl_tree_insert()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -274,7 +173,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">int avl_tree_insert </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *&#160;</td>
           <td class="paramname"><em>tree</em>, </td>
         </tr>
         <tr>
@@ -286,7 +185,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a> **&#160;</td>
+          <td class="paramtype"><a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> **&#160;</td>
           <td class="paramname"><em>found</em>&#160;</td>
         </tr>
         <tr>
@@ -298,7 +197,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Inserts an element into the tree. </p>
-<p>Insert an element into the tree. The tree will take ownership of the element and free it (if <a class="el" href="group__avl__tree__ref.html#ga63f21d265d0cf0a9861acb1ff0ac9ce4" title="Function used to free the elements.">avl_tree_ref::free_element</a> != NULL) when the tree is freed.</p>
+<p>Insert an element into the tree. The tree will take ownership of the element and free it (if avl_tree_ref::free_element != NULL) when the tree is freed.</p>
 <p><em>Complexity</em>: \(O(ln(n))\) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tree</td><td>Pointer to the tree </td></tr>
@@ -311,62 +210,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="gad2c788f1065687309d2947a5c05c3791" name="gad2c788f1065687309d2947a5c05c3791"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad2c788f1065687309d2947a5c05c3791">&#9670;&#160;</a></span>avl_tree_max()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a> * avl_tree_max </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a> *&#160;</td>
-          <td class="paramname"><em>tree</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Finds the maximum element of the tree. </p>
-<p><em>Complexity</em>: \(O(ln(n))\) </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tree</td><td>Pointer to the tree </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns NULL if the tree is empty and the node containing the maximum element otherwise </dd></dl>
-
-</div>
-</div>
-<a id="ga6539a5b824c6cb8ccd5b747f46e191a4" name="ga6539a5b824c6cb8ccd5b747f46e191a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga6539a5b824c6cb8ccd5b747f46e191a4">&#9670;&#160;</a></span>avl_tree_min()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a> * avl_tree_min </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a> *&#160;</td>
-          <td class="paramname"><em>tree</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Finds the minimum element of the tree. </p>
-<p><em>Complexity</em>: \(O(ln(n))\) </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tree</td><td>Pointer to the tree </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns NULL if the tree is empty and the node containing the minimum element otherwise </dd></dl>
-
-</div>
-</div>
-<a id="ga36fdbc5754dc075a077d7764ca84aa33" name="ga36fdbc5754dc075a077d7764ca84aa33"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga36fdbc5754dc075a077d7764ca84aa33">&#9670;&#160;</a></span>avl_tree_remove()</h2>
+<a id="gaebdd2f1d41d5433bc8d0d695789fe6cc" name="gaebdd2f1d41d5433bc8d0d695789fe6cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaebdd2f1d41d5433bc8d0d695789fe6cc">&#9670;&#160;</a></span>avl_tree_remove()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -374,7 +219,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">BOOL avl_tree_remove </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *&#160;</td>
           <td class="paramname"><em>tree</em>, </td>
         </tr>
         <tr>
@@ -401,207 +246,6 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>TRUE if an element equal to value was found in the tree, FALSE otherwise </dd></dl>
-
-</div>
-</div>
-<a id="ga464739520c68ce43096d61815028f98a" name="ga464739520c68ce43096d61815028f98a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga464739520c68ce43096d61815028f98a">&#9670;&#160;</a></span>create_avl_tree()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__avl__tree__ref.html#gaac854409fd8cbdbd276e4035d35ce0ce">avl_tree_ref_t</a> * create_avl_tree </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size_bytes</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="compare_8h.html#a5bffd944fdaeefd20b78e74d6a7f8b27">compare_fn_t</a>&#160;</td>
-          <td class="paramname"><em>compare</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Create an empty avl binary tree. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of an element (the size of the element pointed by <a class="el" href="group__avl__tree__ref.html#gabe5a8c47e6644b1372334079f15a69dd">node_avl_tree_ref::p</a> ) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to the newly created avl tree </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>avl_tree_free() </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="gad402ba35093ef070e89d0559f66cd5da" name="gad402ba35093ef070e89d0559f66cd5da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad402ba35093ef070e89d0559f66cd5da">&#9670;&#160;</a></span>compare</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="compare_8h.html#a5bffd944fdaeefd20b78e74d6a7f8b27">compare_fn_t</a> avl_tree_ref::compare</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function used to compare to elements in the tree. </p>
-<p>This field should be a pointer to a function that will be called to compare to elements of the tree, it should take two pointers as arguments. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="compare_8h.html#a5bffd944fdaeefd20b78e74d6a7f8b27" title="Typedef for pointer to a comparison function.">compare_fn_t</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="avl__tree__ref_8h_source.html#l00097">97</a> of file <a class="el" href="avl__tree__ref_8h_source.html">avl_tree_ref.h</a>.</p>
-
-</div>
-</div>
-<a id="ga76ea049ef22f0cadf55ba613f7a98094" name="ga76ea049ef22f0cadf55ba613f7a98094"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga76ea049ef22f0cadf55ba613f7a98094">&#9670;&#160;</a></span>father</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a>* node_avl_tree_ref::father</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to its father </p>
-
-<p class="definition">Definition at line <a class="el" href="avl__tree__ref_8h_source.html#l00043">43</a> of file <a class="el" href="avl__tree__ref_8h_source.html">avl_tree_ref.h</a>.</p>
-
-</div>
-</div>
-<a id="ga63f21d265d0cf0a9861acb1ff0ac9ce4" name="ga63f21d265d0cf0a9861acb1ff0ac9ce4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga63f21d265d0cf0a9861acb1ff0ac9ce4">&#9670;&#160;</a></span>free_element</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">free_element_fn_t avl_tree_ref::free_element</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function used to free the elements. </p>
-<p>This field should be a pointer to a function that will be called to free the memory region referenced by <a class="el" href="group__avl__tree__ref.html#gabe5a8c47e6644b1372334079f15a69dd">node_avl_tree_ref_t::p</a>. If the btree was created using the API it will default to free from libc. However you can turn a btree in a simple view on the data by setting this pointer to NULL. </p>
-
-<p class="definition">Definition at line <a class="el" href="avl__tree__ref_8h_source.html#l00088">88</a> of file <a class="el" href="avl__tree__ref_8h_source.html">avl_tree_ref.h</a>.</p>
-
-</div>
-</div>
-<a id="ga72d66853f782cad88c3db471a342cf59" name="ga72d66853f782cad88c3db471a342cf59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga72d66853f782cad88c3db471a342cf59">&#9670;&#160;</a></span>ls</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a>* node_avl_tree_ref::ls</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to its left son </p>
-
-<p class="definition">Definition at line <a class="el" href="avl__tree__ref_8h_source.html#l00041">41</a> of file <a class="el" href="avl__tree__ref_8h_source.html">avl_tree_ref.h</a>.</p>
-
-</div>
-</div>
-<a id="gabe5a8c47e6644b1372334079f15a69dd" name="gabe5a8c47e6644b1372334079f15a69dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gabe5a8c47e6644b1372334079f15a69dd">&#9670;&#160;</a></span>p</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* node_avl_tree_ref::p</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to data </p>
-
-<p class="definition">Definition at line <a class="el" href="avl__tree__ref_8h_source.html#l00040">40</a> of file <a class="el" href="avl__tree__ref_8h_source.html">avl_tree_ref.h</a>.</p>
-
-</div>
-</div>
-<a id="ga1495e46d2bb34e54a2d9fea0fafb3015" name="ga1495e46d2bb34e54a2d9fea0fafb3015"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1495e46d2bb34e54a2d9fea0fafb3015">&#9670;&#160;</a></span>root</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a>* avl_tree_ref::root</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Root of the binary tree. </p>
-<p>If root == NULL the binary tree is empty </p>
-
-<p class="definition">Definition at line <a class="el" href="avl__tree__ref_8h_source.html#l00068">68</a> of file <a class="el" href="avl__tree__ref_8h_source.html">avl_tree_ref.h</a>.</p>
-
-</div>
-</div>
-<a id="gac5e92d097f1d30041dd808a62643b042" name="gac5e92d097f1d30041dd808a62643b042"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac5e92d097f1d30041dd808a62643b042">&#9670;&#160;</a></span>rs</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__avl__tree__ref.html#gaa84cd1310b0c62f4caff7ce88e9f5a27">node_avl_tree_ref_t</a>* node_avl_tree_ref::rs</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to its right son </p>
-
-<p class="definition">Definition at line <a class="el" href="avl__tree__ref_8h_source.html#l00042">42</a> of file <a class="el" href="avl__tree__ref_8h_source.html">avl_tree_ref.h</a>.</p>
-
-</div>
-</div>
-<a id="gadefa114df5a9905a5f8d752db34825e0" name="gadefa114df5a9905a5f8d752db34825e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadefa114df5a9905a5f8d752db34825e0">&#9670;&#160;</a></span>size</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t avl_tree_ref::size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Size (in bytes) on a element. </p>
-<p>This field should be equals to the size (in bytes) of the memory region referenced by <a class="el" href="group__avl__tree__ref.html#gabe5a8c47e6644b1372334079f15a69dd">node_avl_tree_ref_t::p</a></p>
-<dl class="section note"><dt>Note</dt><dd>This field is not used by any function and is mainly here for information. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="avl__tree__ref_8h_source.html#l00078">78</a> of file <a class="el" href="avl__tree__ref_8h_source.html">avl_tree_ref.h</a>.</p>
-
-</div>
-</div>
-<a id="gaed6bc4b7e93a722927f74b3b72ecd22e" name="gaed6bc4b7e93a722927f74b3b72ecd22e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaed6bc4b7e93a722927f74b3b72ecd22e">&#9670;&#160;</a></span>subtree</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned node_avl_tree_ref::subtree</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Heigh of the subtree whom this node is the root </p>
-
-<p class="definition">Definition at line <a class="el" href="avl__tree__ref_8h_source.html#l00044">44</a> of file <a class="el" href="avl__tree__ref_8h_source.html">avl_tree_ref.h</a>.</p>
 
 </div>
 </div>
