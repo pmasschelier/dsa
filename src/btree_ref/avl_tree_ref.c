@@ -1,10 +1,25 @@
 #include "btree_ref/avl_tree_ref.h"
 #include <stdint.h>
 #include <stdlib.h>
+#include "btree_ref/bsearch_tree_ref.h"
 #include "btree_ref/path.h"
 #include "errors.h"
 #include "structures.h"
 #include "test_macros.h"
+
+typedef struct node_avl_tree_ref node_avl_tree_ref_t;
+
+struct node_avl_tree_ref {
+	void* p;					 /**< Pointer to data */
+	node_avl_tree_ref_t* ls;	 /**< Pointer to its left son */
+	node_avl_tree_ref_t* rs;	 /**< Pointer to its right son */
+	node_avl_tree_ref_t* father; /**< Pointer to its father */
+	unsigned subtree; /**< Heigh of the subtree whom this node is the root */
+};
+
+static node_avl_tree_ref_t* cast_to_avl_node(node_bsearch_tree_ref_t* node) {
+	return (node_avl_tree_ref_t*)node;
+}
 
 typedef enum node_situation {
 	NO_CHILDREN = 3,
@@ -22,6 +37,7 @@ typedef enum node_situation {
 static node_situation_t compute_situation(node_avl_tree_ref_t* node) {
 	return ((node->ls == NULL) << 1) | (node->rs == NULL);
 }
+
 static BOOL update_subtree(node_avl_tree_ref_t* node) {
 	unsigned subtree = 1;
 	switch (compute_situation(node)) {
@@ -119,7 +135,7 @@ static node_avl_tree_ref_t* create_avl_leaf(void* value,
 	return leaf;
 }
 
-static void equilibrate_leaf_path(avl_tree_ref_t* tree,
+static void equilibrate_leaf_path(bsearch_tree_ref_t* tree,
 								  node_avl_tree_ref_t* node,
 								  btree_path_t path) {
 	path.length -= 1;
@@ -132,143 +148,51 @@ static void equilibrate_leaf_path(avl_tree_ref_t* tree,
 			return;
 		equilibrate(node_ptr);
 	}
-	if (tree->root != NULL && update_subtree(tree->root) == TRUE)
-		equilibrate(&tree->root);
+	if (tree->root != NULL &&
+		update_subtree((node_avl_tree_ref_t*)tree->root) == TRUE)
+		equilibrate((node_avl_tree_ref_t**)&tree->root);
 }
 
-int avl_tree_insert(avl_tree_ref_t* tree,
-					void* value,
-					node_avl_tree_ref_t** found) {
-	node_avl_tree_ref_t* father = NULL;
-	if (tree->root == NULL) {
-		tree->root = create_avl_leaf(value, father);
-		return -ERROR_NO_ERROR;
-	}
+typedef node_bsearch_tree_ref_t* (
+	*create_bsearch_leaf_fn_t)(void* value, node_bsearch_tree_ref_t* father);
 
-	node_avl_tree_ref_t** node = &tree->root;
-	btree_path_t path = ROOT_PATH;
-	do {
-		father = *node;
-		int cmp = tree->compare(value, (*node)->p);
-		if (cmp == -1) {
-			path_lhs(&path);
-			node = &(*node)->ls;
-		} else if (cmp == 1) {
-			path_rhs(&path);
-			node = &(*node)->rs;
-		} else {
-			if (found != NULL)
-				*found = *node;
-			return -ERROR_KEY_ALREADY_EXISTS;
-		}
-	} while (*node != NULL);
-	*node = create_avl_leaf(value, father);
-	when_null_ret(*node, -ERROR_ALLOCATION_FAILED);
-	equilibrate_leaf_path(tree, *node, path);
+int bsearch_tree_insert_impl(bsearch_tree_ref_t* tree,
+							 void* value,
+							 node_bsearch_tree_ref_t** found,
+							 btree_path_t* path,
+							 node_bsearch_tree_ref_t** node,
+							 create_bsearch_leaf_fn_t create_leaf);
+
+int avl_tree_insert(bsearch_tree_ref_t* tree,
+					void* value,
+					node_bsearch_tree_ref_t** found) {
+	btree_path_t path;
+	node_bsearch_tree_ref_t* node;
+	int ret =
+		bsearch_tree_insert_impl(tree, value, found, &path, &node,
+								 (create_bsearch_leaf_fn_t)create_avl_leaf);
+	if (ret == -ERROR_KEY_ALREADY_EXISTS)
+		return ret;
+	equilibrate_leaf_path(tree, (node_avl_tree_ref_t*)node, path);
 	return -ERROR_NO_ERROR;
 }
 
-node_avl_tree_ref_t* avl_tree_find(avl_tree_ref_t* tree, void* value) {
-	node_avl_tree_ref_t* node = tree->root;
-	while (node != NULL) {
-		int cmp = tree->compare(value, node->p);
-		if (cmp == -1)
-			node = node->ls;
-		else if (cmp == 1)
-			node = node->rs;
-		else
-			return node;
-	}
-	return NULL;
-}
+node_bsearch_tree_ref_t* bsearch_tree_remove_impl(bsearch_tree_ref_t* tree,
+												  void* value,
+												  btree_path_t* path);
 
-node_avl_tree_ref_t** successor_node(node_avl_tree_ref_t* node) {
-	node_avl_tree_ref_t** ret = &node->rs;
-	while ((*ret)->ls != NULL)
-		ret = &(*ret)->ls;
-	return ret;
-}
-
-static node_avl_tree_ref_t* resolve_remove(avl_tree_ref_t* tree,
-										   node_avl_tree_ref_t** node_ptr) {
-	node_avl_tree_ref_t* node = *node_ptr;
-	node_avl_tree_ref_t** freed = node_ptr;
-	int situation = compute_situation(node);
-	switch (situation) {
-	case LEFT_CHILD:
-		*node_ptr = node->ls;
-		(*node_ptr)->father = node->father;
-		break;
-	case RIGHT_CHILD:
-		*node_ptr = node->rs;
-		(*node_ptr)->father = node->father;
-		break;
-	case BOTH_CHILDREN:
-		freed = successor_node(node);
-		// exchange value of node and *succ
-		void* node_p = node->p;
-		node->p = (*freed)->p;
-		(*freed)->p = node_p;
-		// the only remaining reference on *freed will be node
-		node = *freed;
-		*freed = NULL;
-		break;
-	case NO_CHILDREN:
-		*node_ptr = NULL;
-	default:
-		break;
-	}
-	if (node->p != NULL && tree->free_element != NULL)
-		tree->free_element(node->p);
-	return node;
-}
-
-BOOL avl_tree_remove(avl_tree_ref_t* tree, void* value) {
-	node_avl_tree_ref_t** node_ptr = &tree->root;
-	btree_path_t path = ROOT_PATH;
-	while (*node_ptr != NULL) {
-		int cmp = tree->compare(value, (*node_ptr)->p);
-		if (cmp == -1) {
-			path_lhs(&path);
-			node_ptr = &(*node_ptr)->ls;
-		} else if (cmp == 1) {
-			path_rhs(&path);
-			node_ptr = &(*node_ptr)->rs;
-		} else
-			break;
-	}
-	if (*node_ptr == NULL)
+BOOL avl_tree_remove(bsearch_tree_ref_t* tree, void* value) {
+	btree_path_t path;
+	node_avl_tree_ref_t* node =
+		(node_avl_tree_ref_t*)bsearch_tree_remove_impl(tree, value, &path);
+	if (node == NULL)
 		return FALSE;
-	node_avl_tree_ref_t* node = resolve_remove(tree, node_ptr);
 	equilibrate_leaf_path(tree, node, path);
 	free(node);
 	return TRUE;
 }
 
-node_avl_tree_ref_t* avl_tree_min(avl_tree_ref_t* tree) {
-	node_avl_tree_ref_t* node = tree->root;
-	if (node == NULL)
-		return NULL;
-	while (node->ls != NULL)
-		node = node->ls;
-	return node;
-}
-
-node_avl_tree_ref_t* avl_tree_max(avl_tree_ref_t* tree) {
-	node_avl_tree_ref_t* node = tree->root;
-	if (node == NULL)
-		return NULL;
-	while (node->rs != NULL)
-		node = node->rs;
-	return node;
-}
-
-avl_tree_ref_t* create_avl_tree(size_t size_bytes, compare_fn_t compare) {
-	avl_tree_ref_t* ret = malloc(sizeof(avl_tree_ref_t));
-	when_null_ret(ret, NULL);
-	ret->compare = compare;
-	ret->free_element = free;
-	ret->size = size_bytes;
-	ret->root = NULL;
-	return ret;
+unsigned avl_tree_height(bsearch_tree_ref_t* tree) {
+	node_avl_tree_ref_t* root = (node_avl_tree_ref_t*)tree->root;
+	return root == NULL ? 0 : root->subtree;
 }

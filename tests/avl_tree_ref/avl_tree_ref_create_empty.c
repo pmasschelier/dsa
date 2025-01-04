@@ -6,11 +6,11 @@
 DEFINE_COMPARE_SCALAR(int)
 
 int main(void) {
-	avl_tree_ref_t* tree = create_avl_tree(sizeof(int), compare_int);
+	bsearch_tree_ref_t* tree = create_bsearch_tree(sizeof(int), compare_int);
 	assert(tree != NULL);
 	assert(tree->root == NULL);
 	assert(tree->compare == compare_int);
 	assert(tree->size == sizeof(int));
-	free_avl_tree_ref(tree);
+	free_bsearch_tree_ref(tree);
 	return 0;
 }

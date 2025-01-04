@@ -1,5 +1,7 @@
 #include "btree_ref/bsearch_tree_ref.h"
 #include <stdlib.h>
+#include "btree_ref/btree_ref.h"
+#include "btree_ref/path.h"
 #include "errors.h"
 #include "test_macros.h"
 
@@ -26,25 +28,31 @@ static node_bsearch_tree_ref_t* create_bsearch_leaf(
 	return leaf;
 }
 
-int bsearch_tree_insert(bsearch_tree_ref_t* tree,
-						void* value,
-						node_bsearch_tree_ref_t** found) {
+typedef node_bsearch_tree_ref_t* (
+	*create_bsearch_leaf_fn_t)(void* value, node_bsearch_tree_ref_t* father);
+
+int bsearch_tree_insert_impl(bsearch_tree_ref_t* tree,
+							 void* value,
+							 node_bsearch_tree_ref_t** found,
+							 btree_path_t* path,
+							 node_bsearch_tree_ref_t** created,
+							 create_bsearch_leaf_fn_t create_leaf) {
 	node_bsearch_tree_ref_t* father = NULL;
+	*path = ROOT_PATH;
 	if (tree->root == NULL) {
-		tree->root = create_bsearch_leaf(value, father);
+		*created = tree->root = create_leaf(value, father);
 		return -ERROR_NO_ERROR;
 	}
 
 	node_bsearch_tree_ref_t** node = &tree->root;
-	btree_path_t path = ROOT_PATH;
 	do {
 		father = *node;
 		int cmp = tree->compare(value, (*node)->p);
 		if (cmp == -1) {
-			path_lhs(&path);
+			path_lhs(path);
 			node = &(*node)->ls;
 		} else if (cmp == 1) {
-			path_rhs(&path);
+			path_rhs(path);
 			node = &(*node)->rs;
 		} else {
 			if (found != NULL)
@@ -52,11 +60,52 @@ int bsearch_tree_insert(bsearch_tree_ref_t* tree,
 			return -ERROR_KEY_ALREADY_EXISTS;
 		}
 	} while (*node != NULL);
-	*node = create_bsearch_leaf(value, father);
+	*node = create_leaf(value, father);
 	when_null_ret(*node, -ERROR_ALLOCATION_FAILED);
-	/* equilibrate_leaf_path(tree, *node, path); */
+	*created = *node;
 	return -ERROR_NO_ERROR;
 }
+
+int bsearch_tree_insert(bsearch_tree_ref_t* tree,
+						void* value,
+						node_bsearch_tree_ref_t** found) {
+	btree_path_t path;
+	node_bsearch_tree_ref_t* node;
+	return bsearch_tree_insert_impl(tree, value, found, &path, &node,
+									create_bsearch_leaf);
+}
+
+/* int bsearch_tree_insert(bsearch_tree_ref_t* tree, */
+/* 						void* value, */
+/* 						node_bsearch_tree_ref_t** found) { */
+/* 	node_bsearch_tree_ref_t* father = NULL; */
+/* 	if (tree->root == NULL) { */
+/* 		tree->root = create_bsearch_leaf(value, father); */
+/* 		return -ERROR_NO_ERROR; */
+/* 	} */
+/**/
+/* 	node_bsearch_tree_ref_t** node = &tree->root; */
+/* 	btree_path_t path = ROOT_PATH; */
+/* 	do { */
+/* 		father = *node; */
+/* 		int cmp = tree->compare(value, (*node)->p); */
+/* 		if (cmp == -1) { */
+/* 			path_lhs(&path); */
+/* 			node = &(*node)->ls; */
+/* 		} else if (cmp == 1) { */
+/* 			path_rhs(&path); */
+/* 			node = &(*node)->rs; */
+/* 		} else { */
+/* 			if (found != NULL) */
+/* 				*found = *node; */
+/* 			return -ERROR_KEY_ALREADY_EXISTS; */
+/* 		} */
+/* 	} while (*node != NULL); */
+/* 	*node = create_bsearch_leaf(value, father); */
+/* 	when_null_ret(*node, -ERROR_ALLOCATION_FAILED); */
+/* equilibrate_leaf_path(tree, *node, path); */
+/* 	return -ERROR_NO_ERROR; */
+/* } */
 
 node_bsearch_tree_ref_t* bsearch_tree_find(bsearch_tree_ref_t* tree,
 										   void* value) {
@@ -133,27 +182,58 @@ static node_bsearch_tree_ref_t* resolve_remove(
 	return node;
 }
 
-BOOL bsearch_tree_remove(bsearch_tree_ref_t* tree, void* value) {
+node_bsearch_tree_ref_t* bsearch_tree_remove_impl(bsearch_tree_ref_t* tree,
+												  void* value,
+												  btree_path_t* path) {
 	node_bsearch_tree_ref_t** node_ptr = &tree->root;
-	btree_path_t path = ROOT_PATH;
+	*path = ROOT_PATH;
 	while (*node_ptr != NULL) {
 		int cmp = tree->compare(value, (*node_ptr)->p);
 		if (cmp == -1) {
-			path_lhs(&path);
+			path_lhs(path);
 			node_ptr = &(*node_ptr)->ls;
 		} else if (cmp == 1) {
-			path_rhs(&path);
+			path_rhs(path);
 			node_ptr = &(*node_ptr)->rs;
 		} else
 			break;
 	}
 	if (*node_ptr == NULL)
+		return NULL;
+	return resolve_remove(tree, node_ptr);
+}
+
+BOOL bsearch_tree_remove(bsearch_tree_ref_t* tree, void* value) {
+	btree_path_t path;
+	node_bsearch_tree_ref_t* node =
+		bsearch_tree_remove_impl(tree, value, &path);
+	if (node == NULL)
 		return FALSE;
-	node_bsearch_tree_ref_t* node = resolve_remove(tree, node_ptr);
-	/* equilibrate_leaf_path(tree, node, path); */
 	free(node);
 	return TRUE;
 }
+
+/* BOOL bsearch_tree_remove(bsearch_tree_ref_t* tree, void* value) { */
+/* 	node_bsearch_tree_ref_t** node_ptr = &tree->root; */
+/* 	btree_path_t path = ROOT_PATH; */
+/* 	while (*node_ptr != NULL) { */
+/* 		int cmp = tree->compare(value, (*node_ptr)->p); */
+/* 		if (cmp == -1) { */
+/* 			path_lhs(&path); */
+/* 			node_ptr = &(*node_ptr)->ls; */
+/* 		} else if (cmp == 1) { */
+/* 			path_rhs(&path); */
+/* 			node_ptr = &(*node_ptr)->rs; */
+/* 		} else */
+/* 			break; */
+/* 	} */
+/* 	if (*node_ptr == NULL) */
+/* 		return FALSE; */
+/* 	node_bsearch_tree_ref_t* node = resolve_remove(tree, node_ptr); */
+/* 	equilibrate_leaf_path(tree, node, path); */
+/* 	free(node); */
+/* 	return TRUE; */
+/* } */
 
 node_bsearch_tree_ref_t* bsearch_tree_min(bsearch_tree_ref_t* tree) {
 	node_bsearch_tree_ref_t* node = tree->root;

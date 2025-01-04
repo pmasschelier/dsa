@@ -2,6 +2,7 @@ passing_test_sources = [
   'avl_tree_ref_create_empty.c',
   'avl_tree_ref_find.c',
   'avl_tree_ref_insert.c',
+  'avl_tree_ref_insert_balance.c',
   'avl_tree_ref_insert_found.c',
   'avl_tree_ref_insert_root.c',
   'avl_tree_ref_insert_remove_root.c',

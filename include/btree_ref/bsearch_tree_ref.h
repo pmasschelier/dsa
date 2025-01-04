@@ -1,5 +1,5 @@
-#ifndef AVLTREE_H
-#define AVLTREE_H
+#ifndef BSEARCHTREE_H
+#define BSEARCHTREE_H
 
 #include <stddef.h>
 #include "compare.h"
@@ -9,6 +9,7 @@
 #include "btree_ref.h"
 
 #define free_bsearch_tree_ref(tree) btree_free((btree_ref_t*)(tree))
+#define clean_bsearch_tree_ref(tree) btree_clean((btree_ref_t*)(tree))
 
 /**
  * @file bsearch_tree_ref.h
@@ -104,7 +105,7 @@ struct bsearch_tree_ref {
  *
  * @param[in] size Size of an element (the size of the element pointed by
  * node_bsearch_tree_ref#p )
- * @return A pointer to the newly created avl tree
+ * @return A pointer to the newly created unbalanced binary search tree
  * @see bsearch_tree_free()
  */
 bsearch_tree_ref_t* create_bsearch_tree(size_t size_bytes,
@@ -176,4 +177,4 @@ node_bsearch_tree_ref_t* bsearch_tree_min(bsearch_tree_ref_t* tree);
  */
 node_bsearch_tree_ref_t* bsearch_tree_max(bsearch_tree_ref_t* tree);
 
-#endif	// !AVLTREE_H
+#endif	// !BSEARCHTREE_H

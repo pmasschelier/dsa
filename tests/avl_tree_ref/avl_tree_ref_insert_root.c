@@ -12,15 +12,14 @@ DEFINE_COMPARE_SCALAR(int)
 KEY_TYPE a = 1;
 
 int main(void) {
-	avl_tree_ref_t* tree = create_avl_tree(sizeof(int), compare_int);
+	bsearch_tree_ref_t* tree = create_bsearch_tree(sizeof(int), compare_int);
 	int ret = avl_tree_insert(tree, ptr(TYPE_INT, a), NULL);
 	assert(ret == -ERROR_NO_ERROR);
 	assert(tree->root != NULL);
-	assert(tree->root->subtree == 1);
 	assert(tree->root->father == NULL);
 	assert(tree->root->ls == NULL);
 	assert(tree->root->rs == NULL);
 	assert(*get_node_ref(tree->root, int) == a);
-	free_avl_tree_ref(tree);
+	free_bsearch_tree_ref(tree);
 	return 0;
 }
