@@ -17,10 +17,6 @@ struct node_avl_tree_ref {
 	unsigned subtree; /**< Heigh of the subtree whom this node is the root */
 };
 
-static node_avl_tree_ref_t* cast_to_avl_node(node_bsearch_tree_ref_t* node) {
-	return (node_avl_tree_ref_t*)node;
-}
-
 typedef enum node_situation {
 	NO_CHILDREN = 3,
 	LEFT_CHILD = 1,
@@ -59,36 +55,6 @@ static BOOL update_subtree(node_avl_tree_ref_t* node) {
 	return TRUE;
 }
 
-static void rotate_left(node_avl_tree_ref_t** node) {
-	node_avl_tree_ref_t* root = *node;
-	node_avl_tree_ref_t* right_son = (*node)->rs;
-
-	*node = right_son;
-	right_son->father = root->father;
-
-	root->rs = right_son->ls;
-	if (root->rs != NULL)
-		root->rs->father = root;
-
-	right_son->ls = root;
-	root->father = right_son;
-}
-
-static void rotate_right(node_avl_tree_ref_t** node) {
-	node_avl_tree_ref_t* root = *node;
-	node_avl_tree_ref_t* left_son = (*node)->ls;
-
-	*node = left_son;
-	left_son->father = root->father;
-
-	root->ls = left_son->rs;
-	if (root->ls != NULL)
-		root->ls->father = root;
-
-	left_son->rs = root;
-	root->father = left_son;
-}
-
 static int balance_factor(node_avl_tree_ref_t* node) {
 	int bf_ls = 0, bf_rs = 0;
 	if (node->ls != NULL)
@@ -100,26 +66,27 @@ static int balance_factor(node_avl_tree_ref_t* node) {
 
 static void equilibrate(node_avl_tree_ref_t** node) {
 	int bf = balance_factor(*node);
+	node_bsearch_tree_ref_t** bsearch_node = (node_bsearch_tree_ref_t**)node;
 	if (bf == -2) {
 		(*node)->subtree -= 2;
 		if (balance_factor((*node)->rs) == 1) {
 			(*node)->rs->subtree -= 1;
 			(*node)->rs->ls->subtree += 1;
-			rotate_right(&(*node)->rs);
-			rotate_left(node);
+			bsearch_tree_rotate_right(&(*bsearch_node)->rs);
+			bsearch_tree_rotate_left(bsearch_node);
 		}
 		if (balance_factor((*node)->rs) == -1)
-			rotate_left(node);
+			bsearch_tree_rotate_left(bsearch_node);
 	} else if (bf == 2) {
 		(*node)->subtree -= 2;
 		if (balance_factor((*node)->ls) == -1) {
 			(*node)->ls->subtree -= 1;
 			(*node)->ls->rs->subtree += 1;
-			rotate_left(&(*node)->ls);
-			rotate_right(node);
+			bsearch_tree_rotate_left(&(*bsearch_node)->ls);
+			bsearch_tree_rotate_right(bsearch_node);
 		}
 		if (balance_factor((*node)->ls) == 1)
-			rotate_right(node);
+			bsearch_tree_rotate_right(bsearch_node);
 	}
 }
 

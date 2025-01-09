@@ -10,6 +10,7 @@
 
 #define free_bsearch_tree_ref(tree) btree_free((btree_ref_t*)(tree))
 #define clean_bsearch_tree_ref(tree) btree_clean((btree_ref_t*)(tree))
+#define bsearch_tree_height(tree) btree_height((btree_ref_t*)(tree))
 
 /**
  * @file bsearch_tree_ref.h
@@ -176,5 +177,95 @@ node_bsearch_tree_ref_t* bsearch_tree_min(bsearch_tree_ref_t* tree);
  * element otherwise
  */
 node_bsearch_tree_ref_t* bsearch_tree_max(bsearch_tree_ref_t* tree);
+
+/**
+ * @brief Apply left rotation on a tree node
+ *
+ * Before applying the left rotation on the "a" node
+ * @dot
+ * digraph before {
+ *      graph [ordering="out"]
+ *      node [style=filled]
+ *      a [fillcolor=lightblue]
+ *      b [fillcolor=lightskyblue]
+ *      c [fillcolor=mediumpurple]
+ *      null0 [shape=point]
+ *      null1 [shape=point]
+ *      null2 [shape=point]
+ *      null3 [shape=point]
+ *      a -> null0
+ *      a -> b -> null1
+ *      b -> c -> null2
+ *      c -> null3
+ * }
+ * @enddot
+ * After applying the left rotation on the "a" node
+ * @dot
+ * digraph after {
+ *      graph [ordering="out"]
+ *      node [style=filled]
+ *      a [fillcolor=lightblue]
+ *      b [fillcolor=lightskyblue]
+ *      c [fillcolor=mediumpurple]
+ *      null0 [shape=point]
+ *      null1 [shape=point]
+ *      null2 [shape=point]
+ *      null3 [shape=point]
+ *      b -> a -> null2
+ *      a -> null3
+ *      b -> c -> null0
+ *      c -> null1
+ * }
+ * @enddot
+ *
+ * @param node Pointer to a node_bsearch_tree_ref#ls, node_bsearch_tree_ref#rs
+ * or bsearch_tree_ref#root attribute
+ *
+ */
+void bsearch_tree_rotate_left(node_bsearch_tree_ref_t** node);
+
+/**
+ * @brief Apply right rotation on a tree node
+ *
+ * Before applying the right rotation on the "c" node
+ * @dot
+ * digraph before {
+ *      node [style=filled]
+ *      a [fillcolor=lightblue]
+ *      b [fillcolor=lightskyblue]
+ *      c [fillcolor=mediumpurple]
+ *      null0 [shape=point]
+ *      null1 [shape=point]
+ *      null2 [shape=point]
+ *      null3 [shape=point]
+ *      c -> b -> a -> null0
+ *      a -> null1
+ *      b -> null2
+ *      c -> null3
+ * }
+ * @enddot
+ * After applying the right rotation on the "c" node
+ * @dot
+ * digraph after {
+ *      node [style=filled]
+ *      a [fillcolor=lightblue]
+ *      b [fillcolor=lightskyblue]
+ *      c [fillcolor=mediumpurple]
+ *      null0 [shape=point]
+ *      null1 [shape=point]
+ *      null2 [shape=point]
+ *      null3 [shape=point]
+ *      b -> a -> null0
+ *      a -> null1
+ *      b -> c -> null2
+ *      c -> null3
+ * }
+ * @enddot
+ *
+ * @param node Pointer to a node_bsearch_tree_ref#ls, node_bsearch_tree_ref#rs
+ * or bsearch_tree_ref#root attribute
+ *
+ */
+void bsearch_tree_rotate_right(node_bsearch_tree_ref_t** node);
 
 #endif	// !BSEARCHTREE_H
