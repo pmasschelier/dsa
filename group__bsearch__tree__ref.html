@@ -144,6 +144,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa94b561df6724a7d5633007bcf93b567" id="r_gaa94b561df6724a7d5633007bcf93b567"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bsearch__tree__ref.html#gaa94b561df6724a7d5633007bcf93b567">bsearch_tree_max</a> (<a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *tree)</td></tr>
 <tr class="memdesc:gaa94b561df6724a7d5633007bcf93b567"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the maximum element of the tree.  <br /></td></tr>
 <tr class="separator:gaa94b561df6724a7d5633007bcf93b567"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga933e9438622fbbefce07ed91b1426324" id="r_ga933e9438622fbbefce07ed91b1426324"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bsearch__tree__ref.html#ga933e9438622fbbefce07ed91b1426324">bsearch_tree_rotate_left</a> (<a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> **node)</td></tr>
+<tr class="memdesc:ga933e9438622fbbefce07ed91b1426324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply left rotation on a tree node.  <br /></td></tr>
+<tr class="separator:ga933e9438622fbbefce07ed91b1426324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2bf20c398294db7b4de05600845fbbb7" id="r_ga2bf20c398294db7b4de05600845fbbb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bsearch__tree__ref.html#ga2bf20c398294db7b4de05600845fbbb7">bsearch_tree_rotate_right</a> (<a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> **node)</td></tr>
+<tr class="memdesc:ga2bf20c398294db7b4de05600845fbbb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply right rotation on a tree node.  <br /></td></tr>
+<tr class="separator:ga2bf20c398294db7b4de05600845fbbb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -184,7 +190,7 @@ Variables</h2></td></tr>
 
 <p>Typedef for the <a class="el" href="structbsearch__tree__ref.html" title="Unbalanced binary searcch tree.">bsearch_tree_ref</a> structure. </p>
 
-<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00053">53</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00054">54</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
 
 </div>
 </div>
@@ -202,7 +208,7 @@ Variables</h2></td></tr>
 
 <p>Typedef for the <a class="el" href="structnode__bsearch__tree__ref.html" title="A binary-tree node.">node_bsearch_tree_ref</a> structure. </p>
 
-<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00031">31</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00032">32</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
 
 </div>
 </div>
@@ -384,6 +390,70 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ga933e9438622fbbefce07ed91b1426324" name="ga933e9438622fbbefce07ed91b1426324"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga933e9438622fbbefce07ed91b1426324">&#9670;&#160;</a></span>bsearch_tree_rotate_left()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bsearch_tree_rotate_left </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> **&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Apply left rotation on a tree node. </p>
+<p>Before applying the left rotation on the "a" node </p><div class="dotgraph">
+<img src="dot_inline_dotgraph_1.png" alt="dot_inline_dotgraph_1.png" border="0" usemap="#dot_inline_dotgraph_1.map"/>
+</div>
+<p> After applying the left rotation on the "a" node </p><div class="dotgraph">
+<img src="dot_inline_dotgraph_2.png" alt="dot_inline_dotgraph_2.png" border="0" usemap="#dot_inline_dotgraph_2.map"/>
+</div>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>Pointer to a <a class="el" href="group__bsearch__tree__ref.html#ga51f45bf9c49d5f2f8e134455761ab7d0">node_bsearch_tree_ref::ls</a>, <a class="el" href="group__bsearch__tree__ref.html#ga2f71bf104f4e47c83911bb756fa3ce94">node_bsearch_tree_ref::rs</a> or <a class="el" href="group__bsearch__tree__ref.html#gab9a13c3b7864adb0a8aa8e3f8d991224" title="Root of the binary tree.">bsearch_tree_ref::root</a> attribute </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga2bf20c398294db7b4de05600845fbbb7" name="ga2bf20c398294db7b4de05600845fbbb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2bf20c398294db7b4de05600845fbbb7">&#9670;&#160;</a></span>bsearch_tree_rotate_right()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bsearch_tree_rotate_right </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> **&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Apply right rotation on a tree node. </p>
+<p>Before applying the right rotation on the "c" node </p><div class="dotgraph">
+<img src="dot_inline_dotgraph_3.png" alt="dot_inline_dotgraph_3.png" border="0" usemap="#dot_inline_dotgraph_3.map"/>
+</div>
+<p> After applying the right rotation on the "c" node </p><div class="dotgraph">
+<img src="dot_inline_dotgraph_4.png" alt="dot_inline_dotgraph_4.png" border="0" usemap="#dot_inline_dotgraph_4.map"/>
+</div>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>Pointer to a <a class="el" href="group__bsearch__tree__ref.html#ga51f45bf9c49d5f2f8e134455761ab7d0">node_bsearch_tree_ref::ls</a>, <a class="el" href="group__bsearch__tree__ref.html#ga2f71bf104f4e47c83911bb756fa3ce94">node_bsearch_tree_ref::rs</a> or <a class="el" href="group__bsearch__tree__ref.html#gab9a13c3b7864adb0a8aa8e3f8d991224" title="Root of the binary tree.">bsearch_tree_ref::root</a> attribute </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga006b2dfc7a53199903dc9b055a293045" name="ga006b2dfc7a53199903dc9b055a293045"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga006b2dfc7a53199903dc9b055a293045">&#9670;&#160;</a></span>create_bsearch_tree()</h2>
 
@@ -438,7 +508,7 @@ Variables</h2></td></tr>
 <p>Function used to compare to elements in the tree. </p>
 <p>This field should be a pointer to a function that will be called to compare to elements of the tree, it should take two pointers as arguments. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="compare_8h.html#a5bffd944fdaeefd20b78e74d6a7f8b27" title="Typedef for pointer to a comparison function.">compare_fn_t</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00100">100</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00101">101</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
 
 </div>
 </div>
@@ -455,7 +525,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Pointer to its father </p>
 
-<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00045">45</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00046">46</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
 
 </div>
 </div>
@@ -474,7 +544,7 @@ Variables</h2></td></tr>
 <p>Function used to free the elements. </p>
 <p>This field should be a pointer to a function that will be called to free the memory region referenced by <a class="el" href="group__bsearch__tree__ref.html#ga080b01eb09921df7ed42aea7692a10bc">node_bsearch_tree_ref_t::p</a>. If the btree was created using the API it will default to free from libc. However you can turn a bsearch tree in a simple view on the data by setting this pointer to NULL. </p>
 
-<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00091">91</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00092">92</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
 
 </div>
 </div>
@@ -491,7 +561,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Pointer to its left son </p>
 
-<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00043">43</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00044">44</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
 
 </div>
 </div>
@@ -508,7 +578,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Pointer to data </p>
 
-<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00042">42</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00043">43</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
 
 </div>
 </div>
@@ -527,7 +597,7 @@ Variables</h2></td></tr>
 <p>Root of the binary tree. </p>
 <p>If root == NULL the binary tree is empty </p>
 
-<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00071">71</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00072">72</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
 
 </div>
 </div>
@@ -544,7 +614,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Pointer to its right son </p>
 
-<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00044">44</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00045">45</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
 
 </div>
 </div>
@@ -564,7 +634,7 @@ Variables</h2></td></tr>
 <p>This field should be equals to the size (in bytes) of the memory region referenced by <a class="el" href="group__bsearch__tree__ref.html#ga080b01eb09921df7ed42aea7692a10bc">node_bsearch_tree_ref_t::p</a></p>
 <dl class="section note"><dt>Note</dt><dd>This field is not used by any function and is mainly here for information. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00081">81</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bsearch__tree__ref_8h_source.html#l00082">82</a> of file <a class="el" href="bsearch__tree__ref_8h_source.html">bsearch_tree_ref.h</a>.</p>
 
 </div>
 </div>

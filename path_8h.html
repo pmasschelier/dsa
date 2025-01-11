@@ -108,20 +108,37 @@ $(document).ready(function(){initNavTree('path_8h.html',''); initResizable(); })
 
 <p>Binary tree path definition Defines functions to manipulate a path in a binary tree.  
 <a href="#details">More...</a></p>
-<div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> This graph shows which files directly or indirectly include this file:</div>
+<div class="textblock"><code>#include &quot;structures.h&quot;</code><br />
+</div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for path.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="path_8h__incl.png" border="0" usemap="#a_2home_2runner_2work_2dsa_2dsa_2include_2btree__ref_2path_8h" alt=""/></div>
+<map name="a_2home_2runner_2work_2dsa_2dsa_2include_2btree__ref_2path_8h" id="a_2home_2runner_2work_2dsa_2dsa_2include_2btree__ref_2path_8h">
+<area shape="rect" title="Binary tree path definition Defines functions to manipulate a path in a binary tree." alt="" coords="5,5,177,60"/>
+<area shape="rect" href="structures_8h_source.html" title=" " alt="" coords="42,108,141,133"/>
+<area shape="poly" title=" " alt="" coords="94,60,94,94,89,94,89,60"/>
+<area shape="rect" title=" " alt="" coords="56,181,127,207"/>
+<area shape="poly" title=" " alt="" coords="94,134,94,168,89,168,89,134"/>
+</map>
+</div>
+</div><div class="textblock"><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> This graph shows which files directly or indirectly include this file:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="path_8h__dep__incl.png" border="0" usemap="#a_2home_2runner_2work_2dsa_2dsa_2include_2btree__ref_2path_8hdep" alt=""/></div>
 <map name="a_2home_2runner_2work_2dsa_2dsa_2include_2btree__ref_2path_8hdep" id="a_2home_2runner_2work_2dsa_2dsa_2include_2btree__ref_2path_8hdep">
-<area shape="rect" title="Binary tree path definition Defines functions to manipulate a path in a binary tree." alt="" coords="5,5,177,60"/>
-<area shape="rect" href="btree__ref_8h.html" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="5,108,177,163"/>
-<area shape="poly" title=" " alt="" coords="94,74,94,108,89,108,89,74"/>
-<area shape="rect" href="bsearch__tree__ref_8h.html" title="Unbanlanced binary search trees definition Defines functions to create, free and manipulate unbalance..." alt="" coords="5,211,177,265"/>
-<area shape="poly" title=" " alt="" coords="94,176,94,211,89,211,89,176"/>
+<area shape="rect" title="Binary tree path definition Defines functions to manipulate a path in a binary tree." alt="" coords="103,5,275,60"/>
+<area shape="rect" href="btree__ref_8h.html" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="103,108,275,163"/>
+<area shape="poly" title=" " alt="" coords="191,74,191,108,186,108,186,74"/>
+<area shape="rect" href="bsearch__tree__ref_8h.html" title="Unbanlanced binary search trees definition Defines functions to create, free and manipulate unbalance..." alt="" coords="103,211,275,265"/>
+<area shape="poly" title=" " alt="" coords="191,176,191,211,186,211,186,176"/>
 <area shape="rect" href="avl__tree__ref_8h.html" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="5,313,177,368"/>
-<area shape="poly" title=" " alt="" coords="94,279,94,313,89,313,89,279"/>
+<area shape="poly" title=" " alt="" coords="156,277,119,315,115,311,152,273"/>
+<area shape="rect" href="rb__tree__ref_8h.html" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="201,313,373,368"/>
+<area shape="poly" title=" " alt="" coords="226,273,263,311,260,315,222,277"/>
 </map>
 </div>
 </div>
@@ -149,6 +166,9 @@ Functions</h2></td></tr>
 <tr class="memitem:adb7dd5bca964e4e7c4223b68af033f9f" id="r_adb7dd5bca964e4e7c4223b68af033f9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="path_8h.html#adb7dd5bca964e4e7c4223b68af033f9f">path_append_branch</a> (<a class="el" href="structbtree__path.html">btree_path_t</a> *path_from_root, <a class="el" href="structbtree__path.html">btree_path_t</a> next_branch)</td></tr>
 <tr class="memdesc:adb7dd5bca964e4e7c4223b68af033f9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concatenate two paths.  <br /></td></tr>
 <tr class="separator:adb7dd5bca964e4e7c4223b68af033f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afde65d250e1c1c340b6f2b46c23d5817" id="r_afde65d250e1c1c340b6f2b46c23d5817"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="path_8h.html#afde65d250e1c1c340b6f2b46c23d5817">path_last_direction</a> (<a class="el" href="structbtree__path.html">btree_path_t</a> path_from_root)</td></tr>
+<tr class="memdesc:afde65d250e1c1c340b6f2b46c23d5817"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return 1 if the last turn of the path is a right turn, 0 otherwise.  <br /></td></tr>
+<tr class="separator:afde65d250e1c1c340b6f2b46c23d5817"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01e3d87c503f4bd74c26db870233eb90" id="r_a01e3d87c503f4bd74c26db870233eb90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structbtree__path.html">btree_path_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="path_8h.html#a01e3d87c503f4bd74c26db870233eb90">btree_node_to_path</a> (long unsigned int pos)</td></tr>
 <tr class="memdesc:a01e3d87c503f4bd74c26db870233eb90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the path corresponding to the numbering of a perfect binary tree (canonical heap numbering).  <br /></td></tr>
 <tr class="separator:a01e3d87c503f4bd74c26db870233eb90"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -188,7 +208,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="path_8h_source.html#l00011">11</a> of file <a class="el" href="path_8h_source.html">path.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="path_8h_source.html#l00012">12</a> of file <a class="el" href="path_8h_source.html">path.h</a>.</p>
 
 </div>
 </div>
@@ -256,6 +276,33 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="path_8h.html#afa58d468e56f76b5ec2ebd3bf8f8af5b" title="Add a left branch to the path.">path_lhs()</a> <a class="el" href="path_8h.html#ad584d76893141cbfc8503e62d856b464" title="Add a right branch to the path.">path_rhs()</a> </dd></dl>
+
+</div>
+</div>
+<a id="afde65d250e1c1c340b6f2b46c23d5817" name="afde65d250e1c1c340b6f2b46c23d5817"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afde65d250e1c1c340b6f2b46c23d5817">&#9670;&#160;</a></span>path_last_direction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char path_last_direction </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structbtree__path.html">btree_path_t</a>&#160;</td>
+          <td class="paramname"><em>path_from_root</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return 1 if the last turn of the path is a right turn, 0 otherwise. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path_from_root</td><td>the path to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>zero or one </dd></dl>
 
 </div>
 </div>

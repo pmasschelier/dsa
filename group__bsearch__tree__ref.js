@@ -19,6 +19,8 @@ var group__bsearch__tree__ref =
     [ "bsearch_tree_max", "group__bsearch__tree__ref.html#gaa94b561df6724a7d5633007bcf93b567", null ],
     [ "bsearch_tree_min", "group__bsearch__tree__ref.html#ga963946ab1569556120ed8b5cb6e9e65e", null ],
     [ "bsearch_tree_remove", "group__bsearch__tree__ref.html#gaebbc5d592d92f77f6e030bdd8f318bff", null ],
+    [ "bsearch_tree_rotate_left", "group__bsearch__tree__ref.html#ga933e9438622fbbefce07ed91b1426324", null ],
+    [ "bsearch_tree_rotate_right", "group__bsearch__tree__ref.html#ga2bf20c398294db7b4de05600845fbbb7", null ],
     [ "create_bsearch_tree", "group__bsearch__tree__ref.html#ga006b2dfc7a53199903dc9b055a293045", null ],
     [ "bsearch_tree_ref::compare", "group__bsearch__tree__ref.html#ga5fa19b1f456230cb5b9f4b0baeb92c28", null ],
     [ "node_bsearch_tree_ref::father", "group__bsearch__tree__ref.html#ga47acc66d4019a0ceb75badb2799e95bd", null ],

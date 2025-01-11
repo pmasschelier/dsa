@@ -1,23 +1,24 @@
 <map id="/home/runner/work/dsa/dsa/include/btree_ref/avl_tree_ref.h" name="/home/runner/work/dsa/dsa/include/btree_ref/avl_tree_ref.h">
-<area shape="rect" id="Node000001" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="148,5,320,60"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="42,255,116,280"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,62,121,83,79,109,41,143,12,182,9,200,16,216,30,232,48,245,44,249,26,236,12,219,4,200,7,180,37,139,76,105,118,78,160,58"/>
-<area shape="rect" id="Node000003" href="$structures_8h_source.html" title=" " alt="" coords="355,181,454,207"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="265,58,318,106,384,169,381,173,314,110,262,62"/>
-<area shape="rect" id="Node000005" href="$bsearch__tree__ref_8h.html" title="Unbanlanced binary search trees definition Defines functions to create, free and manipulate unbalance..." alt="" coords="162,108,305,133"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="236,60,236,94,231,94,231,60"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="369,255,440,280"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="407,207,407,241,402,241,402,207"/>
-<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="223,136,103,247,100,243,219,132"/>
-<area shape="poly" id="edge8_Node000005_Node000003" title=" " alt="" coords="262,131,365,174,363,178,260,136"/>
-<area shape="rect" id="Node000006" href="$compare_8h.html" title="Comparison function type definition Defines compare_fn_t type function." alt="" coords="22,181,112,207"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="208,136,108,178,106,173,206,131"/>
-<area shape="rect" id="Node000007" href="$ptr_8h_source.html" title=" " alt="" coords="292,255,343,280"/>
-<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="250,132,272,153,293,180,307,211,316,241,310,242,302,213,289,183,268,156,246,136"/>
-<area shape="rect" id="Node000008" href="$btree__ref_8h.html" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="188,181,280,207"/>
-<area shape="poly" id="edge9_Node000005_Node000008" title=" " alt="" coords="236,134,236,168,231,168,231,134"/>
-<area shape="poly" id="edge10_Node000008_Node000002" title=" " alt="" coords="210,209,118,251,116,246,208,204"/>
-<area shape="poly" id="edge12_Node000008_Node000007" title=" " alt="" coords="249,205,295,243,292,248,245,209"/>
-<area shape="rect" id="Node000009" href="$path_8h.html" title="Binary tree path definition Defines functions to manipulate a path in a binary tree." alt="" coords="141,255,268,280"/>
-<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="231,208,217,243,212,241,226,206"/>
+<area shape="rect" id="Node000001" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="264,5,436,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="275,255,350,280"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="348,61,319,241,314,240,343,60"/>
+<area shape="rect" id="Node000003" href="$structures_8h_source.html" title=" " alt="" coords="138,328,237,353"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="364,59,378,105,389,163,390,194,387,225,379,254,364,282,341,305,312,321,281,332,251,338,250,333,280,327,310,316,338,301,360,278,374,252,382,224,385,194,384,164,373,106,358,61"/>
+<area shape="rect" id="Node000005" href="$bsearch__tree__ref_8h.html" title="Unbanlanced binary search trees definition Defines functions to create, free and manipulate unbalance..." alt="" coords="87,108,229,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="292,63,197,105,195,100,290,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="152,401,223,427"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="190,354,190,388,185,388,185,354"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="196,131,237,150,276,179,296,209,309,240,304,242,292,212,272,183,234,155,193,136"/>
+<area shape="poly" id="edge8_Node000005_Node000003" title=" " alt="" coords="108,136,67,154,49,167,33,183,17,208,9,231,10,254,23,278,43,300,69,315,97,325,125,332,124,337,95,330,66,320,40,304,18,282,5,255,4,230,13,205,29,180,45,163,65,149,106,131"/>
+<area shape="rect" id="Node000006" href="$compare_8h.html" title="Comparison function type definition Defines compare_fn_t type function." alt="" coords="54,181,145,207"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="150,135,119,173,115,169,146,132"/>
+<area shape="rect" id="Node000007" href="$ptr_8h_source.html" title=" " alt="" coords="33,255,83,280"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="112,136,74,154,57,167,44,183,39,196,39,211,48,241,42,243,34,212,34,196,40,180,54,163,71,149,110,131"/>
+<area shape="rect" id="Node000008" href="$btree__ref_8h.html" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="169,181,261,207"/>
+<area shape="poly" id="edge9_Node000005_Node000008" title=" " alt="" coords="170,132,199,169,195,172,165,135"/>
+<area shape="poly" id="edge10_Node000008_Node000002" title=" " alt="" coords="233,205,287,244,284,248,229,209"/>
+<area shape="poly" id="edge13_Node000008_Node000007" title=" " alt="" coords="191,209,97,251,95,247,189,204"/>
+<area shape="rect" id="Node000009" href="$path_8h.html" title="Binary tree path definition Defines functions to manipulate a path in a binary tree." alt="" coords="124,255,251,280"/>
+<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="213,208,199,243,194,241,208,206"/>
+<area shape="poly" id="edge12_Node000009_Node000003" title=" " alt="" coords="190,280,190,314,185,314,185,280"/>
 </map>

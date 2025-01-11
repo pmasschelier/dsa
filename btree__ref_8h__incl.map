@@ -4,6 +4,10 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,62,72,102,69,98,128,58"/>
 <area shape="rect" id="Node000003" href="$path_8h.html" title="Binary tree path definition Defines functions to manipulate a path in a binary tree." alt="" coords="105,108,231,133"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,60,171,94,165,94,165,60"/>
-<area shape="rect" id="Node000004" href="$ptr_8h_source.html" title=" " alt="" coords="256,108,307,133"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="204,58,256,97,253,102,201,62"/>
+<area shape="rect" id="Node000006" href="$ptr_8h_source.html" title=" " alt="" coords="256,108,307,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="204,58,256,97,253,102,201,62"/>
+<area shape="rect" id="Node000004" href="$structures_8h_source.html" title=" " alt="" coords="119,181,217,207"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="171,134,171,168,165,168,165,134"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="133,255,203,280"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="171,207,171,241,165,241,165,207"/>
 </map>

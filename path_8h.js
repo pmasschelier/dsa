@@ -3,6 +3,7 @@ var path_8h =
     [ "btree_path", "structbtree__path.html", "structbtree__path" ],
     [ "btree_node_to_path", "path_8h.html#a01e3d87c503f4bd74c26db870233eb90", null ],
     [ "path_append_branch", "path_8h.html#adb7dd5bca964e4e7c4223b68af033f9f", null ],
+    [ "path_last_direction", "path_8h.html#afde65d250e1c1c340b6f2b46c23d5817", null ],
     [ "path_lhs", "path_8h.html#afa58d468e56f76b5ec2ebd3bf8f8af5b", null ],
     [ "path_rhs", "path_8h.html#ad584d76893141cbfc8503e62d856b464", null ],
     [ "path_walk_backward", "path_8h.html#a8031760e67675613fda26797ae3f6358", null ],
