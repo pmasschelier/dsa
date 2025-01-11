@@ -73,7 +73,6 @@ static void equilibrate(node_avl_tree_ref_t** node) {
 			(*node)->rs->subtree -= 1;
 			(*node)->rs->ls->subtree += 1;
 			bsearch_tree_rotate_right(&(*bsearch_node)->rs);
-			bsearch_tree_rotate_left(bsearch_node);
 		}
 		if (balance_factor((*node)->rs) == -1)
 			bsearch_tree_rotate_left(bsearch_node);
@@ -83,7 +82,6 @@ static void equilibrate(node_avl_tree_ref_t** node) {
 			(*node)->ls->subtree -= 1;
 			(*node)->ls->rs->subtree += 1;
 			bsearch_tree_rotate_left(&(*bsearch_node)->ls);
-			bsearch_tree_rotate_right(bsearch_node);
 		}
 		if (balance_factor((*node)->ls) == 1)
 			bsearch_tree_rotate_right(bsearch_node);
