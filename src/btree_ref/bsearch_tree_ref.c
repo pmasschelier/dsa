@@ -138,12 +138,31 @@ node_bsearch_tree_ref_t* bsearch_tree_find(bsearch_tree_ref_t* tree,
 	return NULL;
 }
 
-node_bsearch_tree_ref_t** bsearch_successor_node(
-	node_bsearch_tree_ref_t* node) {
-	node_bsearch_tree_ref_t** ret = &node->rs;
-	while ((*ret)->ls != NULL)
-		ret = &(*ret)->ls;
-	return ret;
+node_bsearch_tree_ref_t** bsearch_tree_successor_location(
+	bsearch_tree_ref_t* tree,
+	node_bsearch_tree_ref_t* node,
+	btree_path_t* path) {
+	if (node->rs != NULL) {
+		node_bsearch_tree_ref_t** ret = &node->rs;
+		if (path != NULL)
+			path_rhs(path);
+		while ((*ret)->ls != NULL) {
+			ret = &(*ret)->ls;
+			if (path != NULL)
+				path_lhs(path);
+		}
+		return ret;
+	}
+	while (node->father != NULL && node->father->rs == node) {
+		node = node->father;
+		if (path != NULL)
+			path->length -= 1;
+	}
+	if (node->father == NULL)
+		return NULL;
+	if (path != NULL)
+		path->length -= 1;
+	return node_bsearch_tree_get_location(tree, node->father);
 }
 
 typedef enum node_situation {

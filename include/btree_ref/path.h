@@ -8,6 +8,7 @@
  * @ingroup btree_ref
  */
 
+#include "structures.h"
 typedef struct btree_path btree_path_t;
 /**
  * @class btree_path
@@ -92,6 +93,14 @@ btree_path_t* path_rhs(btree_path_t* path_from_root);
  * @see path_lhs() path_rhs()
  */
 void path_append_branch(btree_path_t* path_from_root, btree_path_t next_branch);
+
+/**
+ * @brief Return 1 if the last turn of the path is a right turn, 0 otherwise
+ *
+ * @param path_from_root the path to check
+ * @return zero or one
+ */
+unsigned char path_last_direction(btree_path_t path_from_root);
 
 /**
  * @brief Returns the path corresponding to the numbering of a perfect binary
