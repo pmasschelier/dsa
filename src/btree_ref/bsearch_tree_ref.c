@@ -184,9 +184,10 @@ static node_situation_t compute_situation(node_bsearch_tree_ref_t* node) {
 
 static node_bsearch_tree_ref_t* resolve_remove(
 	bsearch_tree_ref_t* tree,
-	node_bsearch_tree_ref_t** node_ptr) {
+	node_bsearch_tree_ref_t** node_ptr,
+	btree_path_t* path) {
 	node_bsearch_tree_ref_t* node = *node_ptr;
-	node_bsearch_tree_ref_t** freed = node_ptr;
+	node_bsearch_tree_ref_t** freed = NULL;
 	int situation = compute_situation(node);
 	switch (situation) {
 	case LEFT_CHILD:
@@ -198,15 +199,13 @@ static node_bsearch_tree_ref_t* resolve_remove(
 		(*node_ptr)->father = node->father;
 		break;
 	case BOTH_CHILDREN:
-		freed = bsearch_successor_node(node);
+		freed = bsearch_tree_successor_location(tree, node, path);
 		// exchange value of node and *succ
 		void* node_p = node->p;
 		node->p = (*freed)->p;
 		(*freed)->p = node_p;
 		// the only remaining reference on *freed will be node
-		node = *freed;
-		*freed = NULL;
-		break;
+		return resolve_remove(tree, freed, path);
 	case NO_CHILDREN:
 		*node_ptr = NULL;
 	default:
@@ -235,7 +234,7 @@ node_bsearch_tree_ref_t* bsearch_tree_remove_impl(bsearch_tree_ref_t* tree,
 	}
 	if (*node_ptr == NULL)
 		return NULL;
-	return resolve_remove(tree, node_ptr);
+	return resolve_remove(tree, node_ptr, path);
 }
 
 BOOL bsearch_tree_remove(bsearch_tree_ref_t* tree, void* value) {
