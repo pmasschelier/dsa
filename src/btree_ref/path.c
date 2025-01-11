@@ -22,6 +22,10 @@ void path_append_branch(btree_path_t* path_from_root,
 	path_from_root->length += next_branch.length;
 }
 
+unsigned char path_last_direction(btree_path_t path_from_root) {
+	return (path_from_root.path >> (path_from_root.length - 1)) & 1;
+}
+
 btree_path_t btree_node_to_path(long unsigned int pos) {
 	btree_path_t path = {0, 0};
 	while (pos) {
