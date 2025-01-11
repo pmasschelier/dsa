@@ -329,6 +329,12 @@ typedef enum dfs_status { DOWNWARD, UPWARD_LEFT, UPWARD_RIGHT } dfs_status_t;
 	exit:                                                                \
 	free_stack(forest);
 
+/* int btree_preorder_traversal(btree_ref_t* tree, void* tab[]) { */
+/* 	unsigned i = 0; */
+/* 	btree_dfs(tree, node, tab[i++] = node->p, , ); */
+/* 	return i; */
+/* } */
+
 int btree_postorder_traversal(btree_ref_t* tree, void* tab[]) {
 	unsigned i = 0;
 	btree_dfs(tree, node, , , tab[i++] = node->p);

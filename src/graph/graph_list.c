@@ -7,6 +7,9 @@
 #include "test_macros.h"
 #include "weight_type.h"
 
+// TODO: Implement graph_list as unordered lists (dynamic array where remove =
+// swap with last element)
+
 graph_list_t* create_graph_list(unsigned size, BOOL is_weighted) {
 	graph_list_t* ret;
 	when_true_ret(size == 0, NULL);

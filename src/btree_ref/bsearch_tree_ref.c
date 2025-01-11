@@ -1,9 +1,10 @@
 #include "btree_ref/bsearch_tree_ref.h"
 #include <stdlib.h>
-#include "btree_ref/btree_ref.h"
 #include "btree_ref/path.h"
 #include "errors.h"
 #include "test_macros.h"
+
+// TODO: Make bsearch tree order-statistic trees
 
 bsearch_tree_ref_t* create_bsearch_tree(size_t size_bytes,
 										compare_fn_t compare) {
@@ -90,38 +91,6 @@ int bsearch_tree_insert(bsearch_tree_ref_t* tree,
 	return bsearch_tree_insert_impl(tree, value, found, &path, &node,
 									create_bsearch_leaf);
 }
-
-/* int bsearch_tree_insert(bsearch_tree_ref_t* tree, */
-/* 						void* value, */
-/* 						node_bsearch_tree_ref_t** found) { */
-/* 	node_bsearch_tree_ref_t* father = NULL; */
-/* 	if (tree->root == NULL) { */
-/* 		tree->root = create_bsearch_leaf(value, father); */
-/* 		return -ERROR_NO_ERROR; */
-/* 	} */
-/**/
-/* 	node_bsearch_tree_ref_t** node = &tree->root; */
-/* 	btree_path_t path = ROOT_PATH; */
-/* 	do { */
-/* 		father = *node; */
-/* 		int cmp = tree->compare(value, (*node)->p); */
-/* 		if (cmp == -1) { */
-/* 			path_lhs(&path); */
-/* 			node = &(*node)->ls; */
-/* 		} else if (cmp == 1) { */
-/* 			path_rhs(&path); */
-/* 			node = &(*node)->rs; */
-/* 		} else { */
-/* 			if (found != NULL) */
-/* 				*found = *node; */
-/* 			return -ERROR_KEY_ALREADY_EXISTS; */
-/* 		} */
-/* 	} while (*node != NULL); */
-/* 	*node = create_bsearch_leaf(value, father); */
-/* 	when_null_ret(*node, -ERROR_ALLOCATION_FAILED); */
-/* equilibrate_leaf_path(tree, *node, path); */
-/* 	return -ERROR_NO_ERROR; */
-/* } */
 
 node_bsearch_tree_ref_t* bsearch_tree_find(bsearch_tree_ref_t* tree,
 										   void* value) {
