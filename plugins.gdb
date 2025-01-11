@@ -1,0 +1,1 @@
+source plugins/gdbdot.py
