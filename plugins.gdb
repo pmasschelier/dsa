@@ -1,1 +1,2 @@
-source plugins/gdbdot.py
+source plugins/dotbtree.py
+source plugins/dotgraph.py
