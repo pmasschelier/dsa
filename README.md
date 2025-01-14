@@ -42,6 +42,15 @@ ninja coverage-html -C build
 meson install -C build
 ```
 
+## Documentation
+
+You can generate the documentation with:
+```sh
+meson compile doc -C build
+```
+
+Or you can [access it online](https://pmasschelier.github.io/dsa/).
+
 ## Features
 
 ### Data structures:
