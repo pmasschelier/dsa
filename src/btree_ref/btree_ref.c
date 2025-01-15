@@ -3,7 +3,7 @@
 #include <string.h>
 #include "btree_ref/path.h"
 #include "errors.h"
-#include "list_ref/list_ref.h"
+#include "list_ref/linked_list_ref.h"
 #include "test_macros.h"
 
 #ifndef STRUCT_RECURSIVE_IMPL
@@ -413,26 +413,26 @@ int btree_levelorder_traversal(btree_ref_t* tree, void* tab[]) {
 	if (tree->root == NULL)
 		return 0;
 	unsigned i = 0;
-	list_ref_t* foret = create_list(sizeof(node_btree_ref_t));
+	list_ref_t* foret = create_linked_list(sizeof(node_btree_ref_t));
 	when_null_ret(foret, -ERROR_ALLOCATION_FAILED);
 	foret->free_element =
 		(void (*)(void*))btree_free;  // Inutile mais présent par sécurité
-	node_list_ref_t* ret = push_back_list(foret, tree->root);
+	node_list_ref_t* ret = linked_list_push_back(foret, tree->root);
 	when_null_ret(ret, -ERROR_ALLOCATION_FAILED);
 
-	while (!empty_list(foret)) {
+	while (!linked_list_empty(foret)) {
 		node_btree_ref_t* t;
-		pop_front_list(foret, (void**)&t);
+		linked_list_pop_front(foret, (void**)&t);
 		if (t) {
 			if (t->ls != NULL)
-				push_back_list(foret, t->ls);
+				linked_list_push_back(foret, t->ls);
 			if (t->rs != NULL)
-				push_back_list(foret, t->rs);
+				linked_list_push_back(foret, t->rs);
 			tab[i] = t->p;
 			i++;
 		}
 	}
-	free_list(foret);
+	free_linked_list(foret);
 	return 0;
 }
 

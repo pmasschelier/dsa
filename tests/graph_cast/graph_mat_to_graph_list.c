@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <weight_type.h>
 #include "graph/graph_list.h"
-#include "list_ref/list_ref.h"
+#include "list_ref/linked_list_ref.h"
 
 #define EDGE_COUNT 5
 #define NODE_COUNT 4

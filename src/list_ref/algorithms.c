@@ -1,6 +1,6 @@
 #include "list_ref/algorithms.h"
 #include <string.h>
-#include "list_ref/list_ref.h"
+#include "list_ref/linked_list_ref.h"
 
 node_list_ref_t* find_in_list(list_ref_t* list, void* x) {
 	node_list_ref_t* node = list->begin;
@@ -28,8 +28,8 @@ static void filter_list_extract(list_ref_t* list,
 								node_list_ref_t* node) {
 	node_list_ref_t* next = node->next;
 	if (!filter(node->p)) {
-		extract_list(list, node);
-		insert_list_node(others, list->end, node);
+		linked_list_extract(list, node);
+		linked_list_insert_node(others, list->end, node);
 	}
 
 	if (next)
@@ -41,7 +41,7 @@ static void filter_list_remove(list_ref_t* list,
 							   node_list_ref_t* node) {
 	node_list_ref_t* next = node->next;
 	if (!filter(node->p))
-		remove_list(list, node, NULL);
+		linked_list_remove(list, node, NULL);
 
 	if (next)
 		filter_list_remove(list, filter, next);
@@ -49,7 +49,7 @@ static void filter_list_remove(list_ref_t* list,
 
 void filter_list(list_ref_t* list, list_ref_t** others, BOOL (*filter)(void*)) {
 	if (others) {
-		*others = create_list(list->size);
+		*others = create_linked_list(list->size);
 		filter_list_extract(list, *others, filter, list->begin);
 	} else {
 		filter_list_remove(list, filter, list->begin);

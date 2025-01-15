@@ -1,7 +1,7 @@
 #include <assert.h>
 #include "btree_ref/rb_tree_ref.h"
 #include "errors.h"
-#include "list_ref/list_ref.h"
+#include "list_ref/linked_list_ref.h"
 #include "ptr.h"
 
 #define KEY_TYPE int

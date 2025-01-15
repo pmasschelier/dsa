@@ -7,7 +7,7 @@ header_files = files(
   'graph/graph_cast.h',
   'graph/graph_list.h',
   'graph/graph_mat.h',
-  'list_ref/list_ref.h',
+  'list_ref/linked_list_ref.h',
   'list_ref/algorithms.h',
   'circular_buffer.h',
   'compare.h',

@@ -1,4 +1,4 @@
-#include "list_ref/list_ref.h"
+#include "list_ref/linked_list_ref.h"
 #include "test_macros.h"
 
 #include <assert.h>
@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-list_ref_t* create_list(size_t size) {
+list_ref_t* create_linked_list(size_t size) {
 	list_ref_t* ret = malloc(sizeof(list_ref_t));
 	when_null_ret(ret, NULL);
 	ret->begin = NULL;
@@ -16,13 +16,13 @@ list_ref_t* create_list(size_t size) {
 	return ret;
 }
 
-BOOL empty_list(list_ref_t* list) {
+BOOL linked_list_empty(list_ref_t* list) {
 	return list->begin == NULL;
 }
 
-list_ref_t* list_from_tab(void* tab, size_t size, unsigned length) {
+list_ref_t* linked_list_from_tab(void* tab, size_t size, unsigned length) {
 	list_ref_t* ret;
-	list_ref_t* list = create_list(size);
+	list_ref_t* list = create_linked_list(size);
 	when_null_ret(list, NULL);
 
 	if (0 == size)
@@ -38,16 +38,16 @@ list_ref_t* list_from_tab(void* tab, size_t size, unsigned length) {
 		p = malloc(size);
 		when_null_jmp(p, NULL, exit);
 		memcpy(p, (char*)tab + i * size, size);
-		ptr = insert_list(list, ptr, p);
+		ptr = linked_list_insert(list, ptr, p);
 	}
 
 	return list;
 exit:
-	free_list(list);
+	free_linked_list(list);
 	return ret;
 }
 
-void* tab_from_list(list_ref_t* list, void* tab) {
+void* linked_list_to_tab(list_ref_t* list, void* tab) {
 	unsigned i = 0;
 	node_list_ref_t* node = list->begin;
 	while (node) {
@@ -69,8 +69,8 @@ unsigned length_list(list_ref_t* list) {
 	return length_list_rec(list->begin, 0);
 }
 #else
-unsigned length_list(list_ref_t* list) {
-	if (empty_list(list))
+unsigned linked_list_length(list_ref_t* list) {
+	if (linked_list_empty(list))
 		return 0;
 	unsigned l = 0;
 	node_list_ref_t* node = list->begin;
@@ -81,9 +81,9 @@ unsigned length_list(list_ref_t* list) {
 }
 #endif
 
-void insert_list_node(list_ref_t* list,
-					  node_list_ref_t* prev,
-					  node_list_ref_t* node) {
+void linked_list_insert_node(list_ref_t* list,
+							 node_list_ref_t* prev,
+							 node_list_ref_t* node) {
 	assert(list);
 	assert(node);
 
@@ -105,7 +105,9 @@ void insert_list_node(list_ref_t* list,
 		list->end = node;  // Le nouveau noeud est le dernier
 }
 
-node_list_ref_t* insert_list(list_ref_t* list, node_list_ref_t* prev, void* p) {
+node_list_ref_t* linked_list_insert(list_ref_t* list,
+									node_list_ref_t* prev,
+									void* p) {
 	assert(list);
 
 	// On crée un nouveau noeud qui devient le nouveau suivant
@@ -114,11 +116,11 @@ node_list_ref_t* insert_list(list_ref_t* list, node_list_ref_t* prev, void* p) {
 
 	// On assigne la valeur voulue au pointeur du nouveau noeud
 	node->p = p;
-	insert_list_node(list, prev, node);
+	linked_list_insert_node(list, prev, node);
 	return node;  // On retourne le nouveau noeud
 }
 
-node_list_ref_t* push_front_list(list_ref_t* list, void* p) {
+node_list_ref_t* linked_list_push_front(list_ref_t* list, void* p) {
 	assert(list);
 
 	node_list_ref_t* node =
@@ -136,13 +138,13 @@ node_list_ref_t* push_front_list(list_ref_t* list, void* p) {
 	return node;		 // On retourne le nouveau noeud
 }
 
-node_list_ref_t* append_front_list(list_ref_t* list, void* p) {
+node_list_ref_t* linked_list_append_front(list_ref_t* list, void* p) {
 	void* elem = malloc(list->size);
 	memcpy(elem, p, list->size);
-	return push_front_list(list, elem);
+	return linked_list_push_front(list, elem);
 }
 
-node_list_ref_t* push_back_list(list_ref_t* list, void* p) {
+node_list_ref_t* linked_list_push_back(list_ref_t* list, void* p) {
 	assert(list);
 
 	node_list_ref_t* node =
@@ -163,14 +165,14 @@ node_list_ref_t* push_back_list(list_ref_t* list, void* p) {
 	return node;	   // On retourne le nouveau noeud
 }
 
-node_list_ref_t* append_back_list(list_ref_t* list, void* p) {
+node_list_ref_t* linked_list_append_back(list_ref_t* list, void* p) {
 	void* elem = malloc(list->size);
 	memcpy(elem, p, list->size);
-	return push_back_list(list, elem);
+	return linked_list_push_back(list, elem);
 }
 
-void pop_front_list(list_ref_t* list, void** x) {
-	if (empty_list(list)) {
+void linked_list_pop_front(list_ref_t* list, void** x) {
+	if (linked_list_empty(list)) {
 		if (x)
 			*x = NULL;
 		return;
@@ -196,8 +198,8 @@ void pop_front_list(list_ref_t* list, void** x) {
 		list->free_element(ret);
 }
 
-void pop_back_list(list_ref_t* list, void** x) {
-	if (empty_list(list)) {
+void linked_list_pop_back(list_ref_t* list, void** x) {
+	if (linked_list_empty(list)) {
 		if (x)
 			*x = NULL;
 		return;
@@ -216,7 +218,7 @@ void pop_back_list(list_ref_t* list, void** x) {
 		list->free_element(ret);
 }
 
-void extract_list(list_ref_t* list, node_list_ref_t* node) {
+void linked_list_extract(list_ref_t* list, node_list_ref_t* node) {
 	assert(node);
 	if (node->prev)
 		node->prev->next = node->next;
@@ -228,8 +230,8 @@ void extract_list(list_ref_t* list, node_list_ref_t* node) {
 		list->end = node->prev;
 }
 
-void remove_list(list_ref_t* list, node_list_ref_t* node, void** x) {
-	extract_list(list, node);
+void linked_list_remove(list_ref_t* list, node_list_ref_t* node, void** x) {
+	linked_list_extract(list, node);
 	if (x)
 		*x = node->p;
 	else if (list->free_element)
@@ -248,7 +250,7 @@ static void free_node(list_ref_t* list, node_list_ref_t* node) {
 	free_node(list, next);			  // Libère le noeud suivant
 }
 
-void clean_list(list_ref_t* list) {
+void linked_list_clean(list_ref_t* list) {
 	if (list && list->begin) {
 		free_node(list, list->begin);
 		list->begin = NULL;
@@ -256,7 +258,7 @@ void clean_list(list_ref_t* list) {
 	}
 }
 #else
-void clean_list(list_ref_t* list) {
+void linked_list_clean(list_ref_t* list) {
 	when_null_ret(list, );
 	node_list_ref_t* node = list->begin;
 	node_list_ref_t* next;
@@ -272,9 +274,9 @@ void clean_list(list_ref_t* list) {
 }
 #endif
 
-void free_list(list_ref_t* list) {
+void free_linked_list(list_ref_t* list) {
 	if (!list)
 		return;
-	clean_list(list);
+	linked_list_clean(list);
 	free(list);
 }

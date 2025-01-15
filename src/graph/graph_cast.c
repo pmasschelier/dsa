@@ -2,7 +2,7 @@
 #include <string.h>
 #include "graph/graph_list.h"
 #include "graph/graph_mat.h"
-#include "list_ref/list_ref.h"
+#include "list_ref/linked_list_ref.h"
 #include "test_macros.h"
 #include "weight_type.h"
 
@@ -19,7 +19,7 @@ graph_list_t* graph_mat_to_graph_list(graph_mat_t* graph_mat,
 		graph_list = create_graph_list(size, weighted);
 	else {
 		for (unsigned i = 0; i < graph_list->nb_vert; i++)
-			clean_list(&graph_list->neighbours[i]);
+			linked_list_clean(&graph_list->neighbours[i]);
 		graph_list->neighbours =
 			realloc(graph_list->neighbours, size * sizeof(list_ref_t));
 		when_null_ret(graph_list->neighbours, NULL);

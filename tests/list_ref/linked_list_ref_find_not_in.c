@@ -16,10 +16,10 @@ LIST_TYPE tab[TAB_LEN] = {
 LIST_TYPE x = {10, 11, 12};
 
 int main(void) {
-	list_ref_t* list = list_from_tab(tab, sizeof(LIST_TYPE), TAB_LEN);
+	list_ref_t* list = linked_list_from_tab(tab, sizeof(LIST_TYPE), TAB_LEN);
 	node_list_ref_t* node;
 	node = find_in_list(list, &x);
 	assert(node == NULL);
 
-	free_list(list);
+	free_linked_list(list);
 }

@@ -3,7 +3,7 @@
 
 #ifdef STACK_IMPL_LIST_REF
 #include <string.h>
-#include "list_ref/list_ref.h"
+#include "list_ref/linked_list_ref.h"
 #include "test_macros.h"
 
 typedef list_ref_t fixed_xifo_view_t;

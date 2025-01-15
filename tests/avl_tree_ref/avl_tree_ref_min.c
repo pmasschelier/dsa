@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "btree_ref/avl_tree_ref.h"
 #include "compare.h"
-#include "list_ref/list_ref.h"
+#include "list_ref/linked_list_ref.h"
 
 #define KEY_TYPE int
 DEFINE_COMPARE_SCALAR(int)

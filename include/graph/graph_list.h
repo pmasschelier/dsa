@@ -1,7 +1,7 @@
 #ifndef GRAPH_LIST_H
 #define GRAPH_LIST_H
 
-#include "list_ref/list_ref.h"
+#include "list_ref/linked_list_ref.h"
 #include "weight_type.h"
 
 /**

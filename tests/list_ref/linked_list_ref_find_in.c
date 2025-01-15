@@ -14,7 +14,7 @@ LIST_TYPE tab[TAB_LEN] = {
 };
 
 int main(void) {
-	list_ref_t* list = list_from_tab(tab, sizeof(LIST_TYPE), TAB_LEN);
+	list_ref_t* list = linked_list_from_tab(tab, sizeof(LIST_TYPE), TAB_LEN);
 	node_list_ref_t *nodeA, *nodeB = list->begin;
 	for (int i = 0; i < TAB_LEN; i++) {
 		nodeA = find_in_list(list, (void*)&tab[i]);
@@ -22,5 +22,5 @@ int main(void) {
 		nodeB = nodeB->next;
 	}
 
-	free_list(list);
+	free_linked_list(list);
 }

@@ -2,7 +2,7 @@
 #define STACK_VIEW_H
 
 #ifdef STACK_IMPL_LIST_REF
-#include "list_ref/list_ref.h"
+#include "list_ref/linked_list_ref.h"
 #include "test_macros.h"
 
 typedef list_ref_t stack_view_t;

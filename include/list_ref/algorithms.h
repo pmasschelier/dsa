@@ -1,7 +1,7 @@
 #ifndef LISTREFALGLORITHMS_H
 #define LISTREFALGLORITHMS_H
 
-#include "list_ref/list_ref.h"
+#include "list_ref/linked_list_ref.h"
 
 /** \brief Renvoie le premier élément de la liste égale à *x
  * La comparaison est faite avec memcmp

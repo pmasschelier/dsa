@@ -3,7 +3,7 @@
 #include "config.h"
 #include "errors.h"
 #include "fixed_xifo_view.h"
-#include "list_ref/list_ref.h"
+#include "list_ref/linked_list_ref.h"
 #include "test_macros.h"
 #include "weight_type.h"
 
@@ -43,7 +43,7 @@ int graph_list_add_edge_noverif(graph_list_t* g,
 	graph_list_edge_t* e = malloc(sizeof(graph_list_edge_t));
 	when_null_ret(e, -ERROR_ALLOCATION_FAILED);
 	*e = (graph_list_edge_t){weight, b};
-	push_back_list(neighbours, e);
+	linked_list_push_back(neighbours, e);
 
 	return 0;
 }
@@ -112,7 +112,7 @@ void graph_list_set_edge(graph_list_t* g,
 		weight = 1;
 	node_list_ref_t* node = find_edge(g, a, b);
 	if (node && !val)
-		remove_list(&g->neighbours[a], node, NULL);
+		linked_list_remove(&g->neighbours[a], node, NULL);
 	if (node && val)
 		((graph_list_edge_t*)node->p)->w = weight;
 	if (!node && val)
@@ -124,7 +124,7 @@ void graph_list_set_edge(graph_list_t* g,
 void free_graph_list(graph_list_t* g) {
 	if (g) {
 		for (unsigned i = 0; i < g->nb_vert; i++)
-			clean_list(&g->neighbours[i]);
+			linked_list_clean(&g->neighbours[i]);
 		free(g->neighbours);
 		free(g);
 	}
@@ -524,7 +524,7 @@ unsigned int graph_list_indegree(graph_list_t* g, unsigned vertex) {
 }
 
 unsigned int graph_list_outdegree(graph_list_t* g, unsigned vertex) {
-	return length_list(&g->neighbours[vertex]);
+	return linked_list_length(&g->neighbours[vertex]);
 }
 
 int graph_list_topological_ordering(graph_list_t* g,

@@ -97,7 +97,7 @@ struct list_ref {
  * @return A pointer to the newly created list
  * @see free_list()
  */
-list_ref_t* create_list(size_t size);
+list_ref_t* create_linked_list(size_t size);
 
 /**
  * @brief Test if the list is empty
@@ -108,7 +108,7 @@ list_ref_t* create_list(size_t size);
  * @param[in] list pointer on the list to test
  * @return TRUE iif the list is empty
  */
-BOOL empty_list(list_ref_t* list);
+BOOL linked_list_empty(list_ref_t* list);
 
 /**
  * @brief Create a list from an array
@@ -128,7 +128,7 @@ BOOL empty_list(list_ref_t* list);
  * @return A pointer on the newly created list
  * @see free_list()
  */
-list_ref_t* list_from_tab(void* tab, size_t size, unsigned length);
+list_ref_t* linked_list_from_tab(void* tab, size_t size, unsigned length);
 
 /**
  * @brief Fill an array with the content of a list
@@ -142,7 +142,7 @@ list_ref_t* list_from_tab(void* tab, size_t size, unsigned length);
  * @return tab
  * @see length_list()
  */
-void* tab_from_list(list_ref_t* list, void* tab);
+void* linked_list_to_tab(list_ref_t* list, void* tab);
 
 /** @brief Compute a list length
  *
@@ -152,7 +152,7 @@ void* tab_from_list(list_ref_t* list, void* tab);
  * @param[in] list pointer to the list
  * @return The length of the list
  */
-unsigned length_list(list_ref_t* list);
+unsigned linked_list_length(list_ref_t* list);
 
 /**
  * @brief Insert an existing node into the list
@@ -168,9 +168,9 @@ unsigned length_list(list_ref_t* list);
  * will cause it insert at the beginning of the list
  * @param[in] node pointer to the node to insert
  */
-void insert_list_node(list_ref_t* list,
-					  node_list_ref_t* prev,
-					  node_list_ref_t* node);
+void linked_list_insert_node(list_ref_t* list,
+							 node_list_ref_t* prev,
+							 node_list_ref_t* node);
 
 /**
  * @brief Insert an element into the list.
@@ -187,7 +187,9 @@ void insert_list_node(list_ref_t* list,
  * @param[in] p pointer to the value the new node will reference
  * @return pointer to the newly created node
  */
-node_list_ref_t* insert_list(list_ref_t* list, node_list_ref_t* prev, void* p);
+node_list_ref_t* linked_list_insert(list_ref_t* list,
+									node_list_ref_t* prev,
+									void* p);
 
 /**
  * @brief Append an element to the beginning of the list
@@ -202,7 +204,7 @@ node_list_ref_t* insert_list(list_ref_t* list, node_list_ref_t* prev, void* p);
  * @param[in] x pointer to data we want to add to the list
  * @return pointer to the newly created node (NULL in case of failure)
  */
-node_list_ref_t* push_front_list(list_ref_t* list, void* x);
+node_list_ref_t* linked_list_push_front(list_ref_t* list, void* x);
 
 /**
  * @brief Copy an element to the beginning of the list
@@ -219,7 +221,7 @@ node_list_ref_t* push_front_list(list_ref_t* list, void* x);
  * @param p Pointer to the data to copy at the beginning of the list
  * @return Pointer to the newly created node (NULL in case of failure)
  */
-node_list_ref_t* append_front_list(list_ref_t* list, void* p);
+node_list_ref_t* linked_list_append_front(list_ref_t* list, void* p);
 
 /**
  * @brief Append an element to the end of the list
@@ -234,7 +236,7 @@ node_list_ref_t* append_front_list(list_ref_t* list, void* p);
  * @param[in] x pointer to the data we want to add to the list
  * @return pointer to the newly created node (NULL in case of failure)
  */
-node_list_ref_t* push_back_list(list_ref_t* list, void* x);
+node_list_ref_t* linked_list_push_back(list_ref_t* list, void* x);
 
 /**
  * @brief Copy an element to the end of the list
@@ -251,7 +253,7 @@ node_list_ref_t* push_back_list(list_ref_t* list, void* x);
  * @param p Pointer to the data to copy at the beginning of the list
  * @return Pointer to the newly created node (NULL in case of failure)
  */
-node_list_ref_t* append_back_list(list_ref_t* list, void* p);
+node_list_ref_t* linked_list_append_back(list_ref_t* list, void* p);
 
 /**
  * @brief Remove the first element of the list
@@ -266,7 +268,7 @@ node_list_ref_t* append_back_list(list_ref_t* list, void* p);
  * @param[out] x pointer on a pointer to the remove data (if NULL the data will
  * be freed)
  */
-void pop_front_list(list_ref_t* list, void** x);
+void linked_list_pop_front(list_ref_t* list, void** x);
 
 /**
  * @brief Remove the last element of the list
@@ -281,7 +283,7 @@ void pop_front_list(list_ref_t* list, void** x);
  * @param[out] x pointer on a pointer the removed data (if NULL the data will be
  * freed)
  */
-void pop_back_list(list_ref_t* list, void** x);
+void linked_list_pop_back(list_ref_t* list, void** x);
 
 /**
  * @brief Extract a node from the list
@@ -293,7 +295,7 @@ void pop_back_list(list_ref_t* list, void** x);
  * @param[in] list pointer to the list
  * @param[out] node pointer to the extracted element
  */
-void extract_list(list_ref_t* list, node_list_ref_t* node);
+void linked_list_extract(list_ref_t* list, node_list_ref_t* node);
 
 /**
  * @brief Remove a node from the list
@@ -310,7 +312,7 @@ void extract_list(list_ref_t* list, node_list_ref_t* node);
  * value.
  *
  */
-void remove_list(list_ref_t* list, node_list_ref_t* node, void** x);
+void linked_list_remove(list_ref_t* list, node_list_ref_t* node, void** x);
 
 /**
  * @brief Removes all the element of the list
@@ -320,7 +322,7 @@ void remove_list(list_ref_t* list, node_list_ref_t* node, void** x);
  * _Complexity: O(n)_
  * @param[in] list pointer to the list
  */
-void clean_list(list_ref_t* list);
+void linked_list_clean(list_ref_t* list);
 
 /**
  * @brief Frees the list
@@ -328,7 +330,7 @@ void clean_list(list_ref_t* list);
  * _Complexity: O(n)_
  * @param[in] list pointer to the list
  */
-void free_list(list_ref_t* list);
+void free_linked_list(list_ref_t* list);
 
 /** @} */  // end of list_ref
 
