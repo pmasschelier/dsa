@@ -1,4 +1,5 @@
 testdirs = [
+  'array_list',
   'list_ref',
   'btree_ref',
   'graph_cast',
@@ -9,7 +10,6 @@ testdirs = [
   'avl_tree_ref',
   'rb_tree_ref',
   'bsearch_tree_ref',
-  'dynarray',
   'weight_type',
 ]
 

@@ -48,7 +48,7 @@ static inline fixed_xifo_view_t* create_fixed_xifo_view(size_t size,
 	} while (0);
 #endif	// STACK_IMPL_LIST_REF
 
-#ifdef STACK_IMPL_DYNARRAY
+#ifdef STACK_IMPL_ARRAY_LIST
 #include "circular_buffer.h"
 
 typedef circular_buffer_t fixed_xifo_view_t;
@@ -83,6 +83,6 @@ typedef circular_buffer_t fixed_xifo_view_t;
 	circular_buffer_pop_front(stack, ptr)
 #define fixed_xifo_copy_pop_front(stack, ptr) \
 	circular_buffer_pop_front(stack, ptr)
-#endif	// STACK_IMPL_DYNARRAY
+#endif	// STACK_IMPL_ARRAY_LIST
 
 #endif	// !FIXED_XIFO_VIEW_H

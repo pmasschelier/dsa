@@ -59,7 +59,7 @@ endif
 
 stack_impls = {
   'list_ref': 'STACK_IMPL_LIST_REF',
-  'dynarray': 'STACK_IMPL_DYNARRAY',
+  'array_list': 'STACK_IMPL_ARRAY_LIST',
 }
 stack_impl = stack_impls[get_option('stack_impl')]
 add_project_arguments(f'-D@stack_impl@', language : 'c')

@@ -10,7 +10,7 @@ src_files = files(
   'list_ref/list_ref.c',
   'list_ref/algorithms.c',
   'circular_buffer.c',
-  'dynarray.c',
+  'array_list.c',
   'heap_view.c',
   'ptr.c',
   'weight_type.c',

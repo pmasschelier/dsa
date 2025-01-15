@@ -2,4 +2,4 @@ option('test_fail', type : 'combo', choices : ['abort', 'return', 'nocheck'], va
 option('weight_type', type : 'combo', choices : ['byte', 'short', 'int', 'long', 'llong'], value : 'llong')
 option('recursive', type : 'boolean', value : false)
 option('dijkstra_heap', type : 'boolean', value : true)
-option('stack_impl', type : 'combo', choices : ['dynarray', 'list_ref'], value : 'dynarray')
+option('stack_impl', type : 'combo', choices : ['array_list', 'list_ref'], value : 'array_list')

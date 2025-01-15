@@ -29,19 +29,19 @@ static inline stack_view_t* create_stack_view(size_t size) {
 	((stack)->end == NULL ? NULL : (type*)(stack)->end->p)
 #endif	// STACK_IMPL_LIST_REF
 
-#ifdef STACK_IMPL_DYNARRAY
-#include "dynarray.h"
+#ifdef STACK_IMPL_ARRAY_LIST
+#include "array_list.h"
 
-typedef dynarray_t stack_view_t;
+typedef array_list_t stack_view_t;
 
-#define create_stack_view(size) create_dynarray(sizeof(void*))
-#define create_stack_copy(size) create_dynarray(size)
-#define empty_stack(stack) dynarray_empty(stack)
-#define free_stack(stack) free_dynarray(stack)
-#define stack_view_push(stack, ptr) dynarray_push_back(stack, &ptr);
-#define stack_copy_push(stack, ptr) dynarray_push_back(stack, ptr);
-#define stack_view_pop(stack, ptr) dynarray_pop_back(stack, ptr);
-#define stack_copy_pop(stack, ptr) dynarray_pop_back(stack, ptr);
+#define create_stack_view(size) create_array_list(sizeof(void*))
+#define create_stack_copy(size) create_array_list(size)
+#define empty_stack(stack) array_list_empty(stack)
+#define free_stack(stack) free_array_list(stack)
+#define stack_view_push(stack, ptr) array_list_push_back(stack, &ptr);
+#define stack_copy_push(stack, ptr) array_list_push_back(stack, ptr);
+#define stack_view_pop(stack, ptr) array_list_pop_back(stack, ptr);
+#define stack_copy_pop(stack, ptr) array_list_pop_back(stack, ptr);
 #define stack_view_peak(stack, type)                                      \
 	((stack)->size == 0 ? NULL                                            \
 						: *(type**)((stack)->data + ((stack)->size - 1) * \
@@ -50,6 +50,6 @@ typedef dynarray_t stack_view_t;
 	((stack)->size == 0              \
 		 ? NULL                      \
 		 : (type*)(stack)->data + ((stack)->size - 1) * stack->size_bytes)
-#endif	// STACK_IMPL_DYNARRAY
+#endif	// STACK_IMPL_ARRAY_LIST
 
 #endif	// !STACK_VIEW_H

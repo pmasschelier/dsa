@@ -11,7 +11,7 @@ header_files = files(
   'list_ref/algorithms.h',
   'circular_buffer.h',
   'compare.h',
-  'dynarray.h',
+  'array_list.h',
   'errors.h',
   'heap_view.h',
   'ptr.h',
