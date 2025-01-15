@@ -109,13 +109,13 @@ $(document).ready(function(){initNavTree('stack__view_8h_source.html',''); initR
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define STACK_VIEW_H</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#ifdef STACK_IMPL_LIST_REF</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="list__ref_8h.html">list_ref/list_ref.h</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;list_ref/linked_list_ref.h&quot;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;test_macros.h&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">typedef</span> <a class="code hl_struct" href="structlist__ref.html">list_ref_t</a> stack_view_t;</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">static</span> <span class="keyword">inline</span> stack_view_t* create_stack_view(<span class="keywordtype">size_t</span> size) {</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    stack_view_t* stack = <a class="code hl_function" href="group__list__ref.html#ga9112e0ebdc43f07605771d5342448892">create_list</a>(size);</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    stack_view_t* stack = create_list(size);</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    when_null_ret(stack, NULL);</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    stack-&gt;free_element = NULL;</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keywordflow">return</span> stack;</div>
@@ -161,10 +161,8 @@ $(document).ready(function(){initNavTree('stack__view_8h_source.html',''); initR
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#endif  </span><span class="comment">// !STACK_VIEW_H</span></div>
 <div class="ttc" id="aarray__list_8h_html"><div class="ttname"><a href="array__list_8h.html">array_list.h</a></div><div class="ttdoc">Dynamic arrays definition Defines functions to create, free and manipulate dynamic arrays.</div></div>
-<div class="ttc" id="agroup__list__ref_html_ga9112e0ebdc43f07605771d5342448892"><div class="ttname"><a href="group__list__ref.html#ga9112e0ebdc43f07605771d5342448892">create_list</a></div><div class="ttdeci">list_ref_t * create_list(size_t size)</div><div class="ttdoc">Create an empty list.</div></div>
-<div class="ttc" id="alist__ref_8h_html"><div class="ttname"><a href="list__ref_8h.html">list_ref.h</a></div><div class="ttdoc">Doubly linked lists definition Defines functions to create, free and manipulate doubly-linked lists.</div></div>
 <div class="ttc" id="astructarray__list_html"><div class="ttname"><a href="structarray__list.html">array_list</a></div><div class="ttdef"><b>Definition</b> <a href="array__list_8h_source.html#l00038">array_list.h:38</a></div></div>
-<div class="ttc" id="astructlist__ref_html"><div class="ttname"><a href="structlist__ref.html">list_ref</a></div><div class="ttdoc">Doubly linked list.</div><div class="ttdef"><b>Definition</b> <a href="list__ref_8h_source.html#l00078">list_ref.h:78</a></div></div>
+<div class="ttc" id="astructlist__ref_html"><div class="ttname"><a href="structlist__ref.html">list_ref</a></div><div class="ttdoc">Doubly linked list.</div><div class="ttdef"><b>Definition</b> <a href="linked__list__ref_8h_source.html#l00078">linked_list_ref.h:78</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

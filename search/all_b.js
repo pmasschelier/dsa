@@ -8,5 +8,5 @@ var searchData=
   ['node_5fbtree_5fref_5',['node_btree_ref',['../structnode__btree__ref.html',1,'']]],
   ['node_5fbtree_5fref_5ft_6',['node_btree_ref_t',['../group__btree__ref.html#ga7498c6673dd4b3a06230bad13c72ed57',1,'btree_ref.h']]],
   ['node_5flist_5fref_7',['node_list_ref',['../structnode__list__ref.html',1,'']]],
-  ['node_5flist_5fref_5ft_8',['node_list_ref_t',['../group__list__ref.html#ga129356bb53f043a368c0e87a5b82d3fb',1,'list_ref.h']]]
+  ['node_5flist_5fref_5ft_8',['node_list_ref_t',['../group__list__ref.html#ga129356bb53f043a368c0e87a5b82d3fb',1,'linked_list_ref.h']]]
 ];
