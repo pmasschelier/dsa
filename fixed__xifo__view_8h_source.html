@@ -155,7 +155,7 @@ $(document).ready(function(){initNavTree('fixed__xifo__view_8h_source.html','');
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">    } while (0);</span></div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#endif  </span><span class="comment">// STACK_IMPL_LIST_REF</span></div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#ifdef STACK_IMPL_DYNARRAY</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#ifdef STACK_IMPL_ARRAY_LIST</span></div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#include &quot;<a class="code" href="circular__buffer_8h.html">circular_buffer.h</a>&quot;</span></div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keyword">typedef</span> <a class="code hl_struct" href="structcircular__buffer.html">circular_buffer_t</a> fixed_xifo_view_t;</div>
@@ -190,7 +190,7 @@ $(document).ready(function(){initNavTree('fixed__xifo__view_8h_source.html','');
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="preprocessor">    circular_buffer_pop_front(stack, ptr)</span></div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="preprocessor">#define fixed_xifo_copy_pop_front(stack, ptr) \</span></div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="preprocessor">    circular_buffer_pop_front(stack, ptr)</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">#endif  </span><span class="comment">// STACK_IMPL_DYNARRAY</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">#endif  </span><span class="comment">// STACK_IMPL_ARRAY_LIST</span></div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="preprocessor">#endif  </span><span class="comment">// !FIXED_XIFO_VIEW_H</span></div>
 <div class="ttc" id="acircular__buffer_8h_html"><div class="ttname"><a href="circular__buffer_8h.html">circular_buffer.h</a></div><div class="ttdoc">Circular buffers definition Defines functions to create, free and manipulate circular buffers.</div></div>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['dynarray_0',['dynarray',['../structdynarray.html',1,'']]]
+  ['circular_5fbuffer_0',['circular_buffer',['../structcircular__buffer.html',1,'']]]
 ];
