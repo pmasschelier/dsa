@@ -1,4 +1,5 @@
 #include "list_ref/linked_list_ref.h"
+#include "compare.h"
 #include "test_macros.h"
 
 #include <assert.h>
@@ -59,14 +60,15 @@ void* linked_list_to_tab(list_ref_t* list, void* tab) {
 }
 
 #ifdef STRUCT_RECURSIVE_IMPL
-static unsigned length_list_rec(node_list_ref_t* node, unsigned int acc) {
+static unsigned linked_list_length_rec(node_list_ref_t* node,
+									   unsigned int acc) {
 	if (node == NULL)
 		return acc;
-	return length_list_rec(node->next, acc + 1);
+	return linked_list_length_rec(node->next, acc + 1);
 }
 
-unsigned length_list(list_ref_t* list) {
-	return length_list_rec(list->begin, 0);
+unsigned linked_list_length(list_ref_t* list) {
+	return linked_list_length_rec(list->begin, 0);
 }
 #else
 unsigned linked_list_length(list_ref_t* list) {

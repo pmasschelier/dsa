@@ -352,9 +352,9 @@ int btree_inorder_traversal(btree_ref_t* tree, void* tab[]) {
 static void btree_clean_rec(node_btree_ref_t* node,
 							free_element_fn_t free_elements) {
 	if (node->ls)
-		btree_free_rec(node->ls, free_elements);
+		btree_clean_rec(node->ls, free_elements);
 	if (node->rs)
-		btree_free_rec(node->rs, free_elements);
+		btree_clean_rec(node->rs, free_elements);
 	if (node->p)
 		free_elements(node->p);
 	free(node);
@@ -362,18 +362,18 @@ static void btree_clean_rec(node_btree_ref_t* node,
 
 static void btree_clean_rec_no_free(node_btree_ref_t* node) {
 	if (node->ls)
-		btree_free_rec_no_free(node->ls);
+		btree_clean_rec_no_free(node->ls);
 	if (node->rs)
-		btree_free_rec_no_free(node->rs);
+		btree_clean_rec_no_free(node->rs);
 	free(node);
 }
 
 void btree_clean(btree_ref_t* tree) {
 	if (tree->root != NULL) {
 		if (tree->free_element)
-			btree_free_rec(tree->root, tree->free_element);
+			btree_clean_rec(tree->root, tree->free_element);
 		else
-			btree_free_rec_no_free(tree->root);
+			btree_clean_rec_no_free(tree->root);
 	}
 	tree->root = NULL;
 }
