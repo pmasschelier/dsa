@@ -7,4 +7,5 @@ int main(void) {
 	assert(0 == linked_list_length(list));
 
 	free_linked_list(list);
+	return 0;
 }

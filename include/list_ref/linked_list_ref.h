@@ -2,6 +2,7 @@
 #define LIST_H
 
 #include <stddef.h>
+#include "compare.h"
 #include "ptr.h"
 #include "structures.h"
 
@@ -89,13 +90,14 @@ struct list_ref {
 /**
  * @brief Create an empty list
  *
- * __Every list created with this function should be freed using free_list__
+ * __Every list created with this function should be freed using
+ * free_linked_list()__
  *
  * _Complexity: O(1)_
  * @param[in] size Size of an element (the size of the element pointed by
  * @ref node_list_ref::p )
  * @return A pointer to the newly created list
- * @see free_list()
+ * @see free_linked_list()
  */
 list_ref_t* create_linked_list(size_t size);
 
@@ -323,6 +325,10 @@ void linked_list_remove(list_ref_t* list, node_list_ref_t* node, void** x);
  * @param[in] list pointer to the list
  */
 void linked_list_clean(list_ref_t* list);
+
+node_list_ref_t* linked_list_find_equals(list_ref_t* list,
+										 void* value,
+										 equals_fn_t equals);
 
 /**
  * @brief Frees the list

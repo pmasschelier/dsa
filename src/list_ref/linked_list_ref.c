@@ -242,6 +242,34 @@ void linked_list_remove(list_ref_t* list, node_list_ref_t* node, void** x) {
 }
 
 #ifdef STRUCT_RECURSIVE_IMPL
+node_list_ref_t* linked_list_find_equals_rec(node_list_ref_t* node,
+											 void* value,
+											 equals_fn_t equals) {
+	if (node == NULL)
+		return NULL;
+	if (equals(node->p, value))
+		return node;
+	return linked_list_find_equals_rec(node->next, value, equals);
+}
+
+node_list_ref_t* linked_list_find_equals(list_ref_t* list,
+										 void* value,
+										 equals_fn_t equals) {
+	return linked_list_find_equals_rec(list->begin, value, equals);
+}
+#else
+node_list_ref_t* linked_list_find_equals(list_ref_t* list,
+										 void* value,
+										 equals_fn_t equals) {
+	foreach_node_node(list, node) {
+		if (equals(node->p, value))
+			return node;
+	}
+	return NULL;
+}
+#endif
+
+#ifdef STRUCT_RECURSIVE_IMPL
 static void free_node(list_ref_t* list, node_list_ref_t* node) {
 	if (!node)
 		return;

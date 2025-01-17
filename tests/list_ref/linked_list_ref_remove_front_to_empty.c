@@ -17,4 +17,5 @@ int main(void) {
 	assert(linked_list_empty(list));
 
 	free_linked_list(list);
+	return 0;
 }

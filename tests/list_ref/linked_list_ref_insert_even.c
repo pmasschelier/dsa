@@ -20,4 +20,5 @@ int main(void) {
 	}
 
 	free_linked_list(list);
+	return 0;
 }

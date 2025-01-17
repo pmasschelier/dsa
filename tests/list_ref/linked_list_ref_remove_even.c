@@ -30,4 +30,5 @@ int main(void) {
 		assert(i == *(LIST_TYPE*)(node->p));
 
 	free_linked_list(list);
+	return 0;
 }

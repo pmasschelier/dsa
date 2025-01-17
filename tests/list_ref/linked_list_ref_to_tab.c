@@ -15,4 +15,5 @@ int main(void) {
 		assert(i == tab[i]);
 
 	free_linked_list(list);
+	return 0;
 }

@@ -22,4 +22,5 @@ int main(void) {
 	assert(node == NULL);
 
 	free_linked_list(list);
+	return 0;
 }

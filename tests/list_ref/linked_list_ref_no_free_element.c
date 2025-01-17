@@ -10,4 +10,5 @@ int main(void) {
 
 	linked_list_push_back(list, &x);
 	free_linked_list(list);
+	return 0;
 }

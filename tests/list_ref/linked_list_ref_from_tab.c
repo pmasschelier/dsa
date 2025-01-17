@@ -14,4 +14,5 @@ int main(void) {
 	} while (NULL != (node = node->next));
 
 	free_linked_list(list);
+	return 0;
 }

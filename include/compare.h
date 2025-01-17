@@ -43,4 +43,26 @@ typedef int (*compare_fn_t)(void*, void*);
 		return (*(type*)a < *(type*)b) - (*(type*)a > *(type*)b); \
 	}
 
+/**
+ * @typedef equals_fn_t
+ * @brief Typedef for pointer to an equality function
+ *
+ * An equality function takes to pointers as arguments, it should return 1 if
+ * the first element equals the the second and 0 otherwise.
+ * Any other value returned may lead to Undefined Behavior.
+ */
+typedef int (*equals_fn_t)(void* a, void* b);
+
+/**
+ * @brief Defines a function to compare scalar values
+ * @param type The type of the values we want to compare
+ * For instance calling this macro with `DEFINE_EQUALS_SCALAR(int)` will define
+ * the function equals_int which will be the accurate function to test two ints
+ * for equality
+ */
+#define DEFINE_EQUALS_SCALAR(type)                      \
+	static inline int equals_##type(void* a, void* b) { \
+		return *(type*)a == *(type*)b;                  \
+	}
+
 #endif	// !COMPARE_H
