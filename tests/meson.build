@@ -5,6 +5,7 @@ testdirs = [
   'graph_cast',
   'graph_mat',
   'graph_list',
+  'htable_ref',
   'path', 'heap_view',
   'circular_buffer',
   'avl_tree_ref',
