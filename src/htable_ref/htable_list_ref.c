@@ -1,5 +1,7 @@
 #include "htable_ref/htable_list_ref.h"
+#include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
 #include "compare.h"
 #include "errors.h"
 #include "list_ref/linked_list_ref.h"
@@ -41,6 +43,27 @@ int htable_list_insert(htable_list_ref_t* htable,
 		return -ERROR_KEY_ALREADY_EXISTS;
 	}
 	linked_list_push_back(list, value);
+	return 0;
+}
+
+int htable_list_insert_clone(htable_list_ref_t* htable,
+							 unsigned long long hash,
+							 void* value,
+							 size_t size_bytes,
+							 void** found) {
+	when_null_ret(htable, -ERROR_INVALID_PARAM1);
+	unsigned index = hash % htable->bucket_count;
+	list_ref_t* list = &htable->buckets[index];
+	node_list_ref_t* node =
+		linked_list_find_equals(list, value, htable->equals);
+	if (node != NULL) {
+		if (found != NULL)
+			*found = node->p;
+		return -ERROR_KEY_ALREADY_EXISTS;
+	}
+	void* copy = malloc(size_bytes);
+	memcpy(copy, value, size_bytes);
+	linked_list_push_back(list, copy);
 	return 0;
 }
 

@@ -119,9 +119,9 @@ bsearch_tree_ref_t* create_bsearch_tree(size_t size_bytes,
  * and free it (if bsearch_tree_ref#free_element != NULL) when the tree is
  * freed.
  *
- * _Complexity_: \f$O(ln(n))\f$
+ * _Complexity_: \f$O(ln(n))\f$ if the tree is balanced, \f$O(n)\f$ otherwise
  * @param tree Pointer to the tree
- * @param value Pointer to the element to compare
+ * @param value Pointer to the element to insert
  * @param found If the element was already in the tree and found != NULL then
  * after the call *found points to the node that contains the element equal to
  * value
@@ -131,6 +131,24 @@ bsearch_tree_ref_t* create_bsearch_tree(size_t size_bytes,
 int bsearch_tree_insert(bsearch_tree_ref_t* tree,
 						void* value,
 						node_bsearch_tree_ref_t** found);
+
+/**
+ * @brief Clone and inserts an element into the tree
+ *
+ * Clone and insert an element into the tree.
+ *
+ * _Complexity_: \f$O(ln(n))\f$ if the tree is balanced, \f$O(n)\f$ otherwise
+ * @param tree Pointer to the tree
+ * @param value Pointer to the element to clone
+ * @param found If the element was already in the tree and found != NULL then
+ * after the call *found points to the node that contains the element equal to
+ * value
+ * @return ERROR_KEY_ALREADY_EXISTS if value was found in the tree and
+ * ERROR_NO_ERROR otherwise
+ */
+int bsearch_tree_insert_clone(bsearch_tree_ref_t* tree,
+							  const void* value,
+							  node_bsearch_tree_ref_t** found);
 
 /**
  * @brief Finds if the element is present in the tree

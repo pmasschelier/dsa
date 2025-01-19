@@ -77,8 +77,16 @@ int htable_list_insert(htable_list_ref_t* htable,
 					   void* value,
 					   void** found);
 
+int htable_list_insert_clone(htable_list_ref_t* htable,
+							 unsigned long long hash,
+							 void* value,
+							 size_t size_bytes,
+							 void** found);
+
 void* htable_list_get(htable_list_ref_t* htable,
 					  unsigned long long hash,
 					  void* value);
+
+void htable_list_clean(htable_list_ref_t* htable);
 
 #endif

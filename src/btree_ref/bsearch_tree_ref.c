@@ -1,5 +1,6 @@
 #include "btree_ref/bsearch_tree_ref.h"
 #include <stdlib.h>
+#include <string.h>
 #include "btree_ref/path.h"
 #include "errors.h"
 #include "test_macros.h"
@@ -90,6 +91,18 @@ int bsearch_tree_insert(bsearch_tree_ref_t* tree,
 	node_bsearch_tree_ref_t* node;
 	return bsearch_tree_insert_impl(tree, value, found, &path, &node,
 									create_bsearch_leaf);
+}
+
+int bsearch_tree_insert_clone(bsearch_tree_ref_t* tree,
+							  const void* value,
+							  node_bsearch_tree_ref_t** found) {
+	void* copy = malloc(tree->size);
+	when_null_ret(copy, -ERROR_ALLOCATION_FAILED);
+	memcpy(copy, value, tree->size);
+	int ret = bsearch_tree_insert(tree, copy, found);
+	if (ret != -ERROR_NO_ERROR)
+		free(copy);
+	return ret;
 }
 
 node_bsearch_tree_ref_t* bsearch_tree_find(bsearch_tree_ref_t* tree,

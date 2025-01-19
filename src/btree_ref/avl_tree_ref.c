@@ -1,6 +1,7 @@
 #include "btree_ref/avl_tree_ref.h"
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include "btree_ref/bsearch_tree_ref.h"
 #include "btree_ref/path.h"
 #include "errors.h"
@@ -140,6 +141,18 @@ int avl_tree_insert(bsearch_tree_ref_t* tree,
 		return ret;
 	equilibrate_leaf_path(tree, (node_avl_tree_ref_t*)node, path);
 	return -ERROR_NO_ERROR;
+}
+
+int avl_tree_insert_clone(bsearch_tree_ref_t* tree,
+						  const void* value,
+						  node_bsearch_tree_ref_t** found) {
+	void* copy = malloc(tree->size);
+	when_null_ret(copy, -ERROR_ALLOCATION_FAILED);
+	memcpy(copy, value, tree->size);
+	int ret = avl_tree_insert(tree, copy, found);
+	if (ret != -ERROR_NO_ERROR)
+		free(copy);
+	return ret;
 }
 
 node_bsearch_tree_ref_t* bsearch_tree_remove_impl(bsearch_tree_ref_t* tree,
