@@ -274,7 +274,9 @@ int btree_preorder_traversal(btree_ref_t* tree, void* tab[]) {
 	stack_view_push(forest, node);
 	while (empty_stack(forest) == FALSE) {
 		stack_view_pop(forest, (void**)&node);
-		tab[i++] = node->p;
+		if (tab != NULL)
+			tab[i] = node->p;
+		i++;
 		if (node->rs != NULL)
 			stack_view_push(forest, node->rs);
 		if (node->ls != NULL)
