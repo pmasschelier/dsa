@@ -79,3 +79,9 @@ void* htable_list_get(htable_list_ref_t* htable,
 		return node->p;
 	return NULL;
 }
+
+void htable_list_clean(htable_list_ref_t* htable) {
+	for (unsigned i = 0; i < htable->bucket_count; i++) {
+		linked_list_clean(&htable->buckets[i]);
+	}
+}

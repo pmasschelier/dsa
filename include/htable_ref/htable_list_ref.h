@@ -1,6 +1,7 @@
 #ifndef htable_list_ref_H
 #define htable_list_ref_H
 
+#include <stddef.h>
 #include <stdint.h>
 #include "compare.h"
 #include "list_ref/linked_list_ref.h"
