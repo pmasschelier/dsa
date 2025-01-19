@@ -8,5 +8,6 @@ var topics =
     [ "Circular buffers", "group__cbuffer__ref.html", "group__cbuffer__ref" ],
     [ "Graphs", "group__graph.html", "group__graph" ],
     [ "Indexed heap", "group__heap__view.html", "group__heap__view" ],
+    [ "Hashtables", "group__htable.html", "group__htable" ],
     [ "Doubly-linked lists", "group__list__ref.html", "group__list__ref" ]
 ];

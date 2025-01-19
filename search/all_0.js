@@ -15,9 +15,11 @@ var searchData=
   ['array_5flist_5fswap_12',['array_list_swap',['../group__array__list.html#gaf34ce9a66dd13ae89e56e33885e40690',1,'array_list.h']]],
   ['array_5flist_5ft_13',['array_list_t',['../group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6',1,'array_list.h']]],
   ['arrays_14',['Dynamic arrays',['../group__array__list.html',1,'']]],
-  ['avl_20binary_20search_20trees_15',['AVL binary search trees',['../group__avl__tree__ref.html',1,'']]],
-  ['avl_5ftree_5fheight_16',['avl_tree_height',['../group__avl__tree__ref.html#ga3eae0954e8efa87b6185d260b7fb9edf',1,'avl_tree_ref.h']]],
-  ['avl_5ftree_5finsert_17',['avl_tree_insert',['../group__avl__tree__ref.html#gaa23d3fe051f05408be4c0f332f62a03e',1,'avl_tree_ref.h']]],
-  ['avl_5ftree_5fref_2eh_18',['avl_tree_ref.h',['../avl__tree__ref_8h.html',1,'']]],
-  ['avl_5ftree_5fremove_19',['avl_tree_remove',['../group__avl__tree__ref.html#gaebdd2f1d41d5433bc8d0d695789fe6cc',1,'avl_tree_ref.h']]]
+  ['as_20buckets_15',['Hashtables with linked lists as buckets',['../group__htable__list__ref.html',1,'']]],
+  ['avl_20binary_20search_20trees_16',['AVL binary search trees',['../group__avl__tree__ref.html',1,'']]],
+  ['avl_5ftree_5fheight_17',['avl_tree_height',['../group__avl__tree__ref.html#ga3eae0954e8efa87b6185d260b7fb9edf',1,'avl_tree_ref.h']]],
+  ['avl_5ftree_5finsert_18',['avl_tree_insert',['../group__avl__tree__ref.html#gaa23d3fe051f05408be4c0f332f62a03e',1,'avl_tree_ref.h']]],
+  ['avl_5ftree_5finsert_5fclone_19',['avl_tree_insert_clone',['../group__avl__tree__ref.html#ga5a8137fa3877c2e344f425aa6b7e99d3',1,'avl_tree_ref.h']]],
+  ['avl_5ftree_5fref_2eh_20',['avl_tree_ref.h',['../avl__tree__ref_8h.html',1,'']]],
+  ['avl_5ftree_5fremove_21',['avl_tree_remove',['../group__avl__tree__ref.html#gaebdd2f1d41d5433bc8d0d695789fe6cc',1,'avl_tree_ref.h']]]
 ];

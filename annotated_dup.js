@@ -9,6 +9,7 @@ var annotated_dup =
     [ "graph_list_edge", "structgraph__list__edge.html", "structgraph__list__edge" ],
     [ "graph_mat", "structgraph__mat.html", "structgraph__mat" ],
     [ "heap_view", "structheap__view.html", "structheap__view" ],
+    [ "htable_list_ref", "structhtable__list__ref.html", "structhtable__list__ref" ],
     [ "list_ref", "structlist__ref.html", "structlist__ref" ],
     [ "node_bsearch_tree_ref", "structnode__bsearch__tree__ref.html", "structnode__bsearch__tree__ref" ],
     [ "node_btree_ref", "structnode__btree__ref.html", "structnode__btree__ref" ],

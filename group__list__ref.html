@@ -173,6 +173,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2f891f20d3701d316e4f30d7bdc75ec7" id="r_ga2f891f20d3701d316e4f30d7bdc75ec7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list__ref.html#ga2f891f20d3701d316e4f30d7bdc75ec7">linked_list_clean</a> (<a class="el" href="group__list__ref.html#ga7633c3e9fc84c0c501b6c84deca8fba2">list_ref_t</a> *list)</td></tr>
 <tr class="memdesc:ga2f891f20d3701d316e4f30d7bdc75ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all the element of the list.  <br /></td></tr>
 <tr class="separator:ga2f891f20d3701d316e4f30d7bdc75ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca2b3ec55e71326cd60935b206c17f7f" id="r_gaca2b3ec55e71326cd60935b206c17f7f"><td class="memItemLeft" align="right" valign="top"><a id="gaca2b3ec55e71326cd60935b206c17f7f" name="gaca2b3ec55e71326cd60935b206c17f7f"></a>
+<a class="el" href="group__list__ref.html#ga129356bb53f043a368c0e87a5b82d3fb">node_list_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>linked_list_find_equals</b> (<a class="el" href="group__list__ref.html#ga7633c3e9fc84c0c501b6c84deca8fba2">list_ref_t</a> *list, void *value, <a class="el" href="compare_8h.html#ab567f2dc0dfdb938365f41208b28d818">equals_fn_t</a> equals)</td></tr>
+<tr class="separator:gaca2b3ec55e71326cd60935b206c17f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab5764781c16ecbd4d7fcb9c2394cc499" id="r_gab5764781c16ecbd4d7fcb9c2394cc499"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list__ref.html#gab5764781c16ecbd4d7fcb9c2394cc499">free_linked_list</a> (<a class="el" href="group__list__ref.html#ga7633c3e9fc84c0c501b6c84deca8fba2">list_ref_t</a> *list)</td></tr>
 <tr class="memdesc:gab5764781c16ecbd4d7fcb9c2394cc499"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees the list.  <br /></td></tr>
 <tr class="separator:gab5764781c16ecbd4d7fcb9c2394cc499"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -193,7 +196,7 @@ Functions</h2></td></tr>
 
 <p>Typedef for the <a class="el" href="structlist__ref.html" title="Doubly linked list.">list_ref</a> structure. </p>
 
-<p class="definition">Definition at line <a class="el" href="linked__list__ref_8h_source.html#l00071">71</a> of file <a class="el" href="linked__list__ref_8h_source.html">linked_list_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="linked__list__ref_8h_source.html#l00072">72</a> of file <a class="el" href="linked__list__ref_8h_source.html">linked_list_ref.h</a>.</p>
 
 </div>
 </div>
@@ -211,7 +214,7 @@ Functions</h2></td></tr>
 
 <p>Typedef for the <a class="el" href="structnode__list__ref.html" title="A doubly-linked list node.">node_list_ref</a> structure. </p>
 
-<p class="definition">Definition at line <a class="el" href="linked__list__ref_8h_source.html#l00050">50</a> of file <a class="el" href="linked__list__ref_8h_source.html">linked_list_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="linked__list__ref_8h_source.html#l00051">51</a> of file <a class="el" href="linked__list__ref_8h_source.html">linked_list_ref.h</a>.</p>
 
 </div>
 </div>
@@ -233,7 +236,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create an empty list. </p>
-<p><b>Every list created with this function should be freed using free_list</b></p>
+<p><b>Every list created with this function should be freed using <a class="el" href="group__list__ref.html#gab5764781c16ecbd4d7fcb9c2394cc499" title="Frees the list.">free_linked_list()</a></b></p>
 <p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of an element (the size of the element pointed by <a class="el" href="structnode__list__ref.html#a1c5484cbc8f2263ae3fb964219e95f92">node_list_ref::p</a> ) </td></tr>
@@ -241,7 +244,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the newly created list </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>free_list() </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__list__ref.html#gab5764781c16ecbd4d7fcb9c2394cc499" title="Frees the list.">free_linked_list()</a> </dd></dl>
 
 </div>
 </div>

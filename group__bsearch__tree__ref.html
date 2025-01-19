@@ -132,6 +132,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga0f37b08560f99b9ff75cc72ec6f75ed1" id="r_ga0f37b08560f99b9ff75cc72ec6f75ed1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bsearch__tree__ref.html#ga0f37b08560f99b9ff75cc72ec6f75ed1">bsearch_tree_insert</a> (<a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *tree, void *value, <a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> **found)</td></tr>
 <tr class="memdesc:ga0f37b08560f99b9ff75cc72ec6f75ed1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts an element into the tree.  <br /></td></tr>
 <tr class="separator:ga0f37b08560f99b9ff75cc72ec6f75ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4fb939a653df60837f6634a08acbe532" id="r_ga4fb939a653df60837f6634a08acbe532"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bsearch__tree__ref.html#ga4fb939a653df60837f6634a08acbe532">bsearch_tree_insert_clone</a> (<a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *tree, const void *value, <a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> **found)</td></tr>
+<tr class="memdesc:ga4fb939a653df60837f6634a08acbe532"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clone and inserts an element into the tree.  <br /></td></tr>
+<tr class="separator:ga4fb939a653df60837f6634a08acbe532"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf0761a778802a7d5c77afd316c03f6ac" id="r_gaf0761a778802a7d5c77afd316c03f6ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bsearch__tree__ref.html#gaf0761a778802a7d5c77afd316c03f6ac">bsearch_tree_find</a> (<a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *tree, void *value)</td></tr>
 <tr class="memdesc:gaf0761a778802a7d5c77afd316c03f6ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds if the element is present in the tree.  <br /></td></tr>
 <tr class="separator:gaf0761a778802a7d5c77afd316c03f6ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -285,10 +288,56 @@ Variables</h2></td></tr>
 
 <p>Inserts an element into the tree. </p>
 <p>Insert an element into the tree. The tree will take ownership of the element and free it (if <a class="el" href="group__bsearch__tree__ref.html#gaefa8f0cbe9c3766d5ba07eb95bc5b8ac" title="Function used to free the elements.">bsearch_tree_ref::free_element</a> != NULL) when the tree is freed.</p>
-<p><em>Complexity</em>: \(O(ln(n))\) </p><dl class="params"><dt>Parameters</dt><dd>
+<p><em>Complexity</em>: \(O(ln(n))\) if the tree is balanced, \(O(n)\) otherwise </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tree</td><td>Pointer to the tree </td></tr>
-    <tr><td class="paramname">value</td><td>Pointer to the element to compare </td></tr>
+    <tr><td class="paramname">value</td><td>Pointer to the element to insert </td></tr>
+    <tr><td class="paramname">found</td><td>If the element was already in the tree and found != NULL then after the call *found points to the node that contains the element equal to value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ERROR_KEY_ALREADY_EXISTS if value was found in the tree and ERROR_NO_ERROR otherwise </dd></dl>
+
+</div>
+</div>
+<a id="ga4fb939a653df60837f6634a08acbe532" name="ga4fb939a653df60837f6634a08acbe532"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4fb939a653df60837f6634a08acbe532">&#9670;&#160;</a></span>bsearch_tree_insert_clone()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int bsearch_tree_insert_clone </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *&#160;</td>
+          <td class="paramname"><em>tree</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> **&#160;</td>
+          <td class="paramname"><em>found</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clone and inserts an element into the tree. </p>
+<p>Clone and insert an element into the tree.</p>
+<p><em>Complexity</em>: \(O(ln(n))\) if the tree is balanced, \(O(n)\) otherwise </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tree</td><td>Pointer to the tree </td></tr>
+    <tr><td class="paramname">value</td><td>Pointer to the element to clone </td></tr>
     <tr><td class="paramname">found</td><td>If the element was already in the tree and found != NULL then after the call *found points to the node that contains the element equal to value </td></tr>
   </table>
   </dd>

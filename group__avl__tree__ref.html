@@ -126,6 +126,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa23d3fe051f05408be4c0f332f62a03e" id="r_gaa23d3fe051f05408be4c0f332f62a03e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#gaa23d3fe051f05408be4c0f332f62a03e">avl_tree_insert</a> (<a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *tree, void *value, <a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> **found)</td></tr>
 <tr class="memdesc:gaa23d3fe051f05408be4c0f332f62a03e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts an element into the tree.  <br /></td></tr>
 <tr class="separator:gaa23d3fe051f05408be4c0f332f62a03e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a8137fa3877c2e344f425aa6b7e99d3" id="r_ga5a8137fa3877c2e344f425aa6b7e99d3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#ga5a8137fa3877c2e344f425aa6b7e99d3">avl_tree_insert_clone</a> (<a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *tree, const void *value, <a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> **found)</td></tr>
+<tr class="memdesc:ga5a8137fa3877c2e344f425aa6b7e99d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clone and inserts an element into the tree.  <br /></td></tr>
+<tr class="separator:ga5a8137fa3877c2e344f425aa6b7e99d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaebdd2f1d41d5433bc8d0d695789fe6cc" id="r_gaebdd2f1d41d5433bc8d0d695789fe6cc"><td class="memItemLeft" align="right" valign="top">BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__avl__tree__ref.html#gaebdd2f1d41d5433bc8d0d695789fe6cc">avl_tree_remove</a> (<a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *tree, void *value)</td></tr>
 <tr class="memdesc:gaebdd2f1d41d5433bc8d0d695789fe6cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an element from the tree.  <br /></td></tr>
 <tr class="separator:gaebdd2f1d41d5433bc8d0d695789fe6cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -202,6 +205,52 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">tree</td><td>Pointer to the tree </td></tr>
     <tr><td class="paramname">value</td><td>Pointer to the element to compare </td></tr>
+    <tr><td class="paramname">found</td><td>If the element was already in the tree and found != NULL then after the call *found points to the node that contains the element equal to value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ERROR_KEY_ALREADY_EXISTS if value was found in the tree and ERROR_NO_ERROR otherwise </dd></dl>
+
+</div>
+</div>
+<a id="ga5a8137fa3877c2e344f425aa6b7e99d3" name="ga5a8137fa3877c2e344f425aa6b7e99d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5a8137fa3877c2e344f425aa6b7e99d3">&#9670;&#160;</a></span>avl_tree_insert_clone()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int avl_tree_insert_clone </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__bsearch__tree__ref.html#ga3f40c4a624f11d1b60e4c63dba2c6aeb">bsearch_tree_ref_t</a> *&#160;</td>
+          <td class="paramname"><em>tree</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__bsearch__tree__ref.html#gafc3c2d8ecc4ae2b37193b2f2519a9e7b">node_bsearch_tree_ref_t</a> **&#160;</td>
+          <td class="paramname"><em>found</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clone and inserts an element into the tree. </p>
+<p>Clone and insert an element into the tree.</p>
+<p><em>Complexity</em>: \(O(ln(n))\) if the tree is balanced, \(O(n)\) otherwise </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tree</td><td>Pointer to the tree </td></tr>
+    <tr><td class="paramname">value</td><td>Pointer to the element to clone </td></tr>
     <tr><td class="paramname">found</td><td>If the element was already in the tree and found != NULL then after the call *found points to the node that contains the element equal to value </td></tr>
   </table>
   </dd>

@@ -113,15 +113,24 @@ $(document).ready(function(){initNavTree('compare_8h.html',''); initResizable();
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="compare_8h__dep__incl.png" border="0" usemap="#a_2home_2runner_2work_2dsa_2dsa_2include_2compare_8hdep" alt=""/></div>
 <map name="a_2home_2runner_2work_2dsa_2dsa_2include_2compare_8hdep" id="a_2home_2runner_2work_2dsa_2dsa_2include_2compare_8hdep">
-<area shape="rect" title="Comparison function type definition Defines compare_fn_t type function." alt="" coords="203,5,377,45"/>
-<area shape="rect" href="bsearch__tree__ref_8h.html" title="Unbanlanced binary search trees definition Defines functions to create, free and manipulate unbalance..." alt="" coords="103,93,275,148"/>
-<area shape="poly" title=" " alt="" coords="261,57,219,95,215,91,258,53"/>
-<area shape="rect" href="heap__view_8h_source.html" title=" " alt="" coords="299,101,484,141"/>
-<area shape="poly" title=" " alt="" coords="322,53,373,99,369,103,319,57"/>
+<area shape="rect" title="Comparison function type definition Defines compare_fn_t type function." alt="" coords="418,5,591,45"/>
+<area shape="rect" href="bsearch__tree__ref_8h.html" title="Unbanlanced binary search trees definition Defines functions to create, free and manipulate unbalance..." alt="" coords="151,93,323,148"/>
+<area shape="poly" title=" " alt="" coords="438,52,313,96,311,91,437,47"/>
+<area shape="rect" href="heap__view_8h_source.html" title=" " alt="" coords="347,101,532,141"/>
+<area shape="poly" title=" " alt="" coords="486,58,455,102,450,99,482,55"/>
+<area shape="rect" href="htable__list__ref_8h.html" title="Hashtables with linked lists as buckets." alt="" coords="465,196,637,251"/>
+<area shape="poly" title=" " alt="" coords="529,56,546,93,555,147,556,196,551,196,550,148,541,94,524,58"/>
+<area shape="rect" href="linked__list__ref_8h_source.html" title=" " alt="" coords="647,93,819,148"/>
+<area shape="poly" title=" " alt="" coords="564,48,669,91,667,96,562,53"/>
 <area shape="rect" href="avl__tree__ref_8h.html" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="5,196,177,251"/>
-<area shape="poly" title=" " alt="" coords="156,160,119,198,115,194,152,156"/>
+<area shape="poly" title=" " alt="" coords="189,158,131,198,128,194,186,154"/>
 <area shape="rect" href="rb__tree__ref_8h.html" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="201,196,373,251"/>
-<area shape="poly" title=" " alt="" coords="226,156,263,194,260,198,222,160"/>
+<area shape="poly" title=" " alt="" coords="258,159,276,195,272,197,254,161"/>
+<area shape="poly" title=" " alt="" coords="675,157,600,198,598,193,672,152"/>
+<area shape="rect" href="graph__list_8h.html" title="Graphs defined with adjacency lists." alt="" coords="661,196,844,251"/>
+<area shape="poly" title=" " alt="" coords="743,161,750,195,745,196,738,162"/>
+<area shape="rect" href="algorithms_8h_source.html" title=" " alt="" coords="868,196,1040,251"/>
+<area shape="poly" title=" " alt="" coords="804,151,897,194,895,198,801,156"/>
 </map>
 </div>
 </div>
@@ -135,12 +144,18 @@ Macros</h2></td></tr>
 <tr class="memitem:a9ee17026e0c64dd9c7f59cd1a695acbb" id="r_a9ee17026e0c64dd9c7f59cd1a695acbb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="compare_8h.html#a9ee17026e0c64dd9c7f59cd1a695acbb">DEFINE_COMPARE_MIN_SCALAR</a>(type)</td></tr>
 <tr class="memdesc:a9ee17026e0c64dd9c7f59cd1a695acbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a function to compare scalar values.  <br /></td></tr>
 <tr class="separator:a9ee17026e0c64dd9c7f59cd1a695acbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a643a2176f7b224a5516b66d7369d850c" id="r_a643a2176f7b224a5516b66d7369d850c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="compare_8h.html#a643a2176f7b224a5516b66d7369d850c">DEFINE_EQUALS_SCALAR</a>(type)</td></tr>
+<tr class="memdesc:a643a2176f7b224a5516b66d7369d850c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a function to compare scalar values.  <br /></td></tr>
+<tr class="separator:a643a2176f7b224a5516b66d7369d850c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a5bffd944fdaeefd20b78e74d6a7f8b27" id="r_a5bffd944fdaeefd20b78e74d6a7f8b27"><td class="memItemLeft" align="right" valign="top">typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="compare_8h.html#a5bffd944fdaeefd20b78e74d6a7f8b27">compare_fn_t</a>) (void *, void *)</td></tr>
 <tr class="memdesc:a5bffd944fdaeefd20b78e74d6a7f8b27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for pointer to a comparison function.  <br /></td></tr>
 <tr class="separator:a5bffd944fdaeefd20b78e74d6a7f8b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab567f2dc0dfdb938365f41208b28d818" id="r_ab567f2dc0dfdb938365f41208b28d818"><td class="memItemLeft" align="right" valign="top">typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="compare_8h.html#ab567f2dc0dfdb938365f41208b28d818">equals_fn_t</a>) (void *a, void *b)</td></tr>
+<tr class="memdesc:ab567f2dc0dfdb938365f41208b28d818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for pointer to an equality function.  <br /></td></tr>
+<tr class="separator:ab567f2dc0dfdb938365f41208b28d818"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Comparison function type definition Defines compare_fn_t type function. </p>
@@ -209,6 +224,37 @@ Typedefs</h2></td></tr>
 
 </div>
 </div>
+<a id="a643a2176f7b224a5516b66d7369d850c" name="a643a2176f7b224a5516b66d7369d850c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a643a2176f7b224a5516b66d7369d850c">&#9670;&#160;</a></span>DEFINE_EQUALS_SCALAR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEFINE_EQUALS_SCALAR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> equals_##type(<span class="keywordtype">void</span>* a, <span class="keywordtype">void</span>* b) { \</div>
+<div class="line">        <span class="keywordflow">return</span> *(type*)a == *(type*)b;                  \</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+<p>Defines a function to compare scalar values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>The type of the values we want to compare For instance calling this macro with <code><a class="el" href="compare_8h.html#a643a2176f7b224a5516b66d7369d850c" title="Defines a function to compare scalar values.">DEFINE_EQUALS_SCALAR(int)</a></code> will define the function equals_int which will be the accurate function to test two ints for equality </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="compare_8h_source.html#l00063">63</a> of file <a class="el" href="compare_8h_source.html">compare.h</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a5bffd944fdaeefd20b78e74d6a7f8b27" name="a5bffd944fdaeefd20b78e74d6a7f8b27"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5bffd944fdaeefd20b78e74d6a7f8b27">&#9670;&#160;</a></span>compare_fn_t</h2>
@@ -226,6 +272,25 @@ Typedefs</h2></td></tr>
 <p>A comparison function takes to pointers as arguments, it should return -1 if the first element is smaller than the second, 1 if the first element is greater and 0 if they are equals. Any other value returned may lead to Undefined Behavior. </p>
 
 <p class="definition">Definition at line <a class="el" href="compare_8h_source.html#l00020">20</a> of file <a class="el" href="compare_8h_source.html">compare.h</a>.</p>
+
+</div>
+</div>
+<a id="ab567f2dc0dfdb938365f41208b28d818" name="ab567f2dc0dfdb938365f41208b28d818"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab567f2dc0dfdb938365f41208b28d818">&#9670;&#160;</a></span>equals_fn_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">equals_fn_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Typedef for pointer to an equality function. </p>
+<p>An equality function takes to pointers as arguments, it should return 1 if the first element equals the the second and 0 otherwise. Any other value returned may lead to Undefined Behavior. </p>
+
+<p class="definition">Definition at line <a class="el" href="compare_8h_source.html#l00054">54</a> of file <a class="el" href="compare_8h_source.html">compare.h</a>.</p>
 
 </div>
 </div>
