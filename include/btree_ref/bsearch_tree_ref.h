@@ -11,6 +11,10 @@
 #define free_bsearch_tree_ref(tree) btree_free((btree_ref_t*)(tree))
 #define clean_bsearch_tree_ref(tree) btree_clean((btree_ref_t*)(tree))
 #define bsearch_tree_height(tree) btree_height((btree_ref_t*)(tree))
+#define bsearch_tree_length(tree) btree_length((btree_ref_t*)(tree))
+#define bsearch_tree_traversal(tree, array) \
+	btree_inorder_traversal((btree_ref_t*)(tree), array)
+#define bsearch_tree_clean(tree) btree_clean((btree_ref_t*)(tree))
 
 /**
  * @file bsearch_tree_ref.h
