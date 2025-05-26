@@ -15,6 +15,7 @@ header_files = files(
   'array_list.h',
   'errors.h',
   'heap_view.h',
+  'lambda.h',
   'stack_view.h',
   'structures.h',
   'test_macros.h',
