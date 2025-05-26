@@ -18,6 +18,7 @@ passing_test_sources = [
   'linked_list_ref_remove_back_to_empty.c',
   'linked_list_ref_remove_even.c',
   'linked_list_ref_remove_front_to_empty.c',
-  'linked_list_ref_transform_square.c',
+  'linked_list_ref_sort.c',
   'linked_list_ref_to_tab.c',
+  'linked_list_ref_transform_square.c',
 ]

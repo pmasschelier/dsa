@@ -298,7 +298,7 @@ void linked_list_insert_node(linked_list_t* list,
  */
 linked_list_node_t* linked_list_insert(linked_list_t* list,
 									linked_list_node_t* prev,
-									void* p);
+									const void* p);
 
 /**
  * @brief Append an element to the beginning of the list
@@ -310,7 +310,7 @@ linked_list_node_t* linked_list_insert(linked_list_t* list,
  * @param[in] x pointer to data we want to add to the list
  * @return pointer to the newly created node (NULL in case of failure)
  */
-linked_list_node_t* linked_list_push_front(linked_list_t* list, void* x);
+linked_list_node_t* linked_list_push_front(linked_list_t* list, const void* x);
 
 /**
  * @brief Append an element to the end of the list
@@ -322,7 +322,7 @@ linked_list_node_t* linked_list_push_front(linked_list_t* list, void* x);
  * @param[in] x pointer to the data we want to add to the list
  * @return pointer to the newly created node (NULL in case of failure)
  */
-linked_list_node_t* linked_list_push_back(linked_list_t* list, void* x);
+linked_list_node_t* linked_list_push_back(linked_list_t* list, const void* x);
 
 /**
  * @brief Remove the first element of the list
@@ -430,7 +430,7 @@ linked_list_node_t* linked_list_find_equals(linked_list_t* list,
  * @param[in] a First node
  * @param[in] b Second node
  */
-void linked_list_swap(linked_list_t* list, linked_list_node_t* a, linked_list_node_t* b);
+void linked_list_swap(linked_list_t* list, linked_list_node_t** a, linked_list_node_t** b);
 
 /** @} */  // end of list_ref
 

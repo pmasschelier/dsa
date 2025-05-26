@@ -157,7 +157,7 @@ void linked_list_insert_node(linked_list_t* list,
 
 linked_list_node_t* linked_list_insert(linked_list_t* list,
 									linked_list_node_t* prev,
-									void* p) {
+									const void* p) {
 	assert(list);
 
 	// On crée un nouveau noeud qui devient le nouveau suivant
@@ -170,7 +170,7 @@ linked_list_node_t* linked_list_insert(linked_list_t* list,
 	return node;  // On retourne le nouveau noeud
 }
 
-linked_list_node_t* linked_list_push_front(linked_list_t* list, void* p) {
+linked_list_node_t* linked_list_push_front(linked_list_t* list, const void* p) {
 	assert(list);
 
 	linked_list_node_t* node = malloc(sizeof(linked_list_node_t) + list->size_bytes);
@@ -187,7 +187,7 @@ linked_list_node_t* linked_list_push_front(linked_list_t* list, void* p) {
 	return node;		 // On retourne le nouveau noeud
 }
 
-linked_list_node_t* linked_list_push_back(linked_list_t* list, void* p) {
+linked_list_node_t* linked_list_push_back(linked_list_t* list, const void* p) {
 	assert(list);
 
 	linked_list_node_t* node = malloc(sizeof(linked_list_node_t) + list->size_bytes);
@@ -325,16 +325,40 @@ void linked_list_clean(linked_list_t* list) {
 }
 #endif
 
-void linked_list_swap(linked_list_t* list, linked_list_node_t* a, linked_list_node_t* b) {
-    linked_list_node_t node = *b;
-    *b = *a;
-    *a = node;
-    if(b->prev == NULL)
-        list->begin = b;
-    if(a->prev == NULL)
-        list->begin = a;
-    if(b->next == NULL)
-        list->end = b;
-    if(a->next == NULL)
-        list->end = a;
+void linked_list_swap(linked_list_t* list, linked_list_node_t** a, linked_list_node_t** b) {
+    linked_list_node_t* a_ptr = *a;
+    linked_list_node_t* b_ptr = *b;
+    if(a_ptr == b_ptr)
+        return;
+    linked_list_node_t a_val = *a_ptr;
+    linked_list_node_t b_val = *b_ptr;
+    *b_ptr = a_val;
+    *a_ptr = b_val;
+    if(a_val.next == b_ptr) {
+        a_ptr->prev = b_ptr;
+        b_ptr->next = a_ptr;
+    }
+    else if(b_val.next == a_ptr) {
+        b_ptr->prev = a_ptr;
+        a_ptr->next = b_ptr;
+    }
+
+    if(b_ptr->prev == NULL)
+        list->begin = b_ptr;
+    else
+        b_ptr->prev->next = b_ptr;
+    if(a_ptr->prev == NULL)
+        list->begin = a_ptr;
+    else
+        a_ptr->prev->next = a_ptr;
+    if(b_ptr->next == NULL)
+        list->end = b_ptr;
+    else
+        b_ptr->next->prev = b_ptr;
+    if(a_ptr->next == NULL)
+        list->end = a_ptr;
+    else
+        a_ptr->next->prev = a_ptr;
+    *a = b_ptr;
+    *b = a_ptr;
 }

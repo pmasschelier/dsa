@@ -5,6 +5,7 @@
 #include <string.h>
 #include "btree_ref/path.h"
 #include "errors.h"
+#include "lambda.h"
 #include "list_ref/linked_list_ref.h"
 #include "test_macros.h"
 
@@ -312,6 +313,37 @@ int btree_dfs_array_rec(node_btree_ref_t* node,
     if(postorder != NULL)
         postorder[*c++] = node->data;
     return -ERROR_NO_ERROR;
+}
+
+int btree_dfs_array(btree_ref_t* tree,
+			  void* preorder[],
+			  void* inorder[],
+			  void* postorder[]) {
+    unsigned a = 0, b = 0, c = 0;
+    return btree_dfs_array_rec(tree->root, preorder, &a, inorder, &b, postorder, &c);
+}
+int btree_dfs_rec(node_btree_ref_t* node,
+			  lambda_t* preorder,
+			  lambda_t* inorder,
+			  lambda_t* postorder) {
+    if(node == NULL)
+        return 0;
+    if(preorder != NULL)
+        preorder->fn(preorder->priv, node->data);
+    btree_dfs_rec(node->ls, preorder, inorder, postorder);
+    if(inorder != NULL)
+        inorder->fn(preorder->priv, node->data);
+    btree_dfs_rec(node->rs, preorder, inorder, postorder);
+    if(postorder != NULL)
+        postorder->fn(preorder->priv, node->data);
+    return -ERROR_NO_ERROR;
+}
+
+int btree_dfs(btree_ref_t* tree,
+			  lambda_t* preorder,
+			  lambda_t* inorder,
+			  lambda_t* postorder) {
+    return btree_dfs_rec(tree->root, preorder, inorder, postorder);
 }
 #else
 int btree_preorder_traversal_array(btree_ref_t* tree, void* tab[]) {
