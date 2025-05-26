@@ -39,6 +39,29 @@ BOOL linked_list_empty(const linked_list_t* list) {
 	return list->begin == NULL;
 }
 
+#ifdef STRUCT_RECURSIVE_IMPL
+BOOL linked_list_from_tab_rec(linked_list_t* list, linked_list_node_t* ptr, void* tab, unsigned length) {
+    if(length == 0)
+        return TRUE;
+    ptr = linked_list_insert(list, ptr, tab);
+    if(ptr == NULL)
+        return FALSE;
+    return linked_list_from_tab_rec(list, ptr, (uint8_t*)tab + list->size_bytes, length - 1);
+}
+linked_list_t* linked_list_from_tab(void* tab, size_t size, unsigned length) {
+	linked_list_t* list = linked_list_create(size);
+	when_null_ret(list, NULL);
+
+	if (0 == size)
+		return list;
+
+    if(!linked_list_from_tab_rec(list, NULL, tab, length)) {
+        linked_list_free(list);
+        return NULL;
+    }
+    return list;
+}
+#else
 linked_list_t* linked_list_from_tab(void* tab, size_t size, unsigned length) {
 	linked_list_t* ret;
 	linked_list_t* list = linked_list_create(size);
@@ -46,10 +69,6 @@ linked_list_t* linked_list_from_tab(void* tab, size_t size, unsigned length) {
 
 	if (0 == size)
 		return list;
-
-	/* NOTE: On ne copie pas le tableau d'un seul bloc parce que sinon il
-	 * faudrait gérer la libération de la mémoire et c'est complique :/
-	 * Peut-être à modifier */
 
 	linked_list_node_t* ptr = NULL;
 	for (unsigned i = 0; i < length; i++) {
@@ -62,7 +81,20 @@ exit:
 	linked_list_free(list);
 	return ret;
 }
+#endif
 
+#ifdef STRUCT_RECURSIVE_IMPL
+void linked_list_to_tab_rec(linked_list_node_t* node, void* tab, size_t size_bytes) {
+    if(node == NULL)
+        return;
+    memcpy((uint8_t*)tab, node->data, size_bytes);
+    linked_list_to_tab_rec(node->next, (uint8_t*)tab + size_bytes, size_bytes);
+}
+void* linked_list_to_tab(linked_list_t* list, void* tab) {
+    linked_list_to_tab_rec(list->begin, tab, list->size_bytes);
+	return tab;
+}
+#else
 void* linked_list_to_tab(linked_list_t* list, void* tab) {
 	unsigned i = 0;
 	linked_list_node_t* node = list->begin;
@@ -73,16 +105,17 @@ void* linked_list_to_tab(linked_list_t* list, void* tab) {
 	}
 	return tab;
 }
+#endif
 
 #ifdef STRUCT_RECURSIVE_IMPL
-static unsigned linked_list_length_rec(node_list_ref_t* node,
+static unsigned linked_list_length_rec(linked_list_node_t* node,
 									   unsigned int acc) {
 	if (node == NULL)
 		return acc;
 	return linked_list_length_rec(node->next, acc + 1);
 }
 
-unsigned linked_list_length(list_ref_t* list) {
+unsigned linked_list_length(linked_list_t* list) {
 	return linked_list_length_rec(list->begin, 0);
 }
 #else
@@ -154,12 +187,6 @@ linked_list_node_t* linked_list_push_front(linked_list_t* list, void* p) {
 	return node;		 // On retourne le nouveau noeud
 }
 
-/* linked_list_node_t* linked_list_append_front(linked_list_t* list, void* p) { */
-/* 	void* elem = malloc(list->size_bytes); */
-/* 	memcpy(elem, p, list->size_bytes); */
-/* 	return linked_list_push_front(list, elem); */
-/* } */
-
 linked_list_node_t* linked_list_push_back(linked_list_t* list, void* p) {
 	assert(list);
 
@@ -179,12 +206,6 @@ linked_list_node_t* linked_list_push_back(linked_list_t* list, void* p) {
 	list->end = node;  // Le dernier noeud devient le nouveau
 	return node;	   // On retourne le nouveau noeud
 }
-
-/* linked_list_node_t* linked_list_append_back(linked_list_t* list, void* p) { */
-/* 	void* elem = malloc(list->size_bytes); */
-/* 	memcpy(elem, p, list->size_bytes); */
-/* 	return linked_list_push_back(list, elem); */
-/* } */
 
 BOOL linked_list_pop_front(linked_list_t* list, void* x) {
 	if (linked_list_empty(list))
@@ -246,17 +267,17 @@ void linked_list_remove(linked_list_t* list, linked_list_node_t* node, void* x) 
 }
 
 #ifdef STRUCT_RECURSIVE_IMPL
-node_list_ref_t* linked_list_find_equals_rec(node_list_ref_t* node,
+linked_list_node_t* linked_list_find_equals_rec(linked_list_node_t* node,
 											 void* value,
 											 equals_fn_t equals) {
 	if (node == NULL)
 		return NULL;
-	if (equals(node->p, value))
+	if (equals(node->data, value))
 		return node;
 	return linked_list_find_equals_rec(node->next, value, equals);
 }
 
-node_list_ref_t* linked_list_find_equals(list_ref_t* list,
+linked_list_node_t* linked_list_find_equals(linked_list_t* list,
 										 void* value,
 										 equals_fn_t equals) {
 	return linked_list_find_equals_rec(list->begin, value, equals);
@@ -274,18 +295,16 @@ linked_list_node_t* linked_list_find_equals(linked_list_t* list,
 #endif
 
 #ifdef STRUCT_RECURSIVE_IMPL
-static void free_node(list_ref_t* list, node_list_ref_t* node) {
+static void free_node(linked_list_t* list, linked_list_node_t* node) {
 	if (!node)
 		return;
-	node_list_ref_t* next = node->next;
-	if (list->free_element)
-		list->free_element(node->p);  // Libère l'élément pointé
+	linked_list_node_t* next = node->next;
 	free(node);						  // Libère le noeud courant
 	free_node(list, next);			  // Libère le noeud suivant
 }
 
-void linked_list_clean(list_ref_t* list) {
-	if (list && list->begin) {
+void linked_list_clean(linked_list_t* list) {
+	if (list != NULL) {
 		free_node(list, list->begin);
 		list->begin = NULL;
 		list->end = NULL;

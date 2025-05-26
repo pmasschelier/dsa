@@ -1,10 +1,10 @@
 #include "btree_ref/btree_ref.h"
+#include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include "btree_ref/path.h"
 #include "errors.h"
-#include "lambda.h"
 #include "list_ref/linked_list_ref.h"
 #include "test_macros.h"
 
@@ -153,20 +153,15 @@ node_btree_ref_t** btree_next_node(node_btree_ref_t* node, btree_path_t* p) {
 
 #ifdef STRUCT_RECURSIVE_IMPL
 static node_btree_ref_t* btree_emplace_at_rec(node_btree_ref_t** node_ptr,
+                                              node_btree_ref_t* parent,
 											  btree_path_t path,
-											  void* p,
-											  free_element_fn_t free_element) {
+											  void* p, size_t size_bytes) {
 	if (path.length == 0) {
 		if (*node_ptr) {
-			if ((*node_ptr)->p && free_element)
-				free_element((*node_ptr)->p);
-			(*node_ptr)->p = p;
+            memcpy((*node_ptr)->data, p, size_bytes);
 		} else {
-			*node_ptr = malloc(sizeof(node_btree_ref_t));
+            *node_ptr = create_btree_leaf(NULL, parent, 0, size_bytes);
 			when_null_ret(*node_ptr, NULL);
-			(*node_ptr)->p = p;
-			(*node_ptr)->ls = NULL;
-			(*node_ptr)->rs = NULL;
 		}
 		return *node_ptr;
 	}
@@ -174,13 +169,13 @@ static node_btree_ref_t* btree_emplace_at_rec(node_btree_ref_t** node_ptr,
 	if (*node_ptr == NULL)
 		return NULL;
 	node_btree_ref_t** son = btree_next_node(*node_ptr, &path);
-	return btree_emplace_at_rec(son, path, p, free_element);
+	return btree_emplace_at_rec(son, *node_ptr, path, p, size_bytes);
 }
 
 node_btree_ref_t* btree_emplace_at(btree_ref_t* tree,
 								   btree_path_t path,
 								   void* p) {
-	return btree_emplace_at_rec(&tree->root, path, p, tree->free_element);
+	return btree_emplace_at_rec(&tree->root, NULL, path, p, tree->size);
 }
 #else
 node_btree_ref_t *btree_emplace_at(btree_ref_t *tree, btree_path_t path,
@@ -212,19 +207,16 @@ static int btree_emplace_path_rec(node_btree_ref_t** node_ptr,
 								  void* values[],
 								  int index,
 								  size_t length,
-								  free_element_fn_t free_elements,
+                                  size_t size_bytes,
 								  unsigned written_count) {
 	if (*node_ptr == NULL) {
 		*node_ptr = malloc(sizeof(node_btree_ref_t));
 		when_null_ret(*node_ptr, -ERROR_ALLOCATION_FAILED);
 		(*node_ptr)->ls = NULL;
 		(*node_ptr)->rs = NULL;
-		(*node_ptr)->p = NULL;
 	}
 	if (index >= 0 && index < (int)length && values[index]) {
-		if ((*node_ptr)->p && free_elements)
-			free_elements((*node_ptr)->p);
-		(*node_ptr)->p = values[index];
+        memcpy((*node_ptr)->data, values[index], size_bytes);
 		written_count++;
 	}
 
@@ -232,8 +224,7 @@ static int btree_emplace_path_rec(node_btree_ref_t** node_ptr,
 		return written_count;
 
 	node_btree_ref_t** son = btree_next_node(*node_ptr, &path);
-	return btree_emplace_path_rec(son, path, values, index + 1, length,
-								  free_elements, written_count);
+	return btree_emplace_path_rec(son, path, values, index + 1, length, size_bytes, written_count);
 }
 
 int btree_emplace_path(btree_ref_t* tree,
@@ -241,8 +232,7 @@ int btree_emplace_path(btree_ref_t* tree,
 					   void* values[],
 					   size_t length,
 					   size_t offset) {
-	return btree_emplace_path_rec(&tree->root, path, values, -offset, length,
-								  tree->free_element, 0);
+	return btree_emplace_path_rec(&tree->root, path, values, -offset, length, tree->size, 0);
 }
 #else
 int btree_emplace_path(btree_ref_t* tree,
@@ -274,58 +264,54 @@ int btree_emplace_path(btree_ref_t* tree,
 #endif /* ifdef STRUCT_RECURSIVE_IMPL */
 
 #ifdef STRUCT_RECURSIVE_IMPL
-static void btree_preorder_traversal_rec(node_btree_ref_t* tree,
+void btree_preorder_traversal_rec(node_btree_ref_t* node, lambda_t* lambda, unsigned* i) {
+    if(node == NULL)
+        return;
+    lambda->fn(lambda->priv, node->data);
+    *i += 1;
+    btree_preorder_traversal_rec(node->ls, lambda, i);
+    btree_preorder_traversal_rec(node->rs, lambda, i);
+}
+
+int btree_preorder_traversal(btree_ref_t* tree, lambda_t* lambda) {
+	unsigned i = 0;
+    btree_preorder_traversal_rec(tree->root, lambda, &i);
+    return i;
+}
+
+static void btree_preorder_traversal_array_rec(node_btree_ref_t* node,
 										 void* tab[],
 										 unsigned* i) {
-	if (tree) {
-		if (tab)
-			tab[*i] = tree->p;
-		*i += 1;
-		btree_preorder_traversal_rec(tree->ls, tab, i);
-		btree_preorder_traversal_rec(tree->rs, tab, i);
-	}
+	if (node == NULL)
+        return;
+    if (tab != NULL)
+        tab[*i] = node->data;
+    *i += 1;
+    btree_preorder_traversal_array_rec(node->ls, tab, i);
+    btree_preorder_traversal_array_rec(node->rs, tab, i);
 }
 
-int btree_preorder_traversal(btree_ref_t* tree, void* tab[]) {
+int btree_preorder_traversal_array(btree_ref_t* tree, void* tab[]) {
 	unsigned i = 0;
-	btree_preorder_traversal_rec(tree->root, tab, &i);
+	btree_preorder_traversal_array_rec(tree->root, tab, &i);
 	return i;
 }
 
-static void btree_postorder_traversal_rec(node_btree_ref_t* tree,
-										  void* tab[],
-										  unsigned* i) {
-	if (tree) {
-		btree_postorder_traversal_rec(tree->ls, tab, i);
-		btree_postorder_traversal_rec(tree->rs, tab, i);
-		if (tab)
-			tab[*i] = tree->p;
-		*i += 1;
-	}
-}
-
-int btree_postorder_traversal(btree_ref_t* tree, void* tab[]) {
-	unsigned i = 0;
-	btree_postorder_traversal_rec(tree->root, tab, &i);
-	return i;
-}
-
-static void btree_inorder_traversal_rec(node_btree_ref_t* tree,
-										void* tab[],
-										unsigned* i) {
-	if (tree) {
-		btree_inorder_traversal_rec(tree->ls, tab, i);
-		if (tab)
-			tab[*i] = tree->p;
-		*i += 1;
-		btree_inorder_traversal_rec(tree->rs, tab, i);
-	}
-}
-
-int btree_inorder_traversal(btree_ref_t* tree, void* tab[]) {
-	unsigned i = 0;
-	btree_inorder_traversal_rec(tree->root, tab, &i);
-	return i;
+int btree_dfs_array_rec(node_btree_ref_t* node,
+			  void* preorder[], unsigned *a,
+			  void* inorder[], unsigned *b,
+			  void* postorder[], unsigned *c) {
+    if(node == NULL)
+        return 0;
+    if(preorder != NULL)
+        preorder[*a++] = node->data;
+    btree_dfs_array_rec(node->ls, preorder, a, inorder, b, postorder, c);
+    if(inorder != NULL)
+        inorder[*b++] = node->data;
+    btree_dfs_array_rec(node->rs, preorder, a, inorder, b, postorder, c);
+    if(postorder != NULL)
+        postorder[*c++] = node->data;
+    return -ERROR_NO_ERROR;
 }
 #else
 int btree_preorder_traversal_array(btree_ref_t* tree, void* tab[]) {
@@ -539,32 +525,17 @@ exit:
 #endif /* ifdef STRUCT_RECURSIVE_IMPL */
 
 #ifdef STRUCT_RECURSIVE_IMPL
-static void btree_clean_rec(node_btree_ref_t* node,
-							free_element_fn_t free_elements) {
+static void btree_clean_rec(node_btree_ref_t* node) {
 	if (node->ls)
-		btree_clean_rec(node->ls, free_elements);
+		btree_clean_rec(node->ls);
 	if (node->rs)
-		btree_clean_rec(node->rs, free_elements);
-	if (node->p)
-		free_elements(node->p);
-	free(node);
-}
-
-static void btree_clean_rec_no_free(node_btree_ref_t* node) {
-	if (node->ls)
-		btree_clean_rec_no_free(node->ls);
-	if (node->rs)
-		btree_clean_rec_no_free(node->rs);
+		btree_clean_rec(node->rs);
 	free(node);
 }
 
 void btree_clean(btree_ref_t* tree) {
-	if (tree->root != NULL) {
-		if (tree->free_element)
-			btree_clean_rec(tree->root, tree->free_element);
-		else
-			btree_clean_rec_no_free(tree->root);
-	}
+	if (tree->root != NULL)
+        btree_clean_rec(tree->root);
 	tree->root = NULL;
 }
 #else

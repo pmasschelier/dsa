@@ -54,20 +54,20 @@ graph_list_t* create_graph_list_from_predecessors(unsigned size, int* father) {
 }
 
 #ifdef STRUCT_RECURSIVE_IMPL
-static node_list_ref_t* find_edge_rec(node_list_ref_t* node, unsigned int b) {
+static linked_list_node_t* find_edge_rec(linked_list_node_t* node, unsigned int b) {
 	if (node == NULL)
 		return NULL;
-	graph_list_edge_t* e = node->p;
+	graph_list_edge_t* e = get_node_ref(node, graph_list_edge_t);
 	if (e->to == b)
 		return node;
 	return find_edge_rec(node->next, b);
 }
 
-static node_list_ref_t* find_edge(graph_list_t* g,
+static linked_list_node_t* find_edge(graph_list_t* g,
 								  unsigned int a,
 								  unsigned int b) {
-	list_ref_t* neighbours = &g->neighbours[a];
-	node_list_ref_t* node = neighbours->begin;
+	linked_list_t* neighbours = &g->neighbours[a];
+	linked_list_node_t* node = neighbours->begin;
 
 	return find_edge_rec(node, b);
 }
@@ -193,10 +193,10 @@ static void graph_list_preorder_dfs_impl(graph_list_t* g,
 	mark[current] = TRUE;
 	tab[*index] = current;
 	*index += 1;
-	node_list_ref_t* node = g->neighbours[current].begin;
+	linked_list_node_t* node = g->neighbours[current].begin;
 	graph_list_edge_t* e = NULL;
 	while (node) {
-		e = node->p;
+		e = get_node_ref(node, graph_list_edge_t);
 		if (!mark[e->to]) {
 			if (father)
 				father[e->to] = current;
@@ -213,10 +213,10 @@ static void graph_list_postorder_dfs_impl(graph_list_t* g,
 										  char* mark,
 										  unsigned* index) {
 	mark[current] = TRUE;
-	node_list_ref_t* node = g->neighbours[current].begin;
+	linked_list_node_t* node = g->neighbours[current].begin;
 	graph_list_edge_t* e = NULL;
 	while (node) {
-		e = node->p;
+		e = get_node_ref(node, graph_list_edge_t);
 		if (!mark[e->to]) {
 			if (father)
 				father[e->to] = current;
