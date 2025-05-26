@@ -1,6 +1,6 @@
-#include <assert.h>
 #include <stddef.h>
-#include "array_list.h"
+#include <array_list.h>
+#include <tap.h>
 
 #define ARRAY_TYPE int
 #define ARRAY_LEN 20
@@ -26,7 +26,7 @@ int main(void) {
 	for (unsigned i = 1; i < ARRAY_LEN; i++) {
         int a = *get_array_list_ref(array, i - 1, int);
         int b = *get_array_list_ref(array, i, int);
-        assert(a <= b);
+        cmp_ok(a, "<=", b, "array[%d] <= array[%d]", i-1, i);
     }
 	array_list_deinit(&array);
 	return 0;

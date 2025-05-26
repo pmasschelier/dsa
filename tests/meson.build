@@ -1,6 +1,6 @@
 testdirs = [
   'array_list',
-  'list_ref',
+  'linked_list',
   'btree_ref',
   'graph_cast',
   'graph_mat',
@@ -14,11 +14,13 @@ testdirs = [
   'weight_type',
 ]
 
+libtap = dependency('libtap')
+
 foreach dirname : testdirs
   subdir(dirname)
   foreach test_source : passing_test_sources
     test_name = test_source.split('.')[0].underscorify()
-    exe = executable(test_name, dirname / test_source, dependencies: lib_dep, include_directories: inc_dir)
-    test(test_name, exe, suite: dirname, should_fail: false)
+    exe = executable(test_name, dirname / test_source, dependencies: [lib_dep, libtap], include_directories: inc_dir)
+    test(test_name, exe, suite: dirname, should_fail: false, protocol: 'tap')
   endforeach
 endforeach
