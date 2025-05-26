@@ -3,7 +3,7 @@
 #include "btree_ref/btree_ref.h"
 #include "graph/graph_list.h"
 #include "graph/graph_mat.h"
-#include "list_ref/linked_list_ref.h"
+#include "list_ref/linked_list.h"
 
 static void print_path(btree_path_t path);
 static void print_edges_mat(graph_mat_t* g);

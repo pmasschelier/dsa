@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <list_ref/linked_list_ref.h>
+#include <list_ref/linked_list.h>
 
 int main(void) {
 	linked_list_t* list = linked_list_create(sizeof(int));

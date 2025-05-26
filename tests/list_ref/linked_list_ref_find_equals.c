@@ -1,6 +1,6 @@
 
 #include <assert.h>
-#include <list_ref/linked_list_ref.h>
+#include <list_ref/linked_list.h>
 #include "compare.h"
 
 #define TAB_LEN 10

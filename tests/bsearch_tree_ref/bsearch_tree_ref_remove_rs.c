@@ -1,7 +1,7 @@
 #include <assert.h>
 #include "btree_ref/bsearch_tree_ref.h"
 #include "compare.h"
-#include "list_ref/linked_list_ref.h"
+#include "list_ref/linked_list.h"
 #include "structures.h"
 
 #define KEY_TYPE int

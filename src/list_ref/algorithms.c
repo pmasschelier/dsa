@@ -1,6 +1,6 @@
 #include "list_ref/algorithms.h"
 #include <string.h>
-#include "list_ref/linked_list_ref.h"
+#include "list_ref/linked_list.h"
 
 linked_list_node_t* find_in_list(linked_list_t* list, void* x) {
 	linked_list_node_t* node = list->begin;

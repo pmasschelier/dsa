@@ -6,7 +6,7 @@
 #include "btree_ref/path.h"
 #include "errors.h"
 #include "lambda.h"
-#include "list_ref/linked_list_ref.h"
+#include "list_ref/linked_list.h"
 #include "test_macros.h"
 
 #ifndef STRUCT_RECURSIVE_IMPL

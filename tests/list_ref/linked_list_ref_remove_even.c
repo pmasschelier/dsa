@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <list_ref/linked_list_ref.h>
+#include <list_ref/linked_list.h>
 
 #define HALF_TAB_LEN 5
 #define TAB_LEN (HALF_TAB_LEN << 1)

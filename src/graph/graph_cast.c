@@ -2,7 +2,7 @@
 #include <string.h>
 #include "graph/graph_list.h"
 #include "graph/graph_mat.h"
-#include "list_ref/linked_list_ref.h"
+#include "list_ref/linked_list.h"
 #include "test_macros.h"
 #include "weight_type.h"
 

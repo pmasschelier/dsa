@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "compare.h"
-#include "list_ref/linked_list_ref.h"
+#include "list_ref/linked_list.h"
 
 /**
  * @defgroup htable Hashtables

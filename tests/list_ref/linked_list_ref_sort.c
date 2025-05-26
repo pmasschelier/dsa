@@ -1,4 +1,4 @@
-#include "list_ref/linked_list_ref.h"
+#include "list_ref/linked_list.h"
 #include <assert.h>
 
 #define ARRAY_TYPE int

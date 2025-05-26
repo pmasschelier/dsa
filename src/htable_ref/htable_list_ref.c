@@ -4,7 +4,6 @@
 #include <string.h>
 #include "compare.h"
 #include "errors.h"
-#include "list_ref/linked_list_ref.h"
 #include "test_macros.h"
 
 htable_list_ref_t* create_htable_list(unsigned buckets, equals_fn_t equals, size_t size_bytes) {

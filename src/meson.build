@@ -8,7 +8,7 @@ src_files = files(
   'graph/graph_list.c',
   'graph/graph_mat.c',
   'htable_ref/htable_list_ref.c',
-  'list_ref/linked_list_ref.c',
+  'list_ref/linked_list.c',
   'list_ref/algorithms.c',
   'circular_buffer.c',
   'array_list.c',
