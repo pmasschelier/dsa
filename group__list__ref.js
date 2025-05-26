@@ -22,14 +22,14 @@ var group__list__ref =
     [ "linked_list_free", "group__list__ref.html#ga824f90fe8d9e92a7cf47b63a36c890e8", null ],
     [ "linked_list_from_tab", "group__list__ref.html#gac46cb6fcdd2c253a5b240c80cc4b46e5", null ],
     [ "linked_list_init", "group__list__ref.html#ga6cbbe05372cf31f4f43f47208e7a3cc4", null ],
-    [ "linked_list_insert", "group__list__ref.html#gac7904a3e5d4fc5ec444878739e5c606e", null ],
+    [ "linked_list_insert", "group__list__ref.html#ga2c9f6981bb4ea0da1be0d6d4e8a71719", null ],
     [ "linked_list_insert_node", "group__list__ref.html#ga719e222f120822bb68e7057c841996b5", null ],
     [ "linked_list_length", "group__list__ref.html#gad805934f49966be0275caca177c7e5f3", null ],
     [ "linked_list_pop_back", "group__list__ref.html#ga9a9f86deee9879971fd39b6fb9f9d70a", null ],
     [ "linked_list_pop_front", "group__list__ref.html#ga1726a268168819c0238a9c07d5bad017", null ],
-    [ "linked_list_push_back", "group__list__ref.html#gafdb781e77a50b3ccb767e27131bc30c1", null ],
-    [ "linked_list_push_front", "group__list__ref.html#gaefd3a516cfc58d87aae26ed5362b0743", null ],
+    [ "linked_list_push_back", "group__list__ref.html#ga0bf4ddf03e19f64eeb99cb42ac2ff942", null ],
+    [ "linked_list_push_front", "group__list__ref.html#gac63fd367ab2156593fe83b484c085514", null ],
     [ "linked_list_remove", "group__list__ref.html#ga6b255aa665e8968a2b0211f5c2c88db1", null ],
-    [ "linked_list_swap", "group__list__ref.html#ga57195634bdd7ff56958b74781e032d23", null ],
+    [ "linked_list_swap", "group__list__ref.html#gae103ae9573f0a2e975da8f373501aaa3", null ],
     [ "linked_list_to_tab", "group__list__ref.html#gae71616715311808d93a36324bb639234", null ]
 ];

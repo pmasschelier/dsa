@@ -1,22 +1,22 @@
 <map id="/home/runner/work/dsa/dsa/include/graph/graph_list.h" name="/home/runner/work/dsa/dsa/include/graph/graph_list.h">
 <area shape="rect" id="Node000001" title="Graphs defined with adjacency lists." alt="" coords="257,5,439,60"/>
-<area shape="rect" id="Node000002" href="$linked__list__ref_8h_source.html" title=" " alt="" coords="177,108,314,148"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="321,62,278,101,275,97,317,58"/>
-<area shape="rect" id="Node000008" href="$weight__type_8h_source.html" title=" " alt="" coords="431,115,545,141"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="389,58,461,106,458,110,386,62"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,196,80,221"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="198,151,86,193,84,188,196,146"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="105,196,175,221"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="221,150,168,190,165,185,218,146"/>
-<area shape="rect" id="Node000005" href="$compare_8h.html" title="Comparison function type definition Defines compare_fn_t type function." alt="" coords="200,196,291,221"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="248,148,248,182,243,182,243,148"/>
-<area shape="rect" id="Node000006" href="$structures_8h_source.html" title=" " alt="" coords="315,196,413,221"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="276,146,337,186,334,191,273,150"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="371,269,442,295"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="373,220,395,256,391,259,369,223"/>
-<area shape="poly" id="edge8_Node000008_Node000007" title=" " alt="" coords="484,142,422,258,417,256,480,139"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="489,196,562,221"/>
-<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="496,140,516,182,512,185,491,142"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="586,196,675,221"/>
-<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="510,139,599,187,597,192,508,143"/>
+<area shape="rect" id="Node000002" href="$linked__list_8h_source.html" title=" " alt="" coords="171,108,320,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="318,62,271,101,268,97,315,58"/>
+<area shape="rect" id="Node000008" href="$weight__type_8h_source.html" title=" " alt="" coords="431,108,545,133"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="392,58,459,98,456,103,389,62"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,181,80,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="214,136,89,179,87,174,212,131"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="105,181,175,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="230,136,170,176,167,171,227,131"/>
+<area shape="rect" id="Node000005" href="$compare_8h.html" title="Comparison function type definition Defines compare_fn_t type function." alt="" coords="200,181,291,207"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="248,134,248,168,243,168,243,134"/>
+<area shape="rect" id="Node000006" href="$structures_8h_source.html" title=" " alt="" coords="315,181,413,207"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="266,131,334,172,331,176,263,136"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="371,255,442,280"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="373,206,395,242,391,244,369,208"/>
+<area shape="poly" id="edge8_Node000008_Node000007" title=" " alt="" coords="484,135,422,244,418,241,479,132"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="489,181,562,207"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="497,132,515,168,511,171,492,135"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="586,181,675,207"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="512,131,596,173,594,177,510,136"/>
 </map>
