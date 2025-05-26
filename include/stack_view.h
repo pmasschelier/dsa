@@ -34,10 +34,10 @@ static inline stack_view_t* create_stack_view(size_t size) {
 
 typedef array_list_t stack_view_t;
 
-#define create_stack_view(size) create_array_list(sizeof(void*))
-#define create_stack_copy(size) create_array_list(size)
+#define create_stack_view(size) array_list_create(sizeof(void*))
+#define create_stack_copy(size) array_list_create(size)
 #define empty_stack(stack) array_list_empty(stack)
-#define free_stack(stack) free_array_list(stack)
+#define free_stack(stack) array_list_free(stack)
 #define stack_view_push(stack, ptr) array_list_push_back(stack, &ptr);
 #define stack_copy_push(stack, ptr) array_list_push_back(stack, ptr);
 #define stack_view_pop(stack, ptr) array_list_pop_back(stack, ptr);

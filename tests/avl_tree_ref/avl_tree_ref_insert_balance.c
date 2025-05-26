@@ -1,11 +1,8 @@
 #include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "btree_ref/avl_tree_ref.h"
 #include "btree_ref/bsearch_tree_ref.h"
 #include "compare.h"
 #include "errors.h"
-#include "ptr.h"
 
 #define KEY_TYPE int
 DEFINE_COMPARE_SCALAR(int)
@@ -24,12 +21,12 @@ int main(void) {
 
 	for (unsigned k = 0; k < 4; k++) {
 		for (int i = 0; i < TAB_LEN; i++) {
-			int ret = avl_tree_insert(tree, ptr(TYPE_INT, tab[k][i]), NULL);
+			int ret = avl_tree_insert(tree, &tab[k][i], NULL);
 			assert(ret == -ERROR_NO_ERROR);
 		}
-		assert(*(int*)tree->root->ls->p == 1);
-		assert(*(int*)tree->root->p == 2);
-		assert(*(int*)tree->root->rs->p == 3);
+		assert(*(int*)tree->root->ls->data == 1);
+		assert(*(int*)tree->root->data == 2);
+		assert(*(int*)tree->root->rs->data == 3);
 		clean_bsearch_tree_ref(tree);
 	}
 	free_bsearch_tree_ref(tree);

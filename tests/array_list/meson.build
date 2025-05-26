@@ -4,4 +4,5 @@ passing_test_sources = [
   'array_list_push_front.c',
   'array_list_queue.c',
   'array_list_stack.c',
+  'array_list_sort.c',
 ]

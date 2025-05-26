@@ -1,9 +1,7 @@
 #include <assert.h>
-#include <stdlib.h>
 #include "btree_ref/rb_tree_ref.h"
 #include "compare.h"
 #include "list_ref/linked_list_ref.h"
-#include "ptr.h"
 #include "structures.h"
 
 #define KEY_TYPE int
@@ -16,10 +14,10 @@ KEY_TYPE close = 3;
 
 int main(void) {
 	bsearch_tree_ref_t* tree = create_bsearch_tree(sizeof(int), compare_int);
-	rb_tree_insert(tree, ptr(TYPE_INT, father), NULL);
-	rb_tree_insert(tree, ptr(TYPE_INT, value), NULL);
-	rb_tree_insert(tree, ptr(TYPE_INT, brother), NULL);
-	rb_tree_insert(tree, ptr(TYPE_INT, close), NULL);
+	rb_tree_insert(tree, &father, NULL);
+	rb_tree_insert(tree, &value, NULL);
+	rb_tree_insert(tree, &brother, NULL);
+	rb_tree_insert(tree, &close, NULL);
 	BOOL ret = rb_tree_remove(tree, &value);
 	assert(ret == TRUE);
 	assert(*get_node_ref(tree->root, int) == close);

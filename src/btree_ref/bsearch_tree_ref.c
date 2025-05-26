@@ -1,71 +1,59 @@
 #include "btree_ref/bsearch_tree_ref.h"
+#include <stddef.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include "btree_ref/btree_ref.h"
 #include "btree_ref/path.h"
 #include "errors.h"
 #include "test_macros.h"
 
 // TODO: Make bsearch tree order-statistic trees
 
+node_btree_ref_t* create_btree_leaf(
+	void* value,
+	node_btree_ref_t* parent,
+    uintptr_t priv_init,
+    size_t size_bytes);
+
 bsearch_tree_ref_t* create_bsearch_tree(size_t size_bytes,
 										compare_fn_t compare) {
 	bsearch_tree_ref_t* ret = malloc(sizeof(bsearch_tree_ref_t));
 	when_null_ret(ret, NULL);
 	ret->compare = compare;
-	ret->free_element = free;
 	ret->size = size_bytes;
 	ret->root = NULL;
 	return ret;
 }
 
-node_bsearch_tree_ref_t** node_bsearch_tree_get_location(
+node_btree_ref_t** node_bsearch_tree_get_location(
 	bsearch_tree_ref_t* tree,
-	node_bsearch_tree_ref_t* node) {
+	node_btree_ref_t* node) {
 	when_null_ret(tree, NULL);
 	when_null_ret(node, NULL);
-	if (node->father == NULL)
+	if (node->parent == NULL)
 		return &tree->root;
-	if (node->father->ls == node)
-		return &node->father->ls;
-	return &node->father->rs;
+	if (node->parent->ls == node)
+		return &node->parent->ls;
+	return &node->parent->rs;
 }
 
-static node_bsearch_tree_ref_t* create_bsearch_leaf(
-	void* value,
-	node_bsearch_tree_ref_t* father) {
-	node_bsearch_tree_ref_t* leaf = malloc(sizeof(node_bsearch_tree_ref_t));
-	when_null_ret(leaf, NULL);
-	leaf->p = value;
-	leaf->ls = NULL;
-	leaf->rs = NULL;
-	leaf->father = father;
-	return leaf;
+BOOL bsearch_tree_is_left_son(node_btree_ref_t* node) {
+	return node->parent->ls == node;
 }
-
-BOOL bsearch_tree_is_left_son(node_bsearch_tree_ref_t* node) {
-	return node->father->ls == node;
-}
-
-typedef node_bsearch_tree_ref_t* (
-	*create_bsearch_leaf_fn_t)(void* value, node_bsearch_tree_ref_t* father);
 
 int bsearch_tree_insert_impl(bsearch_tree_ref_t* tree,
 							 void* value,
-							 node_bsearch_tree_ref_t** found,
+							 node_btree_ref_t** found,
 							 btree_path_t* path,
-							 node_bsearch_tree_ref_t** created,
-							 create_bsearch_leaf_fn_t create_leaf) {
-	node_bsearch_tree_ref_t* father = NULL;
-	*path = ROOT_PATH;
-	if (tree->root == NULL) {
-		*created = tree->root = create_leaf(value, father);
-		return -ERROR_NO_ERROR;
-	}
+                             uintptr_t priv_init) {
+	node_btree_ref_t* parent = NULL;
+	node_btree_ref_t** node = &tree->root;
+    *path = ROOT_PATH;
 
-	node_bsearch_tree_ref_t** node = &tree->root;
-	do {
-		father = *node;
-		int cmp = tree->compare(value, (*node)->p);
+	while(*node != NULL) {
+		parent = *node;
+		int cmp = tree->compare(value, (*node)->data);
 		if (cmp == -1) {
 			path_lhs(path);
 			node = &(*node)->ls;
@@ -77,25 +65,24 @@ int bsearch_tree_insert_impl(bsearch_tree_ref_t* tree,
 				*found = *node;
 			return -ERROR_KEY_ALREADY_EXISTS;
 		}
-	} while (*node != NULL);
-	*node = create_leaf(value, father);
+	}
+	*node = create_btree_leaf(value, parent, priv_init, tree->size);
 	when_null_ret(*node, -ERROR_ALLOCATION_FAILED);
-	*created = *node;
-	return -ERROR_NO_ERROR;
+    if(found != NULL)
+        *found = *node;
+    return -ERROR_NO_ERROR;
 }
 
 int bsearch_tree_insert(bsearch_tree_ref_t* tree,
 						void* value,
-						node_bsearch_tree_ref_t** found) {
+						node_btree_ref_t** found) {
 	btree_path_t path;
-	node_bsearch_tree_ref_t* node;
-	return bsearch_tree_insert_impl(tree, value, found, &path, &node,
-									create_bsearch_leaf);
+	return bsearch_tree_insert_impl(tree, value, found, &path, 0);
 }
 
 int bsearch_tree_insert_clone(bsearch_tree_ref_t* tree,
 							  const void* value,
-							  node_bsearch_tree_ref_t** found) {
+							  node_btree_ref_t** found) {
 	void* copy = malloc(tree->size);
 	when_null_ret(copy, -ERROR_ALLOCATION_FAILED);
 	memcpy(copy, value, tree->size);
@@ -105,11 +92,11 @@ int bsearch_tree_insert_clone(bsearch_tree_ref_t* tree,
 	return ret;
 }
 
-node_bsearch_tree_ref_t* bsearch_tree_find(bsearch_tree_ref_t* tree,
+node_btree_ref_t* bsearch_tree_find(bsearch_tree_ref_t* tree,
 										   void* value) {
-	node_bsearch_tree_ref_t* node = tree->root;
+	node_btree_ref_t* node = tree->root;
 	while (node != NULL) {
-		int cmp = tree->compare(value, node->p);
+		int cmp = tree->compare(value, node->data);
 		if (cmp == -1)
 			node = node->ls;
 		else if (cmp == 1)
@@ -120,12 +107,12 @@ node_bsearch_tree_ref_t* bsearch_tree_find(bsearch_tree_ref_t* tree,
 	return NULL;
 }
 
-node_bsearch_tree_ref_t** bsearch_tree_successor_location(
+node_btree_ref_t** bsearch_tree_successor_location(
 	bsearch_tree_ref_t* tree,
-	node_bsearch_tree_ref_t* node,
+	node_btree_ref_t* node,
 	btree_path_t* path) {
 	if (node->rs != NULL) {
-		node_bsearch_tree_ref_t** ret = &node->rs;
+		node_btree_ref_t** ret = &node->rs;
 		if (path != NULL)
 			path_rhs(path);
 		while ((*ret)->ls != NULL) {
@@ -135,16 +122,16 @@ node_bsearch_tree_ref_t** bsearch_tree_successor_location(
 		}
 		return ret;
 	}
-	while (node->father != NULL && node->father->rs == node) {
-		node = node->father;
+	while (node->parent != NULL && node->parent->rs == node) {
+		node = node->parent;
 		if (path != NULL)
 			path->length -= 1;
 	}
-	if (node->father == NULL)
+	if (node->parent == NULL)
 		return NULL;
 	if (path != NULL)
 		path->length -= 1;
-	return node_bsearch_tree_get_location(tree, node->father);
+	return node_bsearch_tree_get_location(tree, node->parent);
 }
 
 typedef enum node_situation {
@@ -160,32 +147,32 @@ typedef enum node_situation {
  * @param node A pointer to the node
  * @return Its encoded situation
  */
-static node_situation_t compute_situation(node_bsearch_tree_ref_t* node) {
+static node_situation_t compute_situation(node_btree_ref_t* node) {
 	return ((node->ls == NULL) << 1) | (node->rs == NULL);
 }
 
-static node_bsearch_tree_ref_t* resolve_remove(
+static node_btree_ref_t* resolve_remove(
 	bsearch_tree_ref_t* tree,
-	node_bsearch_tree_ref_t** node_ptr,
-	btree_path_t* path) {
-	node_bsearch_tree_ref_t* node = *node_ptr;
-	node_bsearch_tree_ref_t** freed = NULL;
+	node_btree_ref_t** node_ptr,
+	btree_path_t* path)
+{
+	node_btree_ref_t* node = *node_ptr;
+	node_btree_ref_t** freed = NULL;
 	int situation = compute_situation(node);
 	switch (situation) {
 	case LEFT_CHILD:
 		*node_ptr = node->ls;
-		(*node_ptr)->father = node->father;
+		(*node_ptr)->parent = node->parent;
 		break;
 	case RIGHT_CHILD:
 		*node_ptr = node->rs;
-		(*node_ptr)->father = node->father;
+		(*node_ptr)->parent = node->parent;
 		break;
 	case BOTH_CHILDREN:
 		freed = bsearch_tree_successor_location(tree, node, path);
+
 		// exchange value of node and *succ
-		void* node_p = node->p;
-		node->p = (*freed)->p;
-		(*freed)->p = node_p;
+        btree_swap_node(&freed, &node_ptr);
 		// the only remaining reference on *freed will be node
 		return resolve_remove(tree, freed, path);
 	case NO_CHILDREN:
@@ -193,18 +180,16 @@ static node_bsearch_tree_ref_t* resolve_remove(
 	default:
 		break;
 	}
-	if (node->p != NULL && tree->free_element != NULL)
-		tree->free_element(node->p);
 	return node;
 }
 
-node_bsearch_tree_ref_t* bsearch_tree_remove_impl(bsearch_tree_ref_t* tree,
+node_btree_ref_t* bsearch_tree_remove_impl(bsearch_tree_ref_t* tree,
 												  void* value,
 												  btree_path_t* path) {
-	node_bsearch_tree_ref_t** node_ptr = &tree->root;
+	node_btree_ref_t** node_ptr = &tree->root;
 	*path = ROOT_PATH;
 	while (*node_ptr != NULL) {
-		int cmp = tree->compare(value, (*node_ptr)->p);
+		int cmp = tree->compare(value, (*node_ptr)->data);
 		if (cmp == -1) {
 			path_lhs(path);
 			node_ptr = &(*node_ptr)->ls;
@@ -221,7 +206,7 @@ node_bsearch_tree_ref_t* bsearch_tree_remove_impl(bsearch_tree_ref_t* tree,
 
 BOOL bsearch_tree_remove(bsearch_tree_ref_t* tree, void* value) {
 	btree_path_t path;
-	node_bsearch_tree_ref_t* node =
+	node_btree_ref_t* node =
 		bsearch_tree_remove_impl(tree, value, &path);
 	if (node == NULL)
 		return FALSE;
@@ -229,8 +214,8 @@ BOOL bsearch_tree_remove(bsearch_tree_ref_t* tree, void* value) {
 	return TRUE;
 }
 
-node_bsearch_tree_ref_t* bsearch_tree_min(bsearch_tree_ref_t* tree) {
-	node_bsearch_tree_ref_t* node = tree->root;
+node_btree_ref_t* bsearch_tree_min(bsearch_tree_ref_t* tree) {
+	node_btree_ref_t* node = tree->root;
 	if (node == NULL)
 		return NULL;
 	while (node->ls != NULL)
@@ -238,8 +223,8 @@ node_bsearch_tree_ref_t* bsearch_tree_min(bsearch_tree_ref_t* tree) {
 	return node;
 }
 
-node_bsearch_tree_ref_t* bsearch_tree_max(bsearch_tree_ref_t* tree) {
-	node_bsearch_tree_ref_t* node = tree->root;
+node_btree_ref_t* bsearch_tree_max(bsearch_tree_ref_t* tree) {
+	node_btree_ref_t* node = tree->root;
 	if (node == NULL)
 		return NULL;
 	while (node->rs != NULL)
@@ -247,34 +232,34 @@ node_bsearch_tree_ref_t* bsearch_tree_max(bsearch_tree_ref_t* tree) {
 	return node;
 }
 
-void bsearch_tree_rotate_left(node_bsearch_tree_ref_t** node) {
-	node_bsearch_tree_ref_t* root = *node;
-	node_bsearch_tree_ref_t* right_son = (*node)->rs;
+void bsearch_tree_rotate_left(node_btree_ref_t** node) {
+	node_btree_ref_t* root = *node;
+	node_btree_ref_t* right_son = (*node)->rs;
 
 	*node = right_son;
-	right_son->father = root->father;
+	right_son->parent = root->parent;
 
 	root->rs = right_son->ls;
 	if (root->rs != NULL)
-		root->rs->father = root;
+		root->rs->parent = root;
 
 	right_son->ls = root;
-	root->father = right_son;
+	root->parent = right_son;
 }
 
-void bsearch_tree_rotate_right(node_bsearch_tree_ref_t** node) {
-	node_bsearch_tree_ref_t* root = *node;
-	node_bsearch_tree_ref_t* left_son = (*node)->ls;
+void bsearch_tree_rotate_right(node_btree_ref_t** node) {
+	node_btree_ref_t* root = *node;
+	node_btree_ref_t* left_son = (*node)->ls;
 
 	*node = left_son;
-	left_son->father = root->father;
+	left_son->parent = root->parent;
 
 	root->ls = left_son->rs;
 	if (root->ls != NULL)
-		root->ls->father = root;
+		root->ls->parent = root;
 
 	left_son->rs = root;
-	root->father = left_son;
+	root->parent = left_son;
 }
 
 // TODO: Implement join, split and union

@@ -18,4 +18,5 @@ passing_test_sources = [
   'btree_ref_perfect_tree_from_tab_null_length.c',
   'btree_ref_postorder_traversal_of_perfect_tree.c',
   'btree_ref_preorder_traversal_of_perfect_tree.c',
+  'btree_ref_swap.c',
 ]

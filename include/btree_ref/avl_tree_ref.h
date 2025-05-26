@@ -39,7 +39,7 @@
  */
 int avl_tree_insert(bsearch_tree_ref_t* tree,
 					void* value,
-					node_bsearch_tree_ref_t** found);
+					node_btree_ref_t** found);
 
 /**
  * @brief Clone and inserts an element into the tree
@@ -57,7 +57,7 @@ int avl_tree_insert(bsearch_tree_ref_t* tree,
  */
 int avl_tree_insert_clone(bsearch_tree_ref_t* tree,
 						  const void* value,
-						  node_bsearch_tree_ref_t** found);
+						  node_btree_ref_t** found);
 
 /**
  * @brief Removes an element from the tree

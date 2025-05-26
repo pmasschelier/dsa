@@ -3,7 +3,6 @@
 
 #include <stddef.h>
 #include "compare.h"
-#include "ptr.h"
 #include "structures.h"
 
 #include "btree_ref.h"
@@ -29,28 +28,6 @@
  */
 
 /**
- * @typedef node_bsearch_tree_ref_t
- * @brief Typedef for the node_bsearch_tree_ref structure
- *
- */
-typedef struct node_bsearch_tree_ref node_bsearch_tree_ref_t;
-
-/**
- * @struct node_bsearch_tree_ref
- * @brief A binary-tree node.
- *
- * A tree node holds a pointer to its data and a pointer to its left son (ls)
- * (NULL if there is no left son) and a pointer to its right son (NULL if it is
- * there is no right son).
- */
-struct node_bsearch_tree_ref {
-	void* p;						 /**< Pointer to data */
-	node_bsearch_tree_ref_t* ls;	 /**< Pointer to its left son */
-	node_bsearch_tree_ref_t* rs;	 /**< Pointer to its right son */
-	node_bsearch_tree_ref_t* father; /**< Pointer to its father */
-};
-
-/**
  * @typedef bsearch_tree_ref_t
  * @brief Typedef for the bsearch_tree_ref structure
  *
@@ -73,7 +50,7 @@ struct bsearch_tree_ref {
 	 *
 	 * If root == NULL the binary tree is empty
 	 */
-	node_bsearch_tree_ref_t* root;
+	node_btree_ref_t* root;
 	/**
 	 * @brief Size (in bytes) on a element
 	 *
@@ -84,16 +61,6 @@ struct bsearch_tree_ref {
 	 * information.
 	 */
 	size_t size;
-	/**
-	 * @brief Function used to free the elements
-	 *
-	 * This field should be a pointer to a function that will be called to free
-	 * the memory region referenced by node_bsearch_tree_ref_t#p. If the btree
-	 * was created using the API it will default to free from libc. However you
-	 * can turn a bsearch tree in a simple view on the data by setting this
-	 * pointer to NULL.
-	 */
-	free_element_fn_t free_element;
 	/**
 	 * @brief Function used to compare to elements in the tree
 	 *
@@ -134,7 +101,7 @@ bsearch_tree_ref_t* create_bsearch_tree(size_t size_bytes,
  */
 int bsearch_tree_insert(bsearch_tree_ref_t* tree,
 						void* value,
-						node_bsearch_tree_ref_t** found);
+						node_btree_ref_t** found);
 
 /**
  * @brief Clone and inserts an element into the tree
@@ -152,7 +119,7 @@ int bsearch_tree_insert(bsearch_tree_ref_t* tree,
  */
 int bsearch_tree_insert_clone(bsearch_tree_ref_t* tree,
 							  const void* value,
-							  node_bsearch_tree_ref_t** found);
+							  node_btree_ref_t** found);
 
 /**
  * @brief Finds if the element is present in the tree
@@ -163,7 +130,7 @@ int bsearch_tree_insert_clone(bsearch_tree_ref_t* tree,
  * @return If value was found, returns the pointer to the node containing value,
  * otherwise returns NULL
  */
-node_bsearch_tree_ref_t* bsearch_tree_find(bsearch_tree_ref_t* tree,
+node_btree_ref_t* bsearch_tree_find(bsearch_tree_ref_t* tree,
 										   void* value);
 
 /**
@@ -188,7 +155,7 @@ BOOL bsearch_tree_remove(bsearch_tree_ref_t* tree, void* value);
  * @return Returns NULL if the tree is empty and the node containing the minimum
  * element otherwise
  */
-node_bsearch_tree_ref_t* bsearch_tree_min(bsearch_tree_ref_t* tree);
+node_btree_ref_t* bsearch_tree_min(bsearch_tree_ref_t* tree);
 
 /**
  * @brief Finds the maximum element of the tree
@@ -198,7 +165,7 @@ node_bsearch_tree_ref_t* bsearch_tree_min(bsearch_tree_ref_t* tree);
  * @return Returns NULL if the tree is empty and the node containing the maximum
  * element otherwise
  */
-node_bsearch_tree_ref_t* bsearch_tree_max(bsearch_tree_ref_t* tree);
+node_btree_ref_t* bsearch_tree_max(bsearch_tree_ref_t* tree);
 
 /**
  * @brief Apply left rotation on a tree node
@@ -244,7 +211,7 @@ node_bsearch_tree_ref_t* bsearch_tree_max(bsearch_tree_ref_t* tree);
  * or bsearch_tree_ref#root attribute
  *
  */
-void bsearch_tree_rotate_left(node_bsearch_tree_ref_t** node);
+void bsearch_tree_rotate_left(node_btree_ref_t** node);
 
 /**
  * @brief Apply right rotation on a tree node
@@ -288,6 +255,6 @@ void bsearch_tree_rotate_left(node_bsearch_tree_ref_t** node);
  * or bsearch_tree_ref#root attribute
  *
  */
-void bsearch_tree_rotate_right(node_bsearch_tree_ref_t** node);
+void bsearch_tree_rotate_right(node_btree_ref_t** node);
 
 #endif	// !BSEARCHTREE_H

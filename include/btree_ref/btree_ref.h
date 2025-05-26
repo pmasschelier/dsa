@@ -2,8 +2,9 @@
 #define BINARYTREE_H
 
 #include <stddef.h>
+#include <stdint.h>
 #include "btree_ref/path.h"
-#include "ptr.h"
+#include "lambda.h"
 
 /**
  * @file btree_ref.h
@@ -15,6 +16,8 @@
  * @defgroup btree_ref Binary trees
  * @{
  */
+
+#define get_node_ref(node, type) ((type*)&(node)->data)
 
 /**
  * @typedef node_btree_ref_t
@@ -32,9 +35,11 @@ typedef struct node_btree_ref node_btree_ref_t;
  * there is no right son).
  */
 struct node_btree_ref {
-	void* p;			  /**< Pointer to data */
-	node_btree_ref_t* ls; /**< Pointer to its left son */
-	node_btree_ref_t* rs; /**< Pointer to its right son */
+	node_btree_ref_t* ls;	  /**< Pointer to its left son */
+	node_btree_ref_t* rs;	  /**< Pointer to its right son */
+	node_btree_ref_t* parent; /**< Pointer to its parent */
+	uintptr_t priv;			  /**< Implementation data */
+	uint8_t data[];			  /**< Pointer to data */
 };
 
 /**
@@ -69,16 +74,6 @@ struct btree_ref {
 	 * information.
 	 */
 	size_t size;
-	/**
-	 * @brief Function used to free the elements
-	 *
-	 * This field should be a pointer to a function that will be called to free
-	 * the memory region referenced by node_btree_ref_t#p. If the btree was
-	 * created using the API it will default to free from libc. However you can
-	 * turn a btree in a simple view on the data by setting this pointer to
-	 * NULL.
-	 */
-	free_element_fn_t free_element;
 };
 
 /**
@@ -90,6 +85,8 @@ struct btree_ref {
  * @see btree_free()
  */
 btree_ref_t* create_btree(size_t size);
+
+void btree_swap_node(node_btree_ref_t*** a, node_btree_ref_t*** b);
 
 /**
  * @brief Return the binary tree height
@@ -202,8 +199,33 @@ btree_ref_t* btree_perfect_tree_from_tab(void* tab,
  * @return The number of node in the tree in case of success, a negative error
  * otherwise.
  */
-int btree_preorder_traversal(btree_ref_t* tree, void* tab[]);
+int btree_preorder_traversal_array(btree_ref_t* tree, void* tab[]);
 
+/**
+ * @brief Preorder traversal of the binary tree.
+ *
+ * Iterate over the nodes of a binary tree in the order node -> left son ->
+ * right son.<br>
+ * For each node the lambda is called with a pointer to its private data
+ * and a pointer to the node data.
+ *
+ * _Complexity:_ \f$O(n)\f$
+ * @param tree pointer to the tree
+ * @param lambda lambda to call (see lambda_t)
+ * @return The number of node in the tree in case of success, a negative error
+ * otherwise.
+ */
+int btree_preorder_traversal(btree_ref_t* tree, lambda_t* lambda);
+
+int btree_dfs_array(btree_ref_t* tree,
+					void* preorder[],
+					void* inorder[],
+					void* postorder[]);
+
+int btree_dfs(btree_ref_t* tree,
+			  lambda_t* preorder,
+			  lambda_t* inorder,
+			  lambda_t* postorder);
 /**
  * @brief Postorder traversal of the binary tree.
  *
@@ -251,7 +273,7 @@ int btree_inorder_traversal(btree_ref_t* tree, void* tab[]);
  * @param tab array to fill, it should be allocated with a sufficient size, the
  * count of node can be get with the btree_length() function.
  */
-int btree_levelorder_traversal(btree_ref_t* tree, void* tab[]);
+int btree_levelorder_traversal(btree_ref_t* tree, void* tab);
 
 /**
  * @brief Clear the binary tree

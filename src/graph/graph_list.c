@@ -18,15 +18,14 @@ graph_list_t* create_graph_list(unsigned size, BOOL is_weighted) {
 	when_null_ret(g, NULL);
 
 	g->nb_vert = size;
-	g->neighbours = malloc(size * sizeof(list_ref_t));
+	g->neighbours = malloc(size * sizeof(linked_list_t));
 	when_null_jmp(g->neighbours, NULL, error);
 	g->is_weighted = is_weighted;
 
 	for (unsigned i = 0; i < size; i++) {
 		g->neighbours[i].begin = NULL;
 		g->neighbours[i].end = NULL;
-		g->neighbours[i].size = sizeof(graph_list_edge_t);
-		g->neighbours[i].free_element = free;
+		g->neighbours[i].size_bytes = sizeof(graph_list_edge_t);
 	}
 
 	return g;
@@ -39,11 +38,9 @@ int graph_list_add_edge_noverif(graph_list_t* g,
 								unsigned int a,
 								unsigned int b,
 								long long weight) {
-	list_ref_t* neighbours = &g->neighbours[a];
-	graph_list_edge_t* e = malloc(sizeof(graph_list_edge_t));
-	when_null_ret(e, -ERROR_ALLOCATION_FAILED);
-	*e = (graph_list_edge_t){weight, b};
-	linked_list_push_back(neighbours, e);
+	linked_list_t* neighbours = &g->neighbours[a];
+	graph_list_edge_t e = {.w = weight, .to = b};
+	linked_list_push_back(neighbours, &e);
 
 	return 0;
 }
@@ -78,15 +75,15 @@ static node_list_ref_t* find_edge(graph_list_t* g,
 	return find_edge_rec(node, b);
 }
 #else
-static node_list_ref_t* find_edge(graph_list_t* g,
+static linked_list_node_t* find_edge(graph_list_t* g,
 								  unsigned int a,
 								  unsigned int b) {
-	list_ref_t* neighbours = &g->neighbours[a];
-	node_list_ref_t* node = neighbours->begin;
+	linked_list_t* neighbours = &g->neighbours[a];
+	linked_list_node_t* node = neighbours->begin;
 
 	graph_list_edge_t* e = NULL;
 	while (node) {
-		e = node->p;
+		e = get_node_ref(node, graph_list_edge_t);
 		if (e->to == b)
 			return node;
 		node = node->next;
@@ -98,8 +95,8 @@ static node_list_ref_t* find_edge(graph_list_t* g,
 graph_list_edge_t* graph_list_get_edge(graph_list_t* g,
 									   unsigned int a,
 									   unsigned int b) {
-	node_list_ref_t* node = find_edge(g, a, b);
-	return node == NULL ? NULL : node->p;
+	linked_list_node_t* node = find_edge(g, a, b);
+	return node == NULL ? NULL : get_node_ref(node, graph_list_edge_t);
 }
 
 void graph_list_set_edge(graph_list_t* g,
@@ -110,11 +107,11 @@ void graph_list_set_edge(graph_list_t* g,
 						 BOOL reverse) {
 	if (g->is_weighted == FALSE)
 		weight = 1;
-	node_list_ref_t* node = find_edge(g, a, b);
+	linked_list_node_t* node = find_edge(g, a, b);
 	if (node && !val)
 		linked_list_remove(&g->neighbours[a], node, NULL);
 	if (node && val)
-		((graph_list_edge_t*)node->p)->w = weight;
+		get_node_ref(node, graph_list_edge_t)->w = weight;
 	if (!node && val)
 		graph_list_add_edge_noverif(g, a, b, weight);
 	if (reverse)
@@ -157,10 +154,10 @@ int mark_and_examine_traversal_list(graph_list_t* g,
 			tab[index] = vertex;
 		index++;
 
-		node_list_ref_t* node = g->neighbours[vertex].begin;
+		linked_list_node_t* node = g->neighbours[vertex].begin;
 		graph_list_edge_t* e = NULL;
 		while (node) {
-			e = node->p;
+			e = get_node_ref(node, graph_list_edge_t);
 			if (!mark[e->to]) {
 				mark[e->to] = TRUE;
 				if (father)
@@ -516,7 +513,7 @@ int graph_list_dijkstra(graph_list_t* g,
 unsigned int graph_list_indegree(graph_list_t* g, unsigned vertex) {
 	unsigned degree = 0;
 	for (unsigned i = 0; i < g->nb_vert; i++) {
-		list_ref_t* neighbours = &g->neighbours[i];
+		linked_list_t* neighbours = &g->neighbours[i];
 		foreach_node(neighbours, edge, graph_list_edge_t) degree +=
 			edge->to == vertex;
 	}

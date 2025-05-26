@@ -11,15 +11,15 @@ void square(LIST_TYPE* n) {
 }
 
 int main(void) {
-	list_ref_t* list = create_linked_list(sizeof(LIST_TYPE));
+	linked_list_t* list = linked_list_create(sizeof(LIST_TYPE));
 	int i;
 	for (i = 0; i < TAB_LEN; i++)
-		linked_list_push_back(list, ptr(TYPE_INT, i));
+		linked_list_push_back(list, &i);
 	transform_list(list, (transform_list_fn_t)square);
-	node_list_ref_t* node = list->begin;
+	linked_list_node_t* node = list->begin;
 	for (i = 0; i < TAB_LEN; node = node->next, i++)
-		assert(*(LIST_TYPE*)node->p == tab[i]);
+		assert(*get_node_ref(node, LIST_TYPE) == tab[i]);
 
-	free_linked_list(list);
+	linked_list_free(list);
 	return 0;
 }

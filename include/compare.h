@@ -17,7 +17,7 @@
  * greater and 0 if they are equals. Any other value returned may lead to
  * Undefined Behavior.
  */
-typedef int (*compare_fn_t)(void*, void*);
+typedef int (*compare_fn_t)(void* a, void*);
 
 /**
  * @brief Defines a function to compare scalar values

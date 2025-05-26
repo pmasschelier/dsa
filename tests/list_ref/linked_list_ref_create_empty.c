@@ -2,10 +2,10 @@
 #include <list_ref/linked_list_ref.h>
 
 int main(void) {
-	list_ref_t* list = create_linked_list(sizeof(int));
+	linked_list_t* list = linked_list_create(sizeof(int));
 	assert(list);
 	assert(0 == linked_list_length(list));
 
-	free_linked_list(list);
+	linked_list_free(list);
 	return 0;
 }

@@ -49,7 +49,7 @@ struct htable_list_ref {
 	 * * htable_list_ref#nb_vert + j] will contains the weight of all the edges
 	 * (i, j),
 	 */
-	list_ref_t buckets[];
+	linked_list_t buckets[];
 };
 
 /**
@@ -62,7 +62,7 @@ struct htable_list_ref {
  * @return a pointer to the newly created graph or NULL if the function failed
  * @see free_htable_list_ref()
  */
-htable_list_ref_t* create_htable_list(unsigned buckets, equals_fn_t equals);
+htable_list_ref_t* create_htable_list(unsigned buckets, equals_fn_t equals, size_t size_bytes);
 
 /**
  * @brief Frees the graph

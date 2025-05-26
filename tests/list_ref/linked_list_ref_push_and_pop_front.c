@@ -6,22 +6,22 @@
 const int tab[TAB_LEN] = {0, 1, 2, 0, 1, 2};
 
 int main(void) {
-	list_ref_t* list = create_linked_list(sizeof(LIST_TYPE));
+	linked_list_t* list = linked_list_create(sizeof(LIST_TYPE));
 	for (int i = 0; i < 10; i++)
-		linked_list_push_front(list, ptr(TYPE_INT, i));
+		linked_list_push_front(list, &i);
 	for (int i = 0; i < 7; i++)
 		linked_list_pop_front(list, NULL);
 	for (int i = 0; i < 5; i++)
-		linked_list_push_front(list, ptr(TYPE_INT, i));
+		linked_list_push_front(list, &i);
 	for (int i = 0; i < 2; i++)
 		linked_list_pop_front(list, NULL);
 	int i = 0;
 	assert(linked_list_length(list) == TAB_LEN);
-	node_list_ref_t* node = list->end;
+	linked_list_node_t* node = list->end;
 	do {
-		assert(*(int*)(node->p) == tab[i++]);
+		assert(*get_node_ref(node, LIST_TYPE) == tab[i++]);
 	} while ((node = node->prev));
 
-	free_linked_list(list);
+	linked_list_free(list);
 	return 0;
 }

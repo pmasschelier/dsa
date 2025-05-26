@@ -21,13 +21,12 @@ graph_list_t* graph_mat_to_graph_list(graph_mat_t* graph_mat,
 		for (unsigned i = 0; i < graph_list->nb_vert; i++)
 			linked_list_clean(&graph_list->neighbours[i]);
 		graph_list->neighbours =
-			realloc(graph_list->neighbours, size * sizeof(list_ref_t));
+			realloc(graph_list->neighbours, size * sizeof(linked_list_t));
 		when_null_ret(graph_list->neighbours, NULL);
 		for (unsigned i = 0; i < size; i++) {
 			graph_list->neighbours[i].begin = NULL;
 			graph_list->neighbours[i].end = NULL;
-			graph_list->neighbours[i].size = sizeof(graph_list_edge_t);
-			graph_list->neighbours[i].free_element = free;
+			graph_list->neighbours[i].size_bytes = sizeof(graph_list_edge_t);
 		}
 		graph_list->nb_vert = size;
 		graph_list->is_weighted = weighted;
@@ -65,7 +64,7 @@ graph_mat_t* graph_list_to_graph_mat(graph_list_t* graph_list,
 
 	for (unsigned i = 0; i < size; i++) {
 		foreach_node_node((&graph_list->neighbours[i]), node) {
-			graph_list_edge_t* edge = node->p;
+			graph_list_edge_t* edge = get_node_ref(node, graph_list_edge_t);
 			graph_mat_set_edge(graph_mat, i, edge->to, TRUE, edge->w, FALSE);
 		}
 	}

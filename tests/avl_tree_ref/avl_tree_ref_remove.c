@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <stdlib.h>
 #include "btree_ref/avl_tree_ref.h"
 #include "compare.h"
 #include "errors.h"
@@ -17,10 +16,10 @@ int main(void) {
 	bsearch_tree_ref_t* tree = create_bsearch_tree(sizeof(int), compare_int);
 	int ret;
 	for (int i = 0; i < TAB_LEN; i++) {
-		ret = avl_tree_insert(tree, ptr(TYPE_INT, tab[i]), NULL);
+		ret = avl_tree_insert(tree, &tab[i], NULL);
 		assert(ret == -ERROR_NO_ERROR);
 	}
-	node_bsearch_tree_ref_t* found;
+	node_btree_ref_t* found;
 
 	ret = avl_tree_remove(tree, &tab[INSERT_INDEX]);
 	assert(ret == TRUE);

@@ -8,16 +8,6 @@
 #include "structures.h"
 #include "test_macros.h"
 
-typedef struct node_rb_tree_ref node_rb_tree_ref_t;
-
-struct node_rb_tree_ref {
-	void* p;					/**< Pointer to data */
-	node_rb_tree_ref_t* ls;		/**< Pointer to its left son */
-	node_rb_tree_ref_t* rs;		/**< Pointer to its right son */
-	node_rb_tree_ref_t* father; /**< Pointer to its father */
-	BOOL red;					/**< Is the node red ? */
-};
-
 // TODO: Implement rb_tree_check
 /* BOOL rb_tree_check(bsearch_tree_ref_t* tree) { */
 /* 	when_null_ret(tree, -ERROR_INVALID_PARAM1); */
@@ -28,7 +18,7 @@ struct node_rb_tree_ref {
 /* 	stack_view_t* forest = create_stack_view(sizeof(node_btree_ref_t*)); */
 /* 	when_null_ret(forest, -ERROR_ALLOCATION_FAILED); */
 /**/
-/* 	node_rb_tree_ref_t* node = (node_rb_tree_ref_t*)tree->root; */
+/* 	node_btree_ref_t* node = (node_btree_ref_t*)tree->root; */
 /**/
 /* 	stack_view_push(forest, node); */
 /* 	while (empty_stack(forest) == FALSE) { */
@@ -49,119 +39,107 @@ struct node_rb_tree_ref {
 /* 	return i; */
 /* } */
 
-static unsigned get_child_index(node_rb_tree_ref_t* node) {
-	return node->father->rs == node;
+static unsigned get_child_index(node_btree_ref_t* node) {
+	return node->parent->rs == node;
 }
 
-node_bsearch_tree_ref_t** node_bsearch_tree_get_location(
+node_btree_ref_t** node_bsearch_tree_get_location(
 	bsearch_tree_ref_t* tree,
-	node_bsearch_tree_ref_t* node);
+	node_btree_ref_t* node);
 
 static void insert_equilibrate_leaf_path(bsearch_tree_ref_t* tree,
-										 node_rb_tree_ref_t* node,
+										 node_btree_ref_t* node,
 										 btree_path_t path) {
-	node_rb_tree_ref_t **parents, **children;
-	node_bsearch_tree_ref_t **grandfather_ptr, **father_ptr;
-	node_rb_tree_ref_t *grandfather, *father, *uncle;
+	node_btree_ref_t **parents, **children;
+	node_btree_ref_t **grandparent_ptr, **parent_ptr;
+	node_btree_ref_t *grandparent, *parent, *uncle;
 
-	while (node->father != NULL) {
-		// Case  (father BLACK)
-		if (node->father->red == FALSE)
+	while (node->parent != NULL) {
+		// Case  (parent BLACK)
+		if (node->parent->priv == RB_BLACK)
 			return;	 // insertion complete
-		// From now on father is RED
+		// From now on parent is RED
 
-		// Case 4 (father is root and RED)
-		if (node->father->father == NULL) {
-			node->father->red = FALSE;
+		// Case 4 (parent is root and RED)
+		if (node->parent->parent == NULL) {
+			node->parent->priv = RB_BLACK;
 			return;	 // insertion complete
 		}
 
-		grandfather_ptr = node_bsearch_tree_get_location(
-			tree, (node_bsearch_tree_ref_t*)node->father->father);
-		grandfather = (node_rb_tree_ref_t*)*grandfather_ptr;
-		parents = &grandfather->ls;
-		unsigned father_index = get_child_index(node->father);
-		father_ptr = (node_bsearch_tree_ref_t**)&parents[father_index];
-		father = (node_rb_tree_ref_t*)*father_ptr;
-		uncle = parents[1 - father_index];
-		children = &father->ls;
+		grandparent_ptr = node_bsearch_tree_get_location(
+			tree, (node_btree_ref_t*)node->parent->parent);
+		grandparent = (node_btree_ref_t*)*grandparent_ptr;
+		parents = &grandparent->ls;
+		unsigned parent_index = get_child_index(node->parent);
+		parent_ptr = (node_btree_ref_t**)&parents[parent_index];
+		parent = (node_btree_ref_t*)*parent_ptr;
+		uncle = parents[1 - parent_index];
+		children = &parent->ls;
 
 		// Case 5 and 6 (uncle is considered BLACK)
-		if (uncle == NULL || uncle->red == FALSE) {
+		if (uncle == NULL || uncle->priv == RB_BLACK) {
 			// Case 5 (inner node)
-			if (father_index != get_child_index(node)) {
-				if (father_index == 1)
-					bsearch_tree_rotate_right(father_ptr);
+			if (parent_index != get_child_index(node)) {
+				if (parent_index == 1)
+					bsearch_tree_rotate_right(parent_ptr);
 				else
-					bsearch_tree_rotate_left(father_ptr);
-				node = father;
+					bsearch_tree_rotate_left(parent_ptr);
+				node = parent;
 				// Continue to Case 6
 				continue;
 			}
 			// Case 6 (parent RED and uncle BLACK and outer grandchild)
-			if (father_index == 0)
-				bsearch_tree_rotate_right(grandfather_ptr);
+			if (parent_index == 0)
+				bsearch_tree_rotate_right(grandparent_ptr);
 			else
-				bsearch_tree_rotate_left(grandfather_ptr);
-			father->red = FALSE;
-			grandfather->red = TRUE;
+				bsearch_tree_rotate_left(grandparent_ptr);
+			parent->priv = RB_BLACK;
+			grandparent->priv = RB_RED;
 			return;
 		}
-		// Case 2 (father and uncle are RED)
-		father->red = FALSE;
-		uncle->red = FALSE;
-		grandfather->red = TRUE;
-		node = grandfather;
+		// Case 2 (parent and uncle are RED)
+		parent->priv = RB_BLACK;
+		uncle->priv = RB_BLACK;
+		grandparent->priv = RB_RED;
+		node = grandparent;
 	}
 }
 
-static node_rb_tree_ref_t* create_rb_leaf(void* value,
-										  node_rb_tree_ref_t* father) {
-	node_rb_tree_ref_t* leaf = malloc(sizeof(node_rb_tree_ref_t));
-	when_null_ret(leaf, NULL);
-	leaf->p = value;
-	leaf->ls = NULL;
-	leaf->rs = NULL;
-	leaf->red = TRUE;
-	leaf->father = father;
-	return leaf;
-}
-
-typedef node_bsearch_tree_ref_t* (
-	*create_bsearch_leaf_fn_t)(void* value, node_bsearch_tree_ref_t* father);
+typedef node_btree_ref_t* (
+	*create_bsearch_leaf_fn_t)(void* value, node_btree_ref_t* parent);
 
 int bsearch_tree_insert_impl(bsearch_tree_ref_t* tree,
 							 void* value,
-							 node_bsearch_tree_ref_t** found,
+							 node_btree_ref_t** found,
 							 btree_path_t* path,
-							 node_bsearch_tree_ref_t** node,
-							 create_bsearch_leaf_fn_t create_leaf);
+                             uintptr_t priv_init);
 
 int rb_tree_insert(bsearch_tree_ref_t* tree,
 				   void* value,
-				   node_bsearch_tree_ref_t** found) {
+				   node_btree_ref_t** found) {
 	btree_path_t path;
-	node_bsearch_tree_ref_t* node;
+	node_btree_ref_t* node;
 	int ret =
-		bsearch_tree_insert_impl(tree, value, found, &path, &node,
-								 (create_bsearch_leaf_fn_t)create_rb_leaf);
-	if (ret == -ERROR_KEY_ALREADY_EXISTS)
+		bsearch_tree_insert_impl(tree, value, &node, &path, RB_RED);
+    if(found != NULL)
+        *found = node;
+    if (ret == -ERROR_KEY_ALREADY_EXISTS)
 		return ret;
-	insert_equilibrate_leaf_path(tree, (node_rb_tree_ref_t*)node, path);
+	insert_equilibrate_leaf_path(tree, node, path);
 	return -ERROR_NO_ERROR;
 }
 
-node_bsearch_tree_ref_t* bsearch_tree_remove_impl(bsearch_tree_ref_t* tree,
+node_btree_ref_t* bsearch_tree_remove_impl(bsearch_tree_ref_t* tree,
 												  void* value,
 												  btree_path_t* path);
 
 static void remove_equilibrate_leaf_path(bsearch_tree_ref_t* tree,
-										 node_rb_tree_ref_t* node,
+										 node_btree_ref_t* node,
 										 btree_path_t path) {
 	int child_index;
-	node_rb_tree_ref_t **siblings, **nephews;
-	node_bsearch_tree_ref_t **father_ptr, **brother_ptr;
-	node_rb_tree_ref_t *father, *brother, *close, *distant;
+	node_btree_ref_t **siblings, **nephews;
+	node_btree_ref_t **parent_ptr, **brother_ptr;
+	node_btree_ref_t *parent, *brother, *close, *distant;
 	// Only zero or one-child nodes can be removed
 	// If a two node is to be remove we swap its value with the value of its
 	// successor and try to remove its successor (see resolve_remove in
@@ -169,40 +147,40 @@ static void remove_equilibrate_leaf_path(bsearch_tree_ref_t* tree,
 	BOOL has_right = node->rs != NULL;
 	BOOL has_left = node->ls != NULL;
 	if (has_right && !has_left) {
-		node->rs->red = FALSE;
+		node->rs->priv = RB_BLACK;
 		return;
 	}
 	if (has_left && !has_right) {
-		node->ls->red = FALSE;
+		node->ls->priv = RB_BLACK;
 		return;
 	}
-	father = node->father;
-	if (father == NULL || node->red == TRUE)
+	parent = node->parent;
+	if (parent == NULL || node->priv == RB_RED)
 		return;
 	// node is not the root, has no child and is BLACK
 	do {
 		child_index = path_last_direction(path);
-		father_ptr = node_bsearch_tree_get_location(
-			tree, (node_bsearch_tree_ref_t*)father);
-		siblings = &father->ls;
-		brother_ptr = (node_bsearch_tree_ref_t**)&siblings[1 - child_index];
-		brother = (node_rb_tree_ref_t*)*brother_ptr;
+		parent_ptr = node_bsearch_tree_get_location(
+			tree, (node_btree_ref_t*)parent);
+		siblings = &parent->ls;
+		brother_ptr = (node_btree_ref_t**)&siblings[1 - child_index];
+		brother = (node_btree_ref_t*)*brother_ptr;
 		nephews = &brother->ls;
 		close = nephews[child_index];
 		distant = nephews[1 - child_index];
 		// Case 3: Sibling is RED
-		if (brother->red == TRUE) {
+		if (brother->priv == RB_RED) {
 			if (child_index == 0)
-				bsearch_tree_rotate_left(father_ptr);
+				bsearch_tree_rotate_left(parent_ptr);
 			else
-				bsearch_tree_rotate_right(father_ptr);
-			father->red = TRUE;
-			brother->red = FALSE;
+				bsearch_tree_rotate_right(parent_ptr);
+			parent->priv = RB_RED;
+			brother->priv = RB_BLACK;
 			continue;
 		}
 		// Sibling is BLACK
-		BOOL close_is_red = close != NULL && close->red == TRUE;
-		BOOL distant_is_red = distant != NULL && distant->red == TRUE;
+		BOOL close_is_red = close != NULL && close->priv == TRUE;
+		BOOL distant_is_red = distant != NULL && distant->priv == TRUE;
 		if (close_is_red || distant_is_red) {
 			// Case 5: Close nephew is RED
 			if (close_is_red == TRUE) {
@@ -210,40 +188,40 @@ static void remove_equilibrate_leaf_path(bsearch_tree_ref_t* tree,
 					bsearch_tree_rotate_right(brother_ptr);
 				else
 					bsearch_tree_rotate_left(brother_ptr);
-				brother->red = TRUE;
-				close->red = FALSE;
+				brother->priv = RB_RED;
+				close->priv = RB_BLACK;
 				distant = brother;
 				brother = close;
 			}
 			// Case 6: Distant nephew is RED
 			if (child_index == 0)
-				bsearch_tree_rotate_left(father_ptr);
+				bsearch_tree_rotate_left(parent_ptr);
 			else
-				bsearch_tree_rotate_right(father_ptr);
-			brother->red = father->red;
-			father->red = FALSE;
-			distant->red = FALSE;
+				bsearch_tree_rotate_right(parent_ptr);
+			brother->priv = parent->priv;
+			parent->priv = RB_BLACK;
+			distant->priv = RB_BLACK;
 			return;
 		}
 		// Both nephews are BLACK
-		// Case 4: Father is RED
-		if (father->red == TRUE) {
-			brother->red = TRUE;
-			father->red = FALSE;
+		// Case 4: parent is RED
+		if (parent->priv == RB_RED) {
+			brother->priv = RB_RED;
+			parent->priv = RB_BLACK;
 			return;
 		}
-		// Case 2: father, brother and both nephews are BLACK
-		brother->red = TRUE;
-		father = father->father;
+		// Case 2: parent, brother and both nephews are BLACK
+		brother->priv = RB_RED;
+		parent = parent->parent;
 		path.length -= 1;
-	} while (father != NULL);
+	} while (parent != NULL);
 	return;
 }
 
 BOOL rb_tree_remove(bsearch_tree_ref_t* tree, void* value) {
 	btree_path_t path;
-	node_rb_tree_ref_t* node =
-		(node_rb_tree_ref_t*)bsearch_tree_remove_impl(tree, value, &path);
+	node_btree_ref_t* node =
+		(node_btree_ref_t*)bsearch_tree_remove_impl(tree, value, &path);
 	if (node == NULL)
 		return FALSE;
 	if (tree->root != NULL)
@@ -252,9 +230,9 @@ BOOL rb_tree_remove(bsearch_tree_ref_t* tree, void* value) {
 	return TRUE;
 }
 
-BOOL rb_tree_is_node_red(node_bsearch_tree_ref_t* node) {
+BOOL rb_tree_is_node_red(node_btree_ref_t* node) {
+    // An absence of node is equivalent to the presence of a black node
 	if (node == NULL)
 		return FALSE;
-	node_rb_tree_ref_t* rb_node = (node_rb_tree_ref_t*)node;
-	return rb_node->red == TRUE;
+	return node->priv == RB_RED;
 }

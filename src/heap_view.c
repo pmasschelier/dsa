@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "errors.h"
-#include "ptr.h"
 #include "structures.h"
 #include "test_macros.h"
 

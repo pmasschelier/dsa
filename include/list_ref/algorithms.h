@@ -10,7 +10,7 @@
  * \return un pointeur sur l'élément s'il a été trouve, NULL sinon
  * \complexity O(n)
  */
-node_list_ref_t* find_in_list(list_ref_t* list, void* x);
+linked_list_node_t* find_in_list(linked_list_t* list, void* x);
 
 typedef void (*transform_list_fn_t)(void*);
 
@@ -20,7 +20,7 @@ typedef void (*transform_list_fn_t)(void*);
  * @param list pointer to the list
  * @param f function to apply to the elements
  */
-void transform_list(list_ref_t* list, transform_list_fn_t f);
+void transform_list(linked_list_t* list, transform_list_fn_t f);
 
 typedef BOOL (*list_filter_fn_t)(void*);
 

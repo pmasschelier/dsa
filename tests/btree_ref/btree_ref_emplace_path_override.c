@@ -1,7 +1,5 @@
 #include <assert.h>
 #include <btree_ref/btree_ref.h>
-#include <ptr.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 #define BT_TYPE int
@@ -14,20 +12,11 @@ void* values[TAB_LEN];
 
 btree_path_t pathA = {PATH_LEN, 0x0AF};
 
-const int FREE_COUNT = TAB_LEN + TAB_LEN / 2;
-int free_count;
-
-static void free_counter(void* ptr) {
-	(void)ptr;
-	free_count++;
-}
-
 int main(void) {
 	for (int i = 0; i < TAB_LEN; i++)
 		values[i] = &numbers[i];
 
 	btree_ref_t* btree = create_btree(sizeof(BT_TYPE));
-	btree->free_element = free_counter;
 
 	btree_emplace_path(btree, pathA, values, TAB_LEN, 0);
 	for (int i = 0; i < TAB_LEN; i++)
@@ -35,26 +24,25 @@ int main(void) {
 	btree_emplace_path(btree, pathA, values, TAB_LEN, 0);
 
 	node_btree_ref_t* node = btree->root;
-	assert(*(BT_TYPE*)node->p == override[0]);
+	assert(*(BT_TYPE*)node->data == override[0]);
 	node = *btree_next_node(node, &pathA);
-	assert(*(BT_TYPE*)node->p == override[1]);
+	assert(*(BT_TYPE*)node->data == override[1]);
 	node = *btree_next_node(node, &pathA);
-	assert(*(BT_TYPE*)node->p == override[2]);
+	assert(*(BT_TYPE*)node->data == override[2]);
 	node = *btree_next_node(node, &pathA);
-	assert(*(BT_TYPE*)node->p == override[3]);
+	assert(*(BT_TYPE*)node->data == override[3]);
 	node = *btree_next_node(node, &pathA);
-	assert(*(BT_TYPE*)node->p == override[4]);
+	assert(*(BT_TYPE*)node->data == override[4]);
 	node = *btree_next_node(node, &pathA);
-	assert(*(BT_TYPE*)node->p == override[5]);
+	assert(*(BT_TYPE*)node->data == override[5]);
 	node = *btree_next_node(node, &pathA);
-	assert(*(BT_TYPE*)node->p == override[6]);
+	assert(*(BT_TYPE*)node->data == override[6]);
 	node = *btree_next_node(node, &pathA);
-	assert(*(BT_TYPE*)node->p == override[7]);
+	assert(*(BT_TYPE*)node->data == override[7]);
 	node = *btree_next_node(node, &pathA);
-	assert(*(BT_TYPE*)node->p == override[8]);
+	assert(*(BT_TYPE*)node->data == override[8]);
 	node = *btree_next_node(node, &pathA);
-	assert(*(BT_TYPE*)node->p == override[9]);
+	assert(*(BT_TYPE*)node->data == override[9]);
 	btree_free(btree);
-	assert(free_count == FREE_COUNT);
 	return 0;
 }

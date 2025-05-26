@@ -13,7 +13,6 @@ src_files = files(
   'circular_buffer.c',
   'array_list.c',
   'heap_view.c',
-  'ptr.c',
   'weight_type.c',
 )
 

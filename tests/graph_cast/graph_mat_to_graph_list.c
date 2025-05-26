@@ -30,7 +30,7 @@ int main(void) {
 		assert(g->nb_vert == graph_list->nb_vert);
 		for (unsigned i = 0; i < g->nb_vert; i++) {
 			foreach_node_node((&graph_list->neighbours[i]), node) {
-				graph_list_edge_t* edge = node->p;
+				graph_list_edge_t* edge = get_node_ref(node, graph_list_edge_t);
 				assert(graph_mat_get_edge(g, i, edge->to) == TRUE);
 				assert(graph_mat_get_weight(g, i, edge->to) == edge->w);
 			}

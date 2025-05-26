@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <stdlib.h>
 #include "btree_ref/bsearch_tree_ref.h"
 #include "compare.h"
 

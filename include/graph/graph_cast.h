@@ -1,6 +1,9 @@
 #ifndef GRAPHCAST_H
 #define GRAPHCAST_H
 
+#include "graph_mat.h"
+#include "graph_list.h"
+
 /**
  * @file graph/graph_cast.h
  * @brief Conversion functions for different graph implementations
@@ -9,12 +12,6 @@
  * Defines function to perform conversion between graph_mat and graph_list
  * types.
  */
-
-typedef struct graph_mat graph_mat_t;
-struct graph_mat;
-
-typedef struct graph_list graph_list_t;
-struct graph_list;
 
 /**
  * @brief Converts a graph_mat_t into a graph_list_t

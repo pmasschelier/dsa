@@ -5,10 +5,9 @@
 LIST_TYPE x = 10;
 
 int main(void) {
-	list_ref_t* list = create_linked_list(sizeof(LIST_TYPE));
-	list->free_element = NULL;
+	linked_list_t* list = linked_list_create(sizeof(LIST_TYPE));
 
 	linked_list_push_back(list, &x);
-	free_linked_list(list);
+	linked_list_free(list);
 	return 0;
 }

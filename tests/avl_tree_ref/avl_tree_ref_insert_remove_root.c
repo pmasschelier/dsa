@@ -1,9 +1,7 @@
 
 #include <assert.h>
-#include <stdlib.h>
 #include "btree_ref/avl_tree_ref.h"
 #include "compare.h"
-#include "ptr.h"
 #include "structures.h"
 
 #define KEY_TYPE int
@@ -13,7 +11,7 @@ KEY_TYPE a = 1;
 
 int main(void) {
 	bsearch_tree_ref_t* tree = create_bsearch_tree(sizeof(int), compare_int);
-	avl_tree_insert(tree, ptr(TYPE_INT, a), NULL);
+	avl_tree_insert(tree, &a, NULL);
 	BOOL ret = avl_tree_remove(tree, &a);
 	assert(ret == TRUE);
 	assert(tree->root == NULL);

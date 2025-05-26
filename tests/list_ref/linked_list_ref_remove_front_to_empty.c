@@ -6,9 +6,9 @@
 LIST_TYPE tab[TAB_LEN] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 int main(void) {
-	list_ref_t* list = create_linked_list(sizeof(LIST_TYPE));
+	linked_list_t* list = linked_list_create(sizeof(LIST_TYPE));
 	for (int i = 0; i < TAB_LEN; i++)
-		linked_list_push_back(list, ptr(TYPE_INT, i));
+		linked_list_push_back(list, &i);
 
 	assert(linked_list_length(list) == TAB_LEN);
 	for (int i = 0; i < TAB_LEN; i++)
@@ -16,6 +16,6 @@ int main(void) {
 
 	assert(linked_list_empty(list));
 
-	free_linked_list(list);
+	linked_list_free(list);
 	return 0;
 }

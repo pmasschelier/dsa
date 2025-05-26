@@ -69,7 +69,7 @@ struct graph_list {
 	 * neighbours[i] contains the list of edges coming out of the i-th node of
 	 * the graph
 	 */
-	list_ref_t* neighbours;
+	linked_list_t* neighbours;
 	/** Does the graph is weighted ? */
 	/**
 	 * @brief Is the graph weighted

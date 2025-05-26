@@ -14,14 +14,14 @@ LIST_TYPE tab[TAB_LEN] = {
 };
 
 int main(void) {
-	list_ref_t* list = linked_list_from_tab(tab, sizeof(LIST_TYPE), TAB_LEN);
-	node_list_ref_t *nodeA, *nodeB = list->begin;
+	linked_list_t* list = linked_list_from_tab(tab, sizeof(LIST_TYPE), TAB_LEN);
+	linked_list_node_t *nodeA, *nodeB = list->begin;
 	for (int i = 0; i < TAB_LEN; i++) {
 		nodeA = find_in_list(list, (void*)&tab[i]);
 		assert(nodeA == nodeB);
 		nodeB = nodeB->next;
 	}
 
-	free_linked_list(list);
+	linked_list_free(list);
 	return 0;
 }

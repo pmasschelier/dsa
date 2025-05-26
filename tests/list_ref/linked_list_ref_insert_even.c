@@ -5,20 +5,20 @@
 #define LIST_TYPE int
 
 int main(void) {
-	list_ref_t* list = create_linked_list(sizeof(LIST_TYPE));
+	linked_list_t* list = linked_list_create(sizeof(LIST_TYPE));
 	for (int i = 1; i < TAB_LEN; i += 2)
-		linked_list_push_back(list, ptr(TYPE_INT, i));
-	node_list_ref_t* node = NULL;
+		linked_list_push_back(list, &i);
+	linked_list_node_t* node = NULL;
 	for (int i = 0; i < TAB_LEN; i += 2) {
-		node = linked_list_insert(list, node, ptr(TYPE_INT, i));
+		node = linked_list_insert(list, node, &i);
 		node = node->next;
 	}
 
 	node = list->begin;
 	for (int i = 0; i < TAB_LEN; i++, node = node->next) {
-		assert(i == *(LIST_TYPE*)node->p);
+		assert(i == *get_node_ref(node, LIST_TYPE));
 	}
 
-	free_linked_list(list);
+	linked_list_free(list);
 	return 0;
 }

@@ -1,7 +1,5 @@
 #include <assert.h>
 #include <btree_ref/btree_ref.h>
-#include <ptr.h>
-#include <stdlib.h>
 
 #define BT_TYPE int
 #define PATHA_LEN 9
@@ -21,7 +19,6 @@ int main(void) {
 		values[i] = &numbers[i];
 
 	btree_ref_t* btree = create_btree(sizeof(BT_TYPE));
-	btree->free_element = NULL;
 
 	btree_emplace_path(btree, pathA, values, TAB_LEN, 0);
 	btree_emplace_path(btree, pathB, values, TAB_LEN, PATHB_OFFSET);

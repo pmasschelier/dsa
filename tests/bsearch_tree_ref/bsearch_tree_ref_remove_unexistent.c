@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <stdlib.h>
 #include "btree_ref/bsearch_tree_ref.h"
 #include "compare.h"
 #include "errors.h"
@@ -17,7 +16,7 @@ KEY_TYPE a = 13;
 int main(void) {
 	bsearch_tree_ref_t* tree = create_bsearch_tree(sizeof(int), compare_int);
 	for (int i = 0; i < TAB_LEN; i++) {
-		int ret = bsearch_tree_insert(tree, ptr(TYPE_INT, tab[i]), NULL);
+		int ret = bsearch_tree_insert(tree, &tab[i], NULL);
 		assert(ret == -ERROR_NO_ERROR);
 	}
 

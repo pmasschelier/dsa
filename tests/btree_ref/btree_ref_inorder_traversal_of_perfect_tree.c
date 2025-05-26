@@ -13,7 +13,7 @@ int main(void) {
 		tab[i] = i;
 	btree_ref_t* btree =
 		btree_perfect_tree_from_tab(tab, sizeof(BT_TYPE), TAB_LEN);
-	btree_inorder_traversal(btree, (void**)out);
+	btree_dfs_array(btree, NULL, (void**)out, NULL);
 
 	for (int i = 0; i < TAB_LEN; i++)
 		assert(*out[i] == expected[i]);

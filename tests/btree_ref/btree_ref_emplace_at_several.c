@@ -1,6 +1,5 @@
 #include <assert.h>
 #include <btree_ref/btree_ref.h>
-#include "ptr.h"
 
 #define BT_TYPE int
 #define PATHS_LEN 11
@@ -22,19 +21,19 @@ btree_path_t paths[PATHS_LEN] = {
 int main(void) {
 	btree_ref_t* btree = create_btree(sizeof(BT_TYPE));
 	for (int i = 0; i < PATHS_LEN; i++)
-		btree_emplace_at(btree, paths[i], ptr(TYPE_INT, i));
+		btree_emplace_at(btree, paths[i], &i);
 	node_btree_ref_t* node = btree->root;
-	assert(*(BT_TYPE*)node->p == 0);
-	assert(*(BT_TYPE*)node->ls->p == 1);
-	assert(*(BT_TYPE*)node->ls->rs->p == 2);
-	assert(*(BT_TYPE*)node->ls->rs->ls->p == 3);
-	assert(*(BT_TYPE*)node->ls->rs->ls->rs->p == 4);
-	assert(*(BT_TYPE*)node->rs->p == 5);
-	assert(*(BT_TYPE*)node->ls->rs->ls->rs->rs->p == 6);
-	assert(*(BT_TYPE*)node->ls->rs->rs->p == 7);
-	assert(*(BT_TYPE*)node->ls->rs->ls->rs->rs->rs->p == 8);
-	assert(*(BT_TYPE*)node->ls->rs->ls->rs->rs->rs->ls->p == 9);
-	assert(*(BT_TYPE*)node->ls->rs->ls->rs->rs->rs->rs->p == 10);
+	assert(*(BT_TYPE*)node->data == 0);
+	assert(*(BT_TYPE*)node->ls->data == 1);
+	assert(*(BT_TYPE*)node->ls->rs->data == 2);
+	assert(*(BT_TYPE*)node->ls->rs->ls->data == 3);
+	assert(*(BT_TYPE*)node->ls->rs->ls->rs->data == 4);
+	assert(*(BT_TYPE*)node->rs->data == 5);
+	assert(*(BT_TYPE*)node->ls->rs->ls->rs->rs->data == 6);
+	assert(*(BT_TYPE*)node->ls->rs->rs->data == 7);
+	assert(*(BT_TYPE*)node->ls->rs->ls->rs->rs->rs->data == 8);
+	assert(*(BT_TYPE*)node->ls->rs->ls->rs->rs->rs->ls->data == 9);
+	assert(*(BT_TYPE*)node->ls->rs->ls->rs->rs->rs->rs->data == 10);
 	btree_free(btree);
 	return 0;
 }
