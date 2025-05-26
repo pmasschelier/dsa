@@ -29,7 +29,7 @@ int main(void) {
 		graph_list = graph_mat_to_graph_list(g, graph_list);
 		assert(g->nb_vert == graph_list->nb_vert);
 		for (unsigned i = 0; i < g->nb_vert; i++) {
-			foreach_node_node((&graph_list->neighbours[i]), node) {
+			linked_list_foreach_node((&graph_list->neighbours[i]), node) {
 				graph_list_edge_t* edge = get_node_ref(node, graph_list_edge_t);
 				assert(graph_mat_get_edge(g, i, edge->to) == TRUE);
 				assert(graph_mat_get_weight(g, i, edge->to) == edge->w);

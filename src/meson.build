@@ -26,6 +26,3 @@ lib = library('struct', src_files,
 # Specify dependencies for the library (if any)
 lib_dep = declare_dependency(include_directories: inc_dir,
                          link_with: lib)
-
-# Expose the library and dependency to other subdirectories
-# lib_dep = [lib, dep]

@@ -1,6 +1,4 @@
 passing_test_sources = [
-  # 'linked_list_ref_append_back.c',
-  # 'linked_list_ref_append_front.c',
   'linked_list_ref_clean.c',
   'linked_list_ref_create_empty.c',
   'linked_list_ref_find_equals.c',

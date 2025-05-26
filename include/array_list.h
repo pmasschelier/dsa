@@ -52,6 +52,7 @@ typedef struct array_list array_list_t;
  * int i;
  * for(int i = 0; i < array.size; i++) {
  *    value = get_array_list_ref(array, i, int);
+ *    printf("%d\n", *value);
  *    // ...
  * }
  * ```

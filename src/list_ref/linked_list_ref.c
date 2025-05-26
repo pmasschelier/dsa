@@ -3,6 +3,7 @@
 #include "test_macros.h"
 
 #include <assert.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,6 +16,23 @@ linked_list_t* linked_list_create(size_t size_bytes) {
     ret->end = NULL;
     ret->size_bytes = size_bytes;
 	return ret;
+}
+
+void linked_list_free(linked_list_t* list) {
+	if (!list)
+		return;
+	linked_list_clean(list);
+	free(list);
+}
+
+void linked_list_init(linked_list_t* list, size_t size_bytes) {
+    list->size_bytes = size_bytes;
+    list->begin = NULL;
+    list->end = NULL;
+}
+
+void linked_list_deinit(linked_list_t* list) {
+    linked_list_clean(list);
 }
 
 BOOL linked_list_empty(const linked_list_t* list) {
@@ -247,7 +265,7 @@ node_list_ref_t* linked_list_find_equals(list_ref_t* list,
 linked_list_node_t* linked_list_find_equals(linked_list_t* list,
 										 void* value,
 										 equals_fn_t equals) {
-    foreach_node(list, node) {
+    linked_list_foreach(list, node) {
 		if (equals(node->data, value))
 			return node;
 	}
@@ -300,11 +318,4 @@ void linked_list_swap(linked_list_t* list, linked_list_node_t* a, linked_list_no
         list->end = b;
     if(a->next == NULL)
         list->end = a;
-}
-
-void linked_list_free(linked_list_t* list) {
-	if (!list)
-		return;
-	linked_list_clean(list);
-	free(list);
 }

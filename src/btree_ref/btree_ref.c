@@ -602,20 +602,20 @@ int btree_levelorder_traversal(btree_ref_t* tree, void* tab) {
 		return 0;
 	unsigned i = 0;
     
-	linked_list_t foret = LIST_REF_INIT(node_btree_ref_t*);
-	linked_list_node_t* ret = linked_list_push_back(&foret, &tree->root);
+	linked_list_t forest = LINKED_LIST_INIT(node_btree_ref_t*);
+	linked_list_node_t* ret = linked_list_push_back(&forest, &tree->root);
 	when_null_ret(ret, -ERROR_ALLOCATION_FAILED);
 
     node_btree_ref_t* t;
-	while (linked_list_pop_front(&foret, &t)) {
+	while (linked_list_pop_front(&forest, &t)) {
         if (t->ls != NULL)
-            linked_list_push_back(&foret, &t->ls);
+            linked_list_push_back(&forest, &t->ls);
         if (t->rs != NULL)
-            linked_list_push_back(&foret, &t->rs);
+            linked_list_push_back(&forest, &t->rs);
         memcpy((uint8_t*)tab + i * tree->size, t->data, tree->size);
         i++;
 	}
-	linked_list_clean(&foret);
+	linked_list_deinit(&forest);
 	return 0;
 }
 

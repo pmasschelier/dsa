@@ -47,8 +47,9 @@ typedef int (*compare_fn_t)(void* a, void*);
  * @typedef equals_fn_t
  * @brief Typedef for pointer to an equality function
  *
- * An equality function takes to pointers as arguments, it should return 1 if
- * the first element equals the the second and 0 otherwise.
+ * An equality function takes two pointers as arguments, it should return 1 if
+ * the first element equals the second and 0 otherwise.
+ *
  * Any other value returned may lead to Undefined Behavior.
  */
 typedef int (*equals_fn_t)(void* a, void* b);
