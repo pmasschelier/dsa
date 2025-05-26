@@ -1,13 +1,13 @@
 var searchData=
 [
-  ['bsearch_5ftree_5ffind_0',['bsearch_tree_find',['../group__bsearch__tree__ref.html#gaf0761a778802a7d5c77afd316c03f6ac',1,'bsearch_tree_ref.h']]],
-  ['bsearch_5ftree_5finsert_1',['bsearch_tree_insert',['../group__bsearch__tree__ref.html#ga0f37b08560f99b9ff75cc72ec6f75ed1',1,'bsearch_tree_ref.h']]],
-  ['bsearch_5ftree_5finsert_5fclone_2',['bsearch_tree_insert_clone',['../group__bsearch__tree__ref.html#ga4fb939a653df60837f6634a08acbe532',1,'bsearch_tree_ref.h']]],
-  ['bsearch_5ftree_5fmax_3',['bsearch_tree_max',['../group__bsearch__tree__ref.html#gaa94b561df6724a7d5633007bcf93b567',1,'bsearch_tree_ref.h']]],
-  ['bsearch_5ftree_5fmin_4',['bsearch_tree_min',['../group__bsearch__tree__ref.html#ga963946ab1569556120ed8b5cb6e9e65e',1,'bsearch_tree_ref.h']]],
+  ['bsearch_5ftree_5ffind_0',['bsearch_tree_find',['../group__bsearch__tree__ref.html#ga8f3afbb54404a679fdf3e1ad5b8ed472',1,'bsearch_tree_ref.h']]],
+  ['bsearch_5ftree_5finsert_1',['bsearch_tree_insert',['../group__bsearch__tree__ref.html#ga64d48d254640b875f9d92c1cf52dae57',1,'bsearch_tree_ref.h']]],
+  ['bsearch_5ftree_5finsert_5fclone_2',['bsearch_tree_insert_clone',['../group__bsearch__tree__ref.html#gaac6c4c90c5333683e610ea65eda3336b',1,'bsearch_tree_ref.h']]],
+  ['bsearch_5ftree_5fmax_3',['bsearch_tree_max',['../group__bsearch__tree__ref.html#ga5e708487160740db5024112f5c293ca8',1,'bsearch_tree_ref.h']]],
+  ['bsearch_5ftree_5fmin_4',['bsearch_tree_min',['../group__bsearch__tree__ref.html#ga9cc71fe9771149fbd1fb6fc6631910d0',1,'bsearch_tree_ref.h']]],
   ['bsearch_5ftree_5fremove_5',['bsearch_tree_remove',['../group__bsearch__tree__ref.html#gaebbc5d592d92f77f6e030bdd8f318bff',1,'bsearch_tree_ref.h']]],
-  ['bsearch_5ftree_5frotate_5fleft_6',['bsearch_tree_rotate_left',['../group__bsearch__tree__ref.html#ga933e9438622fbbefce07ed91b1426324',1,'bsearch_tree_ref.h']]],
-  ['bsearch_5ftree_5frotate_5fright_7',['bsearch_tree_rotate_right',['../group__bsearch__tree__ref.html#ga2bf20c398294db7b4de05600845fbbb7',1,'bsearch_tree_ref.h']]],
+  ['bsearch_5ftree_5frotate_5fleft_6',['bsearch_tree_rotate_left',['../group__bsearch__tree__ref.html#ga28b2c0b2144a346b5a824e539b40c732',1,'bsearch_tree_ref.h']]],
+  ['bsearch_5ftree_5frotate_5fright_7',['bsearch_tree_rotate_right',['../group__bsearch__tree__ref.html#gac3bc7fa88466aa8207f2bbfff249d23d',1,'bsearch_tree_ref.h']]],
   ['btree_5fclean_8',['btree_clean',['../group__btree__ref.html#gad0571720bbe1c04f4ff6f4d20f888de6',1,'btree_ref.h']]],
   ['btree_5femplace_5fat_9',['btree_emplace_at',['../group__btree__ref.html#ga26aeb1be2d8a0fcbe6ed4481d6f62508',1,'btree_ref.h']]],
   ['btree_5femplace_5fpath_10',['btree_emplace_path',['../group__btree__ref.html#ga587d1b50fbb8687b753b0d36453448a4',1,'btree_ref.h']]],
@@ -15,10 +15,11 @@ var searchData=
   ['btree_5fheight_12',['btree_height',['../group__btree__ref.html#ga14082d454da79befc077ce6a9996380b',1,'btree_ref.h']]],
   ['btree_5finorder_5ftraversal_13',['btree_inorder_traversal',['../group__btree__ref.html#gadda45d212b7174c57252b8f9f460b600',1,'btree_ref.h']]],
   ['btree_5flength_14',['btree_length',['../group__btree__ref.html#ga75a5a44d5d5de51b3baf558e91228bb5',1,'btree_ref.h']]],
-  ['btree_5flevelorder_5ftraversal_15',['btree_levelorder_traversal',['../group__btree__ref.html#gafef1b2a97b52882d14936b77babc62ac',1,'btree_ref.h']]],
+  ['btree_5flevelorder_5ftraversal_15',['btree_levelorder_traversal',['../group__btree__ref.html#ga3b2d2dccee60f9a577375a0ecda10ce2',1,'btree_ref.h']]],
   ['btree_5fnext_5fnode_16',['btree_next_node',['../group__btree__ref.html#gaaea6cdd989342608ee88ccac0e387dda',1,'btree_ref.h']]],
   ['btree_5fnode_5fto_5fpath_17',['btree_node_to_path',['../path_8h.html#a01e3d87c503f4bd74c26db870233eb90',1,'path.h']]],
   ['btree_5fperfect_5ftree_5ffrom_5ftab_18',['btree_perfect_tree_from_tab',['../group__btree__ref.html#gab162adbfa580bdfca04af1165b0d2f6b',1,'btree_ref.h']]],
   ['btree_5fpostorder_5ftraversal_19',['btree_postorder_traversal',['../group__btree__ref.html#ga5ab79307bc4f5e646347e556fe5ff2e5',1,'btree_ref.h']]],
-  ['btree_5fpreorder_5ftraversal_20',['btree_preorder_traversal',['../group__btree__ref.html#ga90bfb622eae4137bf14d241a80a15fb7',1,'btree_ref.h']]]
+  ['btree_5fpreorder_5ftraversal_20',['btree_preorder_traversal',['../group__btree__ref.html#ga05c17d003a0bfc96bfcfb31466311626',1,'btree_ref.h']]],
+  ['btree_5fpreorder_5ftraversal_5farray_21',['btree_preorder_traversal_array',['../group__btree__ref.html#ga27d2ac4c4716d404a38001f4fd3423a1',1,'btree_ref.h']]]
 ];

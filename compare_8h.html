@@ -131,6 +131,8 @@ $(document).ready(function(){initNavTree('compare_8h.html',''); initResizable();
 <area shape="poly" title=" " alt="" coords="743,161,750,195,745,196,738,162"/>
 <area shape="rect" href="algorithms_8h_source.html" title=" " alt="" coords="868,196,1040,251"/>
 <area shape="poly" title=" " alt="" coords="804,151,897,194,895,198,801,156"/>
+<area shape="rect" href="graph__cast_8h.html" title="Conversion functions for different graph implementations." alt="" coords="661,299,844,353"/>
+<area shape="poly" title=" " alt="" coords="755,264,755,299,750,299,750,264"/>
 </map>
 </div>
 </div>
@@ -150,9 +152,9 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a5bffd944fdaeefd20b78e74d6a7f8b27" id="r_a5bffd944fdaeefd20b78e74d6a7f8b27"><td class="memItemLeft" align="right" valign="top">typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="compare_8h.html#a5bffd944fdaeefd20b78e74d6a7f8b27">compare_fn_t</a>) (void *, void *)</td></tr>
-<tr class="memdesc:a5bffd944fdaeefd20b78e74d6a7f8b27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for pointer to a comparison function.  <br /></td></tr>
-<tr class="separator:a5bffd944fdaeefd20b78e74d6a7f8b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb8f8b887151e0c7aba84499dca0c993" id="r_acb8f8b887151e0c7aba84499dca0c993"><td class="memItemLeft" align="right" valign="top">typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="compare_8h.html#acb8f8b887151e0c7aba84499dca0c993">compare_fn_t</a>) (void *a, void *)</td></tr>
+<tr class="memdesc:acb8f8b887151e0c7aba84499dca0c993"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for pointer to a comparison function.  <br /></td></tr>
+<tr class="separator:acb8f8b887151e0c7aba84499dca0c993"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab567f2dc0dfdb938365f41208b28d818" id="r_ab567f2dc0dfdb938365f41208b28d818"><td class="memItemLeft" align="right" valign="top">typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="compare_8h.html#ab567f2dc0dfdb938365f41208b28d818">equals_fn_t</a>) (void *a, void *b)</td></tr>
 <tr class="memdesc:ab567f2dc0dfdb938365f41208b28d818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for pointer to an equality function.  <br /></td></tr>
 <tr class="separator:ab567f2dc0dfdb938365f41208b28d818"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -251,13 +253,13 @@ Typedefs</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="compare_8h_source.html#l00063">63</a> of file <a class="el" href="compare_8h_source.html">compare.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compare_8h_source.html#l00064">64</a> of file <a class="el" href="compare_8h_source.html">compare.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="a5bffd944fdaeefd20b78e74d6a7f8b27" name="a5bffd944fdaeefd20b78e74d6a7f8b27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5bffd944fdaeefd20b78e74d6a7f8b27">&#9670;&#160;</a></span>compare_fn_t</h2>
+<a id="acb8f8b887151e0c7aba84499dca0c993" name="acb8f8b887151e0c7aba84499dca0c993"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb8f8b887151e0c7aba84499dca0c993">&#9670;&#160;</a></span>compare_fn_t</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -288,9 +290,10 @@ Typedefs</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Typedef for pointer to an equality function. </p>
-<p>An equality function takes to pointers as arguments, it should return 1 if the first element equals the the second and 0 otherwise. Any other value returned may lead to Undefined Behavior. </p>
+<p>An equality function takes two pointers as arguments, it should return 1 if the first element equals the second and 0 otherwise.</p>
+<p>Any other value returned may lead to Undefined Behavior. </p>
 
-<p class="definition">Definition at line <a class="el" href="compare_8h_source.html#l00054">54</a> of file <a class="el" href="compare_8h_source.html">compare.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="compare_8h_source.html#l00055">55</a> of file <a class="el" href="compare_8h_source.html">compare.h</a>.</p>
 
 </div>
 </div>

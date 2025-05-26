@@ -113,20 +113,25 @@ $(document).ready(function(){initNavTree('rb__tree__ref_8h_source.html',''); ini
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="bsearch__tree__ref_8h.html">bsearch_tree_ref.h</a>&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="group__rb__tree__ref.html#ga9c20d13b2ffc2d7f5e716dfd30fa8219">   40</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="group__rb__tree__ref.html#ga9c20d13b2ffc2d7f5e716dfd30fa8219">rb_tree_insert</a>(<a class="code hl_struct" href="structbsearch__tree__ref.html">bsearch_tree_ref_t</a>* tree,</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                   <span class="keywordtype">void</span>* value,</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                   <a class="code hl_struct" href="structnode__bsearch__tree__ref.html">node_bsearch_tree_ref_t</a>** found);</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="group__rb__tree__ref.html#gac302edfac0d9d6e21843b2ff1eb7e84b">   56</a></span>BOOL <a class="code hl_function" href="group__rb__tree__ref.html#gac302edfac0d9d6e21843b2ff1eb7e84b">rb_tree_remove</a>(<a class="code hl_struct" href="structbsearch__tree__ref.html">bsearch_tree_ref_t</a>* tree, <span class="keywordtype">void</span>* value);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>BOOL rb_tree_is_node_red(<a class="code hl_struct" href="structnode__bsearch__tree__ref.html">node_bsearch_tree_ref_t</a>* node);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#endif  </span><span class="comment">// !RBTREE_H</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">enum</span> rb_tree_colors {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    RB_BLACK,</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    RB_RED</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>};</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="group__rb__tree__ref.html#gab93ad13cd50d54e393c6a907d6eafc7a">   45</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="group__rb__tree__ref.html#gab93ad13cd50d54e393c6a907d6eafc7a">rb_tree_insert</a>(<a class="code hl_struct" href="structbsearch__tree__ref.html">bsearch_tree_ref_t</a>* tree,</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                   <span class="keywordtype">void</span>* value,</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                   <a class="code hl_struct" href="structnode__btree__ref.html">node_btree_ref_t</a>** found);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="group__rb__tree__ref.html#gac302edfac0d9d6e21843b2ff1eb7e84b">   61</a></span>BOOL <a class="code hl_function" href="group__rb__tree__ref.html#gac302edfac0d9d6e21843b2ff1eb7e84b">rb_tree_remove</a>(<a class="code hl_struct" href="structbsearch__tree__ref.html">bsearch_tree_ref_t</a>* tree, <span class="keywordtype">void</span>* value);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>BOOL rb_tree_is_node_red(<a class="code hl_struct" href="structnode__btree__ref.html">node_btree_ref_t</a>* node);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#endif  </span><span class="comment">// !RBTREE_H</span></div>
 <div class="ttc" id="absearch__tree__ref_8h_html"><div class="ttname"><a href="bsearch__tree__ref_8h.html">bsearch_tree_ref.h</a></div><div class="ttdoc">Unbanlanced binary search trees definition Defines functions to create, free and manipulate unbalance...</div></div>
-<div class="ttc" id="agroup__rb__tree__ref_html_ga9c20d13b2ffc2d7f5e716dfd30fa8219"><div class="ttname"><a href="group__rb__tree__ref.html#ga9c20d13b2ffc2d7f5e716dfd30fa8219">rb_tree_insert</a></div><div class="ttdeci">int rb_tree_insert(bsearch_tree_ref_t *tree, void *value, node_bsearch_tree_ref_t **found)</div><div class="ttdoc">Inserts an element into the tree.</div></div>
+<div class="ttc" id="agroup__rb__tree__ref_html_gab93ad13cd50d54e393c6a907d6eafc7a"><div class="ttname"><a href="group__rb__tree__ref.html#gab93ad13cd50d54e393c6a907d6eafc7a">rb_tree_insert</a></div><div class="ttdeci">int rb_tree_insert(bsearch_tree_ref_t *tree, void *value, node_btree_ref_t **found)</div><div class="ttdoc">Inserts an element into the tree.</div></div>
 <div class="ttc" id="agroup__rb__tree__ref_html_gac302edfac0d9d6e21843b2ff1eb7e84b"><div class="ttname"><a href="group__rb__tree__ref.html#gac302edfac0d9d6e21843b2ff1eb7e84b">rb_tree_remove</a></div><div class="ttdeci">BOOL rb_tree_remove(bsearch_tree_ref_t *tree, void *value)</div><div class="ttdoc">Removes an element from the tree.</div></div>
-<div class="ttc" id="astructbsearch__tree__ref_html"><div class="ttname"><a href="structbsearch__tree__ref.html">bsearch_tree_ref</a></div><div class="ttdoc">Unbalanced binary searcch tree.</div><div class="ttdef"><b>Definition</b> <a href="bsearch__tree__ref_8h_source.html#l00066">bsearch_tree_ref.h:66</a></div></div>
-<div class="ttc" id="astructnode__bsearch__tree__ref_html"><div class="ttname"><a href="structnode__bsearch__tree__ref.html">node_bsearch_tree_ref</a></div><div class="ttdoc">A binary-tree node.</div><div class="ttdef"><b>Definition</b> <a href="bsearch__tree__ref_8h_source.html#l00042">bsearch_tree_ref.h:42</a></div></div>
+<div class="ttc" id="astructbsearch__tree__ref_html"><div class="ttname"><a href="structbsearch__tree__ref.html">bsearch_tree_ref</a></div><div class="ttdoc">Unbalanced binary searcch tree.</div><div class="ttdef"><b>Definition</b> <a href="bsearch__tree__ref_8h_source.html#l00047">bsearch_tree_ref.h:47</a></div></div>
+<div class="ttc" id="astructnode__btree__ref_html"><div class="ttname"><a href="structnode__btree__ref.html">node_btree_ref</a></div><div class="ttdoc">A binary-tree node.</div><div class="ttdef"><b>Definition</b> <a href="btree__ref_8h_source.html#l00037">btree_ref.h:37</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

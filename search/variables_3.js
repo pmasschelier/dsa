@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['edges_0',['edges',['../structgraph__mat.html#a4aeeb40e6d2c176112c618964c5f65ac',1,'graph_mat']]],
-  ['end_1',['end',['../structlist__ref.html#af3beb86085c334a0e15178623b1cc97b',1,'list_ref']]]
+  ['data_0',['data',['../structarray__list.html#ac887e700b2e7ac4963707f3d0f8b19e5',1,'array_list::data'],['../structnode__btree__ref.html#aa87107a323b509fc1fc63b55e4833d22',1,'node_btree_ref::data'],['../group__cbuffer__ref.html#ga87da43659b02d00da3b8e318255e9279',1,'circular_buffer::data'],['../structheap__view.html#a58932592aeb4068956fe2ab37fb05311',1,'heap_view::data'],['../structlinked__list__node.html#a4a070a05c5af36d7a9e5b30b35458bb7',1,'linked_list_node::data']]]
 ];

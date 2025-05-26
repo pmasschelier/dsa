@@ -1,0 +1,28 @@
+<map id="/home/runner/work/dsa/dsa/include/graph/graph_cast.h" name="/home/runner/work/dsa/dsa/include/graph/graph_cast.h">
+<area shape="rect" id="Node000001" title="Conversion functions for different graph implementations." alt="" coords="197,5,380,60"/>
+<area shape="rect" id="Node000002" href="$graph__mat_8h.html" title="Graphs defined with adjacency matrix." alt="" coords="174,108,278,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="272,62,245,98,240,95,267,58"/>
+<area shape="rect" id="Node000008" href="$graph__list_8h.html" title="Graphs defined with adjacency lists." alt="" coords="302,108,401,133"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="310,58,337,95,332,98,306,62"/>
+<area shape="rect" id="Node000003" href="$structures_8h_source.html" title=" " alt="" coords="235,269,334,295"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="233,132,278,255,273,257,228,134"/>
+<area shape="rect" id="Node000005" href="$weight__type_8h_source.html" title=" " alt="" coords="117,189,231,214"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="220,135,191,178,187,176,216,132"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="100,343,171,368"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="262,297,173,339,171,334,259,292"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="117,213,88,220,60,232,34,249,13,271,9,282,10,293,15,302,25,311,54,327,87,339,86,344,52,332,22,316,11,306,4,294,3,281,9,268,31,244,57,227,87,215,116,207"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="137,269,211,295"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="177,214,177,255,171,255,171,214"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="24,269,113,295"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="160,216,97,263,93,259,157,212"/>
+<area shape="poly" id="edge14_Node000008_Node000005" title=" " alt="" coords="327,136,213,186,211,181,324,131"/>
+<area shape="rect" id="Node000009" href="$linked__list__ref_8h_source.html" title=" " alt="" coords="335,181,472,221"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="361,132,385,169,381,171,357,135"/>
+<area shape="poly" id="edge13_Node000009_Node000003" title=" " alt="" coords="376,224,315,264,312,260,373,219"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="473,269,547,295"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="431,219,484,259,481,263,427,224"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="572,269,643,295"/>
+<area shape="poly" id="edge11_Node000009_Node000011" title=" " alt="" coords="453,219,565,262,563,267,451,224"/>
+<area shape="rect" id="Node000012" href="$compare_8h.html" title="Comparison function type definition Defines compare_fn_t type function." alt="" coords="358,269,449,295"/>
+<area shape="poly" id="edge12_Node000009_Node000012" title=" " alt="" coords="406,222,406,255,401,255,401,222"/>
+</map>

@@ -8,7 +8,7 @@ var group__graph__list =
     [ "graph_list", "structgraph__list.html", [
       [ "is_weighted", "structgraph__list.html#a180a73c54b1de0ca0561b9084c8e24ca", null ],
       [ "nb_vert", "structgraph__list.html#a1591579984414dd735a28d1400ad81f6", null ],
-      [ "neighbours", "structgraph__list.html#a6eec7e5c626393d1d388e9d35bc3b525", null ]
+      [ "neighbours", "structgraph__list.html#a538c2e1b4a4ffa89253ad4ebe041e0a2", null ]
     ] ],
     [ "graph_list_edge_t", "group__graph__list.html#ga8ecfbc8987dac289c2fc5ecd87ece7fe", null ],
     [ "graph_list_path_node_t", "group__graph__list.html#ga825fb4767b08976a103ec392d9e7ac69", null ],

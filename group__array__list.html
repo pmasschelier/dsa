@@ -100,22 +100,13 @@ $(document).ready(function(){initNavTree('group__array__list.html',''); initResi
   <div class="summary">
 <a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Dynamic arrays</div></div>
 </div><!--header-->
 <div class="contents">
-<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for Dynamic arrays:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="group__array__list.png" border="0" usemap="#agroup____array____list" alt=""/></div>
-<map name="agroup____array____list" id="agroup____array____list">
-<area shape="rect" title=" " alt="" coords="5,7,131,33"/>
-<area shape="rect" href="group__cbuffer__ref.html" title=" " alt="" coords="272,7,393,33"/>
-</map>
-</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
 Files</h2></td></tr>
@@ -126,34 +117,47 @@ Files</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarray__list.html">array_list</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A dynamic array.  <a href="structarray__list.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcircular__buffer.html">circular_buffer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A circular buffer.  <a href="structcircular__buffer.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga1bb7d81f9b428f2a865389f66997f305" id="r_ga1bb7d81f9b428f2a865389f66997f305"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga1bb7d81f9b428f2a865389f66997f305">ARRAY_LIST_INIT</a>(type)</td></tr>
+<tr class="memdesc:ga1bb7d81f9b428f2a865389f66997f305"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> Compound literal  <br /></td></tr>
+<tr class="separator:ga1bb7d81f9b428f2a865389f66997f305"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga913474905ae8993f3e962b350fa5fca2" id="r_ga913474905ae8993f3e962b350fa5fca2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga913474905ae8993f3e962b350fa5fca2">get_array_list_ref</a>(array,  index,  type)&#160;&#160;&#160;	(type*)((array).data + (index) * (array).size_bytes)</td></tr>
+<tr class="memdesc:ga913474905ae8993f3e962b350fa5fca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper macro for random access.  <br /></td></tr>
+<tr class="separator:ga913474905ae8993f3e962b350fa5fca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga1c0ba09bd0322f6c1ce569f02027f5a6" id="r_ga1c0ba09bd0322f6c1ce569f02027f5a6"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structarray__list.html">array_list</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a></td></tr>
-<tr class="memdesc:ga1c0ba09bd0322f6c1ce569f02027f5a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for the <a class="el" href="structarray__list.html">array_list</a> structure.  <br /></td></tr>
+<tr class="memdesc:ga1c0ba09bd0322f6c1ce569f02027f5a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for the <a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> structure.  <br /></td></tr>
 <tr class="separator:ga1c0ba09bd0322f6c1ce569f02027f5a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga597a5c74ca68968232f3f0fb447d0865" id="r_ga597a5c74ca68968232f3f0fb447d0865"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga597a5c74ca68968232f3f0fb447d0865">create_array_list</a> (unsigned size_bytes)</td></tr>
-<tr class="memdesc:ga597a5c74ca68968232f3f0fb447d0865"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an empty dynamic array.  <br /></td></tr>
-<tr class="separator:ga597a5c74ca68968232f3f0fb447d0865"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad0d68f5e0abe979de7cf8e9f6aaf6d54" id="r_gad0d68f5e0abe979de7cf8e9f6aaf6d54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#gad0d68f5e0abe979de7cf8e9f6aaf6d54">free_array_list</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array)</td></tr>
-<tr class="memdesc:gad0d68f5e0abe979de7cf8e9f6aaf6d54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free the array.  <br /></td></tr>
-<tr class="separator:gad0d68f5e0abe979de7cf8e9f6aaf6d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9445341cff5f6cb10e643f02d483ab2f" id="r_ga9445341cff5f6cb10e643f02d483ab2f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga9445341cff5f6cb10e643f02d483ab2f">array_list_create</a> (unsigned size_bytes)</td></tr>
+<tr class="memdesc:ga9445341cff5f6cb10e643f02d483ab2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an empty dynamic array.  <br /></td></tr>
+<tr class="separator:ga9445341cff5f6cb10e643f02d483ab2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d8d5ac68a68680c5c94db596ce2360b" id="r_ga7d8d5ac68a68680c5c94db596ce2360b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga7d8d5ac68a68680c5c94db596ce2360b">array_list_free</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array)</td></tr>
+<tr class="memdesc:ga7d8d5ac68a68680c5c94db596ce2360b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free an array created with <a class="el" href="group__array__list.html#ga9445341cff5f6cb10e643f02d483ab2f" title="Create an empty dynamic array.">array_list_create()</a>  <br /></td></tr>
+<tr class="separator:ga7d8d5ac68a68680c5c94db596ce2360b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabae927cbba346912732cc67c60deb17e" id="r_gabae927cbba346912732cc67c60deb17e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#gabae927cbba346912732cc67c60deb17e">array_list_init</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array, unsigned size_bytes)</td></tr>
+<tr class="memdesc:gabae927cbba346912732cc67c60deb17e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an empty dynamic array.  <br /></td></tr>
+<tr class="separator:gabae927cbba346912732cc67c60deb17e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d3775b0b680faaaa25ddbbe0e03b8d1" id="r_ga9d3775b0b680faaaa25ddbbe0e03b8d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga9d3775b0b680faaaa25ddbbe0e03b8d1">array_list_deinit</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array)</td></tr>
+<tr class="memdesc:ga9d3775b0b680faaaa25ddbbe0e03b8d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uninitialize the array.  <br /></td></tr>
+<tr class="separator:ga9d3775b0b680faaaa25ddbbe0e03b8d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga276b82fd91aa4a9a40372c90f1bee1a7" id="r_ga276b82fd91aa4a9a40372c90f1bee1a7"><td class="memItemLeft" align="right" valign="top">BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga276b82fd91aa4a9a40372c90f1bee1a7">array_list_empty</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array)</td></tr>
 <tr class="memdesc:ga276b82fd91aa4a9a40372c90f1bee1a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test if the array is empty.  <br /></td></tr>
 <tr class="separator:ga276b82fd91aa4a9a40372c90f1bee1a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab7525a2e5513f97daaea82f18ac87165" id="r_gab7525a2e5513f97daaea82f18ac87165"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#gab7525a2e5513f97daaea82f18ac87165">array_list_push_front</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array, void *value)</td></tr>
-<tr class="memdesc:gab7525a2e5513f97daaea82f18ac87165"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy an element at the beginning of the array.  <br /></td></tr>
-<tr class="separator:gab7525a2e5513f97daaea82f18ac87165"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga45388c77f63c6c428c0fd196f674c205" id="r_ga45388c77f63c6c428c0fd196f674c205"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga45388c77f63c6c428c0fd196f674c205">array_list_push_back</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array, void *value)</td></tr>
-<tr class="memdesc:ga45388c77f63c6c428c0fd196f674c205"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy an element at the end of the array.  <br /></td></tr>
-<tr class="separator:ga45388c77f63c6c428c0fd196f674c205"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf68fb21d3ecfa39701d09603eafb4fc0" id="r_gaf68fb21d3ecfa39701d09603eafb4fc0"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#gaf68fb21d3ecfa39701d09603eafb4fc0">array_list_push_front</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array, const void *value)</td></tr>
+<tr class="memdesc:gaf68fb21d3ecfa39701d09603eafb4fc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy an element at the beginning of the array.  <br /></td></tr>
+<tr class="separator:gaf68fb21d3ecfa39701d09603eafb4fc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga793649978a65ad3a18d6f0d48b9a5987" id="r_ga793649978a65ad3a18d6f0d48b9a5987"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga793649978a65ad3a18d6f0d48b9a5987">array_list_push_back</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array, const void *value)</td></tr>
+<tr class="memdesc:ga793649978a65ad3a18d6f0d48b9a5987"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy an element at the end of the array.  <br /></td></tr>
+<tr class="separator:ga793649978a65ad3a18d6f0d48b9a5987"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafba3abfae82f320f7ce3b1af46779ee3" id="r_gafba3abfae82f320f7ce3b1af46779ee3"><td class="memItemLeft" align="right" valign="top">BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#gafba3abfae82f320f7ce3b1af46779ee3">array_list_pop_front</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array, void *value)</td></tr>
 <tr class="memdesc:gafba3abfae82f320f7ce3b1af46779ee3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the first element of the array.  <br /></td></tr>
 <tr class="separator:gafba3abfae82f320f7ce3b1af46779ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,8 +167,112 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf34ce9a66dd13ae89e56e33885e40690" id="r_gaf34ce9a66dd13ae89e56e33885e40690"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#gaf34ce9a66dd13ae89e56e33885e40690">array_list_swap</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array, unsigned a, unsigned b)</td></tr>
 <tr class="memdesc:gaf34ce9a66dd13ae89e56e33885e40690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap two elements of the array.  <br /></td></tr>
 <tr class="separator:gaf34ce9a66dd13ae89e56e33885e40690"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8bff8bc040646b8475898584dfb72011" id="r_ga8bff8bc040646b8475898584dfb72011"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga8bff8bc040646b8475898584dfb72011">array_list_swap_and_pop_back</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array, unsigned int i, void *value)</td></tr>
+<tr class="memdesc:ga8bff8bc040646b8475898584dfb72011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap the i-th element with the last one and pop back.  <br /></td></tr>
+<tr class="separator:ga8bff8bc040646b8475898584dfb72011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga3e64c25d1c49407d71fa28f1adfbe793" id="r_ga3e64c25d1c49407d71fa28f1adfbe793"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga3e64c25d1c49407d71fa28f1adfbe793">array_list_min_capacity</a></td></tr>
+<tr class="memdesc:ga3e64c25d1c49407d71fa28f1adfbe793"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimal capacity of a non-empty array.  <br /></td></tr>
+<tr class="separator:ga3e64c25d1c49407d71fa28f1adfbe793"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p><a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> are basic dynamic array with size and capacity. </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structarray__list.html">array_list_t</a> array = <a class="code hl_define" href="group__array__list.html#ga1bb7d81f9b428f2a865389f66997f305">ARRAY_LIST_INIT</a>(<span class="keywordtype">int</span>);</div>
+<div class="line"><span class="keywordtype">int</span> value;</div>
+<div class="line"><span class="keywordflow">while</span>(<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>) == read(fd, &amp;value, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>))) {</div>
+<div class="line">   <span class="keywordflow">if</span>(NULL == <a class="code hl_function" href="group__array__list.html#ga793649978a65ad3a18d6f0d48b9a5987">array_list_push_back</a>(&amp;array, &amp;value))</div>
+<div class="line">      <span class="keywordflow">goto</span> allocation_failed;</div>
+<div class="line">}</div>
+<div class="line"><span class="comment">// Do something with the data...</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_function" href="group__array__list.html#ga9d3775b0b680faaaa25ddbbe0e03b8d1">array_list_deinit</a>(&amp;array);</div>
+<div class="ttc" id="agroup__array__list_html_ga1bb7d81f9b428f2a865389f66997f305"><div class="ttname"><a href="group__array__list.html#ga1bb7d81f9b428f2a865389f66997f305">ARRAY_LIST_INIT</a></div><div class="ttdeci">#define ARRAY_LIST_INIT(type)</div><div class="ttdoc">array_list Compound literal</div><div class="ttdef"><b>Definition</b> <a href="array__list_8h_source.html#l00089">array_list.h:89</a></div></div>
+<div class="ttc" id="agroup__array__list_html_ga793649978a65ad3a18d6f0d48b9a5987"><div class="ttname"><a href="group__array__list.html#ga793649978a65ad3a18d6f0d48b9a5987">array_list_push_back</a></div><div class="ttdeci">void * array_list_push_back(array_list_t *array, const void *value)</div><div class="ttdoc">Copy an element at the end of the array.</div></div>
+<div class="ttc" id="agroup__array__list_html_ga9d3775b0b680faaaa25ddbbe0e03b8d1"><div class="ttname"><a href="group__array__list.html#ga9d3775b0b680faaaa25ddbbe0e03b8d1">array_list_deinit</a></div><div class="ttdeci">void array_list_deinit(array_list_t *array)</div><div class="ttdoc">Uninitialize the array.</div></div>
+<div class="ttc" id="astructarray__list_html"><div class="ttname"><a href="structarray__list.html">array_list</a></div><div class="ttdoc">A dynamic array.</div><div class="ttdef"><b>Definition</b> <a href="array__list_8h_source.html#l00060">array_list.h:60</a></div></div>
+</div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>the value given to <a class="el" href="group__array__list.html#ga793649978a65ad3a18d6f0d48b9a5987" title="Copy an element at the end of the array.">array_list_push_back()</a> will be copied.<br  />
+ You can use an <a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> of pointers if the cost of copy is too high. </dd></dl>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga1bb7d81f9b428f2a865389f66997f305" name="ga1bb7d81f9b428f2a865389f66997f305"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1bb7d81f9b428f2a865389f66997f305">&#9670;&#160;</a></span>ARRAY_LIST_INIT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARRAY_LIST_INIT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    (<a class="code hl_typedef" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a>) {                                                        \</div>
+<div class="line">        .data = NULL, .size_bytes = <span class="keyword">sizeof</span>(type), .capacity = 0, .size = 0, \</div>
+<div class="line">    }</div>
+<div class="ttc" id="agroup__array__list_html_ga1c0ba09bd0322f6c1ce569f02027f5a6"><div class="ttname"><a href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a></div><div class="ttdeci">struct array_list array_list_t</div><div class="ttdoc">Typedef for the array_list structure.</div><div class="ttdef"><b>Definition</b> <a href="array__list_8h_source.html#l00039">array_list.h:39</a></div></div>
+</div><!-- fragment -->
+<p><a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> Compound literal </p>
+<p>This is the most concise way to initialize an <a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a>.</p>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="structarray__list.html">array_list_t</a> array = <a class="code hl_define" href="group__array__list.html#ga1bb7d81f9b428f2a865389f66997f305">ARRAY_LIST_INIT</a>(<span class="keywordtype">int</span>);</div>
+<div class="line"><span class="comment">// Do something...</span></div>
+<div class="line"><a class="code hl_function" href="group__array__list.html#ga9d3775b0b680faaaa25ddbbe0e03b8d1">array_list_deinit</a>(&amp;array);</div>
+</div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__array__list.html#gabae927cbba346912732cc67c60deb17e" title="Initialize an empty dynamic array.">array_list_init</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="array__list_8h_source.html#l00089">89</a> of file <a class="el" href="array__list_8h_source.html">array_list.h</a>.</p>
+
+</div>
+</div>
+<a id="ga913474905ae8993f3e962b350fa5fca2" name="ga913474905ae8993f3e962b350fa5fca2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga913474905ae8993f3e962b350fa5fca2">&#9670;&#160;</a></span>get_array_list_ref</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define get_array_list_ref</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">array, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">index, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;	(type*)((array).data + (index) * (array).size_bytes)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Helper macro for random access. </p>
+<dl class="section warning"><dt>Warning</dt><dd>The access are not checked. Be careful with out-of-bounds accesses.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">array</td><td>The array to index </td></tr>
+    <tr><td class="paramname">index</td><td>The index of the target element </td></tr>
+    <tr><td class="paramname">type</td><td>The array type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the i-th element </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="array__list_8h_source.html#l00104">104</a> of file <a class="el" href="array__list_8h_source.html">array_list.h</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ga1c0ba09bd0322f6c1ce569f02027f5a6" name="ga1c0ba09bd0322f6c1ce569f02027f5a6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga1c0ba09bd0322f6c1ce569f02027f5a6">&#9670;&#160;</a></span>array_list_t</h2>
@@ -178,13 +286,78 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Typedef for the <a class="el" href="structarray__list.html">array_list</a> structure. </p>
+<p>Typedef for the <a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> structure. </p>
 
-<p class="definition">Definition at line <a class="el" href="array__list_8h_source.html#l00028">28</a> of file <a class="el" href="array__list_8h_source.html">array_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="array__list_8h_source.html#l00039">39</a> of file <a class="el" href="array__list_8h_source.html">array_list.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga9445341cff5f6cb10e643f02d483ab2f" name="ga9445341cff5f6cb10e643f02d483ab2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9445341cff5f6cb10e643f02d483ab2f">&#9670;&#160;</a></span>array_list_create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> * array_list_create </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>size_bytes</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create an empty dynamic array. </p>
+<p><b>Every <a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> created with this function should be freed using <a class="el" href="group__array__list.html#ga7d8d5ac68a68680c5c94db596ce2360b" title="Free an array created with array_list_create()">array_list_free()</a></b></p>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="structarray__list.html">array_list_t</a>* array = <a class="code hl_function" href="group__array__list.html#ga9445341cff5f6cb10e643f02d483ab2f">array_list_create</a>(<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
+<div class="line"><span class="keywordflow">if</span>(array == NULL)</div>
+<div class="line">    <span class="keywordflow">goto</span> error;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Use the array here</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_function" href="group__array__list.html#ga7d8d5ac68a68680c5c94db596ce2360b">array_list_free</a>(array);</div>
+<div class="ttc" id="agroup__array__list_html_ga7d8d5ac68a68680c5c94db596ce2360b"><div class="ttname"><a href="group__array__list.html#ga7d8d5ac68a68680c5c94db596ce2360b">array_list_free</a></div><div class="ttdeci">void array_list_free(array_list_t *array)</div><div class="ttdoc">Free an array created with array_list_create()</div></div>
+<div class="ttc" id="agroup__array__list_html_ga9445341cff5f6cb10e643f02d483ab2f"><div class="ttname"><a href="group__array__list.html#ga9445341cff5f6cb10e643f02d483ab2f">array_list_create</a></div><div class="ttdeci">array_list_t * array_list_create(unsigned size_bytes)</div><div class="ttdoc">Create an empty dynamic array.</div></div>
+</div><!-- fragment --><p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">size_bytes</td><td>Size of an element </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the newly created <a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> or NULL if the allocation failed </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__array__list.html#ga7d8d5ac68a68680c5c94db596ce2360b" title="Free an array created with array_list_create()">array_list_free()</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga9d3775b0b680faaaa25ddbbe0e03b8d1" name="ga9d3775b0b680faaaa25ddbbe0e03b8d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9d3775b0b680faaaa25ddbbe0e03b8d1">&#9670;&#160;</a></span>array_list_deinit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void array_list_deinit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *&#160;</td>
+          <td class="paramname"><em>array</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uninitialize the array. </p>
+<p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">array</td><td>pointer to the array </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__array__list.html#gabae927cbba346912732cc67c60deb17e" title="Initialize an empty dynamic array.">array_list_init()</a> </dd></dl>
+
+</div>
+</div>
 <a id="ga276b82fd91aa4a9a40372c90f1bee1a7" name="ga276b82fd91aa4a9a40372c90f1bee1a7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga276b82fd91aa4a9a40372c90f1bee1a7">&#9670;&#160;</a></span>array_list_empty()</h2>
 
@@ -210,6 +383,85 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>TRUE iif the array is empty </dd></dl>
+
+</div>
+</div>
+<a id="ga7d8d5ac68a68680c5c94db596ce2360b" name="ga7d8d5ac68a68680c5c94db596ce2360b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7d8d5ac68a68680c5c94db596ce2360b">&#9670;&#160;</a></span>array_list_free()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void array_list_free </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *&#160;</td>
+          <td class="paramname"><em>array</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Free an array created with <a class="el" href="group__array__list.html#ga9445341cff5f6cb10e643f02d483ab2f" title="Create an empty dynamic array.">array_list_create()</a> </p>
+<p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">array</td><td>pointer to the array </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__array__list.html#ga9445341cff5f6cb10e643f02d483ab2f" title="Create an empty dynamic array.">array_list_create()</a> </dd></dl>
+
+</div>
+</div>
+<a id="gabae927cbba346912732cc67c60deb17e" name="gabae927cbba346912732cc67c60deb17e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabae927cbba346912732cc67c60deb17e">&#9670;&#160;</a></span>array_list_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void array_list_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *&#160;</td>
+          <td class="paramname"><em>array</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>size_bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize an empty dynamic array. </p>
+<p><b>Every <a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> initialized with this function should be freed using <a class="el" href="group__array__list.html#ga9d3775b0b680faaaa25ddbbe0e03b8d1" title="Uninitialize the array.">array_list_deinit()</a></b></p>
+<p>This is equivalent to initializing with <a class="el" href="group__array__list.html#ga1bb7d81f9b428f2a865389f66997f305" title="array_list Compound literal">ARRAY_LIST_INIT()</a> ie: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structarray__list.html">array_list_t</a> array;</div>
+<div class="line"><a class="code hl_function" href="group__array__list.html#gabae927cbba346912732cc67c60deb17e">array_list_init</a>(&amp;array, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Use the array here</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_function" href="group__array__list.html#ga9d3775b0b680faaaa25ddbbe0e03b8d1">array_list_deinit</a>(&amp;array);</div>
+<div class="ttc" id="agroup__array__list_html_gabae927cbba346912732cc67c60deb17e"><div class="ttname"><a href="group__array__list.html#gabae927cbba346912732cc67c60deb17e">array_list_init</a></div><div class="ttdeci">void array_list_init(array_list_t *array, unsigned size_bytes)</div><div class="ttdoc">Initialize an empty dynamic array.</div></div>
+</div><!-- fragment --><p> is equivalent to: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structarray__list.html">array_list_t</a> array = <a class="code hl_define" href="group__array__list.html#ga1bb7d81f9b428f2a865389f66997f305">ARRAY_LIST_INIT</a>(<span class="keywordtype">int</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Use the array here</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_function" href="group__array__list.html#ga9d3775b0b680faaaa25ddbbe0e03b8d1">array_list_deinit</a>(&amp;array);</div>
+</div><!-- fragment --><p> This function is provided for symetry with <a class="el" href="group__array__list.html#ga9d3775b0b680faaaa25ddbbe0e03b8d1" title="Uninitialize the array.">array_list_deinit()</a></p>
+<p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">array</td><td>A pointer to the uninitialized array </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size_bytes</td><td>Size of an element </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__array__list.html#ga9d3775b0b680faaaa25ddbbe0e03b8d1" title="Uninitialize the array.">array_list_deinit()</a> </dd></dl>
 
 </div>
 </div>
@@ -242,10 +494,17 @@ Functions</h2></td></tr>
 <p>Remove the last element of the array. </p>
 <p>If value is NULL the removed data will be lost, otherwise the data is copied to the memory region pointed by value which should have been allocated with <a class="el" href="structarray__list.html#a8951d6f90d5fe101d313cf337cd4b0ae">array_list::size_bytes</a> bytes.<br  />
 </p>
-<p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> compute_sum(<a class="code hl_struct" href="structarray__list.html">array_list_t</a>* array) {</div>
+<div class="line">   <span class="keywordtype">int</span> value, sum = 0;</div>
+<div class="line">   <span class="keywordflow">while</span>(<a class="code hl_function" href="group__array__list.html#gaeb8057f3747710e28ea9bf5bf8d5bc69">array_list_pop_back</a>(array, &amp;value))</div>
+<div class="line">      sum += value;</div>
+<div class="line">   <span class="keywordflow">return</span> sum;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__array__list_html_gaeb8057f3747710e28ea9bf5bf8d5bc69"><div class="ttname"><a href="group__array__list.html#gaeb8057f3747710e28ea9bf5bf8d5bc69">array_list_pop_back</a></div><div class="ttdeci">BOOL array_list_pop_back(array_list_t *array, void *value)</div><div class="ttdoc">Remove the last element of the array.</div></div>
+</div><!-- fragment --><p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">array</td><td>pointer to the array </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>pointer to the remove data (if NULL the data will be freed) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>pointer to the removed data (if NULL the data will be lost) </td></tr>
   </table>
   </dd>
 </dl>
@@ -290,11 +549,12 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>FALSE iif the array was empty </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__array__list.html#gaeb8057f3747710e28ea9bf5bf8d5bc69" title="Remove the last element of the array.">array_list_pop_back()</a> </dd></dl>
 
 </div>
 </div>
-<a id="ga45388c77f63c6c428c0fd196f674c205" name="ga45388c77f63c6c428c0fd196f674c205"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga45388c77f63c6c428c0fd196f674c205">&#9670;&#160;</a></span>array_list_push_back()</h2>
+<a id="ga793649978a65ad3a18d6f0d48b9a5987" name="ga793649978a65ad3a18d6f0d48b9a5987"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga793649978a65ad3a18d6f0d48b9a5987">&#9670;&#160;</a></span>array_list_push_back()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -308,7 +568,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
+          <td class="paramtype">const void *&#160;</td>
           <td class="paramname"><em>value</em>&#160;</td>
         </tr>
         <tr>
@@ -320,11 +580,19 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Copy an element at the end of the array. </p>
-<p>The array <b>won't</b> take ownership of the element but extend the array buffer and copy the element into it.</p>
+<p>The array <b>won't</b> take ownership of the element but extend the array buffer and copy the element into it. If you allocated the memory region pointed by value you are responsible for freeing it</p>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="structarray__list.html">array_list_t</a> array = <a class="code hl_define" href="group__array__list.html#ga1bb7d81f9b428f2a865389f66997f305">ARRAY_LIST_INIT</a>(<span class="keywordtype">unsigned</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Appends the numbers 0 to 9 to the array</span></div>
+<div class="line"><span class="keywordflow">for</span>(<span class="keywordtype">unsigned</span> i = 0; i &lt; 10; i++)</div>
+<div class="line"> <a class="code hl_function" href="group__array__list.html#ga793649978a65ad3a18d6f0d48b9a5987">array_list_push_back</a>(&amp;array, &amp;i);</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_function" href="group__array__list.html#ga9d3775b0b680faaaa25ddbbe0e03b8d1">array_list_deinit</a>(&amp;array);</div>
+</div><!-- fragment --><p>If the objects you are manipulating are too large or have varying size you can store pointers in the array, but remember that you are responsible for freeing the memory.</p>
 <p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">array</td><td>Pointer to the array to extend </td></tr>
-    <tr><td class="paramname">p</td><td>Pointer to the data to copy at the end of the array </td></tr>
+    <tr><td class="paramname">value</td><td>Pointer to the data to copy at the end of the array </td></tr>
   </table>
   </dd>
 </dl>
@@ -332,8 +600,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="gab7525a2e5513f97daaea82f18ac87165" name="gab7525a2e5513f97daaea82f18ac87165"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab7525a2e5513f97daaea82f18ac87165">&#9670;&#160;</a></span>array_list_push_front()</h2>
+<a id="gaf68fb21d3ecfa39701d09603eafb4fc0" name="gaf68fb21d3ecfa39701d09603eafb4fc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf68fb21d3ecfa39701d09603eafb4fc0">&#9670;&#160;</a></span>array_list_push_front()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -347,7 +615,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
+          <td class="paramtype">const void *&#160;</td>
           <td class="paramname"><em>value</em>&#160;</td>
         </tr>
         <tr>
@@ -363,11 +631,12 @@ Functions</h2></td></tr>
 <p><em>Complexity: O(n)</em> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">array</td><td>Pointer to the array to extend </td></tr>
-    <tr><td class="paramname">p</td><td>Pointer to the data to copy at the beginning of the array </td></tr>
+    <tr><td class="paramname">value</td><td>Pointer to the data to copy at the beginning of the array </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the newly created element (NULL in case of failure) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__array__list.html#ga793649978a65ad3a18d6f0d48b9a5987" title="Copy an element at the end of the array.">array_list_push_back()</a> </dd></dl>
 
 </div>
 </div>
@@ -404,7 +673,21 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Swap two elements of the array. </p>
-<p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Example: Selection sort </p><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> i = 0; i &lt; ARRAY_LEN; i++) {</div>
+<div class="line">    <span class="keywordtype">int</span> min = *<a class="code hl_define" href="group__array__list.html#ga913474905ae8993f3e962b350fa5fca2">get_array_list_ref</a>(array, i, <span class="keywordtype">int</span>);</div>
+<div class="line">    <span class="keywordtype">unsigned</span> j_min = i;</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> j = i + 1; j &lt; ARRAY_LEN; j++) {</div>
+<div class="line">        <span class="keywordtype">int</span> x = *<a class="code hl_define" href="group__array__list.html#ga913474905ae8993f3e962b350fa5fca2">get_array_list_ref</a>(array, j, <span class="keywordtype">int</span>);</div>
+<div class="line">        <span class="keywordflow">if</span>(x &lt; min) {</div>
+<div class="line">            min = x;</div>
+<div class="line">            j_min = j;</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">    <a class="code hl_function" href="group__array__list.html#gaf34ce9a66dd13ae89e56e33885e40690">array_list_swap</a>(&amp;array, i, j_min);</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__array__list_html_ga913474905ae8993f3e962b350fa5fca2"><div class="ttname"><a href="group__array__list.html#ga913474905ae8993f3e962b350fa5fca2">get_array_list_ref</a></div><div class="ttdeci">#define get_array_list_ref(array, index, type)</div><div class="ttdoc">Helper macro for random access.</div><div class="ttdef"><b>Definition</b> <a href="array__list_8h_source.html#l00104">array_list.h:104</a></div></div>
+<div class="ttc" id="agroup__array__list_html_gaf34ce9a66dd13ae89e56e33885e40690"><div class="ttname"><a href="group__array__list.html#gaf34ce9a66dd13ae89e56e33885e40690">array_list_swap</a></div><div class="ttdeci">int array_list_swap(array_list_t *array, unsigned a, unsigned b)</div><div class="ttdoc">Swap two elements of the array.</div></div>
+</div><!-- fragment --><p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">array</td><td>pointer to the array </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>First index </td></tr>
@@ -416,58 +699,76 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga597a5c74ca68968232f3f0fb447d0865" name="ga597a5c74ca68968232f3f0fb447d0865"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga597a5c74ca68968232f3f0fb447d0865">&#9670;&#160;</a></span>create_array_list()</h2>
+<a id="ga8bff8bc040646b8475898584dfb72011" name="ga8bff8bc040646b8475898584dfb72011"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8bff8bc040646b8475898584dfb72011">&#9670;&#160;</a></span>array_list_swap_and_pop_back()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> * create_array_list </td>
-          <td>(</td>
-          <td class="paramtype">unsigned&#160;</td>
-          <td class="paramname"><em>size_bytes</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Create an empty dynamic array. </p>
-<p>__Every <a class="el" href="structarray__list.html">array_list</a> created with this function should be freed using <a class="el" href="group__array__list.html#gad0d68f5e0abe979de7cf8e9f6aaf6d54" title="Free the array.">free_array_list()</a>_</p>
-<p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of an element </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to the newly created <a class="el" href="structarray__list.html">array_list</a> </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>free_list() </dd></dl>
-
-</div>
-</div>
-<a id="gad0d68f5e0abe979de7cf8e9f6aaf6d54" name="gad0d68f5e0abe979de7cf8e9f6aaf6d54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad0d68f5e0abe979de7cf8e9f6aaf6d54">&#9670;&#160;</a></span>free_array_list()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void free_array_list </td>
+          <td class="memname">int array_list_swap_and_pop_back </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *&#160;</td>
-          <td class="paramname"><em>array</em></td><td>)</td>
+          <td class="paramname"><em>array</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Free the array. </p>
-<p><em>Complexity: O(n)</em> </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Swap the i-th element with the last one and pop back. </p>
+<p>This function is very useful to remove an arbitrary element of the array in constant time when you don't care about the order.</p>
+<p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">array</td><td>pointer to the array </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Element index to remove </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>pointer to the remove data (if NULL the data will be lost) </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>TRUE iif the indices could be swapped </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="ga3e64c25d1c49407d71fa28f1adfbe793" name="ga3e64c25d1c49407d71fa28f1adfbe793"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3e64c25d1c49407d71fa28f1adfbe793">&#9670;&#160;</a></span>array_list_min_capacity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t array_list_min_capacity</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Minimal capacity of a non-empty array. </p>
+<p>This is typically the capacity that will be allocated after a first element was pushed into the array.</p>
+<p>This value defaults to 8 and can be modified by the user. </p>
 
 </div>
 </div>

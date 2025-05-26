@@ -1,13 +1,16 @@
 <map id="/home/runner/work/dsa/dsa/include/btree_ref/btree_ref.h" name="/home/runner/work/dsa/dsa/include/btree_ref/btree_ref.h">
-<area shape="rect" id="Node000001" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="82,5,254,60"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,80,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,62,72,102,69,98,128,58"/>
-<area shape="rect" id="Node000003" href="$path_8h.html" title="Binary tree path definition Defines functions to manipulate a path in a binary tree." alt="" coords="105,108,231,133"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,60,171,94,165,94,165,60"/>
-<area shape="rect" id="Node000006" href="$ptr_8h_source.html" title=" " alt="" coords="256,108,307,133"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="204,58,256,97,253,102,201,62"/>
-<area shape="rect" id="Node000004" href="$structures_8h_source.html" title=" " alt="" coords="119,181,217,207"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="171,134,171,168,165,168,165,134"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="133,255,203,280"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="171,207,171,241,165,241,165,207"/>
+<area shape="rect" id="Node000001" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="22,5,194,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="35,181,109,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="57,62,31,83,12,109,9,126,15,142,28,158,44,171,40,175,24,162,11,145,3,126,7,107,27,79,54,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="22,108,93,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="95,61,73,97,69,95,90,59"/>
+<area shape="rect" id="Node000004" href="$path_8h.html" title="Binary tree path definition Defines functions to manipulate a path in a binary tree." alt="" coords="225,108,351,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="164,58,253,100,251,105,162,62"/>
+<area shape="rect" id="Node000007" href="$lambda_8h_source.html" title=" " alt="" coords="117,108,200,133"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="126,59,147,95,142,97,121,61"/>
+<area shape="rect" id="Node000005" href="$structures_8h_source.html" title=" " alt="" coords="239,181,337,207"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="291,134,291,168,285,168,285,134"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="253,255,323,280"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="291,207,291,241,285,241,285,207"/>
+<area shape="poly" id="edge7_Node000007_Node000002" title=" " alt="" coords="146,135,98,175,95,170,143,131"/>
 </map>

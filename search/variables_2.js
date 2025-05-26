@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['data_0',['data',['../structarray__list.html#ac887e700b2e7ac4963707f3d0f8b19e5',1,'array_list::data'],['../group__cbuffer__ref.html#ga87da43659b02d00da3b8e318255e9279',1,'circular_buffer::data'],['../structheap__view.html#a58932592aeb4068956fe2ab37fb05311',1,'heap_view::data']]]
+  ['capacity_0',['capacity',['../structarray__list.html#acf7f487328a83fc0707adabf6a2500c4',1,'array_list::capacity'],['../group__cbuffer__ref.html#gac7958e861413285b3347e13ea0aa5805',1,'circular_buffer::capacity'],['../structheap__view.html#a8d8bb1dff88125e791952c23c591f412',1,'heap_view::capacity']]],
+  ['compare_1',['compare',['../group__bsearch__tree__ref.html#ga5fa19b1f456230cb5b9f4b0baeb92c28',1,'bsearch_tree_ref::compare'],['../structheap__view.html#a480c5efa2dee97e3f2db6d0231220245',1,'heap_view::compare']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>The struct library: /home/runner/work/dsa/dsa/include/ptr.h Source File</title>
+<title>The struct library: lambda Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -58,11 +58,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function() { init_codefold(0); });
-/* @license-end */
-</script>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -76,7 +71,7 @@ $(document).ready(function() { init_codefold(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('ptr_8h_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('structlambda.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -102,31 +97,64 @@ $(document).ready(function(){initNavTree('ptr_8h_source.html',''); initResizable
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">ptr.h</div></div>
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
+  <div class="headertitle"><div class="title">lambda Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef STRUCT_PTR_H</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define STRUCT_PTR_H</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">typedef</span> void (*free_element_fn_t)(<span class="keywordtype">void</span>*);</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">enum</span> type { TYPE_INT, TYPE_DOUBLE };</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keywordtype">void</span>* ptr(<span class="keyword">enum</span> type t, ...);</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> swap_ref(<span class="keywordtype">void</span>** refs, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j) {</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordtype">void</span>* a = refs[i];</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    refs[i] = refs[j];</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    refs[j] = a;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>}</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#endif</span></div>
-</div><!-- fragment --></div><!-- contents -->
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a358c4646dab9386e0d60a102020cf9ed" id="r_a358c4646dab9386e0d60a102020cf9ed"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlambda.html#a358c4646dab9386e0d60a102020cf9ed">priv</a></td></tr>
+<tr class="separator:a358c4646dab9386e0d60a102020cf9ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a079882a51985716ad1090d881cbe23c0" id="r_a079882a51985716ad1090d881cbe23c0"><td class="memItemLeft" align="right" valign="top">lambda_fn_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlambda.html#a079882a51985716ad1090d881cbe23c0">fn</a></td></tr>
+<tr class="separator:a079882a51985716ad1090d881cbe23c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="lambda_8h_source.html#l00010">10</a> of file <a class="el" href="lambda_8h_source.html">lambda.h</a>.</p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="a079882a51985716ad1090d881cbe23c0" name="a079882a51985716ad1090d881cbe23c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a079882a51985716ad1090d881cbe23c0">&#9670;&#160;</a></span>fn</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">lambda_fn_t lambda::fn</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="lambda_8h_source.html#l00012">12</a> of file <a class="el" href="lambda_8h_source.html">lambda.h</a>.</p>
+
+</div>
+</div>
+<a id="a358c4646dab9386e0d60a102020cf9ed" name="a358c4646dab9386e0d60a102020cf9ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a358c4646dab9386e0d60a102020cf9ed">&#9670;&#160;</a></span>priv</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* lambda::priv</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="lambda_8h_source.html#l00011">11</a> of file <a class="el" href="lambda_8h_source.html">lambda.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>/home/runner/work/dsa/dsa/include/<a class="el" href="lambda_8h_source.html">lambda.h</a></li>
+</ul>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><b>ptr.h</b></li>
+    <li class="navelem"><a class="el" href="structlambda.html">lambda</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

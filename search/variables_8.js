@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['p_0',['p',['../group__bsearch__tree__ref.html#ga080b01eb09921df7ed42aea7692a10bc',1,'node_bsearch_tree_ref::p'],['../structnode__btree__ref.html#adb9ee7b1e28cfc35888b741bde003b98',1,'node_btree_ref::p'],['../structnode__list__ref.html#a1c5484cbc8f2263ae3fb964219e95f92',1,'node_list_ref::p']]],
-  ['path_1',['path',['../structbtree__path.html#a6923cea470b57566026f49f7aed61236',1,'btree_path']]],
-  ['pos_5fto_5fidx_2',['pos_to_idx',['../structheap__view.html#aad92d776b02fd49d972def8b3509594c',1,'heap_view']]],
-  ['prev_3',['prev',['../structnode__list__ref.html#af56c34fe41f436e8a26526d0d37c35f0',1,'node_list_ref']]]
+  ['nb_5fvert_0',['nb_vert',['../structgraph__list.html#a1591579984414dd735a28d1400ad81f6',1,'graph_list::nb_vert'],['../structgraph__mat.html#a6b4597b462076a2510f7119b15d6fddc',1,'graph_mat::nb_vert']]],
+  ['neighbours_1',['neighbours',['../structgraph__list.html#a538c2e1b4a4ffa89253ad4ebe041e0a2',1,'graph_list']]],
+  ['next_2',['next',['../structlinked__list__node.html#ac1c9d07379df3943e1736e77c12ccbc8',1,'linked_list_node']]]
 ];

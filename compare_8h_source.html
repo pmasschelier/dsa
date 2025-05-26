@@ -108,7 +108,7 @@ $(document).ready(function(){initNavTree('compare_8h_source.html',''); initResiz
 <a href="compare_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef COMPARE_H</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define COMPARE_H</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="compare_8h.html#a5bffd944fdaeefd20b78e74d6a7f8b27">   20</a></span><span class="keyword">typedef</span> int (*<a class="code hl_typedef" href="compare_8h.html#a5bffd944fdaeefd20b78e74d6a7f8b27">compare_fn_t</a>)(<span class="keywordtype">void</span>*, <span class="keywordtype">void</span>*);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="compare_8h.html#acb8f8b887151e0c7aba84499dca0c993">   20</a></span><span class="keyword">typedef</span> int (*<a class="code hl_typedef" href="compare_8h.html#acb8f8b887151e0c7aba84499dca0c993">compare_fn_t</a>)(<span class="keywordtype">void</span>* a, <span class="keywordtype">void</span>*);</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
 <div class="foldopen" id="foldopen00029" data-start="" data-end="">
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="compare_8h.html#a1d6cdf1e6255fdd2f79fb60b28c437fb">   29</a></span><span class="preprocessor">#define DEFINE_COMPARE_SCALAR(type)                               \</span></div>
@@ -124,18 +124,18 @@ $(document).ready(function(){initNavTree('compare_8h_source.html',''); initResiz
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">    }</span></div>
 </div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="compare_8h.html#ab567f2dc0dfdb938365f41208b28d818">   54</a></span><span class="keyword">typedef</span> int (*<a class="code hl_typedef" href="compare_8h.html#ab567f2dc0dfdb938365f41208b28d818">equals_fn_t</a>)(<span class="keywordtype">void</span>* a, <span class="keywordtype">void</span>* b);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="foldopen" id="foldopen00063" data-start="" data-end="">
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="compare_8h.html#a643a2176f7b224a5516b66d7369d850c">   63</a></span><span class="preprocessor">#define DEFINE_EQUALS_SCALAR(type)                      \</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">    static inline int equals_##type(void* a, void* b) { \</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">        return *(type*)a == *(type*)b;                  \</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">    }</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="compare_8h.html#ab567f2dc0dfdb938365f41208b28d818">   55</a></span><span class="keyword">typedef</span> int (*<a class="code hl_typedef" href="compare_8h.html#ab567f2dc0dfdb938365f41208b28d818">equals_fn_t</a>)(<span class="keywordtype">void</span>* a, <span class="keywordtype">void</span>* b);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="foldopen" id="foldopen00064" data-start="" data-end="">
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="compare_8h.html#a643a2176f7b224a5516b66d7369d850c">   64</a></span><span class="preprocessor">#define DEFINE_EQUALS_SCALAR(type)                      \</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">    static inline int equals_##type(void* a, void* b) { \</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">        return *(type*)a == *(type*)b;                  \</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">    }</span></div>
 </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#endif  </span><span class="comment">// !COMPARE_H</span></div>
-<div class="ttc" id="acompare_8h_html_a5bffd944fdaeefd20b78e74d6a7f8b27"><div class="ttname"><a href="compare_8h.html#a5bffd944fdaeefd20b78e74d6a7f8b27">compare_fn_t</a></div><div class="ttdeci">int(* compare_fn_t)(void *, void *)</div><div class="ttdoc">Typedef for pointer to a comparison function.</div><div class="ttdef"><b>Definition</b> <a href="compare_8h_source.html#l00020">compare.h:20</a></div></div>
-<div class="ttc" id="acompare_8h_html_ab567f2dc0dfdb938365f41208b28d818"><div class="ttname"><a href="compare_8h.html#ab567f2dc0dfdb938365f41208b28d818">equals_fn_t</a></div><div class="ttdeci">int(* equals_fn_t)(void *a, void *b)</div><div class="ttdoc">Typedef for pointer to an equality function.</div><div class="ttdef"><b>Definition</b> <a href="compare_8h_source.html#l00054">compare.h:54</a></div></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#endif  </span><span class="comment">// !COMPARE_H</span></div>
+<div class="ttc" id="acompare_8h_html_ab567f2dc0dfdb938365f41208b28d818"><div class="ttname"><a href="compare_8h.html#ab567f2dc0dfdb938365f41208b28d818">equals_fn_t</a></div><div class="ttdeci">int(* equals_fn_t)(void *a, void *b)</div><div class="ttdoc">Typedef for pointer to an equality function.</div><div class="ttdef"><b>Definition</b> <a href="compare_8h_source.html#l00055">compare.h:55</a></div></div>
+<div class="ttc" id="acompare_8h_html_acb8f8b887151e0c7aba84499dca0c993"><div class="ttname"><a href="compare_8h.html#acb8f8b887151e0c7aba84499dca0c993">compare_fn_t</a></div><div class="ttdeci">int(* compare_fn_t)(void *a, void *)</div><div class="ttdoc">Typedef for pointer to a comparison function.</div><div class="ttdef"><b>Definition</b> <a href="compare_8h_source.html#l00020">compare.h:20</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

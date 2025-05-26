@@ -114,12 +114,12 @@ $(document).ready(function(){initNavTree('structgraph__list.html',''); initResiz
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="structgraph__list__coll__graph.png" border="0" usemap="#agraph__list_coll__map" alt="Collaboration graph"/></div>
 <map name="agraph__list_coll__map" id="agraph__list_coll__map">
-<area shape="rect" title="Weighted graph defined with adjacency lists." alt="" coords="15,200,102,225"/>
-<area shape="rect" href="structlist__ref.html" title="Doubly linked list." alt="" coords="25,112,92,137"/>
-<area shape="poly" title=" " alt="" coords="61,151,61,199,56,199,56,151"/>
-<area shape="rect" href="structnode__list__ref.html" title="A doubly&#45;linked list node." alt="" coords="5,7,112,33"/>
-<area shape="poly" title=" " alt="" coords="61,47,61,112,56,112,56,47"/>
-<area shape="poly" title=" " alt="" coords="127,10,135,13,139,20,130,29,113,33,112,27,128,25,133,20,131,17,125,14"/>
+<area shape="rect" title="Weighted graph defined with adjacency lists." alt="" coords="25,200,112,225"/>
+<area shape="rect" href="structlinked__list.html" title=" " alt="" coords="25,112,113,137"/>
+<area shape="poly" title=" " alt="" coords="71,151,71,199,66,199,66,151"/>
+<area shape="rect" href="structlinked__list__node.html" title=" " alt="" coords="5,7,132,33"/>
+<area shape="poly" title=" " alt="" coords="71,47,71,112,66,112,66,47"/>
+<area shape="poly" title=" " alt="" coords="147,10,155,13,159,20,151,29,133,32,132,27,148,24,153,20,152,18,145,15"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -128,9 +128,9 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a1591579984414dd735a28d1400ad81f6" id="r_a1591579984414dd735a28d1400ad81f6"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph__list.html#a1591579984414dd735a28d1400ad81f6">nb_vert</a></td></tr>
 <tr class="memdesc:a1591579984414dd735a28d1400ad81f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of vertices in the graph.  <br /></td></tr>
 <tr class="separator:a1591579984414dd735a28d1400ad81f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6eec7e5c626393d1d388e9d35bc3b525" id="r_a6eec7e5c626393d1d388e9d35bc3b525"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__list__ref.html#ga7633c3e9fc84c0c501b6c84deca8fba2">list_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph__list.html#a6eec7e5c626393d1d388e9d35bc3b525">neighbours</a></td></tr>
-<tr class="memdesc:a6eec7e5c626393d1d388e9d35bc3b525"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of lists of <a class="el" href="structgraph__list__edge.html" title="A graph edge.">graph_list_edge</a>.  <br /></td></tr>
-<tr class="separator:a6eec7e5c626393d1d388e9d35bc3b525"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a538c2e1b4a4ffa89253ad4ebe041e0a2" id="r_a538c2e1b4a4ffa89253ad4ebe041e0a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlinked__list.html">linked_list_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph__list.html#a538c2e1b4a4ffa89253ad4ebe041e0a2">neighbours</a></td></tr>
+<tr class="memdesc:a538c2e1b4a4ffa89253ad4ebe041e0a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of lists of <a class="el" href="structgraph__list__edge.html" title="A graph edge.">graph_list_edge</a>.  <br /></td></tr>
+<tr class="separator:a538c2e1b4a4ffa89253ad4ebe041e0a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a180a73c54b1de0ca0561b9084c8e24ca" id="r_a180a73c54b1de0ca0561b9084c8e24ca"><td class="memItemLeft" align="right" valign="top">BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph__list.html#a180a73c54b1de0ca0561b9084c8e24ca">is_weighted</a></td></tr>
 <tr class="memdesc:a180a73c54b1de0ca0561b9084c8e24ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the graph weighted.  <br /></td></tr>
 <tr class="separator:a180a73c54b1de0ca0561b9084c8e24ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -182,14 +182,14 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a id="a6eec7e5c626393d1d388e9d35bc3b525" name="a6eec7e5c626393d1d388e9d35bc3b525"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6eec7e5c626393d1d388e9d35bc3b525">&#9670;&#160;</a></span>neighbours</h2>
+<a id="a538c2e1b4a4ffa89253ad4ebe041e0a2" name="a538c2e1b4a4ffa89253ad4ebe041e0a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a538c2e1b4a4ffa89253ad4ebe041e0a2">&#9670;&#160;</a></span>neighbours</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__list__ref.html#ga7633c3e9fc84c0c501b6c84deca8fba2">list_ref_t</a>* graph_list::neighbours</td>
+          <td class="memname"><a class="el" href="structlinked__list.html">linked_list_t</a>* graph_list::neighbours</td>
         </tr>
       </table>
 </div><div class="memdoc">

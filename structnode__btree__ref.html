@@ -114,26 +114,47 @@ $(document).ready(function(){initNavTree('structnode__btree__ref.html',''); init
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="structnode__btree__ref__coll__graph.png" border="0" usemap="#anode__btree__ref_coll__map" alt="Collaboration graph"/></div>
 <map name="anode__btree__ref_coll__map" id="anode__btree__ref_coll__map">
-<area shape="rect" title="A binary&#45;tree node." alt="" coords="5,7,125,33"/>
-<area shape="poly" title=" " alt="" coords="140,14,152,20,126,27,125,22,147,20,138,19"/>
+<area shape="rect" title="A binary&#45;tree node." alt="" coords="5,15,125,40"/>
+<area shape="poly" title=" " alt="" coords="140,21,152,28,126,34,125,29,147,27,138,26"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:adb9ee7b1e28cfc35888b741bde003b98" id="r_adb9ee7b1e28cfc35888b741bde003b98"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnode__btree__ref.html#adb9ee7b1e28cfc35888b741bde003b98">p</a></td></tr>
-<tr class="separator:adb9ee7b1e28cfc35888b741bde003b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b52057432db82a211e74b88742f5766" id="r_a5b52057432db82a211e74b88742f5766"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__btree__ref.html#ga7498c6673dd4b3a06230bad13c72ed57">node_btree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnode__btree__ref.html#a5b52057432db82a211e74b88742f5766">ls</a></td></tr>
 <tr class="separator:a5b52057432db82a211e74b88742f5766"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ff483726cab963ac3404e0471f92139" id="r_a2ff483726cab963ac3404e0471f92139"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__btree__ref.html#ga7498c6673dd4b3a06230bad13c72ed57">node_btree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnode__btree__ref.html#a2ff483726cab963ac3404e0471f92139">rs</a></td></tr>
 <tr class="separator:a2ff483726cab963ac3404e0471f92139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0cba6efdb4f04fe02f6c6db0a66b306" id="r_aa0cba6efdb4f04fe02f6c6db0a66b306"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__btree__ref.html#ga7498c6673dd4b3a06230bad13c72ed57">node_btree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnode__btree__ref.html#aa0cba6efdb4f04fe02f6c6db0a66b306">parent</a></td></tr>
+<tr class="separator:aa0cba6efdb4f04fe02f6c6db0a66b306"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1baf18704e611fc185427040923d5ac3" id="r_a1baf18704e611fc185427040923d5ac3"><td class="memItemLeft" align="right" valign="top">uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnode__btree__ref.html#a1baf18704e611fc185427040923d5ac3">priv</a></td></tr>
+<tr class="separator:a1baf18704e611fc185427040923d5ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa87107a323b509fc1fc63b55e4833d22" id="r_aa87107a323b509fc1fc63b55e4833d22"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnode__btree__ref.html#aa87107a323b509fc1fc63b55e4833d22">data</a> []</td></tr>
+<tr class="separator:aa87107a323b509fc1fc63b55e4833d22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A binary-tree node. </p>
 <p>A tree node holds a pointer to its data and a pointer to its left son (ls) (NULL if there is no left son) and a pointer to its right son (NULL if it is there is no right son). </p>
 
-<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00034">34</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00037">37</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
+<a id="aa87107a323b509fc1fc63b55e4833d22" name="aa87107a323b509fc1fc63b55e4833d22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa87107a323b509fc1fc63b55e4833d22">&#9670;&#160;</a></span>data</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t node_btree_ref::data[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to data </p>
+
+<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00042">42</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
+
+</div>
+</div>
 <a id="a5b52057432db82a211e74b88742f5766" name="a5b52057432db82a211e74b88742f5766"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5b52057432db82a211e74b88742f5766">&#9670;&#160;</a></span>ls</h2>
 
@@ -147,24 +168,41 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Pointer to its left son </p>
 
-<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00036">36</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00038">38</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
 
 </div>
 </div>
-<a id="adb9ee7b1e28cfc35888b741bde003b98" name="adb9ee7b1e28cfc35888b741bde003b98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb9ee7b1e28cfc35888b741bde003b98">&#9670;&#160;</a></span>p</h2>
+<a id="aa0cba6efdb4f04fe02f6c6db0a66b306" name="aa0cba6efdb4f04fe02f6c6db0a66b306"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0cba6efdb4f04fe02f6c6db0a66b306">&#9670;&#160;</a></span>parent</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* node_btree_ref::p</td>
+          <td class="memname"><a class="el" href="group__btree__ref.html#ga7498c6673dd4b3a06230bad13c72ed57">node_btree_ref_t</a>* node_btree_ref::parent</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to data </p>
+<p>Pointer to its parent </p>
 
-<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00035">35</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00040">40</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
+
+</div>
+</div>
+<a id="a1baf18704e611fc185427040923d5ac3" name="a1baf18704e611fc185427040923d5ac3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1baf18704e611fc185427040923d5ac3">&#9670;&#160;</a></span>priv</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uintptr_t node_btree_ref::priv</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Implementation data </p>
+
+<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00041">41</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
 
 </div>
 </div>
@@ -181,7 +219,7 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Pointer to its right son </p>
 
-<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00037">37</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00039">39</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
 
 </div>
 </div>

@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('btree__ref_8h.html',''); initResizable
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">btree_ref.h File Reference</div></div>
@@ -108,8 +109,9 @@ $(document).ready(function(){initNavTree('btree__ref_8h.html',''); initResizable
 <p>Binary trees definition Defines functions to create, free and manipulate binary trees.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="path_8h_source.html">btree_ref/path.h</a>&quot;</code><br />
-<code>#include &quot;ptr.h&quot;</code><br />
+<code>#include &quot;lambda.h&quot;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for btree_ref.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -117,17 +119,20 @@ $(document).ready(function(){initNavTree('btree__ref_8h.html',''); initResizable
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="btree__ref_8h__incl.png" border="0" usemap="#a_2home_2runner_2work_2dsa_2dsa_2include_2btree__ref_2btree__ref_8h" alt=""/></div>
 <map name="a_2home_2runner_2work_2dsa_2dsa_2include_2btree__ref_2btree__ref_8h" id="a_2home_2runner_2work_2dsa_2dsa_2include_2btree__ref_2btree__ref_8h">
-<area shape="rect" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="82,5,254,60"/>
-<area shape="rect" title=" " alt="" coords="5,108,80,133"/>
-<area shape="poly" title=" " alt="" coords="131,62,72,102,69,98,128,58"/>
-<area shape="rect" href="path_8h.html" title="Binary tree path definition Defines functions to manipulate a path in a binary tree." alt="" coords="105,108,231,133"/>
-<area shape="poly" title=" " alt="" coords="171,60,171,94,165,94,165,60"/>
-<area shape="rect" href="ptr_8h_source.html" title=" " alt="" coords="256,108,307,133"/>
-<area shape="poly" title=" " alt="" coords="204,58,256,97,253,102,201,62"/>
-<area shape="rect" href="structures_8h_source.html" title=" " alt="" coords="119,181,217,207"/>
-<area shape="poly" title=" " alt="" coords="171,134,171,168,165,168,165,134"/>
-<area shape="rect" title=" " alt="" coords="133,255,203,280"/>
-<area shape="poly" title=" " alt="" coords="171,207,171,241,165,241,165,207"/>
+<area shape="rect" title="Binary trees definition Defines functions to create, free and manipulate binary trees." alt="" coords="22,5,194,60"/>
+<area shape="rect" title=" " alt="" coords="35,181,109,207"/>
+<area shape="poly" title=" " alt="" coords="57,62,31,83,12,109,9,126,15,142,28,158,44,171,40,175,24,162,11,145,3,126,7,107,27,79,54,58"/>
+<area shape="rect" title=" " alt="" coords="22,108,93,133"/>
+<area shape="poly" title=" " alt="" coords="95,61,73,97,69,95,90,59"/>
+<area shape="rect" href="path_8h.html" title="Binary tree path definition Defines functions to manipulate a path in a binary tree." alt="" coords="225,108,351,133"/>
+<area shape="poly" title=" " alt="" coords="164,58,253,100,251,105,162,62"/>
+<area shape="rect" href="lambda_8h_source.html" title=" " alt="" coords="117,108,200,133"/>
+<area shape="poly" title=" " alt="" coords="126,59,147,95,142,97,121,61"/>
+<area shape="rect" href="structures_8h_source.html" title=" " alt="" coords="239,181,337,207"/>
+<area shape="poly" title=" " alt="" coords="291,134,291,168,285,168,285,134"/>
+<area shape="rect" title=" " alt="" coords="253,255,323,280"/>
+<area shape="poly" title=" " alt="" coords="291,207,291,241,285,241,285,207"/>
+<area shape="poly" title=" " alt="" coords="146,135,98,175,95,170,143,131"/>
 </map>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -158,6 +163,11 @@ Data Structures</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary tree.  <a href="structbtree__ref.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga9446da52b4b868c2a9b60d2539e89b2f" id="r_ga9446da52b4b868c2a9b60d2539e89b2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__btree__ref.html#ga9446da52b4b868c2a9b60d2539e89b2f">get_node_ref</a>(node,  type)&#160;&#160;&#160;((type*)&amp;(node)-&gt;data)</td></tr>
+<tr class="separator:ga9446da52b4b868c2a9b60d2539e89b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga7498c6673dd4b3a06230bad13c72ed57" id="r_ga7498c6673dd4b3a06230bad13c72ed57"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structnode__btree__ref.html">node_btree_ref</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__btree__ref.html#ga7498c6673dd4b3a06230bad13c72ed57">node_btree_ref_t</a></td></tr>
@@ -172,6 +182,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga38391ded30e9bac307f9d83b1fc78959" id="r_ga38391ded30e9bac307f9d83b1fc78959"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__btree__ref.html#ga504968e8fe07a4c8dff4a4479a54261e">btree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__btree__ref.html#ga38391ded30e9bac307f9d83b1fc78959">create_btree</a> (size_t size)</td></tr>
 <tr class="memdesc:ga38391ded30e9bac307f9d83b1fc78959"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an empty binary tree.  <br /></td></tr>
 <tr class="separator:ga38391ded30e9bac307f9d83b1fc78959"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6dfb3a1f22a02773ad52f8ab83efd2eb" id="r_ga6dfb3a1f22a02773ad52f8ab83efd2eb"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>btree_swap_node</b> (<a class="el" href="group__btree__ref.html#ga7498c6673dd4b3a06230bad13c72ed57">node_btree_ref_t</a> ***a, <a class="el" href="group__btree__ref.html#ga7498c6673dd4b3a06230bad13c72ed57">node_btree_ref_t</a> ***b)</td></tr>
+<tr class="separator:ga6dfb3a1f22a02773ad52f8ab83efd2eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga14082d454da79befc077ce6a9996380b" id="r_ga14082d454da79befc077ce6a9996380b"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__btree__ref.html#ga14082d454da79befc077ce6a9996380b">btree_height</a> (<a class="el" href="group__btree__ref.html#ga504968e8fe07a4c8dff4a4479a54261e">btree_ref_t</a> *tree)</td></tr>
 <tr class="memdesc:ga14082d454da79befc077ce6a9996380b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the binary tree height.  <br /></td></tr>
 <tr class="separator:ga14082d454da79befc077ce6a9996380b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -190,18 +203,27 @@ Functions</h2></td></tr>
 <tr class="memitem:gab162adbfa580bdfca04af1165b0d2f6b" id="r_gab162adbfa580bdfca04af1165b0d2f6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__btree__ref.html#ga504968e8fe07a4c8dff4a4479a54261e">btree_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__btree__ref.html#gab162adbfa580bdfca04af1165b0d2f6b">btree_perfect_tree_from_tab</a> (void *tab, size_t size, unsigned length)</td></tr>
 <tr class="memdesc:gab162adbfa580bdfca04af1165b0d2f6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a perfect binary tree from an array.  <br /></td></tr>
 <tr class="separator:gab162adbfa580bdfca04af1165b0d2f6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga90bfb622eae4137bf14d241a80a15fb7" id="r_ga90bfb622eae4137bf14d241a80a15fb7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__btree__ref.html#ga90bfb622eae4137bf14d241a80a15fb7">btree_preorder_traversal</a> (<a class="el" href="group__btree__ref.html#ga504968e8fe07a4c8dff4a4479a54261e">btree_ref_t</a> *tree, void *tab[])</td></tr>
-<tr class="memdesc:ga90bfb622eae4137bf14d241a80a15fb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preorder traversal of the binary tree.  <br /></td></tr>
-<tr class="separator:ga90bfb622eae4137bf14d241a80a15fb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga27d2ac4c4716d404a38001f4fd3423a1" id="r_ga27d2ac4c4716d404a38001f4fd3423a1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__btree__ref.html#ga27d2ac4c4716d404a38001f4fd3423a1">btree_preorder_traversal_array</a> (<a class="el" href="group__btree__ref.html#ga504968e8fe07a4c8dff4a4479a54261e">btree_ref_t</a> *tree, void *tab[])</td></tr>
+<tr class="memdesc:ga27d2ac4c4716d404a38001f4fd3423a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preorder traversal of the binary tree.  <br /></td></tr>
+<tr class="separator:ga27d2ac4c4716d404a38001f4fd3423a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05c17d003a0bfc96bfcfb31466311626" id="r_ga05c17d003a0bfc96bfcfb31466311626"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__btree__ref.html#ga05c17d003a0bfc96bfcfb31466311626">btree_preorder_traversal</a> (<a class="el" href="group__btree__ref.html#ga504968e8fe07a4c8dff4a4479a54261e">btree_ref_t</a> *tree, <a class="el" href="structlambda.html">lambda_t</a> *<a class="el" href="structlambda.html">lambda</a>)</td></tr>
+<tr class="memdesc:ga05c17d003a0bfc96bfcfb31466311626"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preorder traversal of the binary tree.  <br /></td></tr>
+<tr class="separator:ga05c17d003a0bfc96bfcfb31466311626"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98aa5ed28959c66203d22ddadfe3bca7" id="r_ga98aa5ed28959c66203d22ddadfe3bca7"><td class="memItemLeft" align="right" valign="top">
+int&#160;</td><td class="memItemRight" valign="bottom"><b>btree_dfs_array</b> (<a class="el" href="group__btree__ref.html#ga504968e8fe07a4c8dff4a4479a54261e">btree_ref_t</a> *tree, void *preorder[], void *inorder[], void *postorder[])</td></tr>
+<tr class="separator:ga98aa5ed28959c66203d22ddadfe3bca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa036939afdac4c38903e558445c66139" id="r_gaa036939afdac4c38903e558445c66139"><td class="memItemLeft" align="right" valign="top">
+int&#160;</td><td class="memItemRight" valign="bottom"><b>btree_dfs</b> (<a class="el" href="group__btree__ref.html#ga504968e8fe07a4c8dff4a4479a54261e">btree_ref_t</a> *tree, <a class="el" href="structlambda.html">lambda_t</a> *preorder, <a class="el" href="structlambda.html">lambda_t</a> *inorder, <a class="el" href="structlambda.html">lambda_t</a> *postorder)</td></tr>
+<tr class="separator:gaa036939afdac4c38903e558445c66139"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5ab79307bc4f5e646347e556fe5ff2e5" id="r_ga5ab79307bc4f5e646347e556fe5ff2e5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__btree__ref.html#ga5ab79307bc4f5e646347e556fe5ff2e5">btree_postorder_traversal</a> (<a class="el" href="group__btree__ref.html#ga504968e8fe07a4c8dff4a4479a54261e">btree_ref_t</a> *tree, void *tab[])</td></tr>
 <tr class="memdesc:ga5ab79307bc4f5e646347e556fe5ff2e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Postorder traversal of the binary tree.  <br /></td></tr>
 <tr class="separator:ga5ab79307bc4f5e646347e556fe5ff2e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadda45d212b7174c57252b8f9f460b600" id="r_gadda45d212b7174c57252b8f9f460b600"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__btree__ref.html#gadda45d212b7174c57252b8f9f460b600">btree_inorder_traversal</a> (<a class="el" href="group__btree__ref.html#ga504968e8fe07a4c8dff4a4479a54261e">btree_ref_t</a> *tree, void *tab[])</td></tr>
 <tr class="memdesc:gadda45d212b7174c57252b8f9f460b600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inorder traversal of the binary tree.  <br /></td></tr>
 <tr class="separator:gadda45d212b7174c57252b8f9f460b600"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafef1b2a97b52882d14936b77babc62ac" id="r_gafef1b2a97b52882d14936b77babc62ac"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__btree__ref.html#gafef1b2a97b52882d14936b77babc62ac">btree_levelorder_traversal</a> (<a class="el" href="group__btree__ref.html#ga504968e8fe07a4c8dff4a4479a54261e">btree_ref_t</a> *tree, void *tab[])</td></tr>
-<tr class="memdesc:gafef1b2a97b52882d14936b77babc62ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Level-order traversal of the binary tree.  <br /></td></tr>
-<tr class="separator:gafef1b2a97b52882d14936b77babc62ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b2d2dccee60f9a577375a0ecda10ce2" id="r_ga3b2d2dccee60f9a577375a0ecda10ce2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__btree__ref.html#ga3b2d2dccee60f9a577375a0ecda10ce2">btree_levelorder_traversal</a> (<a class="el" href="group__btree__ref.html#ga504968e8fe07a4c8dff4a4479a54261e">btree_ref_t</a> *tree, void *tab)</td></tr>
+<tr class="memdesc:ga3b2d2dccee60f9a577375a0ecda10ce2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Level-order traversal of the binary tree.  <br /></td></tr>
+<tr class="separator:ga3b2d2dccee60f9a577375a0ecda10ce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad0571720bbe1c04f4ff6f4d20f888de6" id="r_gad0571720bbe1c04f4ff6f4d20f888de6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__btree__ref.html#gad0571720bbe1c04f4ff6f4d20f888de6">btree_clean</a> (<a class="el" href="group__btree__ref.html#ga504968e8fe07a4c8dff4a4479a54261e">btree_ref_t</a> *tree)</td></tr>
 <tr class="memdesc:gad0571720bbe1c04f4ff6f4d20f888de6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the binary tree.  <br /></td></tr>
 <tr class="separator:gad0571720bbe1c04f4ff6f4d20f888de6"><td class="memSeparator" colspan="2">&#160;</td></tr>

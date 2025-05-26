@@ -114,10 +114,10 @@ $(document).ready(function(){initNavTree('structbtree__ref.html',''); initResiza
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="structbtree__ref__coll__graph.png" border="0" usemap="#abtree__ref_coll__map" alt="Collaboration graph"/></div>
 <map name="abtree__ref_coll__map" id="abtree__ref_coll__map">
-<area shape="rect" title="Binary tree." alt="" coords="25,97,106,123"/>
-<area shape="rect" href="structnode__btree__ref.html" title="A binary&#45;tree node." alt="" coords="5,7,125,33"/>
-<area shape="poly" title=" " alt="" coords="68,46,68,97,63,97,63,46"/>
-<area shape="poly" title=" " alt="" coords="140,11,152,20,144,28,126,31,125,26,141,23,147,20,138,16"/>
+<area shape="rect" title="Binary tree." alt="" coords="25,112,106,137"/>
+<area shape="rect" href="structnode__btree__ref.html" title="A binary&#45;tree node." alt="" coords="5,15,125,40"/>
+<area shape="poly" title=" " alt="" coords="68,54,68,112,63,112,63,54"/>
+<area shape="poly" title=" " alt="" coords="140,17,148,21,152,28,144,36,126,40,125,34,141,32,147,27,145,25,138,22"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -129,35 +129,13 @@ Data Fields</h2></td></tr>
 <tr class="memitem:aec7ec0affd9f881887fa3c5a4a563a0f" id="r_aec7ec0affd9f881887fa3c5a4a563a0f"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbtree__ref.html#aec7ec0affd9f881887fa3c5a4a563a0f">size</a></td></tr>
 <tr class="memdesc:aec7ec0affd9f881887fa3c5a4a563a0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size (in bytes) on a element.  <br /></td></tr>
 <tr class="separator:aec7ec0affd9f881887fa3c5a4a563a0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae603a4a6a0ce8fd763d5baa002d2292c" id="r_ae603a4a6a0ce8fd763d5baa002d2292c"><td class="memItemLeft" align="right" valign="top">free_element_fn_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbtree__ref.html#ae603a4a6a0ce8fd763d5baa002d2292c">free_element</a></td></tr>
-<tr class="memdesc:ae603a4a6a0ce8fd763d5baa002d2292c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function used to free the elements.  <br /></td></tr>
-<tr class="separator:ae603a4a6a0ce8fd763d5baa002d2292c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Binary tree. </p>
 <p>A binary tree struct contains the size of the elements referenced by the nodes and a pointer to a function to free them. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="structnode__btree__ref.html" title="A binary-tree node.">node_btree_ref</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00055">55</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00060">60</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="ae603a4a6a0ce8fd763d5baa002d2292c" name="ae603a4a6a0ce8fd763d5baa002d2292c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae603a4a6a0ce8fd763d5baa002d2292c">&#9670;&#160;</a></span>free_element</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">free_element_fn_t btree_ref::free_element</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function used to free the elements. </p>
-<p>This field should be a pointer to a function that will be called to free the memory region referenced by <a class="el" href="structnode__btree__ref.html#adb9ee7b1e28cfc35888b741bde003b98">node_btree_ref_t::p</a>. If the btree was created using the API it will default to free from libc. However you can turn a btree in a simple view on the data by setting this pointer to NULL. </p>
-
-<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00081">81</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
-
-</div>
-</div>
 <a id="a0837f98a4ca9fed5c80543dd871b97cf" name="a0837f98a4ca9fed5c80543dd871b97cf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0837f98a4ca9fed5c80543dd871b97cf">&#9670;&#160;</a></span>root</h2>
 
@@ -173,7 +151,7 @@ Data Fields</h2></td></tr>
 <p>Root of the binary tree. </p>
 <p>If root == NULL the binary tree is empty </p>
 
-<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00061">61</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00066">66</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
 
 </div>
 </div>
@@ -190,10 +168,10 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Size (in bytes) on a element. </p>
-<p>This field should be equals to the size (in bytes) of the memory region referenced by <a class="el" href="structnode__btree__ref.html#adb9ee7b1e28cfc35888b741bde003b98">node_btree_ref_t::p</a></p>
+<p>This field should be equals to the size (in bytes) of the memory region referenced by node_btree_ref_t::p</p>
 <dl class="section note"><dt>Note</dt><dd>This field is not used by any function and is mainly here for information. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00071">71</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="btree__ref_8h_source.html#l00076">76</a> of file <a class="el" href="btree__ref_8h_source.html">btree_ref.h</a>.</p>
 
 </div>
 </div>
