@@ -1,4 +1,7 @@
-passing_test_sources = [
+passing_tap_sources = [
+]
+
+passing_return_sources = [
   'avl_tree_ref_find.c',
   'avl_tree_ref_insert.c',
   'avl_tree_ref_insert_balance.c',

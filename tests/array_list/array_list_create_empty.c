@@ -7,11 +7,11 @@
 
 int main(void) {
 	array_list_t* array = array_list_create(sizeof(ARRAY_TYPE));
-    cmp_ok((uintptr_t)array, "!=", (uintptr_t)NULL, "array_list_create return non-null");
+    ok(array != NULL, "array_list_create return non-null");
 	cmp_ok(array->size, "==", 0, "array_list_create => size");
 	cmp_ok(array->capacity, "==", 0, "array_list_create => capacity");
 	cmp_ok(array->size_bytes, "==", sizeof(ARRAY_TYPE), "array_list_create => size_bytes");
-	cmp_ok((uintptr_t)array->data, "==", (uintptr_t)NULL, "array_list_create => data");
+	ok(array->data == NULL, "array_list_create => data");
 	array_list_free(array);
 	return 0;
 }

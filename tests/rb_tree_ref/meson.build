@@ -1,4 +1,7 @@
-passing_test_sources = [
+passing_tap_sources = [
+]
+
+passing_return_sources = [
   'rb_tree_ref_case1.c',
   'rb_tree_ref_case2.c',
   'rb_tree_ref_case3.c',

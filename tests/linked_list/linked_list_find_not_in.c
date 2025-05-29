@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <tap.h>
 #include <list_ref/algorithms.h>
 
 struct time {
@@ -19,7 +19,7 @@ int main(void) {
 	linked_list_t* list = linked_list_from_tab(tab, sizeof(LIST_TYPE), TAB_LEN);
 	linked_list_node_t* node;
 	node = find_in_list(list, &x);
-	assert(node == NULL);
+	ok(node == NULL, "%d found in list", x);
 
 	linked_list_free(list);
 	return 0;

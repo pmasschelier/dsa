@@ -1,4 +1,7 @@
-passing_test_sources = [
+passing_tap_sources = [
+]
+
+passing_return_sources = [
   'graph_list_bellman_negative_weights.c',
   'graph_list_bellman_negative_weights_no_dag.c',
   'graph_list_bellman_unit_weights.c',

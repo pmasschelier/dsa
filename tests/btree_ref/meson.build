@@ -1,4 +1,7 @@
-passing_test_sources = [
+passing_tap_sources = [
+]
+
+passing_return_sources = [
   'btree_ref_create_empty.c',
   'btree_ref_emplace_at_override.c',
   'btree_ref_emplace_at_root.c',

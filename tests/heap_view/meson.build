@@ -1,4 +1,7 @@
-passing_test_sources = [
+passing_tap_sources = [
+]
+
+passing_return_sources = [
   'heap_view_create_empty.c',
   'heap_view_get_root_to_empty.c',
   'heap_view_heap_from_array.c',

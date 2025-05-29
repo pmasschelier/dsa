@@ -1,4 +1,7 @@
-passing_test_sources = [
+passing_tap_sources = [
+]
+
+passing_return_sources = [
   'bsearch_tree_ref_create_empty.c',
   'bsearch_tree_ref_find.c',
   'bsearch_tree_ref_insert.c',

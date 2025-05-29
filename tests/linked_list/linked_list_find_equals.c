@@ -1,7 +1,7 @@
 
-#include <assert.h>
 #include <list_ref/linked_list.h>
-#include "compare.h"
+#include <compare.h>
+#include <tap.h>
 
 #define TAB_LEN 10
 #define LIST_TYPE int
@@ -14,8 +14,8 @@ LIST_TYPE b = 10;
 
 int main(void) {
 	linked_list_t* list = linked_list_from_tab(tab, sizeof(LIST_TYPE), TAB_LEN);
-	assert(NULL != linked_list_find_equals(list, &a, equals_int));
-	assert(NULL == linked_list_find_equals(list, &b, equals_int));
+	ok(NULL != linked_list_find_equals(list, &a, equals_int), "%d is in list", a);
+	ok(NULL == linked_list_find_equals(list, &b, equals_int), "%d is in list", b);
 
 	linked_list_free(list);
 	return 0;

@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <tap.h>
 #include <list_ref/linked_list.h>
 
 #define TAB_LEN 10
@@ -16,7 +16,7 @@ int main(void) {
 
 	node = list->begin;
 	for (int i = 0; i < TAB_LEN; i++, node = node->next) {
-		assert(i == *get_node_ref(node, LIST_TYPE));
+		cmp_ok(*get_node_ref(node, LIST_TYPE), "==", i);
 	}
 
 	linked_list_free(list);

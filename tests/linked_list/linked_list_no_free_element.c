@@ -1,4 +1,3 @@
-#include <assert.h>
 #include <list_ref/linked_list.h>
 
 #define LIST_TYPE int

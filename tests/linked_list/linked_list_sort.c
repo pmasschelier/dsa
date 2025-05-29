@@ -1,5 +1,5 @@
 #include "list_ref/linked_list.h"
-#include <assert.h>
+#include <tap.h>
 
 #define ARRAY_TYPE int
 #define ARRAY_LEN 20
@@ -26,7 +26,7 @@ int main(void)
     for(linked_list_node_t* node = list.begin; node->next != NULL; node = node->next) {
         int a = *get_node_ref(node, int);
         int b = *get_node_ref(node->next, int);
-        assert(a <= b);
+        cmp_ok(a, "<=", b);
     }
     linked_list_clean(&list);
     return 0;
