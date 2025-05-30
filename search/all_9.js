@@ -15,7 +15,7 @@ var searchData=
   ['linked_5flist_5ffind_5fequals_12',['linked_list_find_equals',['../group__list__ref.html#ga74352f3d8b29642c5e4ac7c162765ca8',1,'linked_list.h']]],
   ['linked_5flist_5ffree_13',['linked_list_free',['../group__list__ref.html#ga824f90fe8d9e92a7cf47b63a36c890e8',1,'linked_list.h']]],
   ['linked_5flist_5ffrom_5ftab_14',['linked_list_from_tab',['../group__list__ref.html#gac46cb6fcdd2c253a5b240c80cc4b46e5',1,'linked_list.h']]],
-  ['linked_5flist_5finit_15',['linked_list_init',['../group__list__ref.html#ga6cbbe05372cf31f4f43f47208e7a3cc4',1,'linked_list_init(linked_list_t *array, size_t size_bytes):&#160;linked_list.h'],['../group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb',1,'LINKED_LIST_INIT:&#160;linked_list.h']]],
+  ['linked_5flist_5finit_15',['linked_list_init',['../group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb',1,'LINKED_LIST_INIT:&#160;linked_list.h'],['../group__list__ref.html#ga6cbbe05372cf31f4f43f47208e7a3cc4',1,'linked_list_init(linked_list_t *array, size_t size_bytes):&#160;linked_list.h']]],
   ['linked_5flist_5finsert_16',['linked_list_insert',['../group__list__ref.html#ga2c9f6981bb4ea0da1be0d6d4e8a71719',1,'linked_list.h']]],
   ['linked_5flist_5finsert_5fnode_17',['linked_list_insert_node',['../group__list__ref.html#ga719e222f120822bb68e7057c841996b5',1,'linked_list.h']]],
   ['linked_5flist_5flength_18',['linked_list_length',['../group__list__ref.html#gad805934f49966be0275caca177c7e5f3',1,'linked_list.h']]],
@@ -28,7 +28,7 @@ var searchData=
   ['linked_5flist_5fswap_25',['linked_list_swap',['../group__list__ref.html#gae103ae9573f0a2e975da8f373501aaa3',1,'linked_list.h']]],
   ['linked_5flist_5fto_5ftab_26',['linked_list_to_tab',['../group__list__ref.html#gae71616715311808d93a36324bb639234',1,'linked_list.h']]],
   ['list_5fref_27',['list_ref',['../structlist__ref.html',1,'']]],
-  ['lists_28',['lists',['../group__graph__list.html',1,'Adjacency lists'],['../group__list__ref.html',1,'Doubly-linked lists']]],
+  ['lists_28',['lists',['../group__graph__list.html',1,'Adjacency lists'],['../group__list__ref.html',1,'Doubly-linked lists'],['../group__indexed__list.html',1,'Indexed lists']]],
   ['lists_20as_20buckets_29',['Hashtables with linked lists as buckets',['../group__htable__list__ref.html',1,'']]],
   ['ls_30',['ls',['../structnode__btree__ref.html#a5b52057432db82a211e74b88742f5766',1,'node_btree_ref']]]
 ];

@@ -11,6 +11,6 @@ var searchData=
   ['path_5fwalk_5fbackward_8',['path_walk_backward',['../path_8h.html#a8031760e67675613fda26797ae3f6358',1,'path.h']]],
   ['path_5fwalk_5fforward_9',['path_walk_forward',['../path_8h.html#a56c44c1cf3ff88ac9a96a8634ae4a389',1,'path.h']]],
   ['pos_5fto_5fidx_10',['pos_to_idx',['../structheap__view.html#aad92d776b02fd49d972def8b3509594c',1,'heap_view']]],
-  ['prev_11',['prev',['../structlinked__list__node.html#a07a90d120784b595467722ab8e31cfe4',1,'linked_list_node']]],
+  ['prev_11',['prev',['../structindexed__list.html#a9e7d145dc7884a67385928c548c0439d',1,'indexed_list::prev'],['../structlinked__list__node.html#a07a90d120784b595467722ab8e31cfe4',1,'linked_list_node::prev']]],
   ['priv_12',['priv',['../structnode__btree__ref.html#a1baf18704e611fc185427040923d5ac3',1,'node_btree_ref']]]
 ];

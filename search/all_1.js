@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['begin_0',['begin',['../structlinked__list.html#ab550b342e7725656e866b36c5ee99374',1,'linked_list']]],
+  ['begin_0',['begin',['../structindexed__list.html#a3d9a0a545a7c2486b85c4a454ad3c8b6',1,'indexed_list::begin'],['../structlinked__list.html#ab550b342e7725656e866b36c5ee99374',1,'linked_list::begin']]],
   ['binary_20search_20trees_1',['binary search trees',['../group__avl__tree__ref.html',1,'AVL binary search trees'],['../group__rb__tree__ref.html',1,'Red-Black binary search trees'],['../group__bsearch__tree__ref.html',1,'Unbalanced binary search trees']]],
   ['binary_20trees_2',['Binary trees',['../group__btree__ref.html',1,'']]],
   ['black_20binary_20search_20trees_3',['Red-Black binary search trees',['../group__rb__tree__ref.html',1,'']]],

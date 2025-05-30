@@ -11,6 +11,7 @@ var annotated_dup =
     [ "graph_mat", "structgraph__mat.html", "structgraph__mat" ],
     [ "heap_view", "structheap__view.html", "structheap__view" ],
     [ "htable_list_ref", "structhtable__list__ref.html", "structhtable__list__ref" ],
+    [ "indexed_list", "structindexed__list.html", "structindexed__list" ],
     [ "lambda", "structlambda.html", null ],
     [ "linked_list", "structlinked__list.html", "structlinked__list" ],
     [ "linked_list_node", "structlinked__list__node.html", "structlinked__list__node" ],
