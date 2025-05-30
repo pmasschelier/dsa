@@ -1,6 +1,6 @@
 <map id="/home/runner/work/dsa/dsa/include/graph/graph_list.h" name="/home/runner/work/dsa/dsa/include/graph/graph_list.h">
 <area shape="rect" id="Node000001" title="Graphs defined with adjacency lists." alt="" coords="257,5,439,60"/>
-<area shape="rect" id="Node000002" href="$linked__list_8h_source.html" title=" " alt="" coords="171,108,320,133"/>
+<area shape="rect" id="Node000002" href="$linked__list_8h.html" title="Doubly linked lists definition Defines functions to create, free and manipulate doubly&#45;linked lists." alt="" coords="171,108,320,133"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="318,62,271,101,268,97,315,58"/>
 <area shape="rect" id="Node000008" href="$weight__type_8h_source.html" title=" " alt="" coords="431,108,545,133"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="392,58,459,98,456,103,389,62"/>

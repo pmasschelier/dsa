@@ -16,7 +16,7 @@
 <area shape="rect" id="Node000007" title=" " alt="" coords="24,255,114,280"/>
 <area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="159,209,99,249,96,245,156,204"/>
 <area shape="poly" id="edge14_Node000008_Node000005" title=" " alt="" coords="324,136,217,179,215,174,322,131"/>
-<area shape="rect" id="Node000009" href="$linked__list_8h_source.html" title=" " alt="" coords="329,181,478,207"/>
+<area shape="rect" id="Node000009" href="$linked__list_8h.html" title="Doubly linked lists definition Defines functions to create, free and manipulate doubly&#45;linked lists." alt="" coords="329,181,478,207"/>
 <area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="362,132,389,169,385,172,358,135"/>
 <area shape="poly" id="edge13_Node000009_Node000003" title=" " alt="" coords="386,209,318,250,315,245,383,204"/>
 <area shape="rect" id="Node000010" title=" " alt="" coords="473,255,548,280"/>

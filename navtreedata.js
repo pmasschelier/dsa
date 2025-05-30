@@ -50,7 +50,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "algorithms_8h_source.html",
-"structlinked__list__node.html"
+"structlinked__list.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,0 +1,11 @@
+<map id="/home/runner/work/dsa/dsa/include/list_ref/linked_list.h" name="/home/runner/work/dsa/dsa/include/list_ref/linked_list.h">
+<area shape="rect" id="Node000001" title="Doubly linked lists definition Defines functions to create, free and manipulate doubly&#45;linked lists." alt="" coords="212,5,384,60"/>
+<area shape="rect" id="Node000002" href="$graph__list_8h.html" title="Graphs defined with adjacency lists." alt="" coords="5,108,188,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="235,68,150,110,148,106,232,64"/>
+<area shape="rect" id="Node000004" href="$htable__list__ref_8h.html" title="Hashtables with linked lists as buckets." alt="" coords="212,108,384,163"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="301,74,301,108,295,108,295,74"/>
+<area shape="rect" id="Node000005" href="$algorithms_8h_source.html" title=" " alt="" coords="408,108,580,163"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="362,64,444,106,442,110,360,69"/>
+<area shape="rect" id="Node000003" href="$graph__cast_8h.html" title="Conversion functions for different graph implementations." alt="" coords="5,211,188,265"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="99,176,99,211,94,211,94,176"/>
+</map>

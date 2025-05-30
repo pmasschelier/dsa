@@ -6,7 +6,7 @@
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="184,61,165,109,148,169,143,167,160,107,179,59"/>
 <area shape="rect" id="Node000004" href="$compare_8h.html" title="Comparison function type definition Defines compare_fn_t type function." alt="" coords="323,181,413,207"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="269,58,306,78,338,106,356,136,366,167,361,169,351,138,334,110,303,83,266,62"/>
-<area shape="rect" id="Node000005" href="$linked__list_8h_source.html" title=" " alt="" coords="175,108,324,133"/>
+<area shape="rect" id="Node000005" href="$linked__list_8h.html" title="Doubly linked lists definition Defines functions to create, free and manipulate doubly&#45;linked lists." alt="" coords="175,108,324,133"/>
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="213,59,236,95,232,98,208,62"/>
 <area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="217,136,90,179,88,174,215,131"/>
 <area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="233,136,171,176,168,171,230,131"/>

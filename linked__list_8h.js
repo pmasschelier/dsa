@@ -1,18 +1,5 @@
-var group__list__ref =
+var linked__list_8h =
 [
-    [ "linked_list.h", "linked__list_8h.html", null ],
-    [ "linked_list_node", "structlinked__list__node.html", [
-      [ "data", "structlinked__list__node.html#a4a070a05c5af36d7a9e5b30b35458bb7", null ],
-      [ "next", "structlinked__list__node.html#ac1c9d07379df3943e1736e77c12ccbc8", null ],
-      [ "prev", "structlinked__list__node.html#a07a90d120784b595467722ab8e31cfe4", null ]
-    ] ],
-    [ "linked_list", "structlinked__list.html", [
-      [ "begin", "structlinked__list.html#ab550b342e7725656e866b36c5ee99374", null ],
-      [ "end", "structlinked__list.html#a9f1e0562fc14ae4d42250de72ad72803", null ],
-      [ "size_bytes", "structlinked__list.html#a243dc9e81d4f0672072b24e2c8bb3db8", null ]
-    ] ],
-    [ "node_list_ref", "structnode__list__ref.html", null ],
-    [ "list_ref", "structlist__ref.html", null ],
     [ "LINKED_LIST_INIT", "group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb", null ],
     [ "linked_list_clean", "group__list__ref.html#gab21a4b8bd0779541ea553bba5420fe30", null ],
     [ "linked_list_create", "group__list__ref.html#ga6b38a7654d4e569d895a1eb231b75a73", null ],

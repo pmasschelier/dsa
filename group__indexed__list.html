@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('group__indexed__list.html',''); initRe
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
 Files</h2></td></tr>
 <tr class="memitem:indexed__list_8h" id="r_indexed__list_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="indexed__list_8h.html">indexed_list.h</a></td></tr>
-<tr class="memdesc:indexed__list_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indexed lists definition Defines functions to create, free and manipulate indexed-linked lists. <br /></td></tr>
+<tr class="memdesc:indexed__list_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indexed lists definition Defines functions to create, free and manipulate indexed-lists. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -124,6 +124,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga913474905ae8993f3e962b350fa5fca2" id="r_ga913474905ae8993f3e962b350fa5fca2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__indexed__list.html#ga913474905ae8993f3e962b350fa5fca2">get_array_list_ref</a>(array,  index,  type)&#160;&#160;&#160;	(type*)((array).data + (index) * (array).size_bytes)</td></tr>
 <tr class="memdesc:ga913474905ae8993f3e962b350fa5fca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper macro for random access.  <br /></td></tr>
 <tr class="separator:ga913474905ae8993f3e962b350fa5fca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga42b69861d0f72e4b57bf0eb410ea4b50" id="r_ga42b69861d0f72e4b57bf0eb410ea4b50"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__indexed__list.html#ga42b69861d0f72e4b57bf0eb410ea4b50">INDEXED_LIST_INIT</a>(type)</td></tr>
+<tr class="memdesc:ga42b69861d0f72e4b57bf0eb410ea4b50"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structindexed__list.html" title="Indexed list.">indexed_list</a> Compound literal  <br /></td></tr>
+<tr class="separator:ga42b69861d0f72e4b57bf0eb410ea4b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -139,6 +142,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga15ce55f2141af8bef9b37e7c95b7dc40" id="r_ga15ce55f2141af8bef9b37e7c95b7dc40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__indexed__list.html#ga15ce55f2141af8bef9b37e7c95b7dc40">indexed_list_free</a> (<a class="el" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a> *list)</td></tr>
 <tr class="memdesc:ga15ce55f2141af8bef9b37e7c95b7dc40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees the list.  <br /></td></tr>
 <tr class="separator:ga15ce55f2141af8bef9b37e7c95b7dc40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabbb85c2f2442efb9a5a214a435eae84a" id="r_gabbb85c2f2442efb9a5a214a435eae84a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__indexed__list.html#gabbb85c2f2442efb9a5a214a435eae84a">indexed_list_init</a> (<a class="el" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a> *list, size_t size_bytes)</td></tr>
+<tr class="memdesc:gabbb85c2f2442efb9a5a214a435eae84a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an empty indexed list.  <br /></td></tr>
+<tr class="separator:gabbb85c2f2442efb9a5a214a435eae84a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e8d17bc0e1e2e35926883223d6e8d59" id="r_ga2e8d17bc0e1e2e35926883223d6e8d59"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__indexed__list.html#ga2e8d17bc0e1e2e35926883223d6e8d59">indexed_list_deinit</a> (<a class="el" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a> *array)</td></tr>
+<tr class="memdesc:ga2e8d17bc0e1e2e35926883223d6e8d59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uninitialize the list.  <br /></td></tr>
+<tr class="separator:ga2e8d17bc0e1e2e35926883223d6e8d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga11ff1d11d40a3b093c1a6a7b97e0e623" id="r_ga11ff1d11d40a3b093c1a6a7b97e0e623"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__indexed__list.html#ga11ff1d11d40a3b093c1a6a7b97e0e623">indexed_list_from_tab</a> (void *tab, size_t size, unsigned length)</td></tr>
 <tr class="memdesc:ga11ff1d11d40a3b093c1a6a7b97e0e623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a list from an array.  <br /></td></tr>
 <tr class="separator:ga11ff1d11d40a3b093c1a6a7b97e0e623"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,15 +157,18 @@ Functions</h2></td></tr>
 <tr class="memitem:gadf2e6355e69fc8e8e9bf01f2c3f333ab" id="r_gadf2e6355e69fc8e8e9bf01f2c3f333ab"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__indexed__list.html#gadf2e6355e69fc8e8e9bf01f2c3f333ab">indexed_list_length</a> (<a class="el" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a> *list)</td></tr>
 <tr class="memdesc:gadf2e6355e69fc8e8e9bf01f2c3f333ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the list length.  <br /></td></tr>
 <tr class="separator:gadf2e6355e69fc8e8e9bf01f2c3f333ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga649a2da5c81a4c329d86aa40492322d0" id="r_ga649a2da5c81a4c329d86aa40492322d0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__indexed__list.html#ga649a2da5c81a4c329d86aa40492322d0">indexed_list_insert</a> (<a class="el" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a> *list, int prev, void *data)</td></tr>
-<tr class="memdesc:ga649a2da5c81a4c329d86aa40492322d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert an element into the list.  <br /></td></tr>
-<tr class="separator:ga649a2da5c81a4c329d86aa40492322d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada8a13528fbeee8475db835099141abc" id="r_gada8a13528fbeee8475db835099141abc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__indexed__list.html#gada8a13528fbeee8475db835099141abc">indexed_list_insert</a> (<a class="el" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a> *list, int prev, const void *data)</td></tr>
+<tr class="memdesc:gada8a13528fbeee8475db835099141abc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert an element into the list.  <br /></td></tr>
+<tr class="separator:gada8a13528fbeee8475db835099141abc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga086edea56c7d1759b536cae406e41271" id="r_ga086edea56c7d1759b536cae406e41271"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__indexed__list.html#ga086edea56c7d1759b536cae406e41271">indexed_list_remove</a> (<a class="el" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a> *list, int index, void *data)</td></tr>
 <tr class="memdesc:ga086edea56c7d1759b536cae406e41271"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a node from the list.  <br /></td></tr>
 <tr class="separator:ga086edea56c7d1759b536cae406e41271"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf94ac7cced89c1ee4555bc96f537b581" id="r_gaf94ac7cced89c1ee4555bc96f537b581"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__indexed__list.html#gaf94ac7cced89c1ee4555bc96f537b581">indexed_list_clean</a> (<a class="el" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a> *list)</td></tr>
 <tr class="memdesc:gaf94ac7cced89c1ee4555bc96f537b581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all the elements of the list.  <br /></td></tr>
 <tr class="separator:gaf94ac7cced89c1ee4555bc96f537b581"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53daee87fa326c99d998e8f44a0d6c98" id="r_ga53daee87fa326c99d998e8f44a0d6c98"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__indexed__list.html#ga53daee87fa326c99d998e8f44a0d6c98">indexed_list_swap</a> (<a class="el" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a> *list, int a, int b)</td></tr>
+<tr class="memdesc:ga53daee87fa326c99d998e8f44a0d6c98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps two nodes of the list.  <br /></td></tr>
+<tr class="separator:ga53daee87fa326c99d998e8f44a0d6c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -205,6 +217,47 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the i-th element </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="indexed__list_8h_source.html#l00050">50</a> of file <a class="el" href="indexed__list_8h_source.html">indexed_list.h</a>.</p>
+
+</div>
+</div>
+<a id="ga42b69861d0f72e4b57bf0eb410ea4b50" name="ga42b69861d0f72e4b57bf0eb410ea4b50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga42b69861d0f72e4b57bf0eb410ea4b50">&#9670;&#160;</a></span>INDEXED_LIST_INIT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INDEXED_LIST_INIT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    (<a class="code hl_typedef" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a>) {                      \</div>
+<div class="line">        .size_bytes = <span class="keyword">sizeof</span>(type),         \</div>
+<div class="line">        .size = 0,                          \</div>
+<div class="line">        .capacity = 0,                      \</div>
+<div class="line">        .begin = -1,                        \</div>
+<div class="line">        .end = -1,                          \</div>
+<div class="line">        .data = NULL,                       \</div>
+<div class="line">        .prev = NULL,                       \</div>
+<div class="line">        .next = NULL,                       \</div>
+<div class="line">    }</div>
+<div class="ttc" id="agroup__indexed__list_html_ga9684657b3d0911e2493f1b5256df4f53"><div class="ttname"><a href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a></div><div class="ttdeci">struct indexed_list indexed_list_t</div><div class="ttdoc">Typedef for the indexed_list structure.</div><div class="ttdef"><b>Definition</b> <a href="indexed__list_8h_source.html#l00058">indexed_list.h:58</a></div></div>
+</div><!-- fragment -->
+<p><a class="el" href="structindexed__list.html" title="Indexed list.">indexed_list</a> Compound literal </p>
+<p>This is the most concise way to initialize an <a class="el" href="structindexed__list.html" title="Indexed list.">indexed_list</a>.</p>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="structindexed__list.html">indexed_list_t</a> list = <a class="code hl_define" href="group__indexed__list.html#ga42b69861d0f72e4b57bf0eb410ea4b50">INDEXED_LIST_INIT</a>(<span class="keywordtype">int</span>);</div>
+<div class="line"><span class="comment">// Do something...</span></div>
+<div class="line"><a class="code hl_function" href="group__indexed__list.html#ga2e8d17bc0e1e2e35926883223d6e8d59">indexed_list_deinit</a>(&amp;list);</div>
+<div class="ttc" id="agroup__indexed__list_html_ga2e8d17bc0e1e2e35926883223d6e8d59"><div class="ttname"><a href="group__indexed__list.html#ga2e8d17bc0e1e2e35926883223d6e8d59">indexed_list_deinit</a></div><div class="ttdeci">void indexed_list_deinit(indexed_list_t *array)</div><div class="ttdoc">Uninitialize the list.</div></div>
+<div class="ttc" id="agroup__indexed__list_html_ga42b69861d0f72e4b57bf0eb410ea4b50"><div class="ttname"><a href="group__indexed__list.html#ga42b69861d0f72e4b57bf0eb410ea4b50">INDEXED_LIST_INIT</a></div><div class="ttdeci">#define INDEXED_LIST_INIT(type)</div><div class="ttdoc">indexed_list Compound literal</div><div class="ttdef"><b>Definition</b> <a href="indexed__list_8h_source.html#l00096">indexed_list.h:96</a></div></div>
+<div class="ttc" id="astructindexed__list_html"><div class="ttname"><a href="structindexed__list.html">indexed_list</a></div><div class="ttdoc">Indexed list.</div><div class="ttdef"><b>Definition</b> <a href="indexed__list_8h_source.html#l00065">indexed_list.h:65</a></div></div>
+</div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__indexed__list.html#gabbb85c2f2442efb9a5a214a435eae84a" title="Initialize an empty indexed list.">indexed_list_init</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="indexed__list_8h_source.html#l00096">96</a> of file <a class="el" href="indexed__list_8h_source.html">indexed_list.h</a>.</p>
 
 </div>
 </div>
@@ -284,6 +337,33 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga2e8d17bc0e1e2e35926883223d6e8d59" name="ga2e8d17bc0e1e2e35926883223d6e8d59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2e8d17bc0e1e2e35926883223d6e8d59">&#9670;&#160;</a></span>indexed_list_deinit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void indexed_list_deinit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a> *&#160;</td>
+          <td class="paramname"><em>array</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uninitialize the list. </p>
+<p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">array</td><td>pointer to the array </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__indexed__list.html#gabbb85c2f2442efb9a5a214a435eae84a" title="Initialize an empty indexed list.">indexed_list_init()</a> </dd></dl>
+
+</div>
+</div>
 <a id="ga15ce55f2141af8bef9b37e7c95b7dc40" name="ga15ce55f2141af8bef9b37e7c95b7dc40"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga15ce55f2141af8bef9b37e7c95b7dc40">&#9670;&#160;</a></span>indexed_list_free()</h2>
 
@@ -360,8 +440,60 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga649a2da5c81a4c329d86aa40492322d0" name="ga649a2da5c81a4c329d86aa40492322d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga649a2da5c81a4c329d86aa40492322d0">&#9670;&#160;</a></span>indexed_list_insert()</h2>
+<a id="gabbb85c2f2442efb9a5a214a435eae84a" name="gabbb85c2f2442efb9a5a214a435eae84a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabbb85c2f2442efb9a5a214a435eae84a">&#9670;&#160;</a></span>indexed_list_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void indexed_list_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a> *&#160;</td>
+          <td class="paramname"><em>list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size_bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize an empty indexed list. </p>
+<p><b>Every <a class="el" href="structindexed__list.html" title="Indexed list.">indexed_list</a> initialized with this function should be freed using <a class="el" href="group__indexed__list.html#ga2e8d17bc0e1e2e35926883223d6e8d59" title="Uninitialize the list.">indexed_list_deinit()</a></b></p>
+<p>This is equivalent to initializing with indexed_list_INIT() ie: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structindexed__list.html">indexed_list_t</a> list;</div>
+<div class="line"><a class="code hl_function" href="group__indexed__list.html#gabbb85c2f2442efb9a5a214a435eae84a">indexed_list_init</a>(&amp;list, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Use the array here</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_function" href="group__indexed__list.html#ga2e8d17bc0e1e2e35926883223d6e8d59">indexed_list_deinit</a>(&amp;list);</div>
+<div class="ttc" id="agroup__indexed__list_html_gabbb85c2f2442efb9a5a214a435eae84a"><div class="ttname"><a href="group__indexed__list.html#gabbb85c2f2442efb9a5a214a435eae84a">indexed_list_init</a></div><div class="ttdeci">void indexed_list_init(indexed_list_t *list, size_t size_bytes)</div><div class="ttdoc">Initialize an empty indexed list.</div></div>
+</div><!-- fragment --><p> is equivalent to: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structindexed__list.html">indexed_list_t</a> list = <a class="code hl_define" href="group__indexed__list.html#ga42b69861d0f72e4b57bf0eb410ea4b50">INDEXED_LIST_INIT</a>(<span class="keywordtype">int</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Use the array here</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_function" href="group__indexed__list.html#ga2e8d17bc0e1e2e35926883223d6e8d59">indexed_list_deinit</a>(&amp;list);</div>
+</div><!-- fragment --><p> This function is provided for symetry with <a class="el" href="group__indexed__list.html#ga2e8d17bc0e1e2e35926883223d6e8d59" title="Uninitialize the list.">indexed_list_deinit()</a></p>
+<p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">list</td><td>A pointer to the uninitialized list </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size_bytes</td><td>Size of an element </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__indexed__list.html#ga2e8d17bc0e1e2e35926883223d6e8d59" title="Uninitialize the list.">indexed_list_deinit()</a> </dd></dl>
+
+</div>
+</div>
+<a id="gada8a13528fbeee8475db835099141abc" name="gada8a13528fbeee8475db835099141abc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gada8a13528fbeee8475db835099141abc">&#9670;&#160;</a></span>indexed_list_insert()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -381,7 +513,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
+          <td class="paramtype">const void *&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -474,6 +606,50 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">list</td><td>pointer to the list </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>index to remove </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>removed data (if NULL the data will be lost) value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga53daee87fa326c99d998e8f44a0d6c98" name="ga53daee87fa326c99d998e8f44a0d6c98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga53daee87fa326c99d998e8f44a0d6c98">&#9670;&#160;</a></span>indexed_list_swap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int indexed_list_swap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53">indexed_list_t</a> *&#160;</td>
+          <td class="paramname"><em>list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Swaps two nodes of the list. </p>
+<p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">list</td><td>pointer to the list </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>First node </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Second node </td></tr>
   </table>
   </dd>
 </dl>

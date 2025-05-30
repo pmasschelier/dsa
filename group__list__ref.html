@@ -98,6 +98,7 @@ $(document).ready(function(){initNavTree('group__list__ref.html',''); initResiza
 
 <div class="header">
   <div class="summary">
+<a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
@@ -106,6 +107,12 @@ $(document).ready(function(){initNavTree('group__list__ref.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:linked__list_8h" id="r_linked__list_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linked__list_8h.html">linked_list.h</a></td></tr>
+<tr class="memdesc:linked__list_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Doubly linked lists definition Defines functions to create, free and manipulate doubly-linked lists. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlinked__list__node.html">linked_list_node</a></td></tr>
@@ -232,7 +239,7 @@ Functions</h2></td></tr>
 <p>This is the most concise way to initialize a <a class="el" href="structlinked__list.html">linked_list</a>.</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structlinked__list.html">linked_list_t</a> list = <a class="code hl_define" href="group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb">LINKED_LIST_INIT</a>(<span class="keywordtype">int</span>);</div>
 <div class="line"><span class="comment">// Do something...</span></div>
-<div class="line"><a class="code hl_function" href="group__list__ref.html#ga873a418c8874fb0ef2842ed506a3d839">linked_list_deinit</a>(&amp;array);</div>
+<div class="line"><a class="code hl_function" href="group__list__ref.html#ga873a418c8874fb0ef2842ed506a3d839">linked_list_deinit</a>(&amp;list);</div>
 </div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__list__ref.html#ga6cbbe05372cf31f4f43f47208e7a3cc4" title="Initialize an empty linked list.">linked_list_init</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00130">130</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
@@ -594,12 +601,11 @@ Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><a class="code hl_function" href="group__list__ref.html#ga873a418c8874fb0ef2842ed506a3d839">linked_list_deinit</a>(&amp;list);</div>
 <div class="ttc" id="agroup__list__ref_html_ga6cbbe05372cf31f4f43f47208e7a3cc4"><div class="ttname"><a href="group__list__ref.html#ga6cbbe05372cf31f4f43f47208e7a3cc4">linked_list_init</a></div><div class="ttdeci">void linked_list_init(linked_list_t *array, size_t size_bytes)</div><div class="ttdoc">Initialize an empty linked list.</div></div>
-</div><!-- fragment --><p> is equivalent to: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structarray__list.html">array_list_t</a> array = <a class="code hl_define" href="group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb">LINKED_LIST_INIT</a>(<span class="keywordtype">int</span>);</div>
+</div><!-- fragment --><p> is equivalent to: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structlinked__list.html">linked_list_t</a> list = <a class="code hl_define" href="group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb">LINKED_LIST_INIT</a>(<span class="keywordtype">int</span>);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Use the array here</span></div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_function" href="group__list__ref.html#ga873a418c8874fb0ef2842ed506a3d839">linked_list_deinit</a>(&amp;array);</div>
-<div class="ttc" id="astructarray__list_html"><div class="ttname"><a href="structarray__list.html">array_list</a></div><div class="ttdoc">A dynamic array.</div><div class="ttdef"><b>Definition</b> <a href="array__list_8h_source.html#l00060">array_list.h:60</a></div></div>
+<div class="line"><a class="code hl_function" href="group__list__ref.html#ga873a418c8874fb0ef2842ed506a3d839">linked_list_deinit</a>(&amp;list);</div>
 </div><!-- fragment --><p> This function is provided for symetry with <a class="el" href="group__list__ref.html#ga873a418c8874fb0ef2842ed506a3d839" title="Uninitialize the list.">linked_list_deinit()</a></p>
 <p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
