@@ -9,20 +9,28 @@
 indexed_list_t* indexed_list_create(size_t size_byte) {
     indexed_list_t* ret = malloc(sizeof(indexed_list_t));
     when_null_ret(ret, NULL);
-    ret->begin = -1;
-    ret->end = -1;
-    ret->capacity = 0;
-    ret->size = 0;
-    ret->size_bytes = size_byte;
-    ret->data = NULL;
-    ret->next = NULL;
-    ret->prev = NULL;
+    indexed_list_init(ret, size_byte);
     return ret;
 }
 
 void indexed_list_free(indexed_list_t *list) {
     indexed_list_clean(list);
     free(list);
+}
+
+void indexed_list_init(indexed_list_t* list, size_t size_bytes) {
+    list->begin = -1;
+    list->end = -1;
+    list->capacity = 0;
+    list->size = 0;
+    list->size_bytes = size_bytes;
+    list->data = NULL;
+    list->next = NULL;
+    list->prev = NULL;
+}
+
+void indexed_list_deinit(indexed_list_t* list) {
+    indexed_list_clean(list);
 }
 
 indexed_list_t* indexed_list_from_tab(void* tab, size_t size, unsigned length);
@@ -57,7 +65,7 @@ int indexed_list_extend(indexed_list_t* list) {
     return list->size - 1;
 }
 
-int indexed_list_insert(indexed_list_t* list, int prev, void* data) {
+int indexed_list_insert(indexed_list_t* list, int prev, const void* data) {
     when_false_ret(prev < list->size, -ERROR_INVALID_PARAM2);
     int index = indexed_list_extend(list);
     int next = prev < 0 ? list->begin : list->next[prev];
@@ -123,4 +131,50 @@ void indexed_list_clean(indexed_list_t* list) {
     list->data = NULL;
     list->next = NULL;
     list->prev = NULL;
+}
+
+int indexed_list_swap(indexed_list_t* list, int a, int b) {
+    when_false_ret(a >= 0 && a < list->size, -ERROR_INVALID_PARAM2);
+    when_false_ret(b >= 0 && b < list->size, -ERROR_INVALID_PARAM3);
+    if(a == b)
+        return -ERROR_NO_ERROR;
+    int preva = list->prev[a];
+    int nexta = list->next[a];
+    int prevb = list->prev[b];
+    int nextb = list->next[b];
+    if(preva >= 0)
+        list->next[preva] = b;
+    else
+        list->begin = b;
+    if(nexta >= 0)
+        list->prev[nexta] = b;
+    else
+        list->end = b;
+    if(prevb >= 0)
+        list->next[prevb] = a;
+    else
+        list->begin = a;
+    if(nextb >= 0)
+        list->prev[nextb] = a;
+    else
+        list->end = a;
+
+    if(a == prevb)
+        list->prev[a] = b;
+    else
+        list->prev[a] = prevb;
+    if(a == nextb)
+        list->next[a] = b;
+    else
+        list->next[a] = nextb;
+
+    if(b == preva)
+        list->prev[b] = a;
+    else
+        list->prev[b] = preva;
+    if(b == nexta)
+        list->next[b] = a;
+    else
+        list->next[b] = nexta;
+    return -ERROR_NO_ERROR;
 }

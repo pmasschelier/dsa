@@ -1,5 +1,5 @@
-#ifndef LIST_H
-#define LIST_H
+#ifndef LINKED_LIST_H
+#define LINKED_LIST_H
 
 // TODO: Write a linked list implementation where node and node data are
 // allocated altogather and data is systematically copied, eventually define a
@@ -11,7 +11,7 @@
 #include "structures.h"
 
 /**
- * @file list_ref.h
+ * @file linked_list.h
  * @brief Doubly linked lists definition
  * Defines functions to create, free and manipulate doubly-linked lists
  * @ingroup list_ref
@@ -123,7 +123,7 @@ struct linked_list {
  * ```
  * linked_list_t list = LINKED_LIST_INIT(int);
  * // Do something...
- * linked_list_deinit(&array);
+ * linked_list_deinit(&list);
  * ```
  * @see linked_list_init
  */
@@ -182,11 +182,11 @@ void linked_list_free(linked_list_t* list);
  * ```
  * is equivalent to:
  * ```
- * array_list_t array = LINKED_LIST_INIT(int);
+ * linked_list_t list = LINKED_LIST_INIT(int);
  *
  * // Use the array here
  *
- * linked_list_deinit(&array);
+ * linked_list_deinit(&list);
  * ```
  * This function is provided for symetry with linked_list_deinit()
  *

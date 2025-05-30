@@ -1,5 +1,5 @@
-#ifndef LIST_H
-#define LIST_H
+#ifndef INDEXED_LIST_H
+#define INDEXED_LIST_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -7,7 +7,7 @@
 /**
  * @file indexed_list.h
  * @brief Indexed lists definition
- * Defines functions to create, free and manipulate indexed-linked lists
+ * Defines functions to create, free and manipulate indexed-lists
  * @ingroup indexed_list
  */
 
@@ -82,6 +82,30 @@ struct indexed_list {
 };
 
 /**
+ * @brief indexed_list Compound literal
+ * 
+ * This is the most concise way to initialize an indexed_list.
+ *
+ * ```
+ * indexed_list_t list = INDEXED_LIST_INIT(int);
+ * // Do something...
+ * indexed_list_deinit(&list);
+ * ```
+ * @see indexed_list_init
+ */
+#define INDEXED_LIST_INIT(type)             \
+	(indexed_list_t) {                      \
+		.size_bytes = sizeof(type),         \
+        .size = 0,                          \
+        .capacity = 0,                      \
+        .begin = -1,                        \
+        .end = -1,                          \
+        .data = NULL,                       \
+        .prev = NULL,                       \
+        .next = NULL,                       \
+	}
+
+/**
  * @brief Create an empty list
  *
  * __Every list created with this function should be freed using
@@ -101,6 +125,47 @@ indexed_list_t* indexed_list_create(size_t size_byte);
  * @param[in] list pointer to the list
  */
 void indexed_list_free(indexed_list_t* list);
+
+/**
+ * @brief Initialize an empty indexed list
+ *
+ * __Every indexed_list initialized with this function should be freed using
+ * indexed_list_deinit()__
+ *
+ * This is equivalent to initializing with indexed_list_INIT() ie:
+ * ```
+ * indexed_list_t list;
+ * indexed_list_init(&list, sizeof(int));
+ *
+ * // Use the array here
+ *
+ * indexed_list_deinit(&list);
+ * ```
+ * is equivalent to:
+ * ```
+ * indexed_list_t list = INDEXED_LIST_INIT(int);
+ *
+ * // Use the array here
+ *
+ * indexed_list_deinit(&list);
+ * ```
+ * This function is provided for symetry with indexed_list_deinit()
+ *
+ * _Complexity: O(1)_
+ * @param[in] list A pointer to the uninitialized list
+ * @param[in] size_bytes Size of an element
+ * @see indexed_list_deinit()
+ */
+void indexed_list_init(indexed_list_t* list, size_t size_bytes);
+
+/**
+ * @brief Uninitialize the list.
+ *
+ * _Complexity: O(1)_
+ * @param[in] array pointer to the array
+ * @see indexed_list_init()
+ */
+void indexed_list_deinit(indexed_list_t* array);
 
 /**
  * @brief Create a list from an array
@@ -159,7 +224,7 @@ unsigned indexed_list_length(indexed_list_t* list);
  * @param[in] data pointer to the value the new node will reference
  * @return index of the newly created node
  */
-int indexed_list_insert(indexed_list_t* list, int prev, void* data);
+int indexed_list_insert(indexed_list_t* list, int prev, const void* data);
 
 /**
  * @brief Remove a node from the list
@@ -184,6 +249,16 @@ int indexed_list_remove(indexed_list_t* list, int index, void* data);
  * @param[in] list pointer to the list
  */
 void indexed_list_clean(indexed_list_t* list);
+
+/**
+ * @brief Swaps two nodes of the list
+ *
+ * _Complexity: O(1)_
+ * @param[in] list pointer to the list
+ * @param[in] a First node
+ * @param[in] b Second node
+ */
+int indexed_list_swap(indexed_list_t* list, int a, int b);
 
 /** @} */  // end of list_ref
 
