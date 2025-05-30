@@ -260,6 +260,8 @@ void indexed_list_clean(indexed_list_t* list);
  */
 int indexed_list_swap(indexed_list_t* list, int a, int b);
 
+int indexed_list_move_after(indexed_list_t* list, int index, int prev);
+
 /** @} */  // end of list_ref
 
 #endif

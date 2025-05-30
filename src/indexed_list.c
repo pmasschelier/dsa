@@ -178,3 +178,33 @@ int indexed_list_swap(indexed_list_t* list, int a, int b) {
         list->next[b] = nexta;
     return -ERROR_NO_ERROR;
 }
+
+int indexed_list_move_after(indexed_list_t* list, int index, int prev) {
+    when_false_ret(index >= 0 && index < list->size, -ERROR_INVALID_PARAM2);
+    when_false_ret(prev < list->size, -ERROR_INVALID_PARAM3);
+    int next = prev >= 0 ? list->next[prev] : list->begin;
+    int oldprev = list->prev[index];
+    int oldnext = list->next[index];
+    if(oldprev == prev || index == prev)
+        return -ERROR_NO_ERROR;
+    if(oldprev >= 0)
+        list->next[oldprev] = oldnext;
+    else
+        list->begin = oldnext;
+    if(oldnext >= 0)
+        list->prev[oldnext] = oldprev;
+    else
+        list->end = oldprev;
+    
+    if(prev >= 0)
+        list->next[prev] = index;
+    else
+        list->begin = index;
+    if(next >= 0)
+        list->prev[next] = index;
+    else
+        list->end = index;
+    list->prev[index] = prev;
+    list->next[index] = next;
+    return -ERROR_NO_ERROR;
+}
