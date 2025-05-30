@@ -1,5 +1,6 @@
 benchmarks = [
-  'selection_sort.c'
+  'selection_sort.c',
+  'insertion_sort.c'
 ]
 
 # cbench = dependency('cbench', fallback: ['cbench', 'cbench_dep'])
