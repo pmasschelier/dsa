@@ -1,5 +1,6 @@
 testdirs = [
   'array_list',
+  'indexed_list',
   'linked_list',
   'btree_ref',
   'graph_cast',
