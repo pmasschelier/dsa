@@ -16,7 +16,7 @@
 btree_t* btree_create(size_t size) {
 	btree_t* ret = malloc(sizeof(btree_t));
 	when_null_ret(ret, NULL);
-	ret->size = size;
+	ret->size_bytes = size;
 	ret->root = NULL;
 	return ret;
 }
@@ -191,11 +191,11 @@ node_btree_t *btree_emplace_at(btree_t *tree, btree_path_t path,
     }
 
     if (*node_ptr == NULL) {
-        *node_ptr = create_btree_leaf(p, parent, 0, tree->size);
+        *node_ptr = create_btree_leaf(p, parent, 0, tree->size_bytes);
         when_null_ret(*node_ptr, NULL);
     }
     else {
-        memcpy((*node_ptr)->data, p, tree->size);
+        memcpy((*node_ptr)->data, p, tree->size_bytes);
     }
 
     return *node_ptr;
@@ -247,12 +247,12 @@ int btree_emplace_path(btree_t* tree,
 	int written_count = 0;
 	while (TRUE) {
 		if (*node_ptr == NULL) {
-            *node_ptr = create_btree_leaf(NULL, NULL, 0, tree->size);
+            *node_ptr = create_btree_leaf(NULL, NULL, 0, tree->size_bytes);
 			when_null_ret(*node_ptr, -ERROR_ALLOCATION_FAILED);
 		}
 
 		if (index >= 0 && index < (int)length && values[index]) {
-            memcpy((*node_ptr)->data, values[index], tree->size);
+            memcpy((*node_ptr)->data, values[index], tree->size_bytes);
 			written_count++;
 		}
 		if (path.length == 0)
@@ -615,7 +615,7 @@ int btree_levelorder_traversal(btree_t* tree, void* tab) {
             linked_list_push_back(&forest, &t->ls);
         if (t->rs != NULL)
             linked_list_push_back(&forest, &t->rs);
-        memcpy((uint8_t*)tab + i * tree->size, t->data, tree->size);
+        memcpy((uint8_t*)tab + i * tree->size_bytes, t->data, tree->size_bytes);
         i++;
 	}
 	linked_list_deinit(&forest);
@@ -628,7 +628,7 @@ btree_t* btree_perfect_tree_from_tab(void* tab,
 	when_true_ret(size == 0 || (length != 0 && tab == NULL), NULL);
 	btree_t* tree = malloc(sizeof(btree_t));
 	when_null_ret(tree, NULL);
-	tree->size = size;
+	tree->size_bytes = size;
 	tree->root = NULL;
 
 	for (unsigned i = 0; i < length; i++) {
