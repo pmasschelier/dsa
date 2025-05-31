@@ -1,7 +1,7 @@
 var searchData=
 [
   ['lambda_0',['lambda',['../structlambda.html',1,'']]],
-  ['last_1',['last',['../group__cbuffer__ref.html#ga9ff2f7baddbfa38bc6b039f77a822403',1,'circular_buffer']]],
+  ['last_1',['last',['../group__circular__buffer.html#ga9ff2f7baddbfa38bc6b039f77a822403',1,'circular_buffer']]],
   ['length_2',['length',['../structbtree__path.html#ae5900c02b32a6b57ab18c94089a24d12',1,'btree_path']]],
   ['lhs_5fpath_3',['LHS_PATH',['../path_8h.html#a88f84f2c348d215b33a7aad71f5e5ef2',1,'path.h']]],
   ['linked_20lists_4',['Doubly-linked lists',['../group__list__ref.html',1,'']]],
@@ -18,7 +18,7 @@ var searchData=
   ['linked_5flist_5fforeach_5frev_15',['linked_list_foreach_rev',['../group__list__ref.html#gacd590c474d9a8b464666f2fd34ee70df',1,'linked_list.h']]],
   ['linked_5flist_5ffree_16',['linked_list_free',['../group__list__ref.html#ga824f90fe8d9e92a7cf47b63a36c890e8',1,'linked_list.h']]],
   ['linked_5flist_5ffrom_5ftab_17',['linked_list_from_tab',['../group__list__ref.html#ga84e0add15e425ab93d224b58b1b18c40',1,'linked_list.h']]],
-  ['linked_5flist_5finit_18',['linked_list_init',['../group__list__ref.html#ga6cbbe05372cf31f4f43f47208e7a3cc4',1,'linked_list_init(linked_list_t *array, size_t size_bytes):&#160;linked_list.h'],['../group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb',1,'LINKED_LIST_INIT:&#160;linked_list.h']]],
+  ['linked_5flist_5finit_18',['linked_list_init',['../group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb',1,'LINKED_LIST_INIT:&#160;linked_list.h'],['../group__list__ref.html#ga6cbbe05372cf31f4f43f47208e7a3cc4',1,'linked_list_init(linked_list_t *array, size_t size_bytes):&#160;linked_list.h']]],
   ['linked_5flist_5finsert_19',['linked_list_insert',['../group__list__ref.html#ga2c9f6981bb4ea0da1be0d6d4e8a71719',1,'linked_list.h']]],
   ['linked_5flist_5finsert_5fnode_20',['linked_list_insert_node',['../group__list__ref.html#ga719e222f120822bb68e7057c841996b5',1,'linked_list.h']]],
   ['linked_5flist_5flength_21',['linked_list_length',['../group__list__ref.html#gad805934f49966be0275caca177c7e5f3',1,'linked_list.h']]],
@@ -33,5 +33,5 @@ var searchData=
   ['list_5fref_30',['list_ref',['../structlist__ref.html',1,'']]],
   ['lists_31',['lists',['../group__graph__list.html',1,'Adjacency lists'],['../group__list__ref.html',1,'Doubly-linked lists'],['../group__indexed__list.html',1,'Indexed lists']]],
   ['lists_20as_20buckets_32',['Hashtables with linked lists as buckets',['../group__htable__list__ref.html',1,'']]],
-  ['ls_33',['ls',['../structnode__btree__ref.html#a5b52057432db82a211e74b88742f5766',1,'node_btree_ref']]]
+  ['ls_33',['ls',['../structnode__btree.html#ad95582151d3aadd0669ebe59f4204d1e',1,'node_btree']]]
 ];

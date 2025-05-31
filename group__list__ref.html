@@ -128,7 +128,7 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga017ba3039370f28622d24a09e34c27b4" id="r_ga017ba3039370f28622d24a09e34c27b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list__ref.html#ga017ba3039370f28622d24a09e34c27b4">linked_list_foreach</a>(...)&#160;&#160;&#160;	GET_MACRO(__VA_ARGS__, linked_list_foreach_value, linked_list_foreach_node, )(__VA_ARGS__)</td></tr>
+<tr class="memitem:ga017ba3039370f28622d24a09e34c27b4" id="r_ga017ba3039370f28622d24a09e34c27b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list__ref.html#ga017ba3039370f28622d24a09e34c27b4">linked_list_foreach</a>(...)</td></tr>
 <tr class="memdesc:ga017ba3039370f28622d24a09e34c27b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Foreach macro for <a class="el" href="structlinked__list.html">linked_list</a>.  <br /></td></tr>
 <tr class="separator:ga017ba3039370f28622d24a09e34c27b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacd590c474d9a8b464666f2fd34ee70df" id="r_gacd590c474d9a8b464666f2fd34ee70df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list__ref.html#gacd590c474d9a8b464666f2fd34ee70df">linked_list_foreach_rev</a>(...)</td></tr>
@@ -206,7 +206,11 @@ Functions</h2></td></tr>
 <tr class="separator:gae103ae9573f0a2e975da8f373501aaa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p><a class="el" href="structlinked__list.html">linked_list</a> are doubly linked lists. </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structlinked__list.html">linked_list_t</a> list = <a class="code hl_define" href="group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb">LINKED_LIST_INIT</a>(<span class="keywordtype">int</span>);</div>
+<p><a class="el" href="structlinked__list.html">linked_list</a> are doubly linked lists.</p>
+<div class="dotgraph">
+<img src="dot_inline_dotgraph_6.png" alt="dot_inline_dotgraph_6.png" border="0" usemap="#dot_inline_dotgraph_6.map"/>
+</div>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="structlinked__list.html">linked_list_t</a> list = <a class="code hl_define" href="group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb">LINKED_LIST_INIT</a>(<span class="keywordtype">int</span>);</div>
 <div class="line"><span class="keywordtype">int</span> value;</div>
 <div class="line"><span class="keywordflow">while</span>(<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>) == read(fd, &amp;value, <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>))) {</div>
 <div class="line">   <span class="keywordflow">if</span>(NULL == <a class="code hl_function" href="group__list__ref.html#ga0bf4ddf03e19f64eeb99cb42ac2ff942">linked_list_push_back</a>(&amp;list, &amp;value))</div>
@@ -217,8 +221,8 @@ Functions</h2></td></tr>
 <div class="line"><a class="code hl_function" href="group__list__ref.html#ga873a418c8874fb0ef2842ed506a3d839">linked_list_deinit</a>(&amp;array);</div>
 <div class="ttc" id="agroup__list__ref_html_ga0bf4ddf03e19f64eeb99cb42ac2ff942"><div class="ttname"><a href="group__list__ref.html#ga0bf4ddf03e19f64eeb99cb42ac2ff942">linked_list_push_back</a></div><div class="ttdeci">linked_list_node_t * linked_list_push_back(linked_list_t *list, const void *x)</div><div class="ttdoc">Append an element to the end of the list.</div></div>
 <div class="ttc" id="agroup__list__ref_html_ga873a418c8874fb0ef2842ed506a3d839"><div class="ttname"><a href="group__list__ref.html#ga873a418c8874fb0ef2842ed506a3d839">linked_list_deinit</a></div><div class="ttdeci">void linked_list_deinit(linked_list_t *array)</div><div class="ttdoc">Uninitialize the list.</div></div>
-<div class="ttc" id="agroup__list__ref_html_gafa087833ed52d6f2afc5c9ba43bc8fcb"><div class="ttname"><a href="group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb">LINKED_LIST_INIT</a></div><div class="ttdeci">#define LINKED_LIST_INIT(type)</div><div class="ttdoc">array_list Compound literal</div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00169">linked_list.h:169</a></div></div>
-<div class="ttc" id="astructlinked__list_html"><div class="ttname"><a href="structlinked__list.html">linked_list</a></div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00148">linked_list.h:148</a></div></div>
+<div class="ttc" id="agroup__list__ref_html_gafa087833ed52d6f2afc5c9ba43bc8fcb"><div class="ttname"><a href="group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb">LINKED_LIST_INIT</a></div><div class="ttdeci">#define LINKED_LIST_INIT(type)</div><div class="ttdoc">array_list Compound literal</div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00184">linked_list.h:184</a></div></div>
+<div class="ttc" id="astructlinked__list_html"><div class="ttname"><a href="structlinked__list.html">linked_list</a></div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00163">linked_list.h:163</a></div></div>
 </div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>the value given to <a class="el" href="group__list__ref.html#ga0bf4ddf03e19f64eeb99cb42ac2ff942" title="Append an element to the end of the list.">linked_list_push_back()</a> will be copied.<br  />
  You can use a <a class="el" href="structlinked__list.html">linked_list</a> of pointers if the cost of copy is too high. </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -233,11 +237,13 @@ Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>...</em></td><td>)</td>
-          <td>&#160;&#160;&#160;	GET_MACRO(__VA_ARGS__, linked_list_foreach_value, linked_list_foreach_node, )(__VA_ARGS__)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
+<b>Value:</b><div class="fragment"><div class="line">    GET_MACRO(__VA_ARGS__, linked_list_foreach_value, \</div>
+<div class="line">              linked_list_foreach_node, )(__VA_ARGS__)</div>
+</div><!-- fragment -->
 <p>Foreach macro for <a class="el" href="structlinked__list.html">linked_list</a>. </p>
 <p>Iterates over an <a class="el" href="structlinked__list.html">linked_list</a>, by defining the value pointer pointing to the current element.</p>
 <p>An implicit node variable is defined.</p>
@@ -246,7 +252,7 @@ Functions</h2></td></tr>
 <div class="line">        printf(<span class="stringliteral">&quot;%d\n&quot;</span>, *value);</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__list__ref_html_ga017ba3039370f28622d24a09e34c27b4"><div class="ttname"><a href="group__list__ref.html#ga017ba3039370f28622d24a09e34c27b4">linked_list_foreach</a></div><div class="ttdeci">#define linked_list_foreach(...)</div><div class="ttdoc">Foreach macro for linked_list.</div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00084">linked_list.h:84</a></div></div>
+<div class="ttc" id="agroup__list__ref_html_ga017ba3039370f28622d24a09e34c27b4"><div class="ttname"><a href="group__list__ref.html#ga017ba3039370f28622d24a09e34c27b4">linked_list_foreach</a></div><div class="ttdeci">#define linked_list_foreach(...)</div><div class="ttdoc">Foreach macro for linked_list.</div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00096">linked_list.h:96</a></div></div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">list</td><td>List to iterate over </td></tr>
@@ -257,7 +263,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00084">84</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00096">96</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
 
 </div>
 </div>
@@ -276,7 +282,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    GET_MACRO(__VA_ARGS__, linked_list_foreach_value_rev, linked_list_foreach_node_rev) \</div>
+<b>Value:</b><div class="fragment"><div class="line">    GET_MACRO(__VA_ARGS__, linked_list_foreach_value_rev, \</div>
+<div class="line">              linked_list_foreach_node_rev)               \</div>
 <div class="line">    (__VA_ARGS__)</div>
 </div><!-- fragment -->
 <p>Reverse Foreach macro for <a class="el" href="structlinked__list.html">linked_list</a>. </p>
@@ -292,7 +299,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00100">100</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00113">113</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
 
 </div>
 </div>
@@ -311,8 +318,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    (<a class="code hl_struct" href="structlinked__list.html">linked_list_t</a>) {                                                                \</div>
-<div class="line">        .size_bytes = <span class="keyword">sizeof</span>(type), .begin = NULL, .end = NULL                       \</div>
+<b>Value:</b><div class="fragment"><div class="line">    (<a class="code hl_struct" href="structlinked__list.html">linked_list_t</a>) {                                          \</div>
+<div class="line">        .size_bytes = <span class="keyword">sizeof</span>(type), .begin = NULL, .end = NULL \</div>
 <div class="line">    }</div>
 </div><!-- fragment -->
 <p><a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> Compound literal </p>
@@ -322,7 +329,7 @@ Functions</h2></td></tr>
 <div class="line"><a class="code hl_function" href="group__list__ref.html#ga873a418c8874fb0ef2842ed506a3d839">linked_list_deinit</a>(&amp;list);</div>
 </div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__list__ref.html#ga6cbbe05372cf31f4f43f47208e7a3cc4" title="Initialize an empty linked list.">linked_list_init</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00169">169</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00184">184</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
 
 </div>
 </div>
@@ -339,7 +346,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00109">109</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00123">123</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
 
 </div>
 </div>
@@ -355,7 +362,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00130">130</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00144">144</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
 
 </div>
 </div>
@@ -525,9 +532,9 @@ Functions</h2></td></tr>
 <div class="line">}</div>
 <div class="ttc" id="agroup__list__ref_html_ga639c4cad2df10f1ec31e07a8bc187979"><div class="ttname"><a href="group__list__ref.html#ga639c4cad2df10f1ec31e07a8bc187979">linked_list_extract</a></div><div class="ttdeci">void linked_list_extract(linked_list_t *list, linked_list_node_t *node)</div><div class="ttdoc">Extract a node from the list.</div></div>
 <div class="ttc" id="agroup__list__ref_html_ga719e222f120822bb68e7057c841996b5"><div class="ttname"><a href="group__list__ref.html#ga719e222f120822bb68e7057c841996b5">linked_list_insert_node</a></div><div class="ttdeci">void linked_list_insert_node(linked_list_t *list, linked_list_node_t *prev, linked_list_node_t *node)</div><div class="ttdoc">Insert an existing node into the list.</div></div>
-<div class="ttc" id="astructlinked__list__node_html"><div class="ttname"><a href="structlinked__list__node.html">linked_list_node</a></div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00119">linked_list.h:119</a></div></div>
-<div class="ttc" id="astructlinked__list__node_html_a07a90d120784b595467722ab8e31cfe4"><div class="ttname"><a href="structlinked__list__node.html#a07a90d120784b595467722ab8e31cfe4">linked_list_node::prev</a></div><div class="ttdeci">linked_list_node_t * prev</div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00120">linked_list.h:120</a></div></div>
-<div class="ttc" id="astructlinked__list__node_html_ac1c9d07379df3943e1736e77c12ccbc8"><div class="ttname"><a href="structlinked__list__node.html#ac1c9d07379df3943e1736e77c12ccbc8">linked_list_node::next</a></div><div class="ttdeci">linked_list_node_t * next</div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00121">linked_list.h:121</a></div></div>
+<div class="ttc" id="astructlinked__list__node_html"><div class="ttname"><a href="structlinked__list__node.html">linked_list_node</a></div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00133">linked_list.h:133</a></div></div>
+<div class="ttc" id="astructlinked__list__node_html_a07a90d120784b595467722ab8e31cfe4"><div class="ttname"><a href="structlinked__list__node.html#a07a90d120784b595467722ab8e31cfe4">linked_list_node::prev</a></div><div class="ttdeci">linked_list_node_t * prev</div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00134">linked_list.h:134</a></div></div>
+<div class="ttc" id="astructlinked__list__node_html_ac1c9d07379df3943e1736e77c12ccbc8"><div class="ttname"><a href="structlinked__list__node.html#ac1c9d07379df3943e1736e77c12ccbc8">linked_list_node::next</a></div><div class="ttdeci">linked_list_node_t * next</div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00135">linked_list.h:135</a></div></div>
 </div><!-- fragment --><p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">list</td><td>pointer to the list </td></tr>
@@ -535,7 +542,9 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__list__ref.html#ga719e222f120822bb68e7057c841996b5" title="Insert an existing node into the list.">linked_list_insert_node()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__list__ref.html#ga719e222f120822bb68e7057c841996b5" title="Insert an existing node into the list.">linked_list_insert_node</a> </dd>
+<dd>
+<a class="el" href="group__list__ref.html#ga6b255aa665e8968a2b0211f5c2c88db1" title="Remove a node from the list.">linked_list_remove</a> </dd></dl>
 
 </div>
 </div>
@@ -877,6 +886,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__list__ref.html#ga1726a268168819c0238a9c07d5bad017" title="Remove the first element of the list.">linked_list_pop_front</a> </dd></dl>
 
 </div>
 </div>
@@ -909,25 +919,25 @@ Functions</h2></td></tr>
 <p>Remove the first element of the list. </p>
 <p>If x is not NULL the node data will be copied to *x.<br  />
  <b>Frees the removed node.</b></p>
-<p>Example: Level-order traversal of a binary tree </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structlinked__list.html">linked_list_t</a> forest = <a class="code hl_define" href="group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb">LINKED_LIST_INIT</a>(<a class="code hl_struct" href="structnode__btree__ref.html">node_btree_ref_t</a>*);</div>
+<p>Example: Level-order traversal of a binary tree </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structlinked__list.html">linked_list_t</a> forest = <a class="code hl_define" href="group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb">LINKED_LIST_INIT</a>(<a class="code hl_struct" href="structnode__btree.html">node_btree_t</a>*);</div>
 <div class="line"><a class="code hl_struct" href="structlinked__list__node.html">linked_list_node_t</a>* ret = <a class="code hl_function" href="group__list__ref.html#ga0bf4ddf03e19f64eeb99cb42ac2ff942">linked_list_push_back</a>(&amp;forest, &amp;tree-&gt;root);</div>
 <div class="line">when_null_ret(ret, -ERROR_ALLOCATION_FAILED);</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_struct" href="structnode__btree__ref.html">node_btree_ref_t</a>* t;</div>
+<div class="line"><a class="code hl_struct" href="structnode__btree.html">node_btree_t</a>* t;</div>
 <div class="line"><span class="keywordflow">while</span> (<a class="code hl_function" href="group__list__ref.html#ga1726a268168819c0238a9c07d5bad017">linked_list_pop_front</a>(&amp;forest, &amp;t)) {</div>
-<div class="line">    <span class="keywordflow">if</span> (t-&gt;<a class="code hl_variable" href="structnode__btree__ref.html#a5b52057432db82a211e74b88742f5766">ls</a> != NULL)</div>
-<div class="line">        <a class="code hl_function" href="group__list__ref.html#ga0bf4ddf03e19f64eeb99cb42ac2ff942">linked_list_push_back</a>(&amp;forest, &amp;t-&gt;<a class="code hl_variable" href="structnode__btree__ref.html#a5b52057432db82a211e74b88742f5766">ls</a>);</div>
-<div class="line">    <span class="keywordflow">if</span> (t-&gt;<a class="code hl_variable" href="structnode__btree__ref.html#a2ff483726cab963ac3404e0471f92139">rs</a> != NULL)</div>
-<div class="line">        <a class="code hl_function" href="group__list__ref.html#ga0bf4ddf03e19f64eeb99cb42ac2ff942">linked_list_push_back</a>(&amp;forest, &amp;t-&gt;<a class="code hl_variable" href="structnode__btree__ref.html#a2ff483726cab963ac3404e0471f92139">rs</a>);</div>
+<div class="line">    <span class="keywordflow">if</span> (t-&gt;<a class="code hl_variable" href="structnode__btree.html#ad95582151d3aadd0669ebe59f4204d1e">ls</a> != NULL)</div>
+<div class="line">        <a class="code hl_function" href="group__list__ref.html#ga0bf4ddf03e19f64eeb99cb42ac2ff942">linked_list_push_back</a>(&amp;forest, &amp;t-&gt;<a class="code hl_variable" href="structnode__btree.html#ad95582151d3aadd0669ebe59f4204d1e">ls</a>);</div>
+<div class="line">    <span class="keywordflow">if</span> (t-&gt;<a class="code hl_variable" href="structnode__btree.html#a4cd00a454dc91399a798cd2620e18525">rs</a> != NULL)</div>
+<div class="line">        <a class="code hl_function" href="group__list__ref.html#ga0bf4ddf03e19f64eeb99cb42ac2ff942">linked_list_push_back</a>(&amp;forest, &amp;t-&gt;<a class="code hl_variable" href="structnode__btree.html#a4cd00a454dc91399a798cd2620e18525">rs</a>);</div>
 <div class="line">    <span class="comment">// ...</span></div>
 <div class="line">    <span class="comment">// Do something with t</span></div>
 <div class="line">    <span class="comment">// ...</span></div>
 <div class="line">}</div>
 <div class="line"><a class="code hl_function" href="group__list__ref.html#ga873a418c8874fb0ef2842ed506a3d839">linked_list_deinit</a>(&amp;forest);</div>
 <div class="ttc" id="agroup__list__ref_html_ga1726a268168819c0238a9c07d5bad017"><div class="ttname"><a href="group__list__ref.html#ga1726a268168819c0238a9c07d5bad017">linked_list_pop_front</a></div><div class="ttdeci">BOOL linked_list_pop_front(linked_list_t *list, void *x)</div><div class="ttdoc">Remove the first element of the list.</div></div>
-<div class="ttc" id="astructnode__btree__ref_html"><div class="ttname"><a href="structnode__btree__ref.html">node_btree_ref</a></div><div class="ttdoc">A binary-tree node.</div><div class="ttdef"><b>Definition</b> <a href="btree__ref_8h_source.html#l00037">btree_ref.h:37</a></div></div>
-<div class="ttc" id="astructnode__btree__ref_html_a2ff483726cab963ac3404e0471f92139"><div class="ttname"><a href="structnode__btree__ref.html#a2ff483726cab963ac3404e0471f92139">node_btree_ref::rs</a></div><div class="ttdeci">node_btree_ref_t * rs</div><div class="ttdef"><b>Definition</b> <a href="btree__ref_8h_source.html#l00039">btree_ref.h:39</a></div></div>
-<div class="ttc" id="astructnode__btree__ref_html_a5b52057432db82a211e74b88742f5766"><div class="ttname"><a href="structnode__btree__ref.html#a5b52057432db82a211e74b88742f5766">node_btree_ref::ls</a></div><div class="ttdeci">node_btree_ref_t * ls</div><div class="ttdef"><b>Definition</b> <a href="btree__ref_8h_source.html#l00038">btree_ref.h:38</a></div></div>
+<div class="ttc" id="astructnode__btree_html"><div class="ttname"><a href="structnode__btree.html">node_btree</a></div><div class="ttdoc">A binary-tree node.</div><div class="ttdef"><b>Definition</b> <a href="btree_8h_source.html#l00065">btree.h:65</a></div></div>
+<div class="ttc" id="astructnode__btree_html_a4cd00a454dc91399a798cd2620e18525"><div class="ttname"><a href="structnode__btree.html#a4cd00a454dc91399a798cd2620e18525">node_btree::rs</a></div><div class="ttdeci">node_btree_t * rs</div><div class="ttdef"><b>Definition</b> <a href="btree_8h_source.html#l00067">btree.h:67</a></div></div>
+<div class="ttc" id="astructnode__btree_html_ad95582151d3aadd0669ebe59f4204d1e"><div class="ttname"><a href="structnode__btree.html#ad95582151d3aadd0669ebe59f4204d1e">node_btree::ls</a></div><div class="ttdeci">node_btree_t * ls</div><div class="ttdef"><b>Definition</b> <a href="btree_8h_source.html#l00066">btree.h:66</a></div></div>
 </div><!-- fragment --><p><em>Complexity: O(1)</em> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">list</td><td>pointer to the list </td></tr>
@@ -936,6 +946,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>TRUE iif the list wasn't empty </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__list__ref.html#ga9a9f86deee9879971fd39b6fb9f9d70a" title="Remove the last element of the list.">linked_list_pop_back</a> </dd></dl>
 
 </div>
 </div>
@@ -1060,6 +1071,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__list__ref.html#ga639c4cad2df10f1ec31e07a8bc187979" title="Extract a node from the list.">linked_list_extract</a> </dd>
+<dd>
+<a class="el" href="group__list__ref.html#ga1726a268168819c0238a9c07d5bad017" title="Remove the first element of the list.">linked_list_pop_front</a> </dd>
+<dd>
+<a class="el" href="group__list__ref.html#ga9a9f86deee9879971fd39b6fb9f9d70a" title="Remove the last element of the list.">linked_list_pop_back</a> </dd></dl>
 
 </div>
 </div>

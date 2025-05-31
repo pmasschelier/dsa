@@ -102,13 +102,26 @@ $(document).ready(function(){initNavTree('circular__buffer_8h.html',''); initRes
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">circular_buffer.h File Reference<div class="ingroups"><a class="el" href="group__cbuffer__ref.html">Circular buffers</a></div></div></div>
+  <div class="headertitle"><div class="title">circular_buffer.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Circular buffers definition Defines functions to create, free and manipulate circular buffers.  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+</div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for circular_buffer.h:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="circular__buffer_8h__incl.png" border="0" usemap="#a_2home_2runner_2work_2dsa_2dsa_2include_2circular__buffer_8h" alt=""/></div>
+<map name="a_2home_2runner_2work_2dsa_2dsa_2include_2circular__buffer_8h" id="a_2home_2runner_2work_2dsa_2dsa_2include_2circular__buffer_8h">
+<area shape="rect" title="Circular buffers definition Defines functions to create, free and manipulate circular buffers." alt="" coords="5,5,177,60"/>
+<area shape="rect" title=" " alt="" coords="56,108,127,133"/>
+<area shape="poly" title=" " alt="" coords="94,60,94,94,89,94,89,60"/>
+</map>
+</div>
+</div>
 <p><a href="circular__buffer_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -126,30 +139,31 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga2f660a6797ab03b717d93b5abc07e790" id="r_ga2f660a6797ab03b717d93b5abc07e790"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structcircular__buffer.html">circular_buffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cbuffer__ref.html#ga2f660a6797ab03b717d93b5abc07e790">circular_buffer_t</a></td></tr>
-<tr class="separator:ga2f660a6797ab03b717d93b5abc07e790"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa2b994e91eb92ef3b6938629872a9838" id="r_gaa2b994e91eb92ef3b6938629872a9838"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structcircular__buffer.html">circular_buffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__circular__buffer.html#gaa2b994e91eb92ef3b6938629872a9838">circular_buffer_t</a></td></tr>
+<tr class="memdesc:gaa2b994e91eb92ef3b6938629872a9838"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for the <a class="el" href="structcircular__buffer.html" title="A circular buffer.">circular_buffer</a> structure.  <br /></td></tr>
+<tr class="separator:gaa2b994e91eb92ef3b6938629872a9838"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gae19e8df8c442f39762014ecb4b2c0c42" id="r_gae19e8df8c442f39762014ecb4b2c0c42"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcircular__buffer.html">circular_buffer_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cbuffer__ref.html#gae19e8df8c442f39762014ecb4b2c0c42">create_circular_buffer</a> (unsigned size_bytes, unsigned capacity)</td></tr>
-<tr class="memdesc:gae19e8df8c442f39762014ecb4b2c0c42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty circular buffer.  <br /></td></tr>
-<tr class="separator:gae19e8df8c442f39762014ecb4b2c0c42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga981caf1712e6697c583c21e6dd7005d4" id="r_ga981caf1712e6697c583c21e6dd7005d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cbuffer__ref.html#ga981caf1712e6697c583c21e6dd7005d4">free_circular_buffer</a> (<a class="el" href="structcircular__buffer.html">circular_buffer_t</a> *b)</td></tr>
-<tr class="memdesc:ga981caf1712e6697c583c21e6dd7005d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a circular buffer.  <br /></td></tr>
-<tr class="separator:ga981caf1712e6697c583c21e6dd7005d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeaa2a51891aff4e7ed1834fd8fbad130" id="r_gaeaa2a51891aff4e7ed1834fd8fbad130"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cbuffer__ref.html#gaeaa2a51891aff4e7ed1834fd8fbad130">circular_buffer_pop_front</a> (<a class="el" href="structcircular__buffer.html">circular_buffer_t</a> *b, void *p)</td></tr>
+<tr class="memitem:gab3e5c0342ab857c60e6c573bed4e69ae" id="r_gab3e5c0342ab857c60e6c573bed4e69ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__circular__buffer.html#gaa2b994e91eb92ef3b6938629872a9838">circular_buffer_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__circular__buffer.html#gab3e5c0342ab857c60e6c573bed4e69ae">circular_buffer_create</a> (unsigned size_bytes, unsigned capacity)</td></tr>
+<tr class="memdesc:gab3e5c0342ab857c60e6c573bed4e69ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty circular buffer.  <br /></td></tr>
+<tr class="separator:gab3e5c0342ab857c60e6c573bed4e69ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga23e7860e1e9e50933ff3a9c796b4e43e" id="r_ga23e7860e1e9e50933ff3a9c796b4e43e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__circular__buffer.html#ga23e7860e1e9e50933ff3a9c796b4e43e">circular_buffer_free</a> (<a class="el" href="group__circular__buffer.html#gaa2b994e91eb92ef3b6938629872a9838">circular_buffer_t</a> *b)</td></tr>
+<tr class="memdesc:ga23e7860e1e9e50933ff3a9c796b4e43e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a circular buffer.  <br /></td></tr>
+<tr class="separator:ga23e7860e1e9e50933ff3a9c796b4e43e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeaa2a51891aff4e7ed1834fd8fbad130" id="r_gaeaa2a51891aff4e7ed1834fd8fbad130"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__circular__buffer.html#gaeaa2a51891aff4e7ed1834fd8fbad130">circular_buffer_pop_front</a> (<a class="el" href="group__circular__buffer.html#gaa2b994e91eb92ef3b6938629872a9838">circular_buffer_t</a> *b, void *p)</td></tr>
 <tr class="memdesc:gaeaa2a51891aff4e7ed1834fd8fbad130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an element at the beginning of the buffer.  <br /></td></tr>
 <tr class="separator:gaeaa2a51891aff4e7ed1834fd8fbad130"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6351666127eee263073cb64c95fb31fd" id="r_ga6351666127eee263073cb64c95fb31fd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cbuffer__ref.html#ga6351666127eee263073cb64c95fb31fd">circular_buffer_pop_back</a> (<a class="el" href="structcircular__buffer.html">circular_buffer_t</a> *b, void *p)</td></tr>
+<tr class="memitem:ga6351666127eee263073cb64c95fb31fd" id="r_ga6351666127eee263073cb64c95fb31fd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__circular__buffer.html#ga6351666127eee263073cb64c95fb31fd">circular_buffer_pop_back</a> (<a class="el" href="group__circular__buffer.html#gaa2b994e91eb92ef3b6938629872a9838">circular_buffer_t</a> *b, void *p)</td></tr>
 <tr class="memdesc:ga6351666127eee263073cb64c95fb31fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an element at the end of the buffer.  <br /></td></tr>
 <tr class="separator:ga6351666127eee263073cb64c95fb31fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacdef72afd0686d8769086723236c5090" id="r_gacdef72afd0686d8769086723236c5090"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cbuffer__ref.html#gacdef72afd0686d8769086723236c5090">circular_buffer_push_front</a> (<a class="el" href="structcircular__buffer.html">circular_buffer_t</a> *b, void *d)</td></tr>
+<tr class="memitem:gacdef72afd0686d8769086723236c5090" id="r_gacdef72afd0686d8769086723236c5090"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__circular__buffer.html#gacdef72afd0686d8769086723236c5090">circular_buffer_push_front</a> (<a class="el" href="group__circular__buffer.html#gaa2b994e91eb92ef3b6938629872a9838">circular_buffer_t</a> *b, void *d)</td></tr>
 <tr class="memdesc:gacdef72afd0686d8769086723236c5090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an element at the beginning of the buffer.  <br /></td></tr>
 <tr class="separator:gacdef72afd0686d8769086723236c5090"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee72b50cd8e9920bd5130d5902f2293c" id="r_gaee72b50cd8e9920bd5130d5902f2293c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cbuffer__ref.html#gaee72b50cd8e9920bd5130d5902f2293c">circular_buffer_push_back</a> (<a class="el" href="structcircular__buffer.html">circular_buffer_t</a> *b, void *d)</td></tr>
+<tr class="memitem:gaee72b50cd8e9920bd5130d5902f2293c" id="r_gaee72b50cd8e9920bd5130d5902f2293c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__circular__buffer.html#gaee72b50cd8e9920bd5130d5902f2293c">circular_buffer_push_back</a> (<a class="el" href="group__circular__buffer.html#gaa2b994e91eb92ef3b6938629872a9838">circular_buffer_t</a> *b, void *d)</td></tr>
 <tr class="memdesc:gaee72b50cd8e9920bd5130d5902f2293c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an element at the end of the buffer.  <br /></td></tr>
 <tr class="separator:gaee72b50cd8e9920bd5130d5902f2293c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5dae0241d905fd55196286f9891836f8" id="r_ga5dae0241d905fd55196286f9891836f8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cbuffer__ref.html#ga5dae0241d905fd55196286f9891836f8">circular_buffer_size</a> (<a class="el" href="structcircular__buffer.html">circular_buffer_t</a> *b)</td></tr>
+<tr class="memitem:ga5dae0241d905fd55196286f9891836f8" id="r_ga5dae0241d905fd55196286f9891836f8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__circular__buffer.html#ga5dae0241d905fd55196286f9891836f8">circular_buffer_size</a> (<a class="el" href="group__circular__buffer.html#gaa2b994e91eb92ef3b6938629872a9838">circular_buffer_t</a> *b)</td></tr>
 <tr class="memdesc:ga5dae0241d905fd55196286f9891836f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the size of the buffer.  <br /></td></tr>
 <tr class="separator:ga5dae0241d905fd55196286f9891836f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -184,7 +198,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="circular__buffer_8h_source.html#l00011">11</a> of file <a class="el" href="circular__buffer_8h_source.html">circular_buffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="circular__buffer_8h_source.html#l00012">12</a> of file <a class="el" href="circular__buffer_8h_source.html">circular_buffer.h</a>.</p>
 
 </div>
 </div>
@@ -214,7 +228,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="circular__buffer_8h_source.html#l00014">14</a> of file <a class="el" href="circular__buffer_8h_source.html">circular_buffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="circular__buffer_8h_source.html#l00015">15</a> of file <a class="el" href="circular__buffer_8h_source.html">circular_buffer.h</a>.</p>
 
 </div>
 </div>

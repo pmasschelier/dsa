@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['data_0',['data',['../structarray__list.html#a234b8dc5d4b968763f43150b1f3a41ad',1,'array_list::data'],['../structnode__btree__ref.html#aa87107a323b509fc1fc63b55e4833d22',1,'node_btree_ref::data'],['../group__cbuffer__ref.html#ga87da43659b02d00da3b8e318255e9279',1,'circular_buffer::data'],['../structheap__view.html#a58932592aeb4068956fe2ab37fb05311',1,'heap_view::data'],['../structindexed__list.html#afb2bb972b248b8ffc3e9b78fe5c66679',1,'indexed_list::data'],['../structlinked__list__node.html#a4a070a05c5af36d7a9e5b30b35458bb7',1,'linked_list_node::data']]],
+  ['data_0',['data',['../structarray__list.html#a234b8dc5d4b968763f43150b1f3a41ad',1,'array_list::data'],['../structnode__btree.html#a128b1b6f36ecaa340edbc6dff73ee5d9',1,'node_btree::data'],['../group__circular__buffer.html#gae97792c9822c884788da9f5a5d61966c',1,'circular_buffer::data'],['../structheap__view.html#a58932592aeb4068956fe2ab37fb05311',1,'heap_view::data'],['../structindexed__list.html#afb2bb972b248b8ffc3e9b78fe5c66679',1,'indexed_list::data'],['../structlinked__list__node.html#a4a070a05c5af36d7a9e5b30b35458bb7',1,'linked_list_node::data']]],
   ['data_20structures_20and_20algorithms_20in_20c_1',['Data Structures and Algorithms in C',['../index.html',1,'']]],
   ['data_20structures_3a_2',['Data structures:',['../index.html#autotoc_md4',1,'']]],
   ['define_5fcompare_5fmin_5fscalar_3',['DEFINE_COMPARE_MIN_SCALAR',['../compare_8h.html#a9ee17026e0c64dd9c7f59cd1a695acbb',1,'compare.h']]],

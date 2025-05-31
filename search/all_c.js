@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['parent_0',['parent',['../structnode__btree__ref.html#aa0cba6efdb4f04fe02f6c6db0a66b306',1,'node_btree_ref']]],
+  ['parent_0',['parent',['../structnode__btree.html#aaa1f11e0e7aef69914e0acc1d4d581a5',1,'node_btree']]],
   ['path_1',['path',['../structbtree__path.html#a6923cea470b57566026f49f7aed61236',1,'btree_path']]],
   ['path_20algorithms_2',['path algorithms',['../group__graph__list__ssshortesthpath.html',1,'Single Source Shortest Path algorithms'],['../group__graph__mat__ssshortesthpath.html',1,'Single Source Shortest Path algorithms']]],
   ['path_2eh_3',['path.h',['../path_8h.html',1,'']]],
@@ -12,5 +12,5 @@ var searchData=
   ['path_5fwalk_5fforward_9',['path_walk_forward',['../path_8h.html#a56c44c1cf3ff88ac9a96a8634ae4a389',1,'path.h']]],
   ['pos_5fto_5fidx_10',['pos_to_idx',['../structheap__view.html#aad92d776b02fd49d972def8b3509594c',1,'heap_view']]],
   ['prev_11',['prev',['../structindexed__list.html#a9e7d145dc7884a67385928c548c0439d',1,'indexed_list::prev'],['../structlinked__list__node.html#a07a90d120784b595467722ab8e31cfe4',1,'linked_list_node::prev']]],
-  ['priv_12',['priv',['../structnode__btree__ref.html#a1baf18704e611fc185427040923d5ac3',1,'node_btree_ref']]]
+  ['priv_12',['priv',['../structnode__btree.html#af511398ad3ef9bd8f545248065de2435',1,'node_btree']]]
 ];
