@@ -14,6 +14,7 @@
 
 /**
  * @defgroup avl_tree AVL binary search trees
+ * @ingroup btree
  *
  * AVL Balanced binary search tree uses balance factors on each node to keep the
  * tree balanced on each insertion or deletion.

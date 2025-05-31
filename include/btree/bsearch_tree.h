@@ -24,6 +24,7 @@
 
 /**
  * @defgroup bsearch_tree Unbalanced binary search trees
+ * @ingroup btree
  * @{
  */
 

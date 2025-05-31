@@ -14,6 +14,7 @@
 
 /**
  * @defgroup rb_tree Red-Black binary search trees
+ * @ingroup btree
  *
  * Red-Black Balanced binary search tree uses color tags on each node to keep
  * the tree balanced on each insertion or deletion.
