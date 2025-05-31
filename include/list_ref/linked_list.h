@@ -390,11 +390,11 @@ linked_list_node_t* linked_list_push_back(linked_list_t* list, const void* x);
  *
  * Example: Level-order traversal of a binary tree
  * ```
- * linked_list_t forest = LINKED_LIST_INIT(node_btree_ref_t*);
+ * linked_list_t forest = LINKED_LIST_INIT(node_btree_t*);
  * linked_list_node_t* ret = linked_list_push_back(&forest, &tree->root);
  * when_null_ret(ret, -ERROR_ALLOCATION_FAILED);
  *
- * node_btree_ref_t* t;
+ * node_btree_t* t;
  * while (linked_list_pop_front(&forest, &t)) {
  *     if (t->ls != NULL)
  *         linked_list_push_back(&forest, &t->ls);

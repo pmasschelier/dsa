@@ -4,7 +4,7 @@
 #include "errors.h"
 #include "test_macros.h"
 
-circular_buffer_t* create_circular_buffer(unsigned size_bytes,
+circular_buffer_t* circular_buffer_create(unsigned size_bytes,
 										  unsigned capacity) {
 	when_true_ret(capacity == 0, NULL);
 	circular_buffer_t* ret;
@@ -24,7 +24,7 @@ exit:
 	return ret;
 }
 
-void free_circular_buffer(circular_buffer_t* b) {
+void circular_buffer_free(circular_buffer_t* b) {
 	free(b->data);
 	free(b);
 }

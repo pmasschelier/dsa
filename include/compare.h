@@ -5,7 +5,7 @@
  * @file compare.h
  * @brief Comparison function type definition
  * Defines compare_fn_t type function
- * @ingroup avl_tree_ref heap_view
+ * @ingroup avl_tree heap_view
  */
 
 /**
