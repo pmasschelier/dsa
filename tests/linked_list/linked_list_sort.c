@@ -11,7 +11,7 @@ int main(void)
     linked_list_t list = LINKED_LIST_INIT(ARRAY_TYPE);
     for (unsigned i = 0; i < ARRAY_LEN; i++)
         linked_list_push_back(&list, &VALUES[i]);
-    linked_list_foreach(&list, node) {
+    linked_list_foreach(list, node) {
         int min = *get_node_ref(node, int);
         linked_list_node_t* node_min = node;
         for(linked_list_node_t* other = node->next; other != NULL; other = other->next) {

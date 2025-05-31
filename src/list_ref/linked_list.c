@@ -39,6 +39,7 @@ BOOL linked_list_empty(const linked_list_t* list) {
 	return list->begin == NULL;
 }
 
+// TODO: Change linked_list_from_tab to linked_list_append
 #ifdef STRUCT_RECURSIVE_IMPL
 BOOL linked_list_from_tab_rec(linked_list_t* list, linked_list_node_t* ptr, void* tab, unsigned length) {
     if(length == 0)
@@ -286,7 +287,7 @@ linked_list_node_t* linked_list_find_equals(linked_list_t* list,
 linked_list_node_t* linked_list_find_equals(linked_list_t* list,
 										 void* value,
 										 equals_fn_t equals) {
-    linked_list_foreach(list, node) {
+    linked_list_foreach(*list, node) {
 		if (equals(node->data, value))
 			return node;
 	}

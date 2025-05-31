@@ -20,27 +20,24 @@
 #define get_node_ref(node, type) ((type*)&(node)->data)
 
 #define linked_list_foreach_node(list, node) \
-	for (linked_list_node_t* node = (list)->begin; node != NULL; node = node->next)
+	for (linked_list_node_t* node = (list).begin; node != NULL; node = node->next)
 
 #define linked_list_foreach_value(list, value, type)                        \
-	type* value = ((list)->begin != NULL) ? (type*)(list)->begin->data : NULL; \
-	for (linked_list_node_t* node = (list)->begin; node != NULL;        \
-		 node = node->next, value = (node != NULL) ? (type*)node->data : NULL)
+    for(linked_list_node_t* node = (list).begin; node != NULL; node = NULL) \
+	for(type* value = (type*)node->data;                                    \
+        node != NULL && (value = (type*)node->data);                        \
+		node = node->next)
 
 #define linked_list_foreach_node_rev(list, node) \
-	for (linked_list_node_t* node = (list)->end; node != NULL; node = node->prev)
+	for (linked_list_node_t* node = (list).end; node != NULL; node = node->prev)
 
-#define linked_list_foreach_value_rev(list, value, type)                \
-	type* value = ((list)->end != NULL) ? (type*)(list)->end->data : NULL; \
-	for (linked_list_node_t* node = (list)->end; node != NULL;      \
-		 node = node->prev, value = (node != NULL) ? (type*)node->data : NULL)
+#define linked_list_foreach_value_rev(list, value, type)                    \
+    for(linked_list_node_t* node = (list).end; node != NULL; node = NULL)   \
+	for(type* value = (type*)node->data;                                    \
+        node != NULL && (value = (type*)node->data);                        \
+		node = node->prev)
 
 #define GET_MACRO(_1, _2, _3, NAME, ...) NAME
-#define linked_list_foreach(...) \
-	GET_MACRO(__VA_ARGS__, linked_list_foreach_value, linked_list_foreach_node, )(__VA_ARGS__)
-#define linked_list_foreach_rev(...)                                             \
-	GET_MACRO(__VA_ARGS__, linked_list_foreach_value_rev, linked_list_foreach_node_rev) \
-	(__VA_ARGS__)
 
 /**
  * @defgroup list_ref Doubly-linked lists
@@ -61,6 +58,48 @@
  * You can use a linked_list of pointers if the cost of copy is too high.
  * @{
  */
+
+/**
+ * @brief Foreach macro for linked_list
+ * 
+ * Iterates over an linked_list, by defining the value
+ * pointer pointing to the current element.
+ *
+ * An implicit node variable is defined.
+ *
+ * **Example:** printing a linked_list of int
+ * ```
+ * void print_list_int(const linked_list list) {
+ *     linked_list_foreach(list, value, int) {
+ *         printf("%d\n", *value);
+ *     }
+ * }
+ * ```
+ *
+ * @param list List to iterate over
+ * @param node Current node
+ * @param value Pointer to the element
+ * @param type Type of the array elements
+ */
+#define linked_list_foreach(...) \
+	GET_MACRO(__VA_ARGS__, linked_list_foreach_value, linked_list_foreach_node, )(__VA_ARGS__)
+
+/**
+ * @brief Reverse Foreach macro for linked_list
+ * 
+ * Iterates over a linked_list in reverse order, by defining the value
+ * pointer pointing to the curmultiplerent element.
+ *
+ * An implicit node variable is defined.
+ *
+ * @param array Array to iterate over
+ * @param node Current node
+ * @param value Pointer to the element
+ * @param type Type of the array elements
+ */
+#define linked_list_foreach_rev(...)                                             \
+	GET_MACRO(__VA_ARGS__, linked_list_foreach_value_rev, linked_list_foreach_node_rev) \
+	(__VA_ARGS__)
 
 /**
  * @typedef node_list_ref_t
@@ -218,11 +257,11 @@ void linked_list_deinit(linked_list_t* array);
 BOOL linked_list_empty(const linked_list_t* list);
 
 /**
- * @brief Create a list from an array
+ * @brief Create a linked_list from an array
  *
  * Exemple:
  * ```c
- * linked_list_t* list = list_from_tab((char[]) {0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+ * linked_list_t* list = linked_list_from_tab((char[]) {0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
  * sizeof(char), 10);
  * if(list == NULL)
  *    goto allocation_failed;
@@ -235,18 +274,18 @@ BOOL linked_list_empty(const linked_list_t* list);
  *
  * _Complexity: O(n)_
  * @param[in] tab pointer to the array to copy
- * @param[in] size size (in bytes) of an array's element
+ * @param[in] size_bytes size (in bytes) of an array's element
  * @param[in] length number of elements in the array
  * @return A pointer on the newly created list
  * @see linked_list_free()
  */
-linked_list_t* linked_list_from_tab(void* tab, size_t size, unsigned length);
+linked_list_t* linked_list_from_tab(void* tab, size_t size_bytes, unsigned length);
 
 /**
  * @brief Fill an array with the content of a list
  *
  * _The array should be allocated with a sufficient size which can be determined
- * using the length_list function._
+ * using the linked_list_length() function._
  *
  * _Complexity O(n)_
  * @param[in] list list to copy element from
@@ -279,6 +318,7 @@ unsigned linked_list_length(linked_list_t* list);
  * @param[in] prev node after which the insertion should occur. Pass NULL
  * to insert at the beginning of the list
  * @param[in] node pointer to the node to insert
+ * @see linked_list_extract
  */
 void linked_list_insert_node(linked_list_t* list,
 							 linked_list_node_t* prev,
@@ -375,6 +415,26 @@ BOOL linked_list_pop_back(linked_list_t* list, void* x);
  *
  * This removes a node from the list without freeing anything.
  * It can be useful to transfer a node from one list to another for instance.
+ * 
+ * **Example:** Insertion sort
+ * ```
+ * linked_list_node_t* next;
+ * for(linked_list_node_t* node = list.begin; node != NULL; node = next) {
+ *     next = node->next;
+ *     int value = *get_node_ref(node, int);
+ *     // Find the first predecessor of node with a smaller value
+ *     linked_list_node_t* prev;
+ *     for(prev = node; prev != NULL; prev = prev->prev) {
+ *         int x = *get_node_ref(prev, int);
+ *         if(x < value)
+ *             break;
+ *     }
+ *     // Extract node from the list
+ *     linked_list_extract(&list, node);
+ *     // Insert node after prev
+ *     linked_list_insert_node(&list, prev, node);
+ * }
+ * ```
  *
  * _Complexity: O(1)_
  * @param[in] list pointer to the list

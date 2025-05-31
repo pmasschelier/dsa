@@ -2,6 +2,7 @@
 #define ARRAY_LIST_H
 
 #include <stddef.h>
+#include <stdint.h>
 #include "structures.h"
 
 /**
@@ -32,6 +33,51 @@
  */
 
 /**
+ * @brief Foreach macro for array_list
+ * 
+ * Iterates over an array_list, by defining the value
+ * pointer pointing to the current element.
+ *
+ * An implicit index variable is defined.
+ *
+ * **Example:** printing an array_list of int
+ * ```
+ * void print_array_int(const array_list list) {
+ *     array_list_foreach(list, value, int) {
+ *         printf("list[%d] = %d\n", index, *value);
+ *     }
+ * }
+ * ```
+ *
+ * @param array Array to iterate over
+ * @param value Pointer to the element
+ * @param type Type of the array elements
+ */
+#define array_list_foreach(array, value, type)                                      \
+    for(size_t index = 0; index < (array).size; index = (array).size)               \
+    for(type* value = get_array_list_ref(array, index, type);                       \
+        index < (array).size && (value = get_array_list_ref(array, index, type));   \
+        index++)
+
+/**
+ * @brief Reverse Foreach macro for array_list
+ * 
+ * Iterates over an array_list in reverse order, by defining the value
+ * pointer pointing to the current element.
+ *
+ * An implicit index variable is defined.
+ *
+ * @param array Array to iterate over
+ * @param value Pointer to the element
+ * @param type Type of the array elements
+ */
+#define array_list_foreach_rev(array, value, type)                                      \
+    for(int index = (array).size - 1; index >= 0; index = -1)                           \
+    for(type* value = get_array_list_ref(array, index, type);                           \
+        index >= (int)(array).size && (value = get_array_list_ref(array, index, type)); \
+        index--)
+
+/**
  * @typedef array_list_t
  * @brief Typedef for the array_list structure
  *
@@ -58,10 +104,10 @@ typedef struct array_list array_list_t;
  * ```
  */
 struct array_list {
-	char* data; /**< Pointer to the allocated memory for the dynamic array */
-	unsigned size_bytes; /**< Size (in bytes) of an element of the array */
-	unsigned capacity;	 /**< The current capacity of the array */
-	unsigned size;		 /**< The number of elements in the array */
+	uint8_t* data; /**< Pointer to the allocated memory for the dynamic array */
+	size_t size_bytes; /**< Size (in bytes) of an element of the array */
+	size_t capacity;	 /**< The current capacity of the array */
+	size_t size;		 /**< The number of elements in the array */
 };
 
 /**
@@ -93,6 +139,8 @@ extern size_t array_list_min_capacity;
 
 /**
  * @brief Helper macro for random access
+ * 
+ *
  * 
  * @warning The access are not checked. Be careful with out-of-bounds accesses.
  *
@@ -132,7 +180,7 @@ array_list_t* array_list_create(unsigned size_bytes);
  * @brief Free an array created with array_list_create()
  *
  * _Complexity: O(1)_
- * @param[in] array pointer to the array
+ * @param[out] array pointer to the array
  * @see array_list_create()
  */
 void array_list_free(array_list_t* array);
@@ -163,7 +211,7 @@ void array_list_free(array_list_t* array);
  * This function is provided for symetry with array_list_deinit()
  *
  * _Complexity: O(1)_
- * @param[in] array A pointer to the uninitialized array
+ * @param[out] array A pointer to the uninitialized array
  * @param[in] size_bytes Size of an element
  * @see array_list_deinit()
  */
@@ -173,10 +221,36 @@ void array_list_init(array_list_t* array, unsigned size_bytes);
  * @brief Uninitialize the array
  *
  * _Complexity: O(1)_
- * @param[in] array pointer to the array
+ * @param[out] array pointer to the array
  * @see array_list_init()
  */
 void array_list_deinit(array_list_t* array);
+
+/**
+ * @brief Append an array to array_list to an array
+ *
+ * The array_list should be initialized and have the same element type than the array.
+ *
+ * **Example**: Create an array_list from an array
+ * ```c
+ * array_list_t list;
+ * array_list_init(&list, sizeof(char));
+ * array_list_append(&list, (char[]) {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 10);
+ *
+ * // Do someting
+ *
+ * array_list_deinit(&list);
+ * ```
+ * __The array content is copied__<br>
+ *
+ * _Complexity: O(n)_
+ * @param[in] array pointer to the array_list to extend
+ * @param[in] tab pointer to the array to copy
+ * @param[in] length number of elements in tab
+ * @return ERROR_NO_ERROR or ERROR_ALLOCATION_FAILED
+ * @see array_list_init()
+ */
+int array_list_append(array_list_t* array, const void* tab, unsigned length);
 
 /**
  * @brief Test if the array is empty
@@ -187,7 +261,7 @@ void array_list_deinit(array_list_t* array);
  * @param[in] array pointer on the array to test
  * @return TRUE iif the array is empty
  */
-BOOL array_list_empty(array_list_t* array);
+BOOL array_list_empty(const array_list_t* array);
 
 /**
  * @brief Copy an element at the beginning of the array
@@ -196,8 +270,8 @@ BOOL array_list_empty(array_list_t* array);
  * and copy the element into it.
  *
  * _Complexity: O(n)_
- * @param array Pointer to the array to extend
- * @param value Pointer to the data to copy at the beginning of the array
+ * @param[inout] array Pointer to the array to extend
+ * @param[in] value Pointer to the data to copy at the beginning of the array
  * @return Pointer to the newly created element (NULL in case of failure)
  * @see array_list_push_back()
  */
@@ -215,7 +289,7 @@ void* array_list_push_front(array_list_t* array, const void* value);
  * 
  * // Appends the numbers 0 to 9 to the array
  * for(unsigned i = 0; i < 10; i++)
- *  array_list_push_back(&array, &i);
+ *     array_list_push_back(&array, &i);
  *
  * array_list_deinit(&array);
  * ```
@@ -225,9 +299,10 @@ void* array_list_push_front(array_list_t* array, const void* value);
  * freeing the memory.
  *
  * _Complexity: O(1)_
- * @param array Pointer to the array to extend
- * @param value Pointer to the data to copy at the end of the array
+ * @param[inout] array Pointer to the array to extend
+ * @param[in] value Pointer to the data to copy at the end of the array
  * @return Pointer to the newly created element (NULL in case of failure)
+ * @see array_list_push_front()
  */
 void* array_list_push_back(array_list_t* array, const void* value);
 
@@ -239,7 +314,7 @@ void* array_list_push_back(array_list_t* array, const void* value);
  * array_list::size_bytes bytes.<br>
  *
  * _Complexity: O(n)_
- * @param[in] array pointer to the array
+ * @param[inout] array pointer to the array
  * @param[out] value pointer to the remove data (if NULL the data will be lost)
  * @return FALSE iif the array was empty
  * @see array_list_pop_back()
@@ -263,7 +338,7 @@ BOOL array_list_pop_front(array_list_t* array, void* value);
  * ```
  *
  * _Complexity: O(1)_
- * @param[in] array pointer to the array
+ * @param[inout] array pointer to the array
  * @param[out] value pointer to the removed data (if NULL the data will be lost)
  * @return FALSE iif the array was empty
  */
@@ -272,7 +347,7 @@ BOOL array_list_pop_back(array_list_t* array, void* value);
 /**
  * @brief Swap two elements of the array
  *
- * Example: Selection sort
+ * **Example:** Selection sort
  * ```
  * for (unsigned i = 0; i < ARRAY_LEN; i++) {
  *     int min = *get_array_list_ref(array, i, int);
@@ -289,7 +364,7 @@ BOOL array_list_pop_back(array_list_t* array, void* value);
  * ```
  *
  * _Complexity: O(1)_
- * @param[in] array pointer to the array
+ * @param[inout] array pointer to the array
  * @param[in] a First index
  * @param[in] b Second index
  * @return -ERROR_NO_ERROR is the indices could be swapped
@@ -303,7 +378,7 @@ int array_list_swap(array_list_t* array, unsigned a, unsigned b);
  * of the array in constant time when you don't care about the order.
  *
  * _Complexity: O(1)_
- * @param[in] array pointer to the array
+ * @param[inout] array pointer to the array
  * @param[in] i Element index to remove
  * @param[out] value pointer to the remove data (if NULL the data will be lost)
  * @return TRUE iif the indices could be swapped

@@ -1,4 +1,6 @@
 #include "array_list.h"
+#include <stddef.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include "errors.h"
@@ -40,18 +42,33 @@ void array_list_deinit(array_list_t* array) {
     array->data = NULL;
 }
 
-BOOL array_list_empty(array_list_t* array) {
-	return array->size == 0;
+static BOOL ensure_sufficient_capacity(array_list_t* array, unsigned append) {
+    size_t size = array->size + append;
+	if (size <= array->capacity)
+        return TRUE;
+    when_false_ret(size * array->size_bytes <= PTRDIFF_MAX, FALSE);
+    if (array->capacity <= array_list_min_capacity)
+        array->capacity = array_list_min_capacity;
+    while(array->capacity < size)
+        array->capacity *= 2;
+    if(array->capacity > PTRDIFF_MAX)
+        array->capacity = PTRDIFF_MAX;
+    void* data = realloc(array->data, array->capacity * array->size_bytes);
+    when_null_ret(data, FALSE);
+    array->data = data;
+    return TRUE;
 }
 
-static void ensure_sufficient_capacity(array_list_t* array) {
-	if (array->size >= array->capacity) {
-		if (array->capacity < array_list_min_capacity)
-			array->capacity = array_list_min_capacity * array->size_bytes;
-		else
-			array->capacity *= 2;
-		array->data = realloc(array->data, array->capacity * array->size_bytes);
-	}
+int array_list_append(array_list_t* array, const void* tab, unsigned length) {
+    int ret = ensure_sufficient_capacity(array, length);
+    when_false_ret(ret, -ERROR_ALLOCATION_FAILED);
+    memcpy(array->data + array->size * array->size_bytes, tab, array->size_bytes * length);
+    array->size += length;
+    return -ERROR_NO_ERROR;
+}
+
+BOOL array_list_empty(const array_list_t* array) {
+	return array->size == 0;
 }
 
 static void shift_right(array_list_t* array) {
@@ -60,7 +77,7 @@ static void shift_right(array_list_t* array) {
 }
 
 void* array_list_push_front(array_list_t* array, const void* value) {
-	ensure_sufficient_capacity(array);
+	ensure_sufficient_capacity(array, 1);
 	array->size++;
 	shift_right(array);
 	void* ptr = array->data;
@@ -69,7 +86,7 @@ void* array_list_push_front(array_list_t* array, const void* value) {
 }
 
 void* array_list_push_back(array_list_t* array, const void* value) {
-	ensure_sufficient_capacity(array);
+	ensure_sufficient_capacity(array, 1);
 	void* ptr = array->data + array->size_bytes * array->size;
 	memcpy(ptr, value, array->size_bytes);
 	array->size++;
@@ -98,7 +115,7 @@ BOOL array_list_pop_back(array_list_t* array, void* value) {
 		return FALSE;
 
 	if (value != NULL) {
-		char* ptr = array->data + array->size_bytes * (array->size - 1);
+		uint8_t* ptr = array->data + array->size_bytes * (array->size - 1);
 		memcpy(value, ptr, array->size_bytes);
 	}
 	array->size--;

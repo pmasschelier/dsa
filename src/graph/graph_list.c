@@ -263,7 +263,7 @@ int graph_list_preorder_dfs(graph_list_t* g,
 		fixed_xifo_copy_pop_back(waiting_list, &pivot);
 		mark[pivot] = TRUE;
 		tab[index++] = pivot;
-		linked_list_foreach_rev(&g->neighbours[pivot], e, graph_list_edge_t) {
+		linked_list_foreach_rev(g->neighbours[pivot], e, graph_list_edge_t) {
 			if (mark[e->to] == FALSE) {
 				fixed_xifo_copy_push_back(waiting_list, &e->to);
 				if (father != NULL)
@@ -301,7 +301,7 @@ int graph_list_postorder_dfs(graph_list_t* g,
 			fixed_xifo_copy_pop_back(waiting_list, NULL);
 			continue;
 		}
-		linked_list_foreach_rev(&g->neighbours[pivot], e, graph_list_edge_t) {
+		linked_list_foreach_rev(g->neighbours[pivot], e, graph_list_edge_t) {
 			if (mark[e->to] == UNVISITED) {
 				fixed_xifo_copy_push_back(waiting_list, &e->to);
 				mark[e->to] = VISITED;
@@ -488,7 +488,7 @@ int graph_list_dijkstra(graph_list_t* g,
 		number++;
 
 		// For each successor of pivot
-		linked_list_foreach(&g->neighbours[pivot], e, graph_list_edge_t) {
+		linked_list_foreach(g->neighbours[pivot], e, graph_list_edge_t) {
 			if (mark[e->to] == TRUE)
 				continue;
 			graph_weight_t d =
@@ -510,9 +510,8 @@ int graph_list_dijkstra(graph_list_t* g,
 unsigned int graph_list_indegree(graph_list_t* g, unsigned vertex) {
 	unsigned degree = 0;
 	for (unsigned i = 0; i < g->nb_vert; i++) {
-		linked_list_t* neighbours = &g->neighbours[i];
-		linked_list_foreach(neighbours, edge, graph_list_edge_t) degree +=
-			edge->to == vertex;
+		linked_list_foreach(g->neighbours[i], edge, graph_list_edge_t)
+            degree += edge->to == vertex;
 	}
 	return degree;
 }
@@ -576,7 +575,7 @@ int graph_list_bellman(graph_list_t* g,
 
 	for (unsigned i = num[r]; i < g->nb_vert - 1; i++) {
 		const unsigned x = denum[i];
-		linked_list_foreach(&g->neighbours[x], e, graph_list_edge_t) {
+		linked_list_foreach(g->neighbours[x], e, graph_list_edge_t) {
 			const graph_weight_t d =
 				weight_add_truncate_overflow(distance[x], e->w);
 			if (d < distance[e->to]) {
@@ -610,7 +609,7 @@ int graph_list_ford(graph_list_t* g,
 		for (unsigned i = 0; i < g->nb_vert; i++) {
 			// Finds the predecessor of i which will allow us to minimize the
 			// distance
-			linked_list_foreach(&g->neighbours[i], e, graph_list_edge_t) {
+			linked_list_foreach(g->neighbours[i], e, graph_list_edge_t) {
 				const graph_weight_t d =
 					weight_add_truncate_overflow(distance[i], e->w);
 				if (d < distance[e->to]) {
@@ -664,7 +663,7 @@ int graph_list_ford_dantzig(graph_list_t* g,
 		// Find an edge which would reduce the distance of node if added to the
 		// covering tree.
 		for (unsigned i = 0; i < g->nb_vert && found == FALSE; i++) {
-			linked_list_foreach(&g->neighbours[i], e, graph_list_edge_t) {
+			linked_list_foreach(g->neighbours[i], e, graph_list_edge_t) {
 				d = weight_add_truncate_overflow(distance[i], e->w);
 				if (d < distance[e->to]) {
 					x = i;
@@ -708,7 +707,7 @@ int graph_list_ford_dantzig(graph_list_t* g,
 		fixed_xifo_copy_push_back(update_queue, &y);
 		do {
 			fixed_xifo_copy_pop_front(update_queue, &x);
-			linked_list_foreach(&g->neighbours[x], e, graph_list_edge_t) {
+			linked_list_foreach(g->neighbours[x], e, graph_list_edge_t) {
 				if (father[e->to] == x) {
 					d = weight_add_truncate_overflow(distance[x], e->w);
 					distance[e->to] = d;

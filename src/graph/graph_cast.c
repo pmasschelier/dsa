@@ -63,7 +63,7 @@ graph_mat_t* graph_list_to_graph_mat(graph_list_t* graph_list,
 	}
 
 	for (unsigned i = 0; i < size; i++) {
-		linked_list_foreach_node((&graph_list->neighbours[i]), node) {
+		linked_list_foreach_node(graph_list->neighbours[i], node) {
 			graph_list_edge_t* edge = get_node_ref(node, graph_list_edge_t);
 			graph_mat_set_edge(graph_mat, i, edge->to, TRUE, edge->w, FALSE);
 		}
