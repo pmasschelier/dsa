@@ -5,7 +5,7 @@
 #define BT_TYPE int
 
 int main(void) {
-	btree_t* btree = create_btree(sizeof(BT_TYPE));
+	btree_t* btree = btree_create(sizeof(BT_TYPE));
 	BT_TYPE lhs = 1;
 	BT_TYPE rhs = 1;
 	assert(NULL == btree_emplace_at(btree, LHS_PATH, &lhs));

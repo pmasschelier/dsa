@@ -13,7 +13,7 @@
 #include "stack_view.h"
 #endif
 
-btree_t* create_btree(size_t size) {
+btree_t* btree_create(size_t size) {
 	btree_t* ret = malloc(sizeof(btree_t));
 	when_null_ret(ret, NULL);
 	ret->size = size;

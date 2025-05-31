@@ -6,7 +6,7 @@
 BT_TYPE values[3] = {1, 2, 3};
 
 int main(void) {
-	btree_t* btree = create_btree(sizeof(BT_TYPE));
+	btree_t* btree = btree_create(sizeof(BT_TYPE));
 	btree_emplace_at(btree, ROOT_PATH, &values[0]);
 	btree_emplace_at(btree, LHS_PATH, &values[1]);
 	assert(*(BT_TYPE*)btree->root->ls->data == 2);

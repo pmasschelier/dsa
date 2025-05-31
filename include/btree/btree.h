@@ -14,6 +14,34 @@
 
 /**
  * @defgroup btree Binary trees
+ * btree are unorderer general binary trees.
+ * @dot
+ * digraph {
+ *     graph [ordering=out,bgcolor=transparent]
+ *     node [style=filled]
+ *     edge [color=grey50]
+ *     null0, null1, null2, null3, null4, null5, null6, null7, null8, null9 [shape=point]
+ *     a -> b -> d -> null0
+ *     d -> null1
+ *     d -> b -> a [constraint=false,style=dashed]
+ *     a -> c -> g -> null2
+ *     g -> null3
+ *     c -> h -> null8
+ *     h -> c [constraint=false,style=dashed]
+ *     h -> null9
+ *     g -> c -> a [constraint=false,style=dashed]
+ *     b -> e -> i -> null4
+ *     i -> null5
+ *     i -> e -> b [constraint=false,style=dashed]
+ *     e -> j -> null6
+ *     j -> null7
+ *     j -> e [constraint=false,style=dashed]
+ * }
+ * @enddot
+ * ```
+ * btree_t* btree = create_tree_from
+ * ```
+ *
  * @{
  */
 
@@ -73,7 +101,7 @@ struct btree {
 	 * \note This field is not used by any function and is mainly here for
 	 * information.
 	 */
-	size_t size;
+	size_t size_bytes;
 };
 
 /**
@@ -84,7 +112,18 @@ struct btree {
  * @return A pointer to the newly created btree
  * @see btree_free()
  */
-btree_t* create_btree(size_t size);
+btree_t* btree_create(size_t size);
+
+/**
+ * @brief Frees the binary tree and the owned elements.
+ *
+ * Calls btree_clean and free the binary tree.
+ *
+ * _Complexity:_ \f$O(n)\f$
+ * @param tree pointer to the tree
+ */
+void btree_free(btree_t* tree);
+
 
 void btree_swap_node(node_btree_t*** a, node_btree_t*** b);
 
@@ -285,16 +324,6 @@ int btree_levelorder_traversal(btree_t* tree, void* tab);
  * @param tree pointer to the tree
  */
 void btree_clean(btree_t* tree);
-
-/**
- * @brief Frees the binary tree and the owned elements.
- *
- * Calls btree_clean and free the binary tree.
- *
- * _Complexity:_ \f$O(n)\f$
- * @param tree pointer to the tree
- */
-void btree_free(btree_t* tree);
 
 /** @} */  // end of btree
 

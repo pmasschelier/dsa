@@ -19,7 +19,7 @@ btree_path_t paths[PATHS_LEN] = {
 };
 
 int main(void) {
-	btree_t* btree = create_btree(sizeof(BT_TYPE));
+	btree_t* btree = btree_create(sizeof(BT_TYPE));
 	for (int i = 0; i < PATHS_LEN; i++)
 		btree_emplace_at(btree, paths[i], &i);
 	node_btree_t* node = btree->root;

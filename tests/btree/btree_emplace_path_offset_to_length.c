@@ -14,7 +14,7 @@ int main(void) {
 	for (int i = 0; i < TAB_LEN; i++)
 		values[i] = &numbers[i];
 
-	btree_t* btree = create_btree(sizeof(BT_TYPE));
+	btree_t* btree = btree_create(sizeof(BT_TYPE));
 
 	btree_emplace_path(btree, pathA, values, TAB_LEN, VAL_OFFSET);
 
