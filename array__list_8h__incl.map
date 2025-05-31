@@ -1,9 +1,11 @@
 <map id="/home/runner/work/dsa/dsa/include/array_list.h" name="/home/runner/work/dsa/dsa/include/array_list.h">
-<area shape="rect" id="Node000001" title="Dynamic arrays definition Defines functions to create, free and manipulate dynamic arrays." alt="" coords="9,5,186,45"/>
+<area shape="rect" id="Node000001" title="Dynamic arrays definition Defines functions to create, free and manipulate dynamic arrays." alt="" coords="51,5,229,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,93,80,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,47,61,84,56,80,82,44"/>
-<area shape="rect" id="Node000003" href="$structures_8h_source.html" title=" " alt="" coords="104,93,203,119"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="113,44,139,80,135,84,109,47"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="118,167,189,192"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="156,119,156,153,151,153,151,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,48,69,87,66,82,115,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="105,93,175,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="143,46,143,79,137,79,137,46"/>
+<area shape="rect" id="Node000004" href="$structures_8h_source.html" title=" " alt="" coords="200,93,299,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="168,43,224,83,221,87,165,48"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="214,167,285,192"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="252,119,252,153,247,153,247,119"/>
 </map>

@@ -110,6 +110,7 @@ $(document).ready(function(){initNavTree('array__list_8h.html',''); initResizabl
 <p>Dynamic arrays definition Defines functions to create, free and manipulate dynamic arrays.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &quot;structures.h&quot;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for array_list.h:</div>
@@ -118,13 +119,15 @@ $(document).ready(function(){initNavTree('array__list_8h.html',''); initResizabl
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="array__list_8h__incl.png" border="0" usemap="#a_2home_2runner_2work_2dsa_2dsa_2include_2array__list_8h" alt=""/></div>
 <map name="a_2home_2runner_2work_2dsa_2dsa_2include_2array__list_8h" id="a_2home_2runner_2work_2dsa_2dsa_2include_2array__list_8h">
-<area shape="rect" title="Dynamic arrays definition Defines functions to create, free and manipulate dynamic arrays." alt="" coords="9,5,186,45"/>
+<area shape="rect" title="Dynamic arrays definition Defines functions to create, free and manipulate dynamic arrays." alt="" coords="51,5,229,45"/>
 <area shape="rect" title=" " alt="" coords="5,93,80,119"/>
-<area shape="poly" title=" " alt="" coords="86,47,61,84,56,80,82,44"/>
-<area shape="rect" href="structures_8h_source.html" title=" " alt="" coords="104,93,203,119"/>
-<area shape="poly" title=" " alt="" coords="113,44,139,80,135,84,109,47"/>
-<area shape="rect" title=" " alt="" coords="118,167,189,192"/>
-<area shape="poly" title=" " alt="" coords="156,119,156,153,151,153,151,119"/>
+<area shape="poly" title=" " alt="" coords="118,48,69,87,66,82,115,43"/>
+<area shape="rect" title=" " alt="" coords="105,93,175,119"/>
+<area shape="poly" title=" " alt="" coords="143,46,143,79,137,79,137,46"/>
+<area shape="rect" href="structures_8h_source.html" title=" " alt="" coords="200,93,299,119"/>
+<area shape="poly" title=" " alt="" coords="168,43,224,83,221,87,165,48"/>
+<area shape="rect" title=" " alt="" coords="214,167,285,192"/>
+<area shape="poly" title=" " alt="" coords="252,119,252,153,247,153,247,119"/>
 </map>
 </div>
 </div>
@@ -138,6 +141,12 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:gaf61e099f6bb15cf3ce140a2e3be7829c" id="r_gaf61e099f6bb15cf3ce140a2e3be7829c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#gaf61e099f6bb15cf3ce140a2e3be7829c">array_list_foreach</a>(array,  value,  type)</td></tr>
+<tr class="memdesc:gaf61e099f6bb15cf3ce140a2e3be7829c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Foreach macro for <a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a>.  <br /></td></tr>
+<tr class="separator:gaf61e099f6bb15cf3ce140a2e3be7829c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf2575de1b618c0d3c04fcda6f49f9067" id="r_gaf2575de1b618c0d3c04fcda6f49f9067"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#gaf2575de1b618c0d3c04fcda6f49f9067">array_list_foreach_rev</a>(array,  value,  type)</td></tr>
+<tr class="memdesc:gaf2575de1b618c0d3c04fcda6f49f9067"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse Foreach macro for <a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a>.  <br /></td></tr>
+<tr class="separator:gaf2575de1b618c0d3c04fcda6f49f9067"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1bb7d81f9b428f2a865389f66997f305" id="r_ga1bb7d81f9b428f2a865389f66997f305"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga1bb7d81f9b428f2a865389f66997f305">ARRAY_LIST_INIT</a>(type)</td></tr>
 <tr class="memdesc:ga1bb7d81f9b428f2a865389f66997f305"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> Compound literal  <br /></td></tr>
 <tr class="separator:ga1bb7d81f9b428f2a865389f66997f305"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,9 +174,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga9d3775b0b680faaaa25ddbbe0e03b8d1" id="r_ga9d3775b0b680faaaa25ddbbe0e03b8d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga9d3775b0b680faaaa25ddbbe0e03b8d1">array_list_deinit</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array)</td></tr>
 <tr class="memdesc:ga9d3775b0b680faaaa25ddbbe0e03b8d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uninitialize the array.  <br /></td></tr>
 <tr class="separator:ga9d3775b0b680faaaa25ddbbe0e03b8d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga276b82fd91aa4a9a40372c90f1bee1a7" id="r_ga276b82fd91aa4a9a40372c90f1bee1a7"><td class="memItemLeft" align="right" valign="top">BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga276b82fd91aa4a9a40372c90f1bee1a7">array_list_empty</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array)</td></tr>
-<tr class="memdesc:ga276b82fd91aa4a9a40372c90f1bee1a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test if the array is empty.  <br /></td></tr>
-<tr class="separator:ga276b82fd91aa4a9a40372c90f1bee1a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1913f59957511b9438db30e00af713a" id="r_gad1913f59957511b9438db30e00af713a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#gad1913f59957511b9438db30e00af713a">array_list_append</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array, const void *tab, unsigned length)</td></tr>
+<tr class="memdesc:gad1913f59957511b9438db30e00af713a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append an array to <a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> to an array.  <br /></td></tr>
+<tr class="separator:gad1913f59957511b9438db30e00af713a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0bc44b7073f4ef0e29f7f6063026d9b" id="r_gaf0bc44b7073f4ef0e29f7f6063026d9b"><td class="memItemLeft" align="right" valign="top">BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#gaf0bc44b7073f4ef0e29f7f6063026d9b">array_list_empty</a> (const <a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array)</td></tr>
+<tr class="memdesc:gaf0bc44b7073f4ef0e29f7f6063026d9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test if the array is empty.  <br /></td></tr>
+<tr class="separator:gaf0bc44b7073f4ef0e29f7f6063026d9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf68fb21d3ecfa39701d09603eafb4fc0" id="r_gaf68fb21d3ecfa39701d09603eafb4fc0"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#gaf68fb21d3ecfa39701d09603eafb4fc0">array_list_push_front</a> (<a class="el" href="group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6">array_list_t</a> *array, const void *value)</td></tr>
 <tr class="memdesc:gaf68fb21d3ecfa39701d09603eafb4fc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy an element at the beginning of the array.  <br /></td></tr>
 <tr class="separator:gaf68fb21d3ecfa39701d09603eafb4fc0"><td class="memSeparator" colspan="2">&#160;</td></tr>

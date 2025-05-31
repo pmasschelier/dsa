@@ -1,5 +1,7 @@
 var linked__list_8h =
 [
+    [ "linked_list_foreach", "group__list__ref.html#ga017ba3039370f28622d24a09e34c27b4", null ],
+    [ "linked_list_foreach_rev", "group__list__ref.html#gacd590c474d9a8b464666f2fd34ee70df", null ],
     [ "LINKED_LIST_INIT", "group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb", null ],
     [ "linked_list_clean", "group__list__ref.html#gab21a4b8bd0779541ea553bba5420fe30", null ],
     [ "linked_list_create", "group__list__ref.html#ga6b38a7654d4e569d895a1eb231b75a73", null ],
@@ -8,7 +10,7 @@ var linked__list_8h =
     [ "linked_list_extract", "group__list__ref.html#ga639c4cad2df10f1ec31e07a8bc187979", null ],
     [ "linked_list_find_equals", "group__list__ref.html#ga74352f3d8b29642c5e4ac7c162765ca8", null ],
     [ "linked_list_free", "group__list__ref.html#ga824f90fe8d9e92a7cf47b63a36c890e8", null ],
-    [ "linked_list_from_tab", "group__list__ref.html#gac46cb6fcdd2c253a5b240c80cc4b46e5", null ],
+    [ "linked_list_from_tab", "group__list__ref.html#ga84e0add15e425ab93d224b58b1b18c40", null ],
     [ "linked_list_init", "group__list__ref.html#ga6cbbe05372cf31f4f43f47208e7a3cc4", null ],
     [ "linked_list_insert", "group__list__ref.html#ga2c9f6981bb4ea0da1be0d6d4e8a71719", null ],
     [ "linked_list_insert_node", "group__list__ref.html#ga719e222f120822bb68e7057c841996b5", null ],

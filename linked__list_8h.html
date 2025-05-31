@@ -164,20 +164,22 @@ Data Structures</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:a9446da52b4b868c2a9b60d2539e89b2f" id="r_a9446da52b4b868c2a9b60d2539e89b2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linked__list_8h.html#a9446da52b4b868c2a9b60d2539e89b2f">get_node_ref</a>(node,  type)&#160;&#160;&#160;((type*)&amp;(node)-&gt;data)</td></tr>
 <tr class="separator:a9446da52b4b868c2a9b60d2539e89b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a168b52b2c8762379d71dff8deaf87f0d" id="r_a168b52b2c8762379d71dff8deaf87f0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linked__list_8h.html#a168b52b2c8762379d71dff8deaf87f0d">linked_list_foreach_node</a>(list,  node)&#160;&#160;&#160;	for (<a class="el" href="structlinked__list__node.html">linked_list_node_t</a>* node = (list)-&gt;begin; node != NULL; node = node-&gt;next)</td></tr>
+<tr class="memitem:a168b52b2c8762379d71dff8deaf87f0d" id="r_a168b52b2c8762379d71dff8deaf87f0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linked__list_8h.html#a168b52b2c8762379d71dff8deaf87f0d">linked_list_foreach_node</a>(list,  node)&#160;&#160;&#160;	for (<a class="el" href="structlinked__list__node.html">linked_list_node_t</a>* node = (list).begin; node != NULL; node = node-&gt;next)</td></tr>
 <tr class="separator:a168b52b2c8762379d71dff8deaf87f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98848fcddf1c0ee07d45e1ab5bfcad3b" id="r_a98848fcddf1c0ee07d45e1ab5bfcad3b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linked__list_8h.html#a98848fcddf1c0ee07d45e1ab5bfcad3b">linked_list_foreach_value</a>(list,  value,  type)</td></tr>
 <tr class="separator:a98848fcddf1c0ee07d45e1ab5bfcad3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74d3e521427ce252d80c36eae3880b0d" id="r_a74d3e521427ce252d80c36eae3880b0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linked__list_8h.html#a74d3e521427ce252d80c36eae3880b0d">linked_list_foreach_node_rev</a>(list,  node)&#160;&#160;&#160;	for (<a class="el" href="structlinked__list__node.html">linked_list_node_t</a>* node = (list)-&gt;end; node != NULL; node = node-&gt;prev)</td></tr>
+<tr class="memitem:a74d3e521427ce252d80c36eae3880b0d" id="r_a74d3e521427ce252d80c36eae3880b0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linked__list_8h.html#a74d3e521427ce252d80c36eae3880b0d">linked_list_foreach_node_rev</a>(list,  node)&#160;&#160;&#160;	for (<a class="el" href="structlinked__list__node.html">linked_list_node_t</a>* node = (list).end; node != NULL; node = node-&gt;prev)</td></tr>
 <tr class="separator:a74d3e521427ce252d80c36eae3880b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56bbe7eea15509aa2afb809e36c5c87f" id="r_a56bbe7eea15509aa2afb809e36c5c87f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linked__list_8h.html#a56bbe7eea15509aa2afb809e36c5c87f">linked_list_foreach_value_rev</a>(list,  value,  type)</td></tr>
 <tr class="separator:a56bbe7eea15509aa2afb809e36c5c87f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a857fa4baf727f64fa21f32da2b6c0468" id="r_a857fa4baf727f64fa21f32da2b6c0468"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linked__list_8h.html#a857fa4baf727f64fa21f32da2b6c0468">GET_MACRO</a>(_1,  _2,  _3,  NAME, ...)&#160;&#160;&#160;NAME</td></tr>
 <tr class="separator:a857fa4baf727f64fa21f32da2b6c0468"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a017ba3039370f28622d24a09e34c27b4" id="r_a017ba3039370f28622d24a09e34c27b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linked__list_8h.html#a017ba3039370f28622d24a09e34c27b4">linked_list_foreach</a>(...)&#160;&#160;&#160;	GET_MACRO(__VA_ARGS__, linked_list_foreach_value, linked_list_foreach_node, )(__VA_ARGS__)</td></tr>
-<tr class="separator:a017ba3039370f28622d24a09e34c27b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd590c474d9a8b464666f2fd34ee70df" id="r_acd590c474d9a8b464666f2fd34ee70df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linked__list_8h.html#acd590c474d9a8b464666f2fd34ee70df">linked_list_foreach_rev</a>(...)</td></tr>
-<tr class="separator:acd590c474d9a8b464666f2fd34ee70df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga017ba3039370f28622d24a09e34c27b4" id="r_ga017ba3039370f28622d24a09e34c27b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list__ref.html#ga017ba3039370f28622d24a09e34c27b4">linked_list_foreach</a>(...)&#160;&#160;&#160;	GET_MACRO(__VA_ARGS__, linked_list_foreach_value, linked_list_foreach_node, )(__VA_ARGS__)</td></tr>
+<tr class="memdesc:ga017ba3039370f28622d24a09e34c27b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Foreach macro for <a class="el" href="structlinked__list.html">linked_list</a>.  <br /></td></tr>
+<tr class="separator:ga017ba3039370f28622d24a09e34c27b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd590c474d9a8b464666f2fd34ee70df" id="r_gacd590c474d9a8b464666f2fd34ee70df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list__ref.html#gacd590c474d9a8b464666f2fd34ee70df">linked_list_foreach_rev</a>(...)</td></tr>
+<tr class="memdesc:gacd590c474d9a8b464666f2fd34ee70df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse Foreach macro for <a class="el" href="structlinked__list.html">linked_list</a>.  <br /></td></tr>
+<tr class="separator:gacd590c474d9a8b464666f2fd34ee70df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafa087833ed52d6f2afc5c9ba43bc8fcb" id="r_gafa087833ed52d6f2afc5c9ba43bc8fcb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list__ref.html#gafa087833ed52d6f2afc5c9ba43bc8fcb">LINKED_LIST_INIT</a>(type)</td></tr>
 <tr class="memdesc:gafa087833ed52d6f2afc5c9ba43bc8fcb"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> Compound literal  <br /></td></tr>
 <tr class="separator:gafa087833ed52d6f2afc5c9ba43bc8fcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -206,9 +208,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5d50bf82e196e8f3b0d799b37a0d2974" id="r_ga5d50bf82e196e8f3b0d799b37a0d2974"><td class="memItemLeft" align="right" valign="top">BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list__ref.html#ga5d50bf82e196e8f3b0d799b37a0d2974">linked_list_empty</a> (const <a class="el" href="structlinked__list.html">linked_list_t</a> *list)</td></tr>
 <tr class="memdesc:ga5d50bf82e196e8f3b0d799b37a0d2974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test if the list is empty.  <br /></td></tr>
 <tr class="separator:ga5d50bf82e196e8f3b0d799b37a0d2974"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac46cb6fcdd2c253a5b240c80cc4b46e5" id="r_gac46cb6fcdd2c253a5b240c80cc4b46e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlinked__list.html">linked_list_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list__ref.html#gac46cb6fcdd2c253a5b240c80cc4b46e5">linked_list_from_tab</a> (void *tab, size_t size, unsigned length)</td></tr>
-<tr class="memdesc:gac46cb6fcdd2c253a5b240c80cc4b46e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a list from an array.  <br /></td></tr>
-<tr class="separator:gac46cb6fcdd2c253a5b240c80cc4b46e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84e0add15e425ab93d224b58b1b18c40" id="r_ga84e0add15e425ab93d224b58b1b18c40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlinked__list.html">linked_list_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list__ref.html#ga84e0add15e425ab93d224b58b1b18c40">linked_list_from_tab</a> (void *tab, size_t size_bytes, unsigned length)</td></tr>
+<tr class="memdesc:ga84e0add15e425ab93d224b58b1b18c40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="structlinked__list.html">linked_list</a> from an array.  <br /></td></tr>
+<tr class="separator:ga84e0add15e425ab93d224b58b1b18c40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae71616715311808d93a36324bb639234" id="r_gae71616715311808d93a36324bb639234"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__list__ref.html#gae71616715311808d93a36324bb639234">linked_list_to_tab</a> (<a class="el" href="structlinked__list.html">linked_list_t</a> *list, void *tab)</td></tr>
 <tr class="memdesc:gae71616715311808d93a36324bb639234"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill an array with the content of a list.  <br /></td></tr>
 <tr class="separator:gae71616715311808d93a36324bb639234"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -298,7 +300,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00038">38</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00040">40</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
 
 </div>
 </div>
@@ -332,26 +334,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a017ba3039370f28622d24a09e34c27b4" name="a017ba3039370f28622d24a09e34c27b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a017ba3039370f28622d24a09e34c27b4">&#9670;&#160;</a></span>linked_list_foreach</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define linked_list_foreach</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em></td><td>)</td>
-          <td>&#160;&#160;&#160;	GET_MACRO(__VA_ARGS__, linked_list_foreach_value, linked_list_foreach_node, )(__VA_ARGS__)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00039">39</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
-
-</div>
-</div>
 <a id="a168b52b2c8762379d71dff8deaf87f0d" name="a168b52b2c8762379d71dff8deaf87f0d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a168b52b2c8762379d71dff8deaf87f0d">&#9670;&#160;</a></span>linked_list_foreach_node</h2>
 
@@ -373,7 +355,7 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;	for (<a class="el" href="structlinked__list__node.html">linked_list_node_t</a>* node = (list)-&gt;begin; node != NULL; node = node-&gt;next)</td>
+          <td></td><td>&#160;&#160;&#160;	for (<a class="el" href="structlinked__list__node.html">linked_list_node_t</a>* node = (list).begin; node != NULL; node = node-&gt;next)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -403,34 +385,12 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;	for (<a class="el" href="structlinked__list__node.html">linked_list_node_t</a>* node = (list)-&gt;end; node != NULL; node = node-&gt;prev)</td>
+          <td></td><td>&#160;&#160;&#160;	for (<a class="el" href="structlinked__list__node.html">linked_list_node_t</a>* node = (list).end; node != NULL; node = node-&gt;prev)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00030">30</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
-
-</div>
-</div>
-<a id="acd590c474d9a8b464666f2fd34ee70df" name="acd590c474d9a8b464666f2fd34ee70df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd590c474d9a8b464666f2fd34ee70df">&#9670;&#160;</a></span>linked_list_foreach_rev</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define linked_list_foreach_rev</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    GET_MACRO(__VA_ARGS__, linked_list_foreach_value_rev, linked_list_foreach_node_rev) \</div>
-<div class="line">    (__VA_ARGS__)</div>
-</div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00041">41</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00031">31</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
 
 </div>
 </div>
@@ -465,12 +425,11 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    type* value = ((list)-&gt;begin != NULL) ? (type*)(list)-&gt;begin-&gt;data : NULL; \</div>
-<div class="line">    for (<a class="code hl_struct" href="structlinked__list__node.html">linked_list_node_t</a>* node = (list)-&gt;begin; node != NULL;        \</div>
-<div class="line">         node = node-&gt;<a class="code hl_variable" href="structlinked__list__node.html#ac1c9d07379df3943e1736e77c12ccbc8">next</a>, value = (node != NULL) ? (type*)node-&gt;<a class="code hl_variable" href="structlinked__list__node.html#a4a070a05c5af36d7a9e5b30b35458bb7">data</a> : NULL)</div>
-<div class="ttc" id="astructlinked__list__node_html"><div class="ttname"><a href="structlinked__list__node.html">linked_list_node</a></div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00080">linked_list.h:80</a></div></div>
-<div class="ttc" id="astructlinked__list__node_html_a4a070a05c5af36d7a9e5b30b35458bb7"><div class="ttname"><a href="structlinked__list__node.html#a4a070a05c5af36d7a9e5b30b35458bb7">linked_list_node::data</a></div><div class="ttdeci">uint8_t data[]</div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00083">linked_list.h:83</a></div></div>
-<div class="ttc" id="astructlinked__list__node_html_ac1c9d07379df3943e1736e77c12ccbc8"><div class="ttname"><a href="structlinked__list__node.html#ac1c9d07379df3943e1736e77c12ccbc8">linked_list_node::next</a></div><div class="ttdeci">linked_list_node_t * next</div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00082">linked_list.h:82</a></div></div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span>(<a class="code hl_struct" href="structlinked__list__node.html">linked_list_node_t</a>* node = (list).begin; node != NULL; node = NULL) \</div>
+<div class="line">    <span class="keywordflow">for</span>(type* value = (type*)node-&gt;data;                                    \</div>
+<div class="line">        node != NULL &amp;&amp; (value = (type*)node-&gt;data);                        \</div>
+<div class="line">        node = node-&gt;next)</div>
+<div class="ttc" id="astructlinked__list__node_html"><div class="ttname"><a href="structlinked__list__node.html">linked_list_node</a></div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00119">linked_list.h:119</a></div></div>
 </div><!-- fragment -->
 <p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00025">25</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
 
@@ -507,12 +466,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    type* value = ((list)-&gt;end != NULL) ? (type*)(list)-&gt;end-&gt;data : NULL; \</div>
-<div class="line">    for (<a class="code hl_struct" href="structlinked__list__node.html">linked_list_node_t</a>* node = (list)-&gt;end; node != NULL;      \</div>
-<div class="line">         node = node-&gt;<a class="code hl_variable" href="structlinked__list__node.html#a07a90d120784b595467722ab8e31cfe4">prev</a>, value = (node != NULL) ? (type*)node-&gt;<a class="code hl_variable" href="structlinked__list__node.html#a4a070a05c5af36d7a9e5b30b35458bb7">data</a> : NULL)</div>
-<div class="ttc" id="astructlinked__list__node_html_a07a90d120784b595467722ab8e31cfe4"><div class="ttname"><a href="structlinked__list__node.html#a07a90d120784b595467722ab8e31cfe4">linked_list_node::prev</a></div><div class="ttdeci">linked_list_node_t * prev</div><div class="ttdef"><b>Definition</b> <a href="linked__list_8h_source.html#l00081">linked_list.h:81</a></div></div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span>(<a class="code hl_struct" href="structlinked__list__node.html">linked_list_node_t</a>* node = (list).end; node != NULL; node = NULL)   \</div>
+<div class="line">    <span class="keywordflow">for</span>(type* value = (type*)node-&gt;data;                                    \</div>
+<div class="line">        node != NULL &amp;&amp; (value = (type*)node-&gt;data);                        \</div>
+<div class="line">        node = node-&gt;prev)</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00033">33</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="linked__list_8h_source.html#l00034">34</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
 
 </div>
 </div>
