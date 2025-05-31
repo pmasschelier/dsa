@@ -12,7 +12,6 @@ circular_buffer_t* create_circular_buffer(unsigned size_bytes,
 	when_null_ret(cbuffer, NULL);
 	cbuffer->data = malloc(size_bytes * capacity);
 	when_null_jmp(cbuffer->data, NULL, exit);
-
 	cbuffer->size_bytes = size_bytes;
 	cbuffer->capacity = capacity;
 	cbuffer->last = -1;

@@ -54,12 +54,12 @@ static inline fixed_xifo_view_t* create_fixed_xifo_view(size_t size,
 typedef circular_buffer_t fixed_xifo_view_t;
 
 #define create_fixed_xifo_view(size, capacity) \
-	create_circular_buffer(sizeof(void*), capacity)
+	circular_buffer_create(sizeof(void*), capacity)
 #define create_fixed_xifo_copy(size, capacity) \
-	create_circular_buffer(size, capacity)
+	circular_buffer_create(size, capacity)
 
 #define empty_fixed_xifo(stack) (circular_buffer_size(stack) == 0)
-#define free_fixed_xifo(stack) free_circular_buffer(stack)
+#define free_fixed_xifo(stack) circular_buffer_free(stack)
 
 #define fixed_xifo_view_back(stack, type) *get_buffer_last(stack, type*)
 #define fixed_xifo_copy_back(stack, type) *get_buffer_last(stack, type)

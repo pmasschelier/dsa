@@ -19,30 +19,42 @@
 
 #define get_node_ref(node, type) ((type*)&(node)->data)
 
-#define linked_list_foreach_node(list, node) \
-	for (linked_list_node_t* node = (list).begin; node != NULL; node = node->next)
+#define linked_list_foreach_node(list, node)                    \
+	for (linked_list_node_t* node = (list).begin; node != NULL; \
+		 node = node->next)
 
-#define linked_list_foreach_value(list, value, type)                        \
-    for(linked_list_node_t* node = (list).begin; node != NULL; node = NULL) \
-	for(type* value = (type*)node->data;                                    \
-        node != NULL && (value = (type*)node->data);                        \
-		node = node->next)
+#define linked_list_foreach_value(list, value, type)                         \
+	for (linked_list_node_t* node = (list).begin; node != NULL; node = NULL) \
+		for (type* value = (type*)node->data;                                \
+			 node != NULL && (value = (type*)node->data); node = node->next)
 
 #define linked_list_foreach_node_rev(list, node) \
 	for (linked_list_node_t* node = (list).end; node != NULL; node = node->prev)
 
-#define linked_list_foreach_value_rev(list, value, type)                    \
-    for(linked_list_node_t* node = (list).end; node != NULL; node = NULL)   \
-	for(type* value = (type*)node->data;                                    \
-        node != NULL && (value = (type*)node->data);                        \
-		node = node->prev)
+#define linked_list_foreach_value_rev(list, value, type)                   \
+	for (linked_list_node_t* node = (list).end; node != NULL; node = NULL) \
+		for (type* value = (type*)node->data;                              \
+			 node != NULL && (value = (type*)node->data); node = node->prev)
 
 #define GET_MACRO(_1, _2, _3, NAME, ...) NAME
 
 /**
  * @defgroup list_ref Doubly-linked lists
- * 
+ *
  * linked_list are doubly linked lists.
+ *
+ * @dot
+ * digraph after {
+ *      rankdir = "LR"
+ *      bgcolor = "transparent"
+ *      node [style=filled]
+ *      edge [color=grey50]
+ *      a, e [fillcolor=lightblue]
+ *      a -> b -> c -> d -> e
+ *      e -> d -> c -> b -> a [style=dashed,constraint=false]
+ * }
+ * @enddot
+ *
  * ```
  * linked_list_t list = LINKED_LIST_INIT(int);
  * int value;
@@ -61,7 +73,7 @@
 
 /**
  * @brief Foreach macro for linked_list
- * 
+ *
  * Iterates over an linked_list, by defining the value
  * pointer pointing to the current element.
  *
@@ -81,12 +93,13 @@
  * @param value Pointer to the element
  * @param type Type of the array elements
  */
-#define linked_list_foreach(...) \
-	GET_MACRO(__VA_ARGS__, linked_list_foreach_value, linked_list_foreach_node, )(__VA_ARGS__)
+#define linked_list_foreach(...)                      \
+	GET_MACRO(__VA_ARGS__, linked_list_foreach_value, \
+			  linked_list_foreach_node, )(__VA_ARGS__)
 
 /**
  * @brief Reverse Foreach macro for linked_list
- * 
+ *
  * Iterates over a linked_list in reverse order, by defining the value
  * pointer pointing to the curmultiplerent element.
  *
@@ -97,8 +110,9 @@
  * @param value Pointer to the element
  * @param type Type of the array elements
  */
-#define linked_list_foreach_rev(...)                                             \
-	GET_MACRO(__VA_ARGS__, linked_list_foreach_value_rev, linked_list_foreach_node_rev) \
+#define linked_list_foreach_rev(...)                      \
+	GET_MACRO(__VA_ARGS__, linked_list_foreach_value_rev, \
+			  linked_list_foreach_node_rev)               \
 	(__VA_ARGS__)
 
 /**
@@ -133,8 +147,9 @@ typedef struct linked_list linked_list_t;
  * @struct list_ref
  * @brief Doubly linked list
  *
- * A linked lists olds pointers to its first and last node and the size (in bytes) of an
- * element of the list
+ * A linked lists olds pointers to its first and last node and the size (in
+ * bytes) of an element of the list.
+ *
  * The prefered way to iterate over a linked_list is using linked_list_foreach():
  * ```
  * int i;
@@ -156,7 +171,7 @@ struct linked_list {
 
 /**
  * @brief array_list Compound literal
- * 
+ *
  * This is the most concise way to initialize a linked_list.
  *
  * ```
@@ -166,9 +181,9 @@ struct linked_list {
  * ```
  * @see linked_list_init
  */
-#define LINKED_LIST_INIT(type)                                                       \
-	(linked_list_t) {                                                                \
-		.size_bytes = sizeof(type), .begin = NULL, .end = NULL                       \
+#define LINKED_LIST_INIT(type)                                 \
+	(linked_list_t) {                                          \
+		.size_bytes = sizeof(type), .begin = NULL, .end = NULL \
 	}
 
 /**
@@ -181,7 +196,7 @@ struct linked_list {
  * linked_list_t* list = linked_list_create(sizeof(int));
  * if(list == NULL)
  *     goto error;
- * 
+ *
  * // Use the array here
  *
  * linked_list_free(list);
@@ -270,7 +285,8 @@ BOOL linked_list_empty(const linked_list_t* list);
  * linked_list_free(list);
  * ```
  * __The array content is copied__<br>
- * __Every list created with this function should be freed using linked_list_free__
+ * __Every list created with this function should be freed using
+ * linked_list_free__
  *
  * _Complexity: O(n)_
  * @param[in] tab pointer to the array to copy
@@ -279,7 +295,9 @@ BOOL linked_list_empty(const linked_list_t* list);
  * @return A pointer on the newly created list
  * @see linked_list_free()
  */
-linked_list_t* linked_list_from_tab(void* tab, size_t size_bytes, unsigned length);
+linked_list_t* linked_list_from_tab(void* tab,
+									size_t size_bytes,
+									unsigned length);
 
 /**
  * @brief Fill an array with the content of a list
@@ -337,8 +355,8 @@ void linked_list_insert_node(linked_list_t* list,
  * @return pointer to the newly created node
  */
 linked_list_node_t* linked_list_insert(linked_list_t* list,
-									linked_list_node_t* prev,
-									const void* p);
+									   linked_list_node_t* prev,
+									   const void* p);
 
 /**
  * @brief Append an element to the beginning of the list
@@ -375,7 +393,7 @@ linked_list_node_t* linked_list_push_back(linked_list_t* list, const void* x);
  * linked_list_t forest = LINKED_LIST_INIT(node_btree_ref_t*);
  * linked_list_node_t* ret = linked_list_push_back(&forest, &tree->root);
  * when_null_ret(ret, -ERROR_ALLOCATION_FAILED);
- * 
+ *
  * node_btree_ref_t* t;
  * while (linked_list_pop_front(&forest, &t)) {
  *     if (t->ls != NULL)
@@ -393,6 +411,7 @@ linked_list_node_t* linked_list_push_back(linked_list_t* list, const void* x);
  * @param[in] list pointer to the list
  * @param[out] x removed data (if NULL the data will be lost)
  * @return TRUE iif the list wasn't empty
+ * @see linked_list_pop_back
  */
 BOOL linked_list_pop_front(linked_list_t* list, void* x);
 
@@ -407,6 +426,7 @@ BOOL linked_list_pop_front(linked_list_t* list, void* x);
  * @param[in] list pointer to the list
  * @param[out] x pointer on a pointer the removed data (if NULL the data will be
  * freed)
+ * @see linked_list_pop_front
  */
 BOOL linked_list_pop_back(linked_list_t* list, void* x);
 
@@ -415,7 +435,7 @@ BOOL linked_list_pop_back(linked_list_t* list, void* x);
  *
  * This removes a node from the list without freeing anything.
  * It can be useful to transfer a node from one list to another for instance.
- * 
+ *
  * **Example:** Insertion sort
  * ```
  * linked_list_node_t* next;
@@ -439,7 +459,8 @@ BOOL linked_list_pop_back(linked_list_t* list, void* x);
  * _Complexity: O(1)_
  * @param[in] list pointer to the list
  * @param[out] node pointer to the extracted element
- * @see linked_list_insert_node()
+ * @see linked_list_insert_node
+ * @see linked_list_remove
  */
 void linked_list_extract(linked_list_t* list, linked_list_node_t* node);
 
@@ -453,7 +474,9 @@ void linked_list_extract(linked_list_t* list, linked_list_node_t* node);
  * @param[in] list pointer to the list
  * @param[in] node node to remove
  * @param[out] x removed data (if NULL the data will be lost)
- *
+ * @see linked_list_extract
+ * @see linked_list_pop_front
+ * @see linked_list_pop_back
  */
 void linked_list_remove(linked_list_t* list, linked_list_node_t* node, void* x);
 
@@ -465,11 +488,10 @@ void linked_list_remove(linked_list_t* list, linked_list_node_t* node, void* x);
  */
 void linked_list_clean(linked_list_t* list);
 
-
 /**
  * @brief Finds an element of the list
  *
- * Find the node whose data is equals to *value 
+ * Find the node whose data is equals to *value
  * according to the predicate equals.
  *
  * _Complexity: O(n)_
@@ -479,8 +501,8 @@ void linked_list_clean(linked_list_t* list);
  * @see equals_fn_t
  */
 linked_list_node_t* linked_list_find_equals(linked_list_t* list,
-										 void* value,
-										 equals_fn_t equals);
+											void* value,
+											equals_fn_t equals);
 
 /**
  * @brief Swaps two nodes of the list
@@ -490,7 +512,9 @@ linked_list_node_t* linked_list_find_equals(linked_list_t* list,
  * @param[in] a First node
  * @param[in] b Second node
  */
-void linked_list_swap(linked_list_t* list, linked_list_node_t** a, linked_list_node_t** b);
+void linked_list_swap(linked_list_t* list,
+					  linked_list_node_t** a,
+					  linked_list_node_t** b);
 
 /** @} */  // end of list_ref
 
