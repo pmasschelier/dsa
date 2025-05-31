@@ -14,14 +14,14 @@ int main(void)
     int next;
     for(int index = list.next[list.begin]; index >= 0; index = next) {
         next = list.next[index];
-        int value = *get_array_list_ref(list, index, int);
+        int value = *get_array_ref(list, index, int);
         int other;
-        for(other = list.prev[index]; other >= 0 && *get_array_list_ref(list, other, int) >= value; other = list.prev[other]);
+        for(other = list.prev[index]; other >= 0 && *get_array_ref(list, other, int) >= value; other = list.prev[other]);
         indexed_list_move_after(&list, index, other);
     }
     for(int index = list.begin; list.next[index] >= 0; index = list.next[index]) {
-        int a = *get_array_list_ref(list, index, int);
-        int b = *get_array_list_ref(list, list.next[index], int);
+        int a = *get_array_ref(list, index, int);
+        int b = *get_array_ref(list, list.next[index], int);
         cmp_ok(a, "<=", b);
     }
     indexed_list_clean(&list);

@@ -9,7 +9,7 @@ int main(void) {
 	int index;
 	for (int i = 0; i < TAB_LEN; i++) {
 		index = indexed_list_insert(list, -1, &i);
-		cmp_ok(*get_array_list_ref(*list, index, LIST_TYPE), "==", i, "Insert %d", i);
+		cmp_ok(*get_array_ref(*list, index, LIST_TYPE), "==", i, "Insert %d", i);
 
         int j = 0;
         indexed_list_foreach_rev(*list, value, LIST_TYPE) {

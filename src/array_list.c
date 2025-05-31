@@ -128,8 +128,8 @@ int array_list_swap(array_list_t* array, unsigned a, unsigned b) {
 	when_false_ret(b < array->size, -ERROR_INVALID_PARAM3);
 	if (a == b)
 		return -ERROR_NO_ERROR;
-	unsigned char* a_ref = get_array_list_ref(*array, a, unsigned char);
-	unsigned char* b_ref = get_array_list_ref(*array, b, unsigned char);
+	unsigned char* a_ref = get_array_ref(*array, a, unsigned char);
+	unsigned char* b_ref = get_array_ref(*array, b, unsigned char);
     
 	for (unsigned i = 0; i < array->size_bytes; i++) {
 		unsigned char byte = a_ref[i];

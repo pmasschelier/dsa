@@ -12,10 +12,10 @@ int main(void) {
 	for (unsigned i = 0; i < ARRAY_LEN; i++)
 		array_list_push_back(&array, &VALUES[i]);
     for (unsigned i = 0; i < ARRAY_LEN; i++) {
-        int min = *get_array_list_ref(array, i, int);
+        int min = *get_array_ref(array, i, int);
         unsigned j_min = i;
         for (unsigned j = i + 1; j < ARRAY_LEN; j++) {
-            int x = *get_array_list_ref(array, j, int);
+            int x = *get_array_ref(array, j, int);
             if(x < min) {
                 min = x;
                 j_min = j;
@@ -24,8 +24,8 @@ int main(void) {
         array_list_swap(&array, i, j_min);
     }
 	for (unsigned i = 1; i < ARRAY_LEN; i++) {
-        int a = *get_array_list_ref(array, i - 1, int);
-        int b = *get_array_list_ref(array, i, int);
+        int a = *get_array_ref(array, i - 1, int);
+        int b = *get_array_ref(array, i, int);
         cmp_ok(a, "<=", b, "array[%d] <= array[%d]", i-1, i);
     }
 	array_list_deinit(&array);

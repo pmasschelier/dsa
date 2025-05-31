@@ -55,8 +55,8 @@
  */
 #define array_list_foreach(array, value, type)                                      \
     for(size_t index = 0; index < (array).size; index = (array).size)               \
-    for(type* value = get_array_list_ref(array, index, type);                       \
-        index < (array).size && (value = get_array_list_ref(array, index, type));   \
+    for(type* value = get_array_ref(array, index, type);                            \
+        index < (array).size && (value = get_array_ref(array, index, type));        \
         index++)
 
 /**
@@ -73,8 +73,8 @@
  */
 #define array_list_foreach_rev(array, value, type)                                      \
     for(int index = (array).size - 1; index >= 0; index = -1)                           \
-    for(type* value = get_array_list_ref(array, index, type);                           \
-        index >= (int)(array).size && (value = get_array_list_ref(array, index, type)); \
+    for(type* value = get_array_ref(array, index, type);                                \
+        index >= (int)(array).size && (value = get_array_ref(array, index, type));      \
         index--)
 
 /**
@@ -92,12 +92,12 @@ typedef struct array_list array_list_t;
  * element of the array, the current capacity of the buffer, the actual
  * number of elements in the array
  * 
- * The prefered way to iterate over an array_list is using get_array_list_ref():
+ * The prefered way to iterate over an array_list is using get_array_ref():
  * ```
  * int* value;
  * int i;
  * for(int i = 0; i < array.size; i++) {
- *    value = get_array_list_ref(array, i, int);
+ *    value = get_array_ref(array, i, int);
  *    printf("%d\n", *value);
  *    // ...
  * }
@@ -149,7 +149,7 @@ extern size_t array_list_min_capacity;
  * @param type The array type
  * @return A pointer to the i-th element
  */
-#define get_array_list_ref(array, index, type) \
+#define get_array_ref(array, index, type) \
 	(type*)((array).data + (index) * (array).size_bytes)
 
 
@@ -350,10 +350,10 @@ BOOL array_list_pop_back(array_list_t* array, void* value);
  * **Example:** Selection sort
  * ```
  * for (unsigned i = 0; i < ARRAY_LEN; i++) {
- *     int min = *get_array_list_ref(array, i, int);
+ *     int min = *get_array_ref(array, i, int);
  *     unsigned j_min = i;
  *     for (unsigned j = i + 1; j < ARRAY_LEN; j++) {
- *         int x = *get_array_list_ref(array, j, int);
+ *         int x = *get_array_ref(array, j, int);
  *         if(x < min) {
  *             min = x;
  *             j_min = j;

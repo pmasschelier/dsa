@@ -14,28 +14,86 @@
 #define indexed_list_foreach_index(list, index) \
     for(int index = (list).begin; index != -1; index = (list).next[index])
 
-#define indexed_list_foreach_value(list, value, type)                        \
-    for(type* value = ((list).begin != -1) ? get_array_list_ref((list), (list).begin, type) : NULL, _loop = 1; _loop; _loop = 0)  \
-    for(int _idx = (list).begin; _idx != -1; _idx = (list).next[_idx], value = get_array_list_ref((list), _idx, type))
+#define indexed_list_foreach_value(list, value, type)                   \
+    for(int index = (list).begin; index != -1; index = -1)              \
+    for(type* value = get_array_ref((list), (list).begin, type);        \
+        index != -1 && (value = get_array_ref((list), index, type));    \
+        index = (list).next[index])
 
 #define indexed_list_foreach_index_rev(list, index) \
     for(int index = (list).end; index != -1; index = (list).prev[index])
 
-#define indexed_list_foreach_value_rev(list, value, type)                \
-    for(type* value = ((list).end != -1) ? get_array_list_ref((list), (list).end, type) : NULL, _loop = 1; _loop; _loop = 0)  \
-    for(int _idx = (list).end; _idx != -1; _idx = (list).prev[_idx], value = get_array_list_ref((list), _idx, type))
+#define indexed_list_foreach_value_rev(list, value, type)               \
+    for(int index = (list).end; index != -1; index = -1)                \
+    for(type* value = get_array_ref((list), (list).end, type);          \
+        index != -1 && (value = get_array_ref((list), index, type));    \
+        index = (list).prev[index])
 
 #define GET_MACRO(_1, _2, _3, NAME, ...) NAME
-#define indexed_list_foreach(...) \
-	GET_MACRO(__VA_ARGS__, indexed_list_foreach_value, indexed_list_foreach_index, )(__VA_ARGS__)
-#define indexed_list_foreach_rev(...)                                             \
-	GET_MACRO(__VA_ARGS__, indexed_list_foreach_value_rev, indexed_list_foreach_index_rev, ) \
-	(__VA_ARGS__)
 
 /**
  * @defgroup indexed_list Indexed lists
+ * 
+ * indexed_list are doubly-linked list with array_like memory layout.
+ * ```
+ * indexed_list_t array = INDEXED_LIST_INIT(int);
+ * int value;
+ * while(sizeof(int) == read(fd, &value, sizeof(int))) {
+ *    if(NULL == indexed_list_insert(&array, array->end, &value))
+ *       goto allocation_failed;
+ * }
+ * // Do something with the data...
+ *
+ * indexed_list_deinit(&array);
+ * ```
+ * @note the value given to indexed_list_insert() will be copied.<br>
+ * You can use an indexed_list of pointers if the cost of copy is too high.
  * @{
  */
+
+/**
+ * @brief Foreach macro for indexed_list
+ * 
+ * Iterates over an indexed_list, by defining the value
+ * pointer pointing to the current element.
+ *
+ * An implicit index variable is defined.
+ *
+ * **Example:** printing an array_list of int
+ * ```
+ * void print_array_int(const indexed_list list) {
+ *     indexed_list_foreach(list, value, int) {
+ *         printf("list[%d] = %d\n", index, *value);
+ *     }
+ * }
+ * ```
+ * @warning The index value is not the position of the element in the list
+ * but the element offset in the backend array
+ *
+ * @param list List to iterate over
+ * @param index index in the backend array
+ * @param value Pointer to the element
+ * @param type Type of the list elements
+ */
+#define indexed_list_foreach(...) \
+	GET_MACRO(__VA_ARGS__, indexed_list_foreach_value, indexed_list_foreach_index, )(__VA_ARGS__)
+
+/**
+ * @brief Reverse Foreach macro for indexed_list
+ * 
+ * Iterates over an indexed_list in reverse order, by defining the value
+ * pointer pointing to the current element.
+ *
+ * An implicit index variable is defined.
+ *
+ * @param list List to iterate over
+ * @param index index in the backend array
+ * @param value Pointer to the element
+ * @param type Type of the list elements
+ */
+#define indexed_list_foreach_rev(...)                                             \
+	GET_MACRO(__VA_ARGS__, indexed_list_foreach_value_rev, indexed_list_foreach_index_rev, ) \
+	(__VA_ARGS__)
 
 /**
  * @brief Helper macro for random access
@@ -47,7 +105,7 @@
  * @param type The array type
  * @return A pointer to the i-th element
  */
-#define get_array_list_ref(array, index, type) \
+#define get_array_ref(array, index, type) \
 	(type*)((array).data + (index) * (array).size_bytes)
 
 /**

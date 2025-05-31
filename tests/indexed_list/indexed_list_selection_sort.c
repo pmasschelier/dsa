@@ -12,10 +12,10 @@ int main(void)
     for (unsigned i = 0; i < ARRAY_LEN; i++)
         indexed_list_insert(&list, list.end, &VALUES[i]);
     indexed_list_foreach(list, index) {
-        int min = *get_array_list_ref(list, index, int);
+        int min = *get_array_ref(list, index, int);
         int index_min = index;
         for(int other = list.next[index]; other >= 0; other = list.next[other]) {
-            int x = *get_array_list_ref(list, other, int);
+            int x = *get_array_ref(list, other, int);
             if(x < min) {
                 min = x;
                 index_min = other;
@@ -25,8 +25,8 @@ int main(void)
         index = index_min;
     }
     for(int index = list.begin; list.next[index] >= 0; index = list.next[index]) {
-        int a = *get_array_list_ref(list, index, int);
-        int b = *get_array_list_ref(list, list.next[index], int);
+        int a = *get_array_ref(list, index, int);
+        int b = *get_array_ref(list, list.next[index], int);
         cmp_ok(a, "<=", b);
     }
     indexed_list_clean(&list);
