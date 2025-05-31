@@ -1,6 +1,8 @@
 var indexed__list_8h =
 [
-    [ "get_array_list_ref", "group__indexed__list.html#ga913474905ae8993f3e962b350fa5fca2", null ],
+    [ "get_array_ref", "group__indexed__list.html#ga29da03fa843cb6a87a91949629912123", null ],
+    [ "indexed_list_foreach", "group__indexed__list.html#ga5c38b54747a0346e77828ab69c715781", null ],
+    [ "indexed_list_foreach_rev", "group__indexed__list.html#gac65e6bf858d41bdc9ca9832a3c0f9a5d", null ],
     [ "INDEXED_LIST_INIT", "group__indexed__list.html#ga42b69861d0f72e4b57bf0eb410ea4b50", null ],
     [ "indexed_list_t", "group__indexed__list.html#ga9684657b3d0911e2493f1b5256df4f53", null ],
     [ "indexed_list_clean", "group__indexed__list.html#gaf94ac7cced89c1ee4555bc96f537b581", null ],

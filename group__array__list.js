@@ -10,7 +10,7 @@ var group__array__list =
     [ "array_list_foreach", "group__array__list.html#gaf61e099f6bb15cf3ce140a2e3be7829c", null ],
     [ "array_list_foreach_rev", "group__array__list.html#gaf2575de1b618c0d3c04fcda6f49f9067", null ],
     [ "ARRAY_LIST_INIT", "group__array__list.html#ga1bb7d81f9b428f2a865389f66997f305", null ],
-    [ "get_array_list_ref", "group__array__list.html#ga913474905ae8993f3e962b350fa5fca2", null ],
+    [ "get_array_ref", "group__array__list.html#ga29da03fa843cb6a87a91949629912123", null ],
     [ "array_list_t", "group__array__list.html#ga1c0ba09bd0322f6c1ce569f02027f5a6", null ],
     [ "array_list_append", "group__array__list.html#gad1913f59957511b9438db30e00af713a", null ],
     [ "array_list_create", "group__array__list.html#ga9445341cff5f6cb10e643f02d483ab2f", null ],

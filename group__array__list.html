@@ -131,9 +131,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga1bb7d81f9b428f2a865389f66997f305" id="r_ga1bb7d81f9b428f2a865389f66997f305"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga1bb7d81f9b428f2a865389f66997f305">ARRAY_LIST_INIT</a>(type)</td></tr>
 <tr class="memdesc:ga1bb7d81f9b428f2a865389f66997f305"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a> Compound literal  <br /></td></tr>
 <tr class="separator:ga1bb7d81f9b428f2a865389f66997f305"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga913474905ae8993f3e962b350fa5fca2" id="r_ga913474905ae8993f3e962b350fa5fca2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga913474905ae8993f3e962b350fa5fca2">get_array_list_ref</a>(array,  index,  type)&#160;&#160;&#160;	(type*)((array).data + (index) * (array).size_bytes)</td></tr>
-<tr class="memdesc:ga913474905ae8993f3e962b350fa5fca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper macro for random access.  <br /></td></tr>
-<tr class="separator:ga913474905ae8993f3e962b350fa5fca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29da03fa843cb6a87a91949629912123" id="r_ga29da03fa843cb6a87a91949629912123"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__array__list.html#ga29da03fa843cb6a87a91949629912123">get_array_ref</a>(array,  index,  type)&#160;&#160;&#160;	(type*)((array).data + (index) * (array).size_bytes)</td></tr>
+<tr class="memdesc:ga29da03fa843cb6a87a91949629912123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper macro for random access.  <br /></td></tr>
+<tr class="separator:ga29da03fa843cb6a87a91949629912123"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -235,10 +235,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> index = 0; index &lt; (array).size; index = (array).size)               \</div>
-<div class="line">    for(type* value = <a class="code hl_define" href="group__array__list.html#ga913474905ae8993f3e962b350fa5fca2">get_array_list_ref</a>(array, index, type);                       \</div>
-<div class="line">        index &lt; (array).size &amp;&amp; (value = <a class="code hl_define" href="group__array__list.html#ga913474905ae8993f3e962b350fa5fca2">get_array_list_ref</a>(array, index, type));   \</div>
+<div class="line">    for(type* value = <a class="code hl_define" href="group__array__list.html#ga29da03fa843cb6a87a91949629912123">get_array_ref</a>(array, index, type);                            \</div>
+<div class="line">        index &lt; (array).size &amp;&amp; (value = <a class="code hl_define" href="group__array__list.html#ga29da03fa843cb6a87a91949629912123">get_array_ref</a>(array, index, type));        \</div>
 <div class="line">        index++)</div>
-<div class="ttc" id="agroup__array__list_html_ga913474905ae8993f3e962b350fa5fca2"><div class="ttname"><a href="group__array__list.html#ga913474905ae8993f3e962b350fa5fca2">get_array_list_ref</a></div><div class="ttdeci">#define get_array_list_ref(array, index, type)</div><div class="ttdoc">Helper macro for random access.</div><div class="ttdef"><b>Definition</b> <a href="array__list_8h_source.html#l00152">array_list.h:152</a></div></div>
+<div class="ttc" id="agroup__array__list_html_ga29da03fa843cb6a87a91949629912123"><div class="ttname"><a href="group__array__list.html#ga29da03fa843cb6a87a91949629912123">get_array_ref</a></div><div class="ttdeci">#define get_array_ref(array, index, type)</div><div class="ttdoc">Helper macro for random access.</div><div class="ttdef"><b>Definition</b> <a href="array__list_8h_source.html#l00152">array_list.h:152</a></div></div>
 </div><!-- fragment -->
 <p>Foreach macro for <a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a>. </p>
 <p>Iterates over an <a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a>, by defining the value pointer pointing to the current element.</p>
@@ -294,8 +294,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> index = (array).size - 1; index &gt;= 0; index = -1)                           \</div>
-<div class="line">    <span class="keywordflow">for</span>(type* value = <a class="code hl_define" href="group__array__list.html#ga913474905ae8993f3e962b350fa5fca2">get_array_list_ref</a>(array, index, type);                           \</div>
-<div class="line">        index &gt;= (int)(array).size &amp;&amp; (value = <a class="code hl_define" href="group__array__list.html#ga913474905ae8993f3e962b350fa5fca2">get_array_list_ref</a>(array, index, type)); \</div>
+<div class="line">    <span class="keywordflow">for</span>(type* value = <a class="code hl_define" href="group__array__list.html#ga29da03fa843cb6a87a91949629912123">get_array_ref</a>(array, index, type);                                \</div>
+<div class="line">        index &gt;= (int)(array).size &amp;&amp; (value = <a class="code hl_define" href="group__array__list.html#ga29da03fa843cb6a87a91949629912123">get_array_ref</a>(array, index, type));      \</div>
 <div class="line">        index--)</div>
 </div><!-- fragment -->
 <p>Reverse Foreach macro for <a class="el" href="structarray__list.html" title="A dynamic array.">array_list</a>. </p>
@@ -345,14 +345,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ga913474905ae8993f3e962b350fa5fca2" name="ga913474905ae8993f3e962b350fa5fca2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga913474905ae8993f3e962b350fa5fca2">&#9670;&#160;</a></span>get_array_list_ref</h2>
+<a id="ga29da03fa843cb6a87a91949629912123" name="ga29da03fa843cb6a87a91949629912123"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga29da03fa843cb6a87a91949629912123">&#9670;&#160;</a></span>get_array_ref</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define get_array_list_ref</td>
+          <td class="memname">#define get_array_ref</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">array, </td>
@@ -852,10 +852,10 @@ Variables</h2></td></tr>
 
 <p>Swap two elements of the array. </p>
 <p><b>Example:</b> Selection sort </p><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> i = 0; i &lt; ARRAY_LEN; i++) {</div>
-<div class="line">    <span class="keywordtype">int</span> min = *<a class="code hl_define" href="group__array__list.html#ga913474905ae8993f3e962b350fa5fca2">get_array_list_ref</a>(array, i, <span class="keywordtype">int</span>);</div>
+<div class="line">    <span class="keywordtype">int</span> min = *<a class="code hl_define" href="group__array__list.html#ga29da03fa843cb6a87a91949629912123">get_array_ref</a>(array, i, <span class="keywordtype">int</span>);</div>
 <div class="line">    <span class="keywordtype">unsigned</span> j_min = i;</div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> j = i + 1; j &lt; ARRAY_LEN; j++) {</div>
-<div class="line">        <span class="keywordtype">int</span> x = *<a class="code hl_define" href="group__array__list.html#ga913474905ae8993f3e962b350fa5fca2">get_array_list_ref</a>(array, j, <span class="keywordtype">int</span>);</div>
+<div class="line">        <span class="keywordtype">int</span> x = *<a class="code hl_define" href="group__array__list.html#ga29da03fa843cb6a87a91949629912123">get_array_ref</a>(array, j, <span class="keywordtype">int</span>);</div>
 <div class="line">        <span class="keywordflow">if</span>(x &lt; min) {</div>
 <div class="line">            min = x;</div>
 <div class="line">            j_min = j;</div>

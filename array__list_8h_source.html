@@ -115,16 +115,16 @@ $(document).ready(function(){initNavTree('array__list_8h_source.html',''); initR
 <div class="foldopen" id="foldopen00056" data-start="" data-end="">
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="group__array__list.html#gaf61e099f6bb15cf3ce140a2e3be7829c">   56</a></span><span class="preprocessor">#define array_list_foreach(array, value, type)                                      \</span></div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">    for(size_t index = 0; index &lt; (array).size; index = (array).size)               \</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">    for(type* value = get_array_list_ref(array, index, type);                       \</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">        index &lt; (array).size &amp;&amp; (value = get_array_list_ref(array, index, type));   \</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">    for(type* value = get_array_ref(array, index, type);                            \</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">        index &lt; (array).size &amp;&amp; (value = get_array_ref(array, index, type));        \</span></div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">        index++)</span></div>
 </div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
 <div class="foldopen" id="foldopen00074" data-start="" data-end="">
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="group__array__list.html#gaf2575de1b618c0d3c04fcda6f49f9067">   74</a></span><span class="preprocessor">#define array_list_foreach_rev(array, value, type)                                      \</span></div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">    for(int index = (array).size - 1; index &gt;= 0; index = -1)                           \</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">    for(type* value = get_array_list_ref(array, index, type);                           \</span></div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="preprocessor">        index &gt;= (int)(array).size &amp;&amp; (value = get_array_list_ref(array, index, type)); \</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">    for(type* value = get_array_ref(array, index, type);                                \</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="preprocessor">        index &gt;= (int)(array).size &amp;&amp; (value = get_array_ref(array, index, type));      \</span></div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">        index--)</span></div>
 </div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
@@ -149,7 +149,7 @@ $(document).ready(function(){initNavTree('array__list_8h_source.html',''); initR
 </div>
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
 <div class="foldopen" id="foldopen00152" data-start="" data-end="">
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="group__array__list.html#ga913474905ae8993f3e962b350fa5fca2">  152</a></span><span class="preprocessor">#define get_array_list_ref(array, index, type) \</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="group__array__list.html#ga29da03fa843cb6a87a91949629912123">  152</a></span><span class="preprocessor">#define get_array_ref(array, index, type) \</span></div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="preprocessor">    (type*)((array).data + (index) * (array).size_bytes)</span></div>
 </div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
