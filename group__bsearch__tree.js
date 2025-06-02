@@ -3,7 +3,7 @@ var group__bsearch__tree =
     [ "bsearch_tree", "structbsearch__tree.html", [
       [ "compare", "group__bsearch__tree.html#ga08f84ef83d826c6eb723c690e82a4815", null ],
       [ "root", "group__bsearch__tree.html#ga8eca13554e5132346336ea4989a0b0dc", null ],
-      [ "size", "group__bsearch__tree.html#ga6ec415fcdf279fa6efd2ffa890634d47", null ]
+      [ "size_bytes", "group__bsearch__tree.html#gaf221d7e6d1b7e07e17057286bf8ec971", null ]
     ] ],
     [ "bsearch_tree_t", "group__bsearch__tree.html#ga06de401350061646687a0deddd24e88c", null ],
     [ "bsearch_tree_find", "group__bsearch__tree.html#ga85f2e08f044075b7f4030762ca03e698", null ],
@@ -17,5 +17,5 @@ var group__bsearch__tree =
     [ "create_bsearch_tree", "group__bsearch__tree.html#ga0d7d2fa565583b77c7d0c8f25b2f08c0", null ],
     [ "bsearch_tree::compare", "group__bsearch__tree.html#ga08f84ef83d826c6eb723c690e82a4815", null ],
     [ "bsearch_tree::root", "group__bsearch__tree.html#ga8eca13554e5132346336ea4989a0b0dc", null ],
-    [ "bsearch_tree::size", "group__bsearch__tree.html#ga6ec415fcdf279fa6efd2ffa890634d47", null ]
+    [ "bsearch_tree::size_bytes", "group__bsearch__tree.html#gaf221d7e6d1b7e07e17057286bf8ec971", null ]
 ];
