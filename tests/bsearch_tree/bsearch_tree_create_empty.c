@@ -9,7 +9,7 @@ int main(void) {
 	assert(tree != NULL);
 	assert(tree->root == NULL);
 	assert(tree->compare == compare_int);
-	assert(tree->size == sizeof(int));
+	assert(tree->size_bytes == sizeof(int));
 	free_bsearch_tree(tree);
 	return 0;
 }

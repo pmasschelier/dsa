@@ -21,7 +21,7 @@ bsearch_tree_t* create_bsearch_tree(size_t size_bytes,
 	bsearch_tree_t* ret = malloc(sizeof(bsearch_tree_t));
 	when_null_ret(ret, NULL);
 	ret->compare = compare;
-	ret->size = size_bytes;
+	ret->size_bytes = size_bytes;
 	ret->root = NULL;
 	return ret;
 }
@@ -66,7 +66,7 @@ int bsearch_tree_insert_impl(bsearch_tree_t* tree,
 			return -ERROR_KEY_ALREADY_EXISTS;
 		}
 	}
-	*node = create_btree_leaf(value, parent, priv_init, tree->size);
+	*node = create_btree_leaf(value, parent, priv_init, tree->size_bytes);
 	when_null_ret(*node, -ERROR_ALLOCATION_FAILED);
     if(found != NULL)
         *found = *node;
@@ -83,9 +83,9 @@ int bsearch_tree_insert(bsearch_tree_t* tree,
 int bsearch_tree_insert_clone(bsearch_tree_t* tree,
 							  const void* value,
 							  node_btree_t** found) {
-	void* copy = malloc(tree->size);
+	void* copy = malloc(tree->size_bytes);
 	when_null_ret(copy, -ERROR_ALLOCATION_FAILED);
-	memcpy(copy, value, tree->size);
+	memcpy(copy, value, tree->size_bytes);
 	int ret = bsearch_tree_insert(tree, copy, found);
 	if (ret != -ERROR_NO_ERROR)
 		free(copy);

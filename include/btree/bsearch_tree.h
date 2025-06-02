@@ -61,7 +61,7 @@ struct bsearch_tree {
 	 * \note This field is not used by any function and is mainly here for
 	 * information.
 	 */
-	size_t size;
+	size_t size_bytes;
 	/**
 	 * @brief Function used to compare to elements in the tree
 	 *

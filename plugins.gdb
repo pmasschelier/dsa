@@ -1,2 +1,1 @@
-source plugins/dotbtree.py
-source plugins/dotgraph.py
+source plugins/dot-struct.py
