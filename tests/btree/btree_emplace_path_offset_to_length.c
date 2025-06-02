@@ -18,7 +18,7 @@ int main(void) {
 
 	btree_emplace_path(btree, pathA, values, TAB_LEN, VAL_OFFSET);
 
-	node_btree_t* node = btree->root;
+	btree_node_t* node = btree->root;
 	for (int i = 0; i < VAL_OFFSET; i++) {
 		/* assert(node->data == NULL); */
 		node = *btree_next_node(node, &pathA);

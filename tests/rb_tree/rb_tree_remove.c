@@ -19,7 +19,7 @@ int main(void) {
 		ret = rb_tree_insert(tree, &tab[i], NULL);
 		assert(ret == -ERROR_NO_ERROR);
 	}
-	node_btree_t* found;
+	btree_node_t* found;
 
 	for (int i = 0; i < TAB_LEN; i++) {
 		ret = rb_tree_remove(tree, &tab[i]);

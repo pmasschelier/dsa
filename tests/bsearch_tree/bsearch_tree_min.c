@@ -17,7 +17,7 @@ int main(void) {
 	for (int i = 0; i < TAB_LEN; i++) {
 		bsearch_tree_insert(tree, &tab[i], NULL);
 	}
-	node_btree_t* found;
+	btree_node_t* found;
 	found = bsearch_tree_min(tree);
 	assert(*get_node_ref(found, int) == 0);
 	free_bsearch_tree(tree);

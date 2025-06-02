@@ -10,9 +10,9 @@
 
 // TODO: Make bsearch tree order-statistic trees
 
-node_btree_t* create_btree_leaf(
+btree_node_t* create_btree_leaf(
 	void* value,
-	node_btree_t* parent,
+	btree_node_t* parent,
     uintptr_t priv_init,
     size_t size_bytes);
 
@@ -26,9 +26,9 @@ bsearch_tree_t* create_bsearch_tree(size_t size_bytes,
 	return ret;
 }
 
-node_btree_t** node_bsearch_tree_get_location(
+btree_node_t** node_bsearch_tree_get_location(
 	bsearch_tree_t* tree,
-	node_btree_t* node) {
+	btree_node_t* node) {
 	when_null_ret(tree, NULL);
 	when_null_ret(node, NULL);
 	if (node->parent == NULL)
@@ -38,17 +38,17 @@ node_btree_t** node_bsearch_tree_get_location(
 	return &node->parent->rs;
 }
 
-BOOL bsearch_tree_is_left_son(node_btree_t* node) {
+BOOL bsearch_tree_is_left_son(btree_node_t* node) {
 	return node->parent->ls == node;
 }
 
 int bsearch_tree_insert_impl(bsearch_tree_t* tree,
 							 void* value,
-							 node_btree_t** found,
+							 btree_node_t** found,
 							 btree_path_t* path,
                              uintptr_t priv_init) {
-	node_btree_t* parent = NULL;
-	node_btree_t** node = &tree->root;
+	btree_node_t* parent = NULL;
+	btree_node_t** node = &tree->root;
     *path = ROOT_PATH;
 
 	while(*node != NULL) {
@@ -75,14 +75,14 @@ int bsearch_tree_insert_impl(bsearch_tree_t* tree,
 
 int bsearch_tree_insert(bsearch_tree_t* tree,
 						void* value,
-						node_btree_t** found) {
+						btree_node_t** found) {
 	btree_path_t path;
 	return bsearch_tree_insert_impl(tree, value, found, &path, 0);
 }
 
 int bsearch_tree_insert_clone(bsearch_tree_t* tree,
 							  const void* value,
-							  node_btree_t** found) {
+							  btree_node_t** found) {
 	void* copy = malloc(tree->size_bytes);
 	when_null_ret(copy, -ERROR_ALLOCATION_FAILED);
 	memcpy(copy, value, tree->size_bytes);
@@ -92,9 +92,9 @@ int bsearch_tree_insert_clone(bsearch_tree_t* tree,
 	return ret;
 }
 
-node_btree_t* bsearch_tree_find(bsearch_tree_t* tree,
+btree_node_t* bsearch_tree_find(bsearch_tree_t* tree,
 										   void* value) {
-	node_btree_t* node = tree->root;
+	btree_node_t* node = tree->root;
 	while (node != NULL) {
 		int cmp = tree->compare(value, node->data);
 		if (cmp == -1)
@@ -107,12 +107,12 @@ node_btree_t* bsearch_tree_find(bsearch_tree_t* tree,
 	return NULL;
 }
 
-node_btree_t** bsearch_tree_successor_location(
+btree_node_t** bsearch_tree_successor_location(
 	bsearch_tree_t* tree,
-	node_btree_t* node,
+	btree_node_t* node,
 	btree_path_t* path) {
 	if (node->rs != NULL) {
-		node_btree_t** ret = &node->rs;
+		btree_node_t** ret = &node->rs;
 		if (path != NULL)
 			path_rhs(path);
 		while ((*ret)->ls != NULL) {
@@ -147,17 +147,17 @@ typedef enum node_situation {
  * @param node A pointer to the node
  * @return Its encoded situation
  */
-static node_situation_t compute_situation(node_btree_t* node) {
+static node_situation_t compute_situation(btree_node_t* node) {
 	return ((node->ls == NULL) << 1) | (node->rs == NULL);
 }
 
-static node_btree_t* resolve_remove(
+static btree_node_t* resolve_remove(
 	bsearch_tree_t* tree,
-	node_btree_t** node_ptr,
+	btree_node_t** node_ptr,
 	btree_path_t* path)
 {
-	node_btree_t* node = *node_ptr;
-	node_btree_t** freed = NULL;
+	btree_node_t* node = *node_ptr;
+	btree_node_t** freed = NULL;
 	int situation = compute_situation(node);
 	switch (situation) {
 	case LEFT_CHILD:
@@ -183,10 +183,10 @@ static node_btree_t* resolve_remove(
 	return node;
 }
 
-node_btree_t* bsearch_tree_remove_impl(bsearch_tree_t* tree,
+btree_node_t* bsearch_tree_remove_impl(bsearch_tree_t* tree,
 												  void* value,
 												  btree_path_t* path) {
-	node_btree_t** node_ptr = &tree->root;
+	btree_node_t** node_ptr = &tree->root;
 	*path = ROOT_PATH;
 	while (*node_ptr != NULL) {
 		int cmp = tree->compare(value, (*node_ptr)->data);
@@ -206,7 +206,7 @@ node_btree_t* bsearch_tree_remove_impl(bsearch_tree_t* tree,
 
 BOOL bsearch_tree_remove(bsearch_tree_t* tree, void* value) {
 	btree_path_t path;
-	node_btree_t* node =
+	btree_node_t* node =
 		bsearch_tree_remove_impl(tree, value, &path);
 	if (node == NULL)
 		return FALSE;
@@ -214,8 +214,8 @@ BOOL bsearch_tree_remove(bsearch_tree_t* tree, void* value) {
 	return TRUE;
 }
 
-node_btree_t* bsearch_tree_min(bsearch_tree_t* tree) {
-	node_btree_t* node = tree->root;
+btree_node_t* bsearch_tree_min(bsearch_tree_t* tree) {
+	btree_node_t* node = tree->root;
 	if (node == NULL)
 		return NULL;
 	while (node->ls != NULL)
@@ -223,8 +223,8 @@ node_btree_t* bsearch_tree_min(bsearch_tree_t* tree) {
 	return node;
 }
 
-node_btree_t* bsearch_tree_max(bsearch_tree_t* tree) {
-	node_btree_t* node = tree->root;
+btree_node_t* bsearch_tree_max(bsearch_tree_t* tree) {
+	btree_node_t* node = tree->root;
 	if (node == NULL)
 		return NULL;
 	while (node->rs != NULL)
@@ -232,9 +232,9 @@ node_btree_t* bsearch_tree_max(bsearch_tree_t* tree) {
 	return node;
 }
 
-void bsearch_tree_rotate_left(node_btree_t** node) {
-	node_btree_t* root = *node;
-	node_btree_t* right_son = (*node)->rs;
+void bsearch_tree_rotate_left(btree_node_t** node) {
+	btree_node_t* root = *node;
+	btree_node_t* right_son = (*node)->rs;
 
 	*node = right_son;
 	right_son->parent = root->parent;
@@ -247,9 +247,9 @@ void bsearch_tree_rotate_left(node_btree_t** node) {
 	root->parent = right_son;
 }
 
-void bsearch_tree_rotate_right(node_btree_t** node) {
-	node_btree_t* root = *node;
-	node_btree_t* left_son = (*node)->ls;
+void bsearch_tree_rotate_right(btree_node_t** node) {
+	btree_node_t* root = *node;
+	btree_node_t* left_son = (*node)->ls;
 
 	*node = left_son;
 	left_son->parent = root->parent;

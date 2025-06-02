@@ -17,7 +17,7 @@ int main(void) {
 	btree_t* btree = btree_create(sizeof(BT_TYPE));
 
 	btree_emplace_path(btree, pathA, values, TAB_LEN, 0);
-	node_btree_t* node = btree->root;
+	btree_node_t* node = btree->root;
 	cmp_ok(*get_node_ref(node, BT_TYPE), "==", numbers[0]);
 	node = *btree_next_node(node, &pathA);
 	cmp_ok(*get_node_ref(node, BT_TYPE), "==", numbers[1]);

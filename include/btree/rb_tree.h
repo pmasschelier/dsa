@@ -45,7 +45,7 @@ enum rb_tree_colors {
  */
 int rb_tree_insert(bsearch_tree_t* tree,
 				   void* value,
-				   node_btree_t** found);
+				   btree_node_t** found);
 
 /**
  * @brief Removes an element from the tree
@@ -61,6 +61,6 @@ int rb_tree_insert(bsearch_tree_t* tree,
  */
 BOOL rb_tree_remove(bsearch_tree_t* tree, void* value);
 
-BOOL rb_tree_is_node_red(node_btree_t* node);
+BOOL rb_tree_is_node_red(btree_node_t* node);
 
 #endif	// !RBTREE_H

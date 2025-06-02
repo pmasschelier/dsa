@@ -51,7 +51,7 @@ struct bsearch_tree {
 	 *
 	 * If root == NULL the binary tree is empty
 	 */
-	node_btree_t* root;
+	btree_node_t* root;
 	/**
 	 * @brief Size (in bytes) on a element
 	 *
@@ -102,7 +102,7 @@ bsearch_tree_t* create_bsearch_tree(size_t size_bytes,
  */
 int bsearch_tree_insert(bsearch_tree_t* tree,
 						void* value,
-						node_btree_t** found);
+						btree_node_t** found);
 
 /**
  * @brief Clone and inserts an element into the tree
@@ -120,7 +120,7 @@ int bsearch_tree_insert(bsearch_tree_t* tree,
  */
 int bsearch_tree_insert_clone(bsearch_tree_t* tree,
 							  const void* value,
-							  node_btree_t** found);
+							  btree_node_t** found);
 
 /**
  * @brief Finds if the element is present in the tree
@@ -131,7 +131,7 @@ int bsearch_tree_insert_clone(bsearch_tree_t* tree,
  * @return If value was found, returns the pointer to the node containing value,
  * otherwise returns NULL
  */
-node_btree_t* bsearch_tree_find(bsearch_tree_t* tree,
+btree_node_t* bsearch_tree_find(bsearch_tree_t* tree,
 										   void* value);
 
 /**
@@ -156,7 +156,7 @@ BOOL bsearch_tree_remove(bsearch_tree_t* tree, void* value);
  * @return Returns NULL if the tree is empty and the node containing the minimum
  * element otherwise
  */
-node_btree_t* bsearch_tree_min(bsearch_tree_t* tree);
+btree_node_t* bsearch_tree_min(bsearch_tree_t* tree);
 
 /**
  * @brief Finds the maximum element of the tree
@@ -166,7 +166,7 @@ node_btree_t* bsearch_tree_min(bsearch_tree_t* tree);
  * @return Returns NULL if the tree is empty and the node containing the maximum
  * element otherwise
  */
-node_btree_t* bsearch_tree_max(bsearch_tree_t* tree);
+btree_node_t* bsearch_tree_max(bsearch_tree_t* tree);
 
 /**
  * @brief Apply left rotation on a tree node
@@ -212,7 +212,7 @@ node_btree_t* bsearch_tree_max(bsearch_tree_t* tree);
  * or bsearch_tree#root attribute
  *
  */
-void bsearch_tree_rotate_left(node_btree_t** node);
+void bsearch_tree_rotate_left(btree_node_t** node);
 
 /**
  * @brief Apply right rotation on a tree node
@@ -256,6 +256,6 @@ void bsearch_tree_rotate_left(node_btree_t** node);
  * or bsearch_tree#root attribute
  *
  */
-void bsearch_tree_rotate_right(node_btree_t** node);
+void bsearch_tree_rotate_right(btree_node_t** node);
 
 #endif	// !BSEARCHTREE_H

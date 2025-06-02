@@ -10,7 +10,7 @@ int main(void) {
     for (int i = 0; i < TAB_LEN; i++)
         tab[i] = i;
     btree_t *btree = btree_perfect_tree_from_tab(tab, sizeof(BT_TYPE), TAB_LEN);
-    node_btree_t *root = btree->root;
+    btree_node_t *root = btree->root;
     cmp_ok(*get_node_ref(root, BT_TYPE), "==", 0);
     cmp_ok(*get_node_ref(root->ls, BT_TYPE), "==", 1);
     cmp_ok(*get_node_ref(root->rs, BT_TYPE), "==", 2);
@@ -27,8 +27,8 @@ int main(void) {
     cmp_ok(*get_node_ref(root->rs->rs->ls, BT_TYPE), "==", 13);
     cmp_ok(*get_node_ref(root->rs->rs->rs, BT_TYPE), "==", 14);
     
-    node_btree_t** a = &root->ls;
-    node_btree_t** b = &root->rs->rs;
+    btree_node_t** a = &root->ls;
+    btree_node_t** b = &root->rs->rs;
     btree_swap_node(&a, &b);
     cmp_ok(*get_node_ref(*a, BT_TYPE), "==", 6);
     cmp_ok(*get_node_ref(*b, BT_TYPE), "==", 1);
@@ -50,8 +50,8 @@ int main(void) {
 
     btree = btree_perfect_tree_from_tab(tab, sizeof(BT_TYPE), TAB_LEN);
     root = btree->root;
-    node_btree_t** c = &root->ls;
-    node_btree_t** d = &root->ls->rs;
+    btree_node_t** c = &root->ls;
+    btree_node_t** d = &root->ls->rs;
     btree_swap_node(&c, &d);
     cmp_ok(*get_node_ref(*c, BT_TYPE), "==", 4);
     cmp_ok(*get_node_ref(*d, BT_TYPE), "==", 1);

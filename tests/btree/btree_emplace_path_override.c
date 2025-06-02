@@ -22,7 +22,7 @@ int main(void) {
 		values[i] = (i % 2 == 0) ? &override[i] : NULL;
 	btree_emplace_path(btree, pathA, values, TAB_LEN, 0);
 
-	node_btree_t* node = btree->root;
+	btree_node_t* node = btree->root;
 	cmp_ok(*get_node_ref(node, BT_TYPE), "==", override[0]);
 	node = *btree_next_node(node, &pathA);
 	cmp_ok(*get_node_ref(node, BT_TYPE), "==", override[1]);

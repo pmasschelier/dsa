@@ -21,11 +21,11 @@ typedef enum node_situation {
  * @param node A pointer to the node
  * @return Its encoded situation
  */
-static node_situation_t compute_situation(node_btree_t* node) {
+static node_situation_t compute_situation(btree_node_t* node) {
 	return ((node->ls == NULL) << 1) | (node->rs == NULL);
 }
 
-static BOOL update_subtree(node_btree_t* node) {
+static BOOL update_subtree(btree_node_t* node) {
 	unsigned subtree = 1;
 	switch (compute_situation(node)) {
 	case BOTH_CHILDREN:
@@ -46,7 +46,7 @@ static BOOL update_subtree(node_btree_t* node) {
 	return TRUE;
 }
 
-static int balance_factor(node_btree_t* node) {
+static int balance_factor(btree_node_t* node) {
 	int bf_ls = 0, bf_rs = 0;
 	if (node->ls != NULL)
 		bf_ls = node->ls->priv;
@@ -55,9 +55,9 @@ static int balance_factor(node_btree_t* node) {
 	return bf_ls - bf_rs;
 }
 
-static void equilibrate(node_btree_t** node) {
+static void equilibrate(btree_node_t** node) {
 	int bf = balance_factor(*node);
-	node_btree_t** bsearch_node = (node_btree_t**)node;
+	btree_node_t** bsearch_node = (btree_node_t**)node;
 	if (bf == -2) {
 		(*node)->priv -= 2;
 		if (balance_factor((*node)->rs) == 1) {
@@ -80,10 +80,10 @@ static void equilibrate(node_btree_t** node) {
 }
 
 static void equilibrate_leaf_path(bsearch_tree_t* tree,
-								  node_btree_t* node,
+								  btree_node_t* node,
 								  btree_path_t path) {
 	path.length -= 1;
-	node_btree_t** node_ptr = NULL;
+	btree_node_t** node_ptr = NULL;
 	while (node->parent != NULL && node->parent->parent != NULL) {
 		node_ptr = path_walk_backward(&path, &node->parent->parent->ls,
 									  &node->parent->parent->rs);
@@ -93,37 +93,37 @@ static void equilibrate_leaf_path(bsearch_tree_t* tree,
 		equilibrate(node_ptr);
 	}
 	if (tree->root != NULL &&
-		update_subtree((node_btree_t*)tree->root) == TRUE)
-		equilibrate((node_btree_t**)&tree->root);
+		update_subtree((btree_node_t*)tree->root) == TRUE)
+		equilibrate((btree_node_t**)&tree->root);
 }
 
-typedef node_btree_t* (
-	*create_bsearch_leaf_fn_t)(void* value, node_btree_t* parent);
+typedef btree_node_t* (
+	*create_bsearch_leaf_fn_t)(void* value, btree_node_t* parent);
 
 int bsearch_tree_insert_impl(bsearch_tree_t* tree,
 							 void* value,
-							 node_btree_t** found,
+							 btree_node_t** found,
 							 btree_path_t* path,
                              uintptr_t priv_init);
 
 int avl_tree_insert(bsearch_tree_t* tree,
 					void* value,
-					node_btree_t** found) {
+					btree_node_t** found) {
 	btree_path_t path;
-	node_btree_t* node;
+	btree_node_t* node;
 	int ret =
 		bsearch_tree_insert_impl(tree, value, &node, &path, 1);
     if(found)
         *found = node;
     if (ret == -ERROR_KEY_ALREADY_EXISTS)
 		return ret;
-	equilibrate_leaf_path(tree, (node_btree_t*)node, path);
+	equilibrate_leaf_path(tree, (btree_node_t*)node, path);
 	return -ERROR_NO_ERROR;
 }
 
 int avl_tree_insert_clone(bsearch_tree_t* tree,
 						  const void* value,
-						  node_btree_t** found) {
+						  btree_node_t** found) {
 	void* copy = malloc(tree->size_bytes);
 	when_null_ret(copy, -ERROR_ALLOCATION_FAILED);
 	memcpy(copy, value, tree->size_bytes);
@@ -133,14 +133,14 @@ int avl_tree_insert_clone(bsearch_tree_t* tree,
 	return ret;
 }
 
-node_btree_t* bsearch_tree_remove_impl(bsearch_tree_t* tree,
+btree_node_t* bsearch_tree_remove_impl(bsearch_tree_t* tree,
 												  void* value,
 												  btree_path_t* path);
 
 BOOL avl_tree_remove(bsearch_tree_t* tree, void* value) {
 	btree_path_t path;
-	node_btree_t* node =
-		(node_btree_t*)bsearch_tree_remove_impl(tree, value, &path);
+	btree_node_t* node =
+		(btree_node_t*)bsearch_tree_remove_impl(tree, value, &path);
 	if (node == NULL)
 		return FALSE;
 	equilibrate_leaf_path(tree, node, path);
@@ -149,6 +149,6 @@ BOOL avl_tree_remove(bsearch_tree_t* tree, void* value) {
 }
 
 unsigned avl_tree_height(bsearch_tree_t* tree) {
-	node_btree_t* root = (node_btree_t*)tree->root;
+	btree_node_t* root = (btree_node_t*)tree->root;
 	return root == NULL ? 0 : root->priv;
 }

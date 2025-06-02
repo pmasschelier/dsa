@@ -20,7 +20,7 @@ int main(void) {
 		int ret = avl_tree_insert(tree, &tab[i], NULL);
 		assert(ret == -ERROR_NO_ERROR);
 	}
-	node_btree_t* found;
+	btree_node_t* found;
 	found = bsearch_tree_find(tree, &tab[INSERT_INDEX]);
 	assert(found != NULL);
 	assert(*get_node_ref(found, int) == tab[INSERT_INDEX]);

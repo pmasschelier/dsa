@@ -11,7 +11,7 @@ int main(void) {
 		tab[i] = i;
 	btree_t* btree =
 		btree_perfect_tree_from_tab(tab, sizeof(BT_TYPE), TAB_LEN);
-	node_btree_t* node = btree->root;
+	btree_node_t* node = btree->root;
 	cmp_ok(*get_node_ref(node, BT_TYPE), "==", 0);
 	cmp_ok(*get_node_ref(node->ls, BT_TYPE), "==", 1);
 	cmp_ok(*get_node_ref(node->rs, BT_TYPE), "==", 2);

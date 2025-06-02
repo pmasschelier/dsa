@@ -52,7 +52,7 @@
  * @brief Typedef for the node_btree structure
  *
  */
-typedef struct node_btree node_btree_t;
+typedef struct btree_node btree_node_t;
 
 /**
  * @struct node_btree
@@ -62,10 +62,10 @@ typedef struct node_btree node_btree_t;
  * (NULL if there is no left son) and a pointer to its right son (NULL if it is
  * there is no right son).
  */
-struct node_btree {
-	node_btree_t* ls;	  /**< Pointer to its left son */
-	node_btree_t* rs;	  /**< Pointer to its right son */
-	node_btree_t* parent; /**< Pointer to its parent */
+struct btree_node {
+	btree_node_t* ls;	  /**< Pointer to its left son */
+	btree_node_t* rs;	  /**< Pointer to its right son */
+	btree_node_t* parent; /**< Pointer to its parent */
 	uintptr_t priv;			  /**< Implementation data */
 	uint8_t data[];			  /**< Pointer to data */
 };
@@ -91,7 +91,7 @@ struct btree {
 	 *
 	 * If root == NULL the binary tree is empty
 	 */
-	node_btree_t* root;
+	btree_node_t* root;
 	/**
 	 * @brief Size (in bytes) on a element
 	 *
@@ -105,6 +105,20 @@ struct btree {
 };
 
 /**
+ * @brief btree Compound literal
+ *
+ * This is the most concise way to initialize a btree.
+ *
+ * ```
+ * btree_t tree = BTREE_INIT(int);
+ * // Do something...
+ * btree_deinit(&tree);
+ * ```
+ * @see btree_init
+ */
+#define BTREE_INIT(type) (btree_t) { .root = NULL, .size_bytes = sizeof(type)}
+
+/**
  * @brief Create an empty binary tree.
  *
  * @param[in] size Size of an element (the size of the element pointed by
@@ -112,7 +126,7 @@ struct btree {
  * @return A pointer to the newly created btree
  * @see btree_free()
  */
-btree_t* btree_create(size_t size);
+btree_t* btree_create(size_t size_bytes);
 
 /**
  * @brief Frees the binary tree and the owned elements.
@@ -124,8 +138,11 @@ btree_t* btree_create(size_t size);
  */
 void btree_free(btree_t* tree);
 
+void btree_init(btree_t* tree, size_t size_bytes);
 
-void btree_swap_node(node_btree_t*** a, node_btree_t*** b);
+void btree_deinit(btree_t* tree);
+
+void btree_swap_node(btree_node_t*** a, btree_node_t*** b);
 
 /**
  * @brief Return the binary tree height
@@ -156,7 +173,7 @@ unsigned btree_length(btree_t* tree);
  * @param[inout] p pointer to the path to the next node.
  * @return a pointer to node_btree#ls or node_btree#rs
  */
-node_btree_t** btree_next_node(node_btree_t* tree, btree_path_t* p);
+btree_node_t** btree_next_node(btree_node_t* tree, btree_path_t* p);
 
 /**
  * @brief Emplace a node in a binary tree at a given path
@@ -174,7 +191,7 @@ node_btree_t** btree_next_node(node_btree_t* tree, btree_path_t* p);
  * @return a reference to the node where the reference has be written (NULL if
  * the node couldn't be created)
  */
-node_btree_t* btree_emplace_at(btree_t* tree,
+btree_node_t* btree_emplace_at(btree_t* tree,
 								   btree_path_t path,
 								   void* p);
 

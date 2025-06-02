@@ -18,7 +18,7 @@ int main(void) {
 		int ret = bsearch_tree_insert(tree, &tab[i], NULL);
 		assert(ret == -ERROR_NO_ERROR);
 	}
-	node_btree_t* found;
+	btree_node_t* found;
 	int ret;
 	ret = bsearch_tree_insert(tree, &tab[INSERT_INDEX], NULL);
 	assert(ret == -ERROR_KEY_ALREADY_EXISTS);

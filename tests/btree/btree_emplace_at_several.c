@@ -13,7 +13,7 @@ int main(void) {
     btree_t *btree = btree_create(sizeof(BT_TYPE));
     for (int i = 0; i < PATHS_LEN; i++)
         btree_emplace_at(btree, paths[i], &i);
-    node_btree_t *node = btree->root;
+    btree_node_t *node = btree->root;
     cmp_ok(*get_node_ref(node, BT_TYPE), "==", 0);
     cmp_ok(*get_node_ref(node->ls, BT_TYPE), "==", 1);
     cmp_ok(*get_node_ref(node->ls->rs, BT_TYPE), "==", 2);

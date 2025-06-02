@@ -23,7 +23,7 @@ int main(void) {
 		ret = bsearch_tree_insert(tree, &tab[i], NULL);
 		assert(ret == -ERROR_NO_ERROR);
 	}
-	node_btree_t* found;
+	btree_node_t* found;
 
 	ret = bsearch_tree_remove(tree, &tab[INSERT_INDEX]);
 	assert(ret == TRUE);

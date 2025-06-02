@@ -17,7 +17,7 @@ int main(void) {
 	for (int i = 0; i < TAB_LEN; i++) {
 		avl_tree_insert(tree, &tab[i], NULL);
 	}
-	node_btree_t* found;
+	btree_node_t* found;
 	found = bsearch_tree_max(tree);
 	assert(*get_node_ref(found, int) == TAB_LEN - 1);
 	free_bsearch_tree(tree);

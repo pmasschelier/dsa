@@ -39,20 +39,20 @@
 /* 	return i; */
 /* } */
 
-static unsigned get_child_index(node_btree_t* node) {
+static unsigned get_child_index(btree_node_t* node) {
 	return node->parent->rs == node;
 }
 
-node_btree_t** node_bsearch_tree_get_location(
+btree_node_t** node_bsearch_tree_get_location(
 	bsearch_tree_t* tree,
-	node_btree_t* node);
+	btree_node_t* node);
 
 static void insert_equilibrate_leaf_path(bsearch_tree_t* tree,
-										 node_btree_t* node,
+										 btree_node_t* node,
 										 btree_path_t path) {
-	node_btree_t **parents, **children;
-	node_btree_t **grandparent_ptr, **parent_ptr;
-	node_btree_t *grandparent, *parent, *uncle;
+	btree_node_t **parents, **children;
+	btree_node_t **grandparent_ptr, **parent_ptr;
+	btree_node_t *grandparent, *parent, *uncle;
 
 	while (node->parent != NULL) {
 		// Case  (parent BLACK)
@@ -67,12 +67,12 @@ static void insert_equilibrate_leaf_path(bsearch_tree_t* tree,
 		}
 
 		grandparent_ptr = node_bsearch_tree_get_location(
-			tree, (node_btree_t*)node->parent->parent);
-		grandparent = (node_btree_t*)*grandparent_ptr;
+			tree, (btree_node_t*)node->parent->parent);
+		grandparent = (btree_node_t*)*grandparent_ptr;
 		parents = &grandparent->ls;
 		unsigned parent_index = get_child_index(node->parent);
-		parent_ptr = (node_btree_t**)&parents[parent_index];
-		parent = (node_btree_t*)*parent_ptr;
+		parent_ptr = (btree_node_t**)&parents[parent_index];
+		parent = (btree_node_t*)*parent_ptr;
 		uncle = parents[1 - parent_index];
 		children = &parent->ls;
 
@@ -105,20 +105,20 @@ static void insert_equilibrate_leaf_path(bsearch_tree_t* tree,
 	}
 }
 
-typedef node_btree_t* (
-	*create_bsearch_leaf_fn_t)(void* value, node_btree_t* parent);
+typedef btree_node_t* (
+	*create_bsearch_leaf_fn_t)(void* value, btree_node_t* parent);
 
 int bsearch_tree_insert_impl(bsearch_tree_t* tree,
 							 void* value,
-							 node_btree_t** found,
+							 btree_node_t** found,
 							 btree_path_t* path,
                              uintptr_t priv_init);
 
 int rb_tree_insert(bsearch_tree_t* tree,
 				   void* value,
-				   node_btree_t** found) {
+				   btree_node_t** found) {
 	btree_path_t path;
-	node_btree_t* node;
+	btree_node_t* node;
 	int ret =
 		bsearch_tree_insert_impl(tree, value, &node, &path, RB_RED);
     if(found != NULL)
@@ -129,17 +129,17 @@ int rb_tree_insert(bsearch_tree_t* tree,
 	return -ERROR_NO_ERROR;
 }
 
-node_btree_t* bsearch_tree_remove_impl(bsearch_tree_t* tree,
+btree_node_t* bsearch_tree_remove_impl(bsearch_tree_t* tree,
 												  void* value,
 												  btree_path_t* path);
 
 static void remove_equilibrate_leaf_path(bsearch_tree_t* tree,
-										 node_btree_t* node,
+										 btree_node_t* node,
 										 btree_path_t path) {
 	int child_index;
-	node_btree_t **siblings, **nephews;
-	node_btree_t **parent_ptr, **brother_ptr;
-	node_btree_t *parent, *brother, *close, *distant;
+	btree_node_t **siblings, **nephews;
+	btree_node_t **parent_ptr, **brother_ptr;
+	btree_node_t *parent, *brother, *close, *distant;
 	// Only zero or one-child nodes can be removed
 	// If a two node is to be remove we swap its value with the value of its
 	// successor and try to remove its successor (see resolve_remove in
@@ -161,10 +161,10 @@ static void remove_equilibrate_leaf_path(bsearch_tree_t* tree,
 	do {
 		child_index = path_last_direction(path);
 		parent_ptr = node_bsearch_tree_get_location(
-			tree, (node_btree_t*)parent);
+			tree, (btree_node_t*)parent);
 		siblings = &parent->ls;
-		brother_ptr = (node_btree_t**)&siblings[1 - child_index];
-		brother = (node_btree_t*)*brother_ptr;
+		brother_ptr = (btree_node_t**)&siblings[1 - child_index];
+		brother = (btree_node_t*)*brother_ptr;
 		nephews = &brother->ls;
 		close = nephews[child_index];
 		distant = nephews[1 - child_index];
@@ -220,8 +220,8 @@ static void remove_equilibrate_leaf_path(bsearch_tree_t* tree,
 
 BOOL rb_tree_remove(bsearch_tree_t* tree, void* value) {
 	btree_path_t path;
-	node_btree_t* node =
-		(node_btree_t*)bsearch_tree_remove_impl(tree, value, &path);
+	btree_node_t* node =
+		(btree_node_t*)bsearch_tree_remove_impl(tree, value, &path);
 	if (node == NULL)
 		return FALSE;
 	if (tree->root != NULL)
@@ -230,7 +230,7 @@ BOOL rb_tree_remove(bsearch_tree_t* tree, void* value) {
 	return TRUE;
 }
 
-BOOL rb_tree_is_node_red(node_btree_t* node) {
+BOOL rb_tree_is_node_red(btree_node_t* node) {
     // An absence of node is equivalent to the presence of a black node
 	if (node == NULL)
 		return FALSE;
