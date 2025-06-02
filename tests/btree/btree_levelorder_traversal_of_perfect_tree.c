@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <tap.h>
 #include <btree/btree.h>
 
 #define BT_TYPE int
@@ -15,7 +15,7 @@ int main(void) {
 	btree_levelorder_traversal(btree, out);
 
 	for (int i = 0; i < TAB_LEN; i++)
-		assert(out[i] == i);
+		cmp_ok(out[i], "==", i);
 	btree_free(btree);
 	return 0;
 }

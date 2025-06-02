@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <tap.h>
 #include <btree/btree.h>
 
 #define BT_TYPE int
@@ -18,25 +18,25 @@ int main(void) {
 
 	btree_emplace_path(btree, pathA, values, TAB_LEN, 0);
 	node_btree_t* node = btree->root;
-	assert(*get_node_ref(node, BT_TYPE) == numbers[0]);
+	cmp_ok(*get_node_ref(node, BT_TYPE), "==", numbers[0]);
 	node = *btree_next_node(node, &pathA);
-	assert(*get_node_ref(node, BT_TYPE) == numbers[1]);
+	cmp_ok(*get_node_ref(node, BT_TYPE), "==", numbers[1]);
 	node = *btree_next_node(node, &pathA);
-	assert(*get_node_ref(node, BT_TYPE) == numbers[2]);
+	cmp_ok(*get_node_ref(node, BT_TYPE), "==", numbers[2]);
 	node = *btree_next_node(node, &pathA);
-	assert(*get_node_ref(node, BT_TYPE) == numbers[3]);
+	cmp_ok(*get_node_ref(node, BT_TYPE), "==", numbers[3]);
 	node = *btree_next_node(node, &pathA);
-	assert(*get_node_ref(node, BT_TYPE) == numbers[4]);
+	cmp_ok(*get_node_ref(node, BT_TYPE), "==", numbers[4]);
 	node = *btree_next_node(node, &pathA);
-	assert(*get_node_ref(node, BT_TYPE) == numbers[5]);
+	cmp_ok(*get_node_ref(node, BT_TYPE), "==", numbers[5]);
 	node = *btree_next_node(node, &pathA);
-	assert(*get_node_ref(node, BT_TYPE) == numbers[6]);
+	cmp_ok(*get_node_ref(node, BT_TYPE), "==", numbers[6]);
 	node = *btree_next_node(node, &pathA);
-	assert(*get_node_ref(node, BT_TYPE) == numbers[7]);
+	cmp_ok(*get_node_ref(node, BT_TYPE), "==", numbers[7]);
 	node = *btree_next_node(node, &pathA);
-	assert(*get_node_ref(node, BT_TYPE) == numbers[8]);
+	cmp_ok(*get_node_ref(node, BT_TYPE), "==", numbers[8]);
 	node = *btree_next_node(node, &pathA);
-	assert(*get_node_ref(node, BT_TYPE) == numbers[9]);
+	cmp_ok(*get_node_ref(node, BT_TYPE), "==", numbers[9]);
 	btree_free(btree);
 	return 0;
 }

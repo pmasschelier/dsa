@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <tap.h>
 #include <btree/btree.h>
 
 #define BT_TYPE int
@@ -24,7 +24,7 @@ int main(void) {
 	btree_emplace_path(btree, pathB, values, TAB_LEN, PATHB_OFFSET);
 
 	int height = btree_height(btree);
-	assert(height == PATHA_LEN + 1);
+	cmp_ok(height, "==", PATHA_LEN + 1);
 	btree_free(btree);
 	return 0;
 }

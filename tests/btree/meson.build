@@ -1,7 +1,4 @@
 passing_tap_sources = [
-]
-
-passing_return_sources = [
   'btree_create_empty.c',
   'btree_emplace_at_override.c',
   'btree_emplace_at_root.c',
@@ -14,7 +11,6 @@ passing_return_sources = [
   'btree_height.c',
   'btree_inorder_traversal_of_perfect_tree.c',
   'btree_levelorder_traversal_of_perfect_tree.c',
-  'btree_no_free_element.c',
   'btree_node_to_path_node.c',
   'btree_node_to_path_root.c',
   'btree_perfect_tree_from_tab.c',
@@ -22,4 +18,8 @@ passing_return_sources = [
   'btree_postorder_traversal_of_perfect_tree.c',
   'btree_preorder_traversal_of_perfect_tree.c',
   'btree_swap.c',
+]
+
+passing_return_sources = [
+  'btree_no_free_element.c',
 ]

@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <tap.h>
 #include <btree/btree.h>
 
 #define BT_TYPE int
@@ -9,9 +9,9 @@ int main(void) {
 	btree_t* btree = btree_create(sizeof(BT_TYPE));
 	btree_emplace_at(btree, ROOT_PATH, &values[0]);
 	btree_emplace_at(btree, LHS_PATH, &values[1]);
-	assert(*(BT_TYPE*)btree->root->ls->data == 2);
+	cmp_ok(*get_node_ref(btree->root->ls, BT_TYPE), "==", 2);
 	btree_emplace_at(btree, LHS_PATH, &values[2]);
-	assert(*(BT_TYPE*)btree->root->ls->data == 3);
+	cmp_ok(*get_node_ref(btree->root->ls, BT_TYPE), "==", 3);
 	btree_free(btree);
 	return 0;
 }

@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <tap.h>
 #include <btree/btree.h>
 
 #define BT_TYPE int
@@ -12,21 +12,21 @@ int main(void) {
 	btree_t* btree =
 		btree_perfect_tree_from_tab(tab, sizeof(BT_TYPE), TAB_LEN);
 	node_btree_t* node = btree->root;
-	assert(*(BT_TYPE*)node->data == 0);
-	assert(*(BT_TYPE*)node->ls->data == 1);
-	assert(*(BT_TYPE*)node->rs->data == 2);
-	assert(*(BT_TYPE*)node->ls->ls->data == 3);
-	assert(*(BT_TYPE*)node->ls->rs->data == 4);
-	assert(*(BT_TYPE*)node->rs->ls->data == 5);
-	assert(*(BT_TYPE*)node->rs->rs->data == 6);
-	assert(*(BT_TYPE*)node->ls->ls->ls->data == 7);
-	assert(*(BT_TYPE*)node->ls->ls->rs->data == 8);
-	assert(*(BT_TYPE*)node->ls->rs->ls->data == 9);
-	assert(*(BT_TYPE*)node->ls->rs->rs->data == 10);
-	assert(*(BT_TYPE*)node->rs->ls->ls->data == 11);
-	assert(*(BT_TYPE*)node->rs->ls->rs->data == 12);
-	assert(*(BT_TYPE*)node->rs->rs->ls->data == 13);
-	assert(*(BT_TYPE*)node->rs->rs->rs->data == 14);
+	cmp_ok(*get_node_ref(node, BT_TYPE), "==", 0);
+	cmp_ok(*get_node_ref(node->ls, BT_TYPE), "==", 1);
+	cmp_ok(*get_node_ref(node->rs, BT_TYPE), "==", 2);
+	cmp_ok(*get_node_ref(node->ls->ls, BT_TYPE), "==", 3);
+	cmp_ok(*get_node_ref(node->ls->rs, BT_TYPE), "==", 4);
+	cmp_ok(*get_node_ref(node->rs->ls, BT_TYPE), "==", 5);
+	cmp_ok(*get_node_ref(node->rs->rs, BT_TYPE), "==", 6);
+	cmp_ok(*get_node_ref(node->ls->ls->ls, BT_TYPE), "==", 7);
+	cmp_ok(*get_node_ref(node->ls->ls->rs, BT_TYPE), "==", 8);
+	cmp_ok(*get_node_ref(node->ls->rs->ls, BT_TYPE), "==", 9);
+	cmp_ok(*get_node_ref(node->ls->rs->rs, BT_TYPE), "==", 10);
+	cmp_ok(*get_node_ref(node->rs->ls->ls, BT_TYPE), "==", 11);
+	cmp_ok(*get_node_ref(node->rs->ls->rs, BT_TYPE), "==", 12);
+	cmp_ok(*get_node_ref(node->rs->rs->ls, BT_TYPE), "==", 13);
+	cmp_ok(*get_node_ref(node->rs->rs->rs, BT_TYPE), "==", 14);
 	btree_free(btree);
 	return 0;
 }

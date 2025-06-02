@@ -1,4 +1,3 @@
-#include <assert.h>
 #include <btree/btree.h>
 
 #define BT_TYPE int

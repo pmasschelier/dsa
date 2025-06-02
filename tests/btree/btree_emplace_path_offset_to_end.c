@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <tap.h>
 #include <btree/btree.h>
 
 #define BT_TYPE int
@@ -25,7 +25,7 @@ int main(void) {
 		node = *btree_next_node(node, &pathA);
 	}
 	for (int i = 0; i < TAB_LEN; i++) {
-		assert(*(BT_TYPE*)node->data == numbers[i]);
+		cmp_ok(*get_node_ref(node, BT_TYPE), "==", numbers[i]);
 		node = *btree_next_node(node, &pathA);
 	}
 	btree_free(btree);

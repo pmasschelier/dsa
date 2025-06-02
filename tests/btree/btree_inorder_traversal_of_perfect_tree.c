@@ -1,4 +1,4 @@
-#include <assert.h>
+#include <tap.h>
 #include <btree/btree.h>
 
 #define BT_TYPE int
@@ -16,7 +16,7 @@ int main(void) {
 	btree_dfs_array(btree, NULL, (void**)out, NULL);
 
 	for (int i = 0; i < TAB_LEN; i++)
-		assert(*out[i] == expected[i]);
+		cmp_ok(*out[i], "==", expected[i]);
 	btree_free(btree);
 	return 0;
 }
